@@ -8,12 +8,13 @@
         "typecheck": "tsc --noEmit"
     },
     "peerDependencies": {
-        "react": "*",
+        "react": "18.2.0",
         "react-native": "*"
     },
     "devDependencies": {
-        "typescript": "latest",
-        "@types/react": "latest",
-        "@types/react-native": "latest"
+        "typescript": "^5.4.5",
+        "@types/react": "^18.2.79",
+        "@types/react-native": "^0.73.0",
+        "eslint": "^8.57.0"
     }
 }

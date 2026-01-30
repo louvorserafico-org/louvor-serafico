@@ -9,13 +9,13 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "turbo": "latest",
-    "prettier": "latest",
-    "typescript": "latest",
-    "eslint": "latest"
+    "turbo": "^1.13.3",
+    "prettier": "^3.2.5",
+    "typescript": "^5.4.5",
+    "eslint": "^8.57.0"
   },
   "packageManager": "pnpm@9.0.0",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   }
 }

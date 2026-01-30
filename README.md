@@ -14,7 +14,7 @@ Monorepo para o aplicativo de partituras e músicas sacras "Louvor Seráfico".
 
 - Node.js >= 18
 - PNPM (`npm install -g pnpm`)
-- Supabase CLI (`npm install -g supabase`)
+- Supabase CLI via npx
 
 ## Instalação
 
@@ -22,71 +22,51 @@ Monorepo para o aplicativo de partituras e músicas sacras "Louvor Seráfico".
 pnpm install
 ```
 
-## Desenvolvimento Local
+## Configuração do Supabase (Remoto)
 
-### 1. Iniciar Banco de Dados
-
+### 1. Login no Supabase
 ```bash
-supabase start
-```
-Isso iniciará o Postgres, Auth, Storage e aplicará as migrations automaticamente.
-
-### 2. Configurar Variáveis de Ambiente
-
-Copie os exemplos para os arquivos reais:
-
-**Admin:**
-```bash
-cp apps/admin/.env.example apps/admin/.env.local
-```
-Preencha com as URLs fornecidas pelo `supabase start` (Studio URL, API URL, Anon Key).
-
-**Mobile:**
-```bash
-cp apps/mobile/.env.example apps/mobile/.env
+npx supabase login
 ```
 
-### 3. Rodar os Apps
+### 2. Vincular Projeto
+```bash
+npx supabase link --project-ref xfgrqnrvkjgmngcvtndi
+```
 
-Para rodar tudo junto:
+### 3. Aplicar Migrations
+```bash
+npx supabase db push
+```
+
+## Rodar os Apps Localmente
+
 ```bash
 pnpm dev
+# Admin: http://localhost:3000
+# Mobile: QRCode
 ```
 
-Ou individualmente:
-```bash
-# Admin
-pnpm --filter admin dev
+## Deploy do Admin (GitHub Pages)
 
-# Mobile
-pnpm --filter mobile start
-```
+O Painel Admin está configurado para ser implantado automaticamente no GitHub Pages via GitHub Actions.
 
-## Banco de Dados e Permissions (RLS)
+### Passos para ativar:
+1. Vá para o repositório no GitHub.
+2. Acesse **Settings > Pages**.
+3. Em "Source", mantenha "Deploy from a branch" (mas a Action mudará isso para "GH Actions" automaticamente ou você pode selecionar "GitHub Actions" se disponível).
+4. **Importante:** Configure as chaves do Supabase nos **Secrets** do repositório (Settings > Secrets and variables > Actions):
+   - `NEXT_PUBLIC_SUPABASE_URL`: Sua URL do projeto.
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Sua chave anônima (mesma do .env.local).
 
-O sistema utiliza Row Level Security (RLS) em todas as tabelas.
+Ao fazer push na branch `main`, o workflow iniciará o build e deploy.
 
-- **Leitura Pública**: Músicas publicadas, Assets de músicas publicadas, Tags e Stats.
-- **Escrita**: Apenas Admins podem criar/editar músicas e assets.
-- **Usuários**: Podem gerenciar seus próprios favoritos e avaliações.
+> **Nota:** Como o GitHub Pages serve em um subdiretório (se não usar domínio customizado), certifique-se de acessar pela URL correta fornecida pela Action. Se encontrar problemas de 404 em rotas profundas ao recarregar, lembre-se que é uma limitação de SPA em hospedagem estática, mas a navegação interna funcionará.
 
-### Promover Admin
-
-Como não há interface pública para criar admins, você deve promover um usuário existente via SQL.
-
-1. Faça Login/Signup no App ou Admin.
-2. Rode o comando SQL no dashboard do Supabase (ou local):
+## Gestão de Acesso (Promover Admin)
 
 ```sql
 select promote_admin_by_email('seu.email@exemplo.com');
 ```
-
-## Checklist de Produção
-
-- [ ] Configurar Projeto no Supabase Dashboard (Cloud).
-- [ ] Linkar projeto local: `supabase link --project-ref seu-ref`.
-- [ ] Pushar migrations: `supabase db push`.
-- [ ] Configurar variáveis de ambiente no Vercel (Admin) e EAS (Mobile).
-- [ ] Revisar políticas de Storage (Public vs Draft).
 
 Feito para honra e glória de Deus!
