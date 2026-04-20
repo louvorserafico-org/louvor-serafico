@@ -1,0 +1,57 @@
+import assert from "node:assert/strict";
+import { describe, it } from "node:test";
+
+import {
+  buildCelebrationMomentRows,
+  santissimoNomeDeJesusCelebration,
+  validateCelebration,
+} from "./celebration.ts";
+
+describe("celebration domain", () => {
+  it("builds celebration rows in standard mass order", () => {
+    const rows = buildCelebrationMomentRows(santissimoNomeDeJesusCelebration);
+
+    assert.deepEqual(
+      rows.map((row) => row.song.title),
+      [
+        "Fazei em nome do Senhor",
+        "Bendito seja o nome do Senhor",
+        "Aleluia, bendizei o seu nome",
+        "Invocando o nome do Senhor",
+        "Por teu nome, o Senhor",
+        "Vamos em nome do Senhor",
+      ],
+    );
+  });
+
+  it("marks celebration incomplete when required moment has no recommendation", () => {
+    const validation = validateCelebration({
+      ...santissimoNomeDeJesusCelebration,
+      recommendations: santissimoNomeDeJesusCelebration.recommendations.filter(
+        (recommendation) => recommendation.momentKey !== "offertory",
+      ),
+    });
+
+    assert.equal(validation.complete, false);
+    assert.deepEqual(validation.missingMomentKeys, ["offertory"]);
+  });
+
+  it("throws when recommendation references unknown song", () => {
+    assert.throws(
+      () =>
+        buildCelebrationMomentRows({
+          ...santissimoNomeDeJesusCelebration,
+          recommendations: [
+            ...santissimoNomeDeJesusCelebration.recommendations,
+            {
+              id: "broken",
+              momentKey: "final_chant",
+              priority: "optional",
+              songId: "missing-song",
+            },
+          ],
+        }),
+      /Unknown song/,
+    );
+  });
+});

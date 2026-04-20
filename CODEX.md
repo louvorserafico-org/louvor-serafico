@@ -401,9 +401,75 @@ Sugestao de commit:
 
 Etapa 3 - Dados mockados estruturados.
 
+Status: concluida em 2026-04-20.
+
 Objetivo esperado:
 
 - Modelar tipos iniciais de celebracao e canto.
 - Criar mock do dia 03 de janeiro com estrutura mais proxima do dominio.
 - Criar tela de detalhe de celebracao.
 - Manter Supabase fora do escopo.
+
+Resultado:
+
+- Tipos criados: `Song`, `SongAsset`, `RepertoireRecommendation`,
+  `Celebration` e `CelebrationMomentRow`.
+- Mock estruturado criado em `santissimoNomeDeJesusCelebration`.
+- Funcoes criadas: `buildCelebrationMomentRows` e `validateCelebration`.
+- Tela Hoje passou a consumir linhas estruturadas.
+- Tela de detalhe criada em `app/celebracoes/[id].tsx`.
+- `MomentCard` passou a exibir status de material premium/pendente.
+
+Testes adicionados:
+
+- `packages/shared/src/celebration.test.ts`
+
+Cobertura:
+
+- Happy path: linhas da celebracao na ordem liturgica.
+- Edge case: celebracao incompleta sem recomendacao no ofertorio.
+- Caso de erro: recomendacao com musica inexistente gera erro.
+
+Hurdle:
+
+- TypeScript e Node exigiram caminhos diferentes para imports `.ts` em codigo
+  executado direto.
+
+Fix:
+
+- Mantido import `.ts` para execucao direta nos testes Node.
+- Adicionado `// @ts-ignore` local com comentario explicito ate adotarmos runner
+  de testes/transpilacao mais adequado.
+
+Validacoes executadas:
+
+- `corepack pnpm test`
+- `corepack pnpm typecheck`
+- `corepack pnpm lint`
+
+Checklist DoD:
+
+- [x] Tipos de dominio criados.
+- [x] Mock estruturado criado.
+- [x] TDD aplicado.
+- [x] Tela detalhe criada.
+- [x] Supabase fora do escopo.
+- [x] Testes passam.
+- [x] Typecheck passa.
+- [x] Lint passa.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`feat: structure celebration mock domain`
+
+## Proxima Etapa Planejada
+
+Etapa 4 - Navegacao para detalhe.
+
+Objetivo esperado:
+
+- Adicionar acao da tela Hoje para detalhe.
+- Criar card/CTA navegavel.
+- Melhorar estado editorial pendente.
+- Validar Expo config.

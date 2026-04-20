@@ -4,17 +4,21 @@ import { StyleSheet, Text, View } from "react-native";
 import { colors, spacing, typography } from "@/theme/tokens";
 
 type MomentCardProps = {
+  assetCount: number;
   moment: MassMoment;
   songTitle: string;
 };
 
-export function MomentCard({ moment, songTitle }: MomentCardProps) {
+export function MomentCard({ assetCount, moment, songTitle }: MomentCardProps) {
   return (
     <View style={styles.card}>
       <Text style={styles.order}>{moment.order}</Text>
       <View style={styles.content}>
         <Text style={styles.label}>{moment.label}</Text>
         <Text style={styles.song}>{songTitle}</Text>
+        <Text style={styles.assets}>
+          {assetCount > 0 ? `${assetCount} material premium` : "Material pendente"}
+        </Text>
       </View>
     </View>
   );
@@ -39,6 +43,10 @@ const styles = StyleSheet.create({
     color: colors.textSecondary,
     fontSize: typography.caption,
     fontWeight: "700",
+  },
+  assets: {
+    color: colors.textMuted,
+    fontSize: typography.caption,
   },
   order: {
     color: colors.gold,

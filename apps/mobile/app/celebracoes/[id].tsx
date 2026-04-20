@@ -1,3 +1,4 @@
+import { Stack, useLocalSearchParams } from "expo-router";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { MomentCard } from "@/components/MomentCard";
@@ -6,23 +7,26 @@ import { SectionTitle } from "@/components/SectionTitle";
 import { initialCelebration } from "@/data/initialCelebration";
 import { colors, spacing, typography } from "@/theme/tokens";
 
-export default function TodayScreen() {
+export default function CelebrationDetailScreen() {
+  const params = useLocalSearchParams<{ id: string }>();
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <Stack.Screen options={{ headerShown: true, title: "Celebracao" }} />
       <PageHeader
         eyebrow={initialCelebration.dateLabel}
+        subtitle={`Identificador: ${params.id ?? initialCelebration.slug}`}
         title={initialCelebration.title}
-        subtitle="Roteiro inicial para validar ordem liturgico-musical."
       />
 
-      <View style={styles.notice}>
-        <Text style={styles.noticeTitle}>Hoje</Text>
-        <Text style={styles.noticeText}>
-          Celebre com cantos organizados por momento da missa.
+      <View style={styles.summary}>
+        <Text style={styles.summaryTitle}>Status editorial</Text>
+        <Text style={styles.summaryText}>
+          Um canto esta com material pendente: Invocando o nome do Senhor.
         </Text>
       </View>
 
-      <SectionTitle title="Roteiro sugerido" />
+      <SectionTitle title="Momentos da missa" />
 
       <View style={styles.list}>
         {initialCelebration.moments.map((item) => (
@@ -48,21 +52,21 @@ const styles = StyleSheet.create({
   list: {
     gap: spacing.md,
   },
-  notice: {
-    backgroundColor: colors.oliveSoft,
-    borderColor: colors.olive,
+  summary: {
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
     borderRadius: 8,
     borderWidth: 1,
     gap: spacing.xs,
     padding: spacing.md,
   },
-  noticeText: {
+  summaryText: {
     color: colors.textSecondary,
     fontSize: typography.body,
     lineHeight: 23,
   },
-  noticeTitle: {
-    color: colors.olive,
+  summaryTitle: {
+    color: colors.accent,
     fontSize: typography.body,
     fontWeight: "800",
   },
