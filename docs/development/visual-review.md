@@ -14,20 +14,20 @@ Mantenha apenas Android Studio aberto. Nao abrir BlueStacks junto.
 
 ## Checklist
 
-- [ ] App abre sem tela vermelha.
-- [ ] Tab Hoje carrega.
-- [ ] CTA "Abrir celebracao" navega.
-- [ ] Cards da missa navegam.
-- [ ] Detalhe da celebracao abre.
-- [ ] Tab Repertorio carrega.
-- [ ] Lista mostra seis cantos.
-- [ ] Canto com material pendente aparece.
-- [ ] Card de musica navega.
-- [ ] Detalhe de musica abre.
-- [ ] Tabs Calendario, Comunidade e Perfil abrem.
-- [ ] Textos nao estouram.
-- [ ] Scroll funciona.
-- [ ] Nenhum erro aparece no Metro.
+- [x] App abre sem tela vermelha.
+- [x] Tab Hoje carrega.
+- [x] CTA "Abrir celebracao" navega.
+- [x] Cards da missa navegam.
+- [x] Detalhe da celebracao abre.
+- [x] Tab Repertorio carrega.
+- [x] Lista mostra seis cantos.
+- [x] Canto com material pendente aparece.
+- [x] Card de musica navega.
+- [x] Detalhe de musica abre.
+- [x] Tabs Calendario, Comunidade e Perfil abrem.
+- [x] Textos nao estouram.
+- [x] Scroll funciona.
+- [x] Nenhum erro aparece no Metro.
 
 ## Relato
 

@@ -3,6 +3,7 @@ import { describe, it } from "node:test";
 
 import {
   buildCelebrationMomentRows,
+  findCelebrationByDate,
   findSongBySlug,
   getInitialSongCatalog,
   santissimoNomeDeJesusCelebration,
@@ -75,5 +76,13 @@ describe("celebration domain", () => {
 
   it("returns undefined when song slug does not exist", () => {
     assert.equal(findSongBySlug("canto-inexistente"), undefined);
+  });
+
+  it("finds the initial celebration by month-day", () => {
+    assert.equal(findCelebrationByDate("01-03")?.slug, "santissimo-nome-de-jesus");
+  });
+
+  it("returns undefined when date has no celebration", () => {
+    assert.equal(findCelebrationByDate("01-04"), undefined);
   });
 });

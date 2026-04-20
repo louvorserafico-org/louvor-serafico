@@ -648,7 +648,81 @@ Sugestao de commit:
 
 Etapa 8 - Corrigir achados da revisao visual.
 
+Status: concluida em 2026-04-20.
+
 Objetivo esperado:
 
 - Aguardar feedback visual do usuario.
 - Ajustar apenas bugs encontrados.
+
+Resultado:
+
+- O usuario validou o checklist visual e marcou todos os itens como concluídos.
+- Não houve bugs visuais ou de runtime reportados.
+- Como não havia correção a fazer, a etapa foi encerrada sem mudança de UI.
+
+Checklist DoD:
+
+- [x] Feedback visual recebido.
+- [x] Sem bugs reportados.
+- [x] Nenhuma alteração desnecessária feita.
+
+Sugestao de commit:
+
+`docs: record successful android visual review`
+
+## Proxima Etapa Planejada
+
+Etapa 9 - Calendario inicial de celebracoes.
+
+Status: concluida em 2026-04-20.
+
+Objetivo esperado:
+
+- Criar catalogo inicial de celebracoes.
+- Permitir encontrar celebracao por data.
+- Transformar a tab Calendario em uma lista real.
+- Manter Supabase fora do escopo.
+
+Resultado:
+
+- O domínio compartilhado ganhou `getInitialCelebrationCatalog` e `findCelebrationByDate`.
+- A tab Calendario passou a listar a celebração inicial.
+- Foi criado o componente `CelebrationCard`.
+- O card navega para o detalhe da celebração.
+
+Testes adicionados:
+
+- Busca da celebração inicial por `dateMonthDay`.
+- Retorno `undefined` para data sem celebração.
+
+Validações executadas:
+
+- `corepack pnpm test`
+- `corepack pnpm typecheck`
+- `corepack pnpm lint`
+
+Checklist DoD:
+
+- [x] Catalogo inicial de celebracoes criado.
+- [x] Busca por data criada.
+- [x] Calendario usa dados estruturados.
+- [x] Supabase fora do escopo.
+- [x] Testes passam.
+- [x] Typecheck passa.
+- [x] Lint passa.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`feat: add initial celebration calendar`
+
+## Proxima Etapa Planejada
+
+Etapa 10 - Preparar base Supabase documental.
+
+Objetivo esperado:
+
+- Documentar schema inicial proposto.
+- Ainda nao criar migrations.
+- Decidir tabelas e relacionamentos antes do banco real.

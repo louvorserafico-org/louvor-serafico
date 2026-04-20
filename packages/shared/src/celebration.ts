@@ -93,6 +93,16 @@ export function findSongBySlug(slug: string): Song | undefined {
   return getInitialSongCatalog().find((song) => song.slug === slug);
 }
 
+export function getInitialCelebrationCatalog(): Celebration[] {
+  return [santissimoNomeDeJesusCelebration];
+}
+
+export function findCelebrationByDate(dateMonthDay: string): Celebration | undefined {
+  return getInitialCelebrationCatalog().find(
+    (celebration) => celebration.dateMonthDay === dateMonthDay,
+  );
+}
+
 export const santissimoNomeDeJesusCelebration: Celebration = {
   id: "celebration-santissimo-nome-de-jesus",
   slug: "santissimo-nome-de-jesus",
