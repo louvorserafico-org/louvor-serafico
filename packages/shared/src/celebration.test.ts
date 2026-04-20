@@ -3,6 +3,8 @@ import { describe, it } from "node:test";
 
 import {
   buildCelebrationMomentRows,
+  findSongBySlug,
+  getInitialSongCatalog,
   santissimoNomeDeJesusCelebration,
   validateCelebration,
 } from "./celebration.ts";
@@ -53,5 +55,25 @@ describe("celebration domain", () => {
         }),
       /Unknown song/,
     );
+  });
+
+  it("returns the initial song catalog sorted by title", () => {
+    const catalog = getInitialSongCatalog();
+
+    assert.deepEqual(
+      catalog.map((song) => song.title),
+      [
+        "Aleluia, bendizei o seu nome",
+        "Bendito seja o nome do Senhor",
+        "Fazei em nome do Senhor",
+        "Invocando o nome do Senhor",
+        "Por teu nome, o Senhor",
+        "Vamos em nome do Senhor",
+      ],
+    );
+  });
+
+  it("returns undefined when song slug does not exist", () => {
+    assert.equal(findSongBySlug("canto-inexistente"), undefined);
   });
 });

@@ -567,9 +567,54 @@ Sugestao de commit:
 
 Etapa 6 - Catalogo inicial de musicas.
 
+Status: concluida em 2026-04-20.
+
 Objetivo esperado:
 
 - Criar tela inicial de repertorio com dados estruturados.
 - Listar cantos da celebracao inicial.
 - Permitir abrir detalhe basico de musica.
 - Manter Supabase fora do escopo.
+
+Resultado:
+
+- A tela Repertorio agora lista os cantos da celebracao inicial.
+- Foi criado o componente `SongCard` para exibir cada canto do catalogo.
+- Foi criada a rota `app/musicas/[slug].tsx` para detalhe basico de musica.
+- O detalhe mostra materiais cadastrados ou estado de material pendente.
+- O dominio compartilhado ganhou `getInitialSongCatalog` e `findSongBySlug`.
+
+Testes adicionados:
+
+- Ordenacao alfabetica do catalogo inicial.
+- Lookup de slug inexistente retornando `undefined`.
+
+Validacoes executadas:
+
+- `corepack pnpm test`
+- `corepack pnpm typecheck`
+- `corepack pnpm lint`
+
+Checklist DoD:
+
+- [x] Catalogo inicial criado.
+- [x] Tela Repertorio usa dados estruturados.
+- [x] Detalhe basico de musica criado.
+- [x] Supabase fora do escopo.
+- [x] Testes passam.
+- [x] Typecheck passa.
+- [x] Lint passa.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`feat: add initial song catalog`
+
+## Proxima Etapa Planejada
+
+Etapa 7 - Revisao visual no Android.
+
+Objetivo esperado:
+
+- Validar manualmente Repertorio e detalhes de musica.
+- Ajustar somente bugs visuais ou runtime encontrados.

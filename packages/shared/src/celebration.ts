@@ -83,6 +83,16 @@ export function validateCelebration(celebration: Celebration) {
   return validateCelebrationRepertoire(repertoire);
 }
 
+export function getInitialSongCatalog(): Song[] {
+  return [...santissimoNomeDeJesusCelebration.songs].sort((first, second) =>
+    first.title.localeCompare(second.title, "pt-BR"),
+  );
+}
+
+export function findSongBySlug(slug: string): Song | undefined {
+  return getInitialSongCatalog().find((song) => song.slug === slug);
+}
+
 export const santissimoNomeDeJesusCelebration: Celebration = {
   id: "celebration-santissimo-nome-de-jesus",
   slug: "santissimo-nome-de-jesus",
