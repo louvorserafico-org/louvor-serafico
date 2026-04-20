@@ -614,7 +614,41 @@ Sugestao de commit:
 
 Etapa 7 - Revisao visual no Android.
 
+Status: preparada em 2026-04-20. Pendente validacao manual do usuario.
+
 Objetivo esperado:
 
 - Validar manualmente Repertorio e detalhes de musica.
 - Ajustar somente bugs visuais ou runtime encontrados.
+
+Resultado:
+
+- Foi criado o checklist `docs/development/visual-review.md`.
+- O README passou a apontar para o checklist de revisao visual.
+- Nenhuma mudanca de UI foi feita nesta etapa.
+
+Validacoes executadas:
+
+- `corepack pnpm test`
+- `corepack pnpm typecheck`
+- `corepack pnpm lint`
+
+Checklist DoD:
+
+- [x] Checklist visual criado.
+- [x] README atualizado.
+- [ ] Validacao manual Android realizada.
+- [ ] Bugs visuais/runtime revisados, se houver.
+
+Sugestao de commit:
+
+`docs: add android visual review checklist`
+
+## Proxima Etapa Planejada
+
+Etapa 8 - Corrigir achados da revisao visual.
+
+Objetivo esperado:
+
+- Aguardar feedback visual do usuario.
+- Ajustar apenas bugs encontrados.

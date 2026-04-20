@@ -68,6 +68,10 @@ Se ocorrer erro com `emulator-5554` ou porta `5554`, veja:
 
 - `docs/development/run-android.md`
 
+Para validar visualmente, veja:
+
+- `docs/development/visual-review.md`
+
 ## Documentacao Viva
 
 Leia primeiro:
