@@ -342,6 +342,8 @@ Sugestao de commit:
 
 Etapa 2 - Navegacao base e design system inicial.
 
+Status: concluida em 2026-04-20.
+
 Objetivo esperado:
 
 - Criar tabs principais com Expo Router.
@@ -349,3 +351,59 @@ Objetivo esperado:
 - Criar componentes compartilhados basicos no mobile.
 - Manter dados mockados.
 - Validar manualmente no Android Emulator com `corepack pnpm android`.
+
+Resultado:
+
+- Tabs criadas: Hoje, Calendario, Repertorio, Comunidade e Perfil.
+- Tela Hoje movida para grupo `(tabs)`.
+- Componentes mobile criados: `PageHeader`, `SectionTitle`, `MomentCard` e
+  `PlaceholderScreen`.
+- Dados mockados movidos para `src/data/initialCelebration.ts`.
+- Tokens visuais expandidos em `src/theme/tokens.ts`.
+- Icones de tab usando `@expo/vector-icons`.
+
+Testes:
+
+- Nenhum teste novo foi adicionado porque a etapa alterou UI/navegacao simples.
+- Testes de dominio existentes foram preservados.
+
+Validacoes executadas:
+
+- `corepack pnpm install`
+- `corepack pnpm test`
+- `corepack pnpm typecheck`
+- `corepack pnpm lint`
+- `node ...\node_modules\expo\bin\cli config --type public`
+
+Validacao nao executada:
+
+- `corepack pnpm android` nao foi executado para nao deixar servidor Metro/Expo
+  aberto nesta resposta.
+
+Checklist DoD:
+
+- [x] Tabs principais criadas.
+- [x] Tema inicial expandido.
+- [x] Componentes compartilhados criados.
+- [x] Dados mockados mantidos.
+- [x] Testes existentes passam.
+- [x] Typecheck passa.
+- [x] Lint passa.
+- [x] Config Expo carrega.
+- [x] `CODEX.md` atualizado.
+- [x] Docs de arquitetura atualizados.
+
+Sugestao de commit:
+
+`feat: add mobile tabs and design foundation`
+
+## Proxima Etapa Planejada
+
+Etapa 3 - Dados mockados estruturados.
+
+Objetivo esperado:
+
+- Modelar tipos iniciais de celebracao e canto.
+- Criar mock do dia 03 de janeiro com estrutura mais proxima do dominio.
+- Criar tela de detalhe de celebracao.
+- Manter Supabase fora do escopo.

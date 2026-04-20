@@ -100,6 +100,24 @@ louvor-serafico/
   README.md
 ```
 
+Estrutura adicionada na Etapa 2:
+
+```text
+apps/mobile/
+  app/
+    (tabs)/
+      _layout.tsx
+      index.tsx
+      calendario.tsx
+      repertorio.tsx
+      comunidade.tsx
+      perfil.tsx
+  src/
+    components/
+    data/
+    theme/
+```
+
 ## Decisao Sobre Legado
 
 O repositorio restaurado possui uma estrutura antiga. Ela nao sera usada como
@@ -129,6 +147,19 @@ Motivo:
 - Evitar admin completo no inicio.
 - Criar testes para regras antes de multiplicar conteudo.
 - Atualizar documentacao sempre que comandos ou estrutura mudarem.
+
+## Navegacao Inicial
+
+Tabs criadas:
+
+- Hoje.
+- Calendario.
+- Repertorio.
+- Comunidade.
+- Perfil.
+
+Todas ainda usam dados mockados. O objetivo da Etapa 2 foi criar hierarquia
+visual e estrutura de navegacao, nao integrar dados reais.
 
 ## Decisao Etapa 1
 

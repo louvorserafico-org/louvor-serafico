@@ -4,7 +4,10 @@ export const colors = {
   border: "#ded8cc",
   gold: "#a47b2d",
   olive: "#596b3f",
+  oliveSoft: "#eef1e8",
   surface: "#ffffff",
+  tabBackground: "#fffdf8",
+  textMuted: "#8a8378",
   textPrimary: "#24211d",
   textSecondary: "#625d53",
 } as const;
@@ -21,5 +24,7 @@ export const spacing = {
 export const typography = {
   caption: 13,
   body: 16,
+  heading: 22,
+  tab: 11,
   title: 32,
 } as const;
