@@ -1,0 +1,13 @@
+{
+  "name": "@louvor-serafico/shared",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "lint": "node --check src/index.ts",
+    "test": "node src/mass-template.test.ts",
+    "typecheck": "tsc --noEmit"
+  }
+}

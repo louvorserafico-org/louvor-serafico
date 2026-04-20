@@ -48,6 +48,14 @@ Validacao feita em 2026-04-20:
 - Nesta etapa, esses arquivos foram apenas observados. Nenhum codigo legado foi
   adotado como base tecnica.
 
+Atualizacao apos Etapa 1 em 2026-04-20:
+
+- O usuario limpou o legado antes da Etapa 1.
+- Monorepo mantido por decisao explicita do usuario.
+- Estrutura tecnica inicial criada com `apps/mobile` e `packages/shared`.
+- Dependencias instaladas com PNPM via Corepack e cache local em `.corepack`.
+- `.corepack` e `.pnpm-store` foram adicionados ao `.gitignore`.
+
 ## Produto Inicial
 
 O primeiro caso editorial real sera:
@@ -143,6 +151,34 @@ Uma etapa so e considerada pronta quando:
 - Fix: registrar que nao houve testes nesta etapa por ausencia de comportamento
   executavel. TDD permanece obrigatorio para regras e codigo futuro.
 
+### 2026-04-20 - PNPM indisponivel no PATH
+
+- Hurdle: `pnpm` nao estava disponivel diretamente no PowerShell.
+- Fix: usar `corepack pnpm` com `COREPACK_HOME` apontando para `.corepack`
+  dentro do workspace.
+
+### 2026-04-20 - Corepack fora do workspace
+
+- Hurdle: `corepack` tentou criar cache em `AppData` e recebeu `EPERM` no
+  sandbox.
+- Fix: definir `COREPACK_HOME` para
+  `C:\Users\myPC\Desktop\dev\personal\frei-luis\louvor-serafico\.corepack`.
+
+### 2026-04-20 - Runner Node e PNPM recursive
+
+- Hurdle: `node --test` e `pnpm --recursive run` encontraram `spawn EPERM` no
+  sandbox.
+- Fix: para esta fase, scripts raiz chamam Node/TypeScript diretamente nos
+  alvos atuais. O teste do dominio roda com
+  `node packages/shared/src/mass-template.test.ts`.
+
+### 2026-04-20 - Expo CLI via pnpm exec
+
+- Hurdle: `pnpm --filter @louvor-serafico/mobile exec expo config --type public`
+  nao resolveu o binario `expo` no Windows/sandbox.
+- Fix: validar a config chamando o CLI diretamente via Node:
+  `node C:\Users\myPC\Desktop\dev\personal\frei-luis\louvor-serafico\node_modules\expo\bin\cli config --type public`.
+
 ## Historico De Etapas
 
 ### Etapa 0 - Fundacao documental e workflow
@@ -200,14 +236,116 @@ Sugestao de commit:
 
 `docs: establish project workflow and technical foundation`
 
+### Etapa 1 - Bootstrap tecnico controlado
+
+Status: concluida em 2026-04-20.
+
+Objetivo:
+
+- Manter monorepo.
+- Criar app mobile Expo/React Native com TypeScript.
+- Criar pacote compartilhado com a primeira regra de dominio testavel.
+- Usar TDD para a ordem da missa padrao e validacao de celebracao incompleta.
+- Documentar comandos locais.
+
+Plano executado:
+
+1. Validar workspace e branch.
+2. Criar configs raiz do monorepo.
+3. Escrever testes de dominio primeiro.
+4. Confirmar Red com import ausente.
+5. Implementar regra minima da missa padrao.
+6. Criar app mobile Expo em `apps/mobile`.
+7. Ajustar Expo Router, tema inicial e tela inicial mockada.
+8. Instalar dependencias com PNPM/Corepack.
+9. Rodar validacoes.
+10. Atualizar documentacao viva.
+
+Arquivos principais criados/alterados:
+
+- `package.json`
+- `pnpm-workspace.yaml`
+- `pnpm-lock.yaml`
+- `.npmrc`
+- `.gitignore`
+- `README.md`
+- `tsconfig.base.json`
+- `apps/mobile`
+- `packages/shared`
+- `docs/development/local-environment.md`
+- `docs/architecture/initial-architecture.md`
+- `CODEX.md`
+
+Testes adicionados:
+
+- `packages/shared/src/mass-template.test.ts`
+
+Cobertura:
+
+- Happy path: ordem obrigatoria dos momentos da missa padrao.
+- Edge case: celebracao incompleta sem musica no ofertorio.
+- Caso de erro/entrada invalida: lookup de chave inexistente retorna
+  `undefined`.
+
+Validacoes executadas:
+
+- `corepack pnpm install`
+- `corepack pnpm test`
+- `corepack pnpm typecheck`
+- `corepack pnpm lint`
+- `node ...\node_modules\expo\bin\cli config --type public`
+
+Validacao nao executada:
+
+- `corepack pnpm android` nao foi executado nesta etapa para evitar deixar o
+  servidor Expo/Metro rodando e porque a validacao manual depende do Android
+  Emulator aberto pelo usuario.
+
+Decisoes tecnicas:
+
+- Monorepo com PNPM workspaces.
+- `packages/shared` guarda dominio testavel desde o inicio.
+- `apps/mobile` foi gerado com `create-expo-app` e ajustado para Expo Router.
+- Scripts raiz de validacao chamam Node/TypeScript diretamente para contornar
+  limitacoes de spawn do sandbox.
+- `react-dom` foi fixado em `19.1.0` para alinhar com `react@19.1.0` do
+  template Expo SDK 54 e evitar peer warning inicial.
+
+Alternativas rejeitadas:
+
+- App Expo isolado na raiz: rejeitado porque o usuario confirmou monorepo.
+- Reaproveitar legado restaurado: rejeitado porque o usuario pediu para ignorar
+  tudo e partir limpo.
+- Criar backend/Supabase nesta etapa: rejeitado para manter o bootstrap pequeno
+  e validavel.
+
+Checklist DoD:
+
+- [x] Monorepo criado.
+- [x] App mobile Expo criado em `apps/mobile`.
+- [x] Pacote compartilhado criado em `packages/shared`.
+- [x] TDD aplicado a regra de dominio inicial.
+- [x] Testes passam.
+- [x] Typecheck passa.
+- [x] Lint passa.
+- [x] Config Expo carregou corretamente.
+- [x] README atualizado com comandos.
+- [x] Docs atualizados.
+- [x] Hurdles registrados.
+- [x] Nenhum backend, auth, assinatura ou Supabase implementado fora do escopo.
+
+Sugestao de commit:
+
+`feat: bootstrap expo monorepo foundation`
+
 ## Proxima Etapa Planejada
 
-Etapa 1 - Bootstrap tecnico controlado.
+Etapa 2 - Navegacao base e design system inicial.
 
 Objetivo esperado:
 
-- Decidir como limpar/substituir o legado.
-- Criar ou recriar o esqueleto Expo/React Native com TypeScript.
-- Manter monorepo apenas se ele continuar simples e justificavel.
-- Documentar comandos de execucao local.
-- Garantir que o app rode no Android Emulator.
+- Criar tabs principais com Expo Router.
+- Evoluir tema inicial para tokens mais completos.
+- Criar componentes compartilhados basicos no mobile.
+- Manter dados mockados.
+- Validar manualmente no Android Emulator com `corepack pnpm android`.

@@ -97,12 +97,30 @@ Regras:
 
 ## Validacoes Futuras
 
-Quando o bootstrap tecnico existir, esta pagina deve listar comandos reais para:
+Comandos reais apos o bootstrap tecnico:
 
-- Instalar dependencias.
-- Rodar mobile.
-- Rodar Android.
-- Rodar lint.
-- Rodar typecheck.
-- Rodar testes.
-- Subir Supabase local.
+```powershell
+$env:COREPACK_HOME='C:\Users\myPC\Desktop\dev\personal\frei-luis\louvor-serafico\.corepack'
+corepack pnpm install
+corepack pnpm test
+corepack pnpm typecheck
+corepack pnpm lint
+corepack pnpm dev
+corepack pnpm android
+```
+
+Supabase local ainda nao foi configurado nesta etapa. Quando entrar no escopo,
+os comandos esperados serao:
+
+```bash
+supabase start
+supabase db reset
+```
+
+## Hurdles Do Ambiente
+
+- `pnpm` nao esta disponivel diretamente no PATH.
+- `corepack` tentou usar `AppData` e recebeu `EPERM` no sandbox.
+- O workaround adotado foi usar `COREPACK_HOME` dentro do workspace.
+- `pnpm --recursive run` tambem encontrou `spawn EPERM` no sandbox; por isso os
+  scripts raiz de validacao chamam Node/TypeScript diretamente nos alvos atuais.

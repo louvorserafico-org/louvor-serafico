@@ -1,0 +1,19 @@
+{
+  "name": "louvor-serafico",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@10.10.0",
+  "scripts": {
+    "android": "corepack pnpm --filter @louvor-serafico/mobile android",
+    "dev": "corepack pnpm --filter @louvor-serafico/mobile start",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "lint": "node --check packages/shared/src/index.ts && node --check apps/mobile/metro.config.js",
+    "test": "node packages/shared/src/mass-template.test.ts",
+    "typecheck": "node node_modules/typescript/bin/tsc --noEmit -p packages/shared/tsconfig.json && node node_modules/typescript/bin/tsc --noEmit -p apps/mobile/tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "prettier": "^3.3.3",
+    "typescript": "~5.9.2"
+  }
+}

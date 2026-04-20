@@ -1,4 +1,6 @@
 node_modules
+.corepack
+.pnpm-store
 .turbo
 dist
 .env
@@ -7,3 +9,4 @@ dist
 .DS_Store
 .next
 .expo
+coverage

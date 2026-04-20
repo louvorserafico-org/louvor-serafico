@@ -84,6 +84,22 @@ louvor-serafico/
   README.md
 ```
 
+Estrutura criada na Etapa 1:
+
+```text
+louvor-serafico/
+  apps/
+    mobile/
+      app/
+      src/theme/
+  packages/
+    shared/
+      src/
+  docs/
+  CODEX.md
+  README.md
+```
+
 ## Decisao Sobre Legado
 
 O repositorio restaurado possui uma estrutura antiga. Ela nao sera usada como
@@ -113,3 +129,16 @@ Motivo:
 - Evitar admin completo no inicio.
 - Criar testes para regras antes de multiplicar conteudo.
 - Atualizar documentacao sempre que comandos ou estrutura mudarem.
+
+## Decisao Etapa 1
+
+Foi mantido monorepo com PNPM workspaces.
+
+Alternativa rejeitada:
+
+- App Expo isolado na raiz.
+
+Motivo:
+
+- O projeto ja nasce com dominio compartilhado testavel em `packages/shared`,
+  sem ainda criar backend proprio nem admin web.
