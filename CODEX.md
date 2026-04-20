@@ -1,0 +1,213 @@
+# CODEX.md
+
+Documento vivo do desenvolvimento assistido do projeto Louvor Serafico.
+
+Este arquivo e a memoria operacional do projeto. Antes de qualquer etapa futura,
+ele deve ser lido junto com os documentos em `docs/`. Depois de cada etapa, ele
+deve ser atualizado com o que foi feito, decisoes, trade-offs, problemas reais
+encontrados e o checklist de Definition of Done.
+
+## Contexto Do Produto
+
+Louvor Serafico e um aplicativo mobile catolico para musicos da Santa Missa.
+O objetivo e organizar roteiros musicais por data, celebracao, tempo liturgico
+e momento da missa, oferecendo repertorio recomendado e acesso premium a
+materiais como letra, cifra, partitura, audio e, futuramente, video.
+
+O projeto deve nascer com cuidado editorial, beleza visual, identidade
+franciscana e uma base tecnica simples, moderna, testavel e evolutiva.
+
+## Paths Oficiais
+
+- Workspace alvo do app: `C:\Users\myPC\Desktop\dev\personal\frei-luis\louvor-serafico`
+- Pasta de referencia editorial/documental: `C:\Users\myPC\Desktop\dev\personal\frei-luis`
+
+## Fonte De Verdade
+
+A fonte de verdade do projeto, nesta ordem:
+
+1. Decisoes explicitas do usuario nesta conversa.
+2. Este `CODEX.md`.
+3. Documentos versionados em `docs/`.
+4. Codigo e configuracoes criados a partir do novo processo.
+
+Arquivos legados restaurados no repositorio nao devem ser tratados como fonte de
+verdade para a implementacao futura. Eles podem ser apagados, substituidos ou
+ignorados quando o usuario autorizar a etapa de bootstrap tecnico.
+
+## Estado Atual Do Workspace
+
+Validacao feita em 2026-04-20:
+
+- Repositorio Git restaurado em `louvor-serafico`.
+- Branch atual: `dev`.
+- Tracking remoto: `origin/dev`.
+- Ha arquivos legados restaurados: `.github`, `apps`, `packages`, `supabase`,
+  `package.json`, `pnpm-lock.yaml`, `pnpm-workspace.yaml`, `turbo.json`,
+  `tsconfig.json`, `.gitignore` e `README.md`.
+- Nesta etapa, esses arquivos foram apenas observados. Nenhum codigo legado foi
+  adotado como base tecnica.
+
+## Produto Inicial
+
+O primeiro caso editorial real sera:
+
+- Data: 03 de janeiro.
+- Celebracao: Missa do Santissimo Nome de Jesus.
+- Modelo: missa padrao.
+
+Ordem liturgico-musical inicial:
+
+1. Canto de entrada: Fazei em nome do Senhor.
+2. Salmo Responsorial: Bendito seja o nome do Senhor.
+3. Aclamacao ao Evangelho: Aleluia, bendizei o seu nome.
+4. Apresentacao das oferendas: Invocando o nome do Senhor.
+5. Canto de comunhao: Por teu nome, o Senhor.
+6. Canto final: Vamos em nome do Senhor.
+
+## Lacunas Conhecidas
+
+- Confirmar se o PDF de `Invocando o nome do Senhor` existe ou precisa ser
+  criado/adicionado.
+- Normalizar nomes dos PDFs da pasta de referencia.
+- Corrigir possiveis erros de digitacao em nomes de arquivos, como `Benndito`,
+  `Responsotial` e `Nomedo`.
+- Corrigir problema de encoding no README legado antes de reaproveitar qualquer
+  texto dele.
+- Decidir, antes do bootstrap tecnico, se o repositorio antigo sera limpo ou se
+  faremos substituicao incremental dos arquivos.
+
+## Arquitetura Desejada
+
+Direcao aprovada ate aqui:
+
+- Monorepo leve, com foco inicial no app mobile.
+- Mobile em React Native + Expo + TypeScript.
+- Backend gerenciado com Supabase como BaaS: Postgres, Auth, Storage, RLS,
+  migrations e Edge Functions quando necessario.
+- Assinaturas com RevenueCat.
+- Repositorio versionara app, docs, schema/migrations e funcoes futuras.
+- Admin web pode existir futuramente, mas nao deve bloquear o MVP mobile.
+
+## Processo Obrigatorio
+
+Para cada etapa futura:
+
+1. Ler `CODEX.md` e `docs/`.
+2. Extrair requisitos, criterios de aceitacao, entradas, saidas e limites.
+3. Propor plano curto, com no maximo 10 itens.
+4. Quando houver regra de negocio ou comportamento testavel, iniciar com TDD:
+   Red -> Green -> Refactor.
+5. Implementar o minimo necessario.
+6. Rodar validacoes locais cabiveis.
+7. Refatorar apenas se for pequeno, seguro e justificado.
+8. Atualizar `CODEX.md`.
+9. Finalizar com arquivos alterados, testes, validacoes, DoD e sugestao de
+   commit.
+
+## Definition Of Done Base
+
+Uma etapa so e considerada pronta quando:
+
+- O comportamento combinado foi entregue.
+- O escopo nao cresceu sem aprovacao.
+- Testes relevantes passam, quando existirem.
+- TypeScript passa, quando houver codigo TypeScript.
+- Lint/format passam, quando configurados.
+- Nao ha TODO solto ou codigo morto introduzido.
+- Erros e logs tem mensagens uteis, quando aplicavel.
+- `CODEX.md` foi atualizado.
+- Divergencias com `docs/` foram registradas.
+- O proximo passo ficou claro.
+
+## Hurdles & Fixes
+
+### 2026-04-20 - Restauracao do repositorio
+
+- Hurdle: inicialmente o path `louvor-serafico` continha apenas `README.md` e
+  nao era reconhecido como repositorio Git.
+- Fix: usuario restaurou os arquivos e a pasta `.git`; nova validacao confirmou
+  a branch `dev...origin/dev`.
+
+### 2026-04-20 - Legado restaurado
+
+- Hurdle: o repositorio restaurado contem uma estrutura antiga que o usuario
+  informou que nao sera usada.
+- Fix: registrar que o legado nao e fonte de verdade e que o bootstrap futuro
+  deve ignorar ou substituir esses arquivos com autorizacao explicita.
+
+### 2026-04-20 - Etapa sem codigo executavel
+
+- Hurdle: a Etapa 0 e documental; aplicar TDD artificialmente nao agregaria
+  valor.
+- Fix: registrar que nao houve testes nesta etapa por ausencia de comportamento
+  executavel. TDD permanece obrigatorio para regras e codigo futuro.
+
+## Historico De Etapas
+
+### Etapa 0 - Fundacao documental e workflow
+
+Status: concluida em 2026-04-20.
+
+Objetivo:
+
+- Criar memoria viva do projeto.
+- Registrar workflow de desenvolvimento assistido.
+- Registrar DoD e estrategia TDD.
+- Registrar ambiente local esperado.
+- Registrar modelo editorial inicial da missa padrao.
+- Registrar arquitetura inicial e escopo de MVP.
+
+Arquivos criados nesta etapa:
+
+- `CODEX.md`
+- `docs/workflow/ai-pair-programming.md`
+- `docs/workflow/definition-of-done.md`
+- `docs/workflow/tdd-strategy.md`
+- `docs/development/local-environment.md`
+- `docs/editorial/mass-template.md`
+- `docs/product/mvp-scope.md`
+- `docs/architecture/initial-architecture.md`
+
+Validacoes executadas:
+
+- `git status --short`
+- `git diff --check`
+- Conferencia da arvore de arquivos em `docs/`
+
+Testes:
+
+- Nenhum teste automatizado foi adicionado nesta etapa porque nao houve codigo
+  executavel nem regra implementada. A excecao esta registrada em
+  `docs/workflow/tdd-strategy.md`.
+
+Checklist DoD:
+
+- [x] `CODEX.md` criado.
+- [x] `docs/` criado com documentos iniciais.
+- [x] Processo de AI pair programming registrado.
+- [x] Definition of Done registrado.
+- [x] Estrategia de TDD registrada.
+- [x] Ambiente local esperado registrado.
+- [x] Modelo da missa padrao registrado.
+- [x] Caso de 03 de janeiro registrado.
+- [x] Lacunas conhecidas registradas.
+- [x] Nenhuma implementacao de app feita.
+- [x] Nenhuma dependencia instalada.
+- [x] Proxima etapa indicada.
+
+Sugestao de commit:
+
+`docs: establish project workflow and technical foundation`
+
+## Proxima Etapa Planejada
+
+Etapa 1 - Bootstrap tecnico controlado.
+
+Objetivo esperado:
+
+- Decidir como limpar/substituir o legado.
+- Criar ou recriar o esqueleto Expo/React Native com TypeScript.
+- Manter monorepo apenas se ele continuar simples e justificavel.
+- Documentar comandos de execucao local.
+- Garantir que o app rode no Android Emulator.
