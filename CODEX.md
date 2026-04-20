@@ -721,8 +721,49 @@ Sugestao de commit:
 
 Etapa 10 - Preparar base Supabase documental.
 
+Status: concluida em 2026-04-20.
+
 Objetivo esperado:
 
 - Documentar schema inicial proposto.
 - Ainda nao criar migrations.
 - Decidir tabelas e relacionamentos antes do banco real.
+
+Resultado:
+
+- Criado `.env.example` com variaveis publicas e privadas separadas.
+- Criado `docs/architecture/supabase-schema-plan.md`.
+- Criado `docs/development/supabase-setup.md`.
+- README atualizado com os novos documentos.
+- Nenhuma migration foi criada.
+- Nenhuma chave real foi versionada.
+
+Decisoes:
+
+- Schema inicial sera relacional.
+- Conteudo premium fica em `song_assets`.
+- `SERVICE_ROLE` fica fora do app mobile.
+- Projeto vai usar Expo Go no iPhone para testes manuais nas proximas etapas.
+
+Checklist DoD:
+
+- [x] Schema inicial documentado.
+- [x] Variaveis de ambiente documentadas.
+- [x] Sem migration nesta etapa.
+- [x] Sem segredo versionado.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`docs: add supabase schema plan`
+
+## Proxima Etapa Planejada
+
+Etapa 11 - Integracao Supabase no app.
+
+Objetivo esperado:
+
+- Criar cliente Supabase no mobile.
+- Ler variaveis publicas do ambiente.
+- Ainda sem auth.
+- Ainda sem salvar dados.

@@ -81,6 +81,8 @@ Leia primeiro:
 - `docs/workflow/definition-of-done.md`
 - `docs/workflow/tdd-strategy.md`
 - `docs/development/local-environment.md`
+- `docs/development/supabase-setup.md`
+- `docs/architecture/supabase-schema-plan.md`
 
 ## Regra De Trabalho
 
