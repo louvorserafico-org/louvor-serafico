@@ -56,6 +56,12 @@ Atualizacao apos Etapa 1 em 2026-04-20:
 - Dependencias instaladas com PNPM via Corepack e cache local em `.corepack`.
 - `.corepack` e `.pnpm-store` foram adicionados ao `.gitignore`.
 
+Atualizacao apos validacao manual mais recente:
+
+- Testes manuais do app passarao a usar iPhone com Expo Go como fluxo padrao.
+- Android Studio continua util para validacoes especificas, mas nao sera o fluxo
+  principal de teste enquanto estivermos em Expo Go.
+
 ## Produto Inicial
 
 O primeiro caso editorial real sera:
@@ -761,9 +767,58 @@ Sugestao de commit:
 
 Etapa 11 - Integracao Supabase no app.
 
+Status: concluida em 2026-04-20.
+
 Objetivo esperado:
 
 - Criar cliente Supabase no mobile.
 - Ler variaveis publicas do ambiente.
 - Ainda sem auth.
 - Ainda sem salvar dados.
+
+Resultado:
+
+- Criado `.env.local` local com chaves recebidas do usuario.
+- Criado `.env.example` para referencia segura.
+- Criado `src/services/supabase/config.ts`.
+- Criado `src/services/supabase/client.ts`.
+- Criado teste de configuracao em `config.test.ts`.
+- A tab Perfil agora mostra o estado da configuracao Supabase sem expor segredos.
+- O app continua sem auth e sem escrita remota.
+
+Testes adicionados:
+
+- Extracao de `projectHost` e `projectRef`.
+- Suporte a publishable key ou anon key.
+- Estado nao configurado quando URL falta.
+
+Validacoes executadas:
+
+- `corepack pnpm test`
+- `corepack pnpm typecheck`
+- `corepack pnpm lint`
+
+Checklist DoD:
+
+- [x] Cliente Supabase criado.
+- [x] Variaveis publicas lidas do ambiente.
+- [x] Sem auth nesta etapa.
+- [x] Sem escrita remota nesta etapa.
+- [x] Testes passam.
+- [x] Typecheck passa.
+- [x] Lint passa.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`feat: add supabase client bootstrap`
+
+## Proxima Etapa Planejada
+
+Etapa 12 - Primeira leitura remota do Supabase.
+
+Objetivo esperado:
+
+- Conectar app a uma tabela simples ou view inicial.
+- Ler dados remotos em modo somente leitura.
+- Manter auth fora do escopo.

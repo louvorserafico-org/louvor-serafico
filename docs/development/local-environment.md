@@ -86,6 +86,13 @@ Guia detalhado:
 
 Expo Go pode ser usado no inicio para telas, navegacao e logica simples.
 
+Fluxo preferencial atual de testes:
+
+- `corepack pnpm dev`
+- abrir Expo Go no iPhone
+- escanear QR code do Metro
+- usar `s` no terminal quando precisar trocar modo no Expo CLI
+
 Development Build sera necessario quando o projeto usar recursos nativos que nao
 funcionam no Expo Go, especialmente compras/assinaturas com RevenueCat.
 

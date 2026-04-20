@@ -50,6 +50,20 @@ corepack pnpm lint
 
 ## Rodar O App Mobile
 
+Teste preferencial agora:
+
+```powershell
+cd C:\Users\myPC\Desktop\dev\personal\frei-luis\louvor-serafico
+$env:COREPACK_HOME='C:\Users\myPC\Desktop\dev\personal\frei-luis\louvor-serafico\.corepack'
+corepack pnpm dev
+```
+
+Depois:
+
+- abrir Expo Go no iPhone
+- escanear QR code
+- pressionar `s` quando quiser trocar modo no Expo CLI
+
 Com o Android Emulator aberto:
 
 ```powershell
