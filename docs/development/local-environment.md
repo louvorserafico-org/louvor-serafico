@@ -78,6 +78,10 @@ Fluxo esperado:
 3. Rodar o app mobile pelo script documentado.
 4. Validar visualmente os fluxos alterados.
 
+Guia detalhado:
+
+- `docs/development/run-android.md`
+
 ## Expo Go Versus Development Build
 
 Expo Go pode ser usado no inicio para telas, navegacao e logica simples.
@@ -124,3 +128,7 @@ supabase db reset
 - O workaround adotado foi usar `COREPACK_HOME` dentro do workspace.
 - `pnpm --recursive run` tambem encontrou `spawn EPERM` no sandbox; por isso os
   scripts raiz de validacao chamam Node/TypeScript diretamente nos alvos atuais.
+- `adb devices -l` pode mostrar `emulator-5554` mesmo sem emulator real rodando.
+  Nesse caso, use `adb disconnect emulator-5554` e abra o AVD real.
+- Nao manter BlueStacks e Android Studio abertos ao mesmo tempo durante testes
+  Expo. Use apenas o Android Studio para evitar conflito no ADB.

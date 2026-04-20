@@ -64,6 +64,10 @@ $env:COREPACK_HOME='C:\Users\myPC\Desktop\dev\personal\frei-luis\louvor-serafico
 corepack pnpm dev
 ```
 
+Se ocorrer erro com `emulator-5554` ou porta `5554`, veja:
+
+- `docs/development/run-android.md`
+
 ## Documentacao Viva
 
 Leia primeiro:

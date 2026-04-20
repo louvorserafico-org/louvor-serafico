@@ -179,6 +179,15 @@ Uma etapa so e considerada pronta quando:
 - Fix: validar a config chamando o CLI diretamente via Node:
   `node C:\Users\myPC\Desktop\dev\personal\frei-luis\louvor-serafico\node_modules\expo\bin\cli config --type public`.
 
+### 2026-04-20 - Device fantasma no ADB
+
+- Hurdle: `corepack pnpm android` falhou porque o Expo tentou consultar
+  `emulator-5554`, mas a porta TCP 5554 recusou conexao.
+- Causa confirmada: BlueStacks e Android Studio estavam abertos ao mesmo tempo.
+- Fix: fechar BlueStacks, usar apenas Android Studio, desconectar devices
+  fantasmas quando necessario e abrir o AVD real `Medium_Phone_API_36.1`.
+- Documentacao criada em `docs/development/run-android.md`.
+
 ## Historico De Etapas
 
 ### Etapa 0 - Fundacao documental e workflow
@@ -526,3 +535,41 @@ Objetivo esperado:
 - Validar tabs, CTA e detalhe no Android Emulator.
 - Registrar qualquer problema visual ou de runtime.
 - Ajustar somente bugs encontrados.
+
+Status: concluida em 2026-04-20.
+
+Resultado:
+
+- O usuario conseguiu acessar e validar o app localmente.
+- Nao houve report de bugs visuais ou de runtime no momento.
+- A causa do erro local foi conflito entre BlueStacks e Android Studio.
+- A documentacao Android foi atualizada para orientar o uso apenas do Android
+  Studio durante testes Expo.
+
+Validacoes:
+
+- Validacao manual local realizada pelo usuario.
+- Sem bugs reportados.
+
+Checklist DoD:
+
+- [x] App acessado localmente.
+- [x] Problema de ADB identificado.
+- [x] Causa documentada.
+- [x] Guia Android atualizado.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`docs: document android emulator troubleshooting`
+
+## Proxima Etapa Planejada
+
+Etapa 6 - Catalogo inicial de musicas.
+
+Objetivo esperado:
+
+- Criar tela inicial de repertorio com dados estruturados.
+- Listar cantos da celebracao inicial.
+- Permitir abrir detalhe basico de musica.
+- Manter Supabase fora do escopo.
