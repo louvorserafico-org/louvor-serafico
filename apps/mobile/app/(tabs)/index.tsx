@@ -1,5 +1,7 @@
+import { router } from "expo-router";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
+import { CelebrationCta } from "@/components/CelebrationCta";
 import { MomentCard } from "@/components/MomentCard";
 import { PageHeader } from "@/components/PageHeader";
 import { SectionTitle } from "@/components/SectionTitle";
@@ -22,6 +24,12 @@ export default function TodayScreen() {
         </Text>
       </View>
 
+      <CelebrationCta
+        description="Ver status editorial, materiais e roteiro completo."
+        href={`/celebracoes/${initialCelebration.slug}`}
+        title="Abrir celebracao"
+      />
+
       <SectionTitle title="Roteiro sugerido" />
 
       <View style={styles.list}>
@@ -30,6 +38,7 @@ export default function TodayScreen() {
             assetCount={item.song.assets.length}
             key={item.recommendation.id}
             moment={item.moment}
+            onPress={() => router.push(`/celebracoes/${initialCelebration.slug}`)}
             songTitle={item.song.title}
           />
         ))}

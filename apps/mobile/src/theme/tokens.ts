@@ -3,6 +3,7 @@ export const colors = {
   background: "#fbfaf7",
   border: "#ded8cc",
   gold: "#a47b2d",
+  goldSoft: "#f6efd9",
   olive: "#596b3f",
   oliveSoft: "#eef1e8",
   surface: "#ffffff",

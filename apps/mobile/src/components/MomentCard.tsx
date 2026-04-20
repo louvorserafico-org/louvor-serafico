@@ -1,17 +1,20 @@
 import type { MassMoment } from "@louvor-serafico/shared";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { colors, spacing, typography } from "@/theme/tokens";
 
 type MomentCardProps = {
   assetCount: number;
   moment: MassMoment;
+  onPress?: () => void;
   songTitle: string;
 };
 
-export function MomentCard({ assetCount, moment, songTitle }: MomentCardProps) {
+export function MomentCard({ assetCount, moment, onPress, songTitle }: MomentCardProps) {
+  const Root = onPress ? Pressable : View;
+
   return (
-    <View style={styles.card}>
+    <Root style={({ pressed }) => [styles.card, pressed && styles.pressed]} onPress={onPress}>
       <Text style={styles.order}>{moment.order}</Text>
       <View style={styles.content}>
         <Text style={styles.label}>{moment.label}</Text>
@@ -20,7 +23,7 @@ export function MomentCard({ assetCount, moment, songTitle }: MomentCardProps) {
           {assetCount > 0 ? `${assetCount} material premium` : "Material pendente"}
         </Text>
       </View>
-    </View>
+    </Root>
   );
 }
 
@@ -53,6 +56,9 @@ const styles = StyleSheet.create({
     fontSize: typography.body,
     fontWeight: "800",
     minWidth: 20,
+  },
+  pressed: {
+    opacity: 0.82,
   },
   song: {
     color: colors.textPrimary,

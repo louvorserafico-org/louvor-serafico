@@ -467,9 +467,62 @@ Sugestao de commit:
 
 Etapa 4 - Navegacao para detalhe.
 
+Status: concluida em 2026-04-20.
+
 Objetivo esperado:
 
 - Adicionar acao da tela Hoje para detalhe.
 - Criar card/CTA navegavel.
 - Melhorar estado editorial pendente.
 - Validar Expo config.
+
+Resultado:
+
+- A tela Hoje agora possui um CTA para abrir a celebração.
+- Os cards de momento também podem navegar para o detalhe da celebração.
+- Foi criado o componente `CelebrationCta`, responsável por destacar a ação principal da celebração do dia.
+- Foi criado o componente `EditorialStatus`, usado para exibir se a celebração está completa ou possui material pendente.
+- A tela de detalhe passou a calcular quantos cantos estão sem material associado, em vez de usar texto fixo.
+
+Testes:
+
+- Nenhum teste novo foi adicionado porque a mudança principal foi navegação visual no app.
+- Os testes de domínio existentes foram preservados.
+
+Validações executadas:
+
+- `corepack pnpm test`
+- `corepack pnpm typecheck`
+- `corepack pnpm lint`
+- `node ...\node_modules\expo\bin\cli config --type public`
+
+Validação não executada:
+
+- `corepack pnpm android` ainda não foi executado para evitar manter Metro/Expo aberto nesta resposta. A validação visual no Android Emulator continua pendente.
+
+Checklist DoD:
+
+- [x] Ação da tela Hoje para detalhe criada.
+- [x] CTA navegável criado.
+- [x] Cards de momento com navegação.
+- [x] Estado editorial pendente melhorado.
+- [x] Testes existentes passam.
+- [x] Typecheck passa.
+- [x] Lint passa.
+- [x] Config Expo carrega.
+- [x] `CODEX.md` atualizado em linguagem normal.
+
+Sugestão de commit:
+
+`feat: add celebration detail navigation`
+
+## Próxima Etapa Planejada
+
+Etapa 5 - Validação visual local.
+
+Objetivo esperado:
+
+- Rodar `corepack pnpm android`.
+- Validar tabs, CTA e detalhe no Android Emulator.
+- Registrar qualquer problema visual ou de runtime.
+- Ajustar somente bugs encontrados.
