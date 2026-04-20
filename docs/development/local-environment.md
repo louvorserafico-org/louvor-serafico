@@ -92,6 +92,7 @@ Fluxo preferencial atual de testes:
 - abrir Expo Go no iPhone
 - escanear QR code do Metro
 - usar `s` no terminal quando precisar trocar modo no Expo CLI
+- abrir a tab `Perfil` quando a etapa envolver integracao Supabase
 
 Development Build sera necessario quando o projeto usar recursos nativos que nao
 funcionam no Expo Go, especialmente compras/assinaturas com RevenueCat.

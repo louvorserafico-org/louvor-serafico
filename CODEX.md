@@ -194,6 +194,15 @@ Uma etapa so e considerada pronta quando:
   fantasmas quando necessario e abrir o AVD real `Medium_Phone_API_36.1`.
 - Documentacao criada em `docs/development/run-android.md`.
 
+### 2026-04-20 - Primeira leitura remota do Supabase
+
+- Hurdle: a ideia inicial de ler o OpenAPI do PostgREST com chave publica falhou.
+- Causa confirmada: o endpoint `rest/v1/` exigiu `service_role` para esse tipo de
+  leitura, o que nao pode entrar no app mobile.
+- Fix: trocar a primeira leitura remota para o endpoint publico
+  `auth/v1/settings`, que funciona com chave publica e permite validar conexao
+  real sem expor segredos nem depender de tabelas prontas.
+
 ## Historico De Etapas
 
 ### Etapa 0 - Fundacao documental e workflow
@@ -817,8 +826,51 @@ Sugestao de commit:
 
 Etapa 12 - Primeira leitura remota do Supabase.
 
+Status: concluida em 2026-04-20.
+
 Objetivo esperado:
 
-- Conectar app a uma tabela simples ou view inicial.
-- Ler dados remotos em modo somente leitura.
+- Fazer a primeira leitura remota real com chave publica.
 - Manter auth fora do escopo.
+- Evitar dependencia de tabelas ainda nao criadas.
+
+Resultado:
+
+- Criado `src/services/supabase/remote-status.ts`.
+- Criado `src/services/supabase/remote-status.test.ts`.
+- Criado `src/components/SupabaseRemoteStatusCard.tsx`.
+- A tab `Perfil` agora mostra estado local e leitura remota inicial.
+- A primeira leitura remota usa `auth/v1/settings`.
+- O endpoint foi validado externamente e responde com chave publica.
+
+Testes adicionados:
+
+- Happy path para leitura remota com resposta valida.
+- Edge case para ambiente publico incompleto.
+- Caso de erro para falha HTTP remota.
+
+Validacoes executadas:
+
+- `node apps/mobile/src/services/supabase/remote-status.test.ts`
+
+Checklist DoD:
+
+- [x] Primeira leitura remota implementada.
+- [x] Sem auth nesta etapa.
+- [x] Sem escrita remota nesta etapa.
+- [x] Testes da leitura remota passam.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`feat: add initial remote supabase read`
+
+## Proxima Etapa Planejada
+
+Etapa 13 - Base inicial de autenticacao documental e UX.
+
+Objetivo esperado:
+
+- Definir fluxo de login.
+- Preparar estados de sessao.
+- Ainda sem compra e sem RLS aplicada no app.

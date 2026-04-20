@@ -1,6 +1,7 @@
 import { ScrollView, StyleSheet } from "react-native";
 
 import { PageHeader } from "@/components/PageHeader";
+import { SupabaseRemoteStatusCard } from "@/components/SupabaseRemoteStatusCard";
 import { SupabaseStatusCard } from "@/components/SupabaseStatusCard";
 import { colors, spacing } from "@/theme/tokens";
 
@@ -10,9 +11,10 @@ export default function ProfileScreen() {
       <PageHeader
         eyebrow="Perfil"
         title="Conta e assinatura"
-        subtitle="Estado inicial da integracao Supabase no app mobile."
+        subtitle="Estado local e leitura remota inicial do projeto Supabase."
       />
       <SupabaseStatusCard />
+      <SupabaseRemoteStatusCard />
     </ScrollView>
   );
 }

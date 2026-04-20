@@ -63,6 +63,7 @@ Depois:
 - abrir Expo Go no iPhone
 - escanear QR code
 - pressionar `s` quando quiser trocar modo no Expo CLI
+- abrir tab `Perfil` para validar estado local e leitura remota inicial do Supabase
 
 Com o Android Emulator aberto:
 
