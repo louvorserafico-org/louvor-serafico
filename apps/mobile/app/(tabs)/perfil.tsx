@@ -4,6 +4,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { AuthEntryCard } from "@/components/AuthEntryCard";
 import { AuthStabilityCard } from "@/components/AuthStabilityCard";
 import { PaywallPreviewCard } from "@/components/PaywallPreviewCard";
+import { ProfileOverviewCard } from "@/components/ProfileOverviewCard";
 import { SessionPreviewCard } from "@/components/SessionPreviewCard";
 import { SubscriptionPreviewCard } from "@/components/SubscriptionPreviewCard";
 import { SupabaseProfileCard } from "@/components/SupabaseProfileCard";
@@ -20,13 +21,14 @@ export default function ProfileScreen() {
         title="Conta e assinatura"
         subtitle="Estado local e leitura remota inicial do projeto Supabase."
       />
+      <ProfileOverviewCard />
+      <AuthEntryCard />
+      <PaywallPreviewCard />
       <AuthStabilityCard />
       <SupabaseStatusCard />
       <SupabaseRemoteStatusCard />
       <SupabaseSessionCard />
       <SupabaseProfileCard />
-      <AuthEntryCard />
-      <PaywallPreviewCard />
       <SubscriptionPreviewCard />
       <SessionPreviewCard />
     </ScrollView>

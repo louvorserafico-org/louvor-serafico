@@ -2823,3 +2823,48 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 58 - Melhorar UX de Perfil.
+
+Status: concluida em 2026-04-21.
+
+Objetivo esperado:
+
+- reduzir a sensacao de tela tecnica na tab Perfil;
+- adicionar um resumo humano de conta e assinatura;
+- manter diagnosticos tecnicos disponiveis durante o desenvolvimento.
+
+Resultado:
+
+- Criado `src/features/auth/profile-overview.ts`.
+- Criado `src/features/auth/profile-overview.test.ts`.
+- Criado `src/components/ProfileOverviewCard.tsx`.
+- Tab `Perfil` passou a priorizar o resumo de conta antes dos cards tecnicos.
+- Script de testes raiz atualizado.
+- `docs/product/auth-flow.md` atualizado.
+
+Decisoes tecnicas e trade-offs:
+
+- A melhoria foi feita sem remover os cards de diagnostico, porque eles ainda ajudam a validar Supabase, sessao, perfil e assinatura durante o ciclo com Expo Go.
+- O novo resumo usa dados ja existentes de sessao, perfil e assinatura local, sem nova chamada remota.
+- A CTA de entrada aparece apenas quando nao ha sessao autenticada.
+- Alternativa rejeitada: redesenhar toda a tela Perfil agora. Isso aumentaria escopo antes de termos a versao final de assinatura e edição de perfil.
+
+Hurdles & Fixes:
+
+- Nenhum bloqueio tecnico encontrado.
+
+Checklist DoD:
+
+- [x] TDD aplicado.
+- [x] UI integrada.
+- [x] Testes passam.
+- [x] Typecheck passa.
+- [x] Lint passa.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: add profile overview card`
+
+## Proxima Etapa Planejada
+
+Etapa 59 - Preparar modo debug para cards tecnicos.
