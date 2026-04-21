@@ -1854,3 +1854,44 @@ Checklist DoD:
 Sugestao de commit:
 
 `feat: prepare premium storage asset links`
+
+## Proxima Etapa Planejada
+
+Etapa 39 - Guia de aplicacao manual do SQL remoto.
+
+Status: concluida em 2026-04-21.
+
+Objetivo esperado:
+
+- destravar aplicacao remota quando `supabase db push` falhar por DNS
+- definir ordem segura para migrations e seed
+- orientar validacao pelo painel e pelo app
+
+Resultado:
+
+- Criado `docs/development/apply-supabase-sql-manually.md`.
+- README atualizado com referencia ao guia.
+- Nenhuma credencial foi documentada.
+- Nenhum SQL destrutivo foi adicionado.
+
+Decisoes tecnicas e trade-offs:
+
+- Preferimos documentar execucao manual pelo Supabase Dashboard em vez de insistir no CLI enquanto ha instabilidade de DNS.
+- Alternativa rejeitada: duplicar todo o SQL em um unico arquivo manual. Isso reduziria cliques, mas criaria risco de divergencia com as migrations reais.
+- A ordem oficial permanece: schema inicial, favoritos, seed.
+
+Hurdles & Fixes:
+
+- O projeto ja tinha migrations e seed idempotentes, entao o guia pode orientar reexecucao segura.
+- O bucket `song-assets` ficou fora deste guia porque Storage precisa de uma etapa propria de seguranca.
+
+Checklist DoD:
+
+- [x] Ordem de execucao documentada.
+- [x] Queries de validacao documentadas.
+- [x] Fluxo de validacao no iPhone documentado.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`docs: add manual supabase sql apply guide`

@@ -66,6 +66,7 @@ Guia detalhado:
 
 - `docs/development/run-iphone-expo-go.md`
 - `docs/development/development-build.md`
+- `docs/development/apply-supabase-sql-manually.md`
 
 Com o Android Emulator aberto:
 
