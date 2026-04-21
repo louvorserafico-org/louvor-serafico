@@ -106,6 +106,7 @@ Leia primeiro:
 - `docs/product/session-preview.md`
 - `docs/product/favorites-preview.md`
 - `docs/product/comments-preview.md`
+- `docs/product/local-persistence.md`
 
 ## Regra De Trabalho
 

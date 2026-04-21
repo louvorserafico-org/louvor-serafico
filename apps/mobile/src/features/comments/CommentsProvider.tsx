@@ -1,6 +1,7 @@
-import { createContext, useContext, useMemo, useState, type PropsWithChildren } from "react";
+import { createContext, useContext, useEffect, useMemo, useState, type PropsWithChildren } from "react";
 
 import { createLocalComment, type LocalComment } from "./comment-store";
+import { loadPreviewComments, savePreviewComments } from "@/features/preview/storage";
 
 type CommentsContextValue = {
   comments: LocalComment[];
@@ -26,6 +27,18 @@ const CommentsContext = createContext<CommentsContextValue | null>(null);
 
 export function CommentsProvider({ children }: PropsWithChildren) {
   const [comments, setComments] = useState<LocalComment[]>(initialComments);
+
+  useEffect(() => {
+    void loadPreviewComments().then((storedComments) => {
+      if (storedComments.length > 0) {
+        setComments(storedComments);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    void savePreviewComments(comments);
+  }, [comments]);
 
   const value = useMemo<CommentsContextValue>(
     () => ({

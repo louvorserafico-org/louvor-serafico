@@ -1,6 +1,7 @@
-import { createContext, useContext, useMemo, useState, type PropsWithChildren } from "react";
+import { createContext, useContext, useEffect, useMemo, useState, type PropsWithChildren } from "react";
 
 import { toggleFavoriteSong } from "./favorite-store";
+import { loadPreviewFavoriteSongIds, savePreviewFavoriteSongIds } from "@/features/preview/storage";
 
 type FavoritesContextValue = {
   favoriteSongIds: string[];
@@ -12,6 +13,14 @@ const FavoritesContext = createContext<FavoritesContextValue | null>(null);
 
 export function FavoritesProvider({ children }: PropsWithChildren) {
   const [favoriteSongIds, setFavoriteSongIds] = useState<string[]>([]);
+
+  useEffect(() => {
+    void loadPreviewFavoriteSongIds().then(setFavoriteSongIds);
+  }, []);
+
+  useEffect(() => {
+    void savePreviewFavoriteSongIds(favoriteSongIds);
+  }, [favoriteSongIds]);
 
   const value = useMemo<FavoritesContextValue>(
     () => ({

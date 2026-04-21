@@ -204,6 +204,16 @@ Uma etapa so e considerada pronta quando:
   `auth/v1/settings`, que funciona com chave publica e permite validar conexao
   real sem expor segredos nem depender de tabelas prontas.
 
+### 2026-04-20 - Instalacao do AsyncStorage
+
+- Hurdle: `npx expo install` falhou porque `pnpm` nao estava no PATH do processo
+  interno do Expo.
+- Hurdle: `corepack pnpm add` encontrou `ENOENT` temporario dentro de
+  `node_modules\*_tmp`.
+- Fix: dependencia ficou disponivel em `node_modules`, o lockfile foi atualizado
+  e o `package.json` do app foi corrigido manualmente para manter estado
+  coerente e rastreavel.
+
 ## Historico De Etapas
 
 ### Etapa 0 - Fundacao documental e workflow
@@ -1041,7 +1051,50 @@ Sugestao de commit:
 
 Etapa 17 - Persistencia local de sessao, favoritos e comentarios.
 
+Status: concluida em 2026-04-20.
+
 Objetivo esperado:
 
 - Manter preview entre reloads.
 - Continuar sem backend real nesses fluxos.
+
+Resultado:
+
+- Criado `src/features/preview/storage.ts`.
+- Criado `src/features/preview/storage-parsers.ts`.
+- Criado `src/features/preview/storage-parsers.test.ts`.
+- Criado `docs/product/local-persistence.md`.
+- `SessionProvider`, `FavoritesProvider` e `CommentsProvider` agora hidratam e
+  salvam estado local.
+- AsyncStorage entrou na base mobile.
+
+Testes adicionados:
+
+- Sessao restaurada por parser.
+- Fallback para payload invalido.
+- Favoritos restaurados e filtrados.
+- Comentarios restaurados e invalidados quando payload e ruim.
+
+Validacoes executadas:
+
+- `node apps/mobile/src/features/preview/storage-parsers.test.ts`
+
+Checklist DoD:
+
+- [x] Persistencia local implementada.
+- [x] Sessao, favoritos e comentarios hidratam apos reload.
+- [x] Sem backend nesses fluxos.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`feat: persist local preview state`
+
+## Proxima Etapa Planejada
+
+Etapa 18 - Autenticacao real com Supabase Auth.
+
+Objetivo esperado:
+
+- Iniciar sessao real por email.
+- Separar preview local de sessao autentica.

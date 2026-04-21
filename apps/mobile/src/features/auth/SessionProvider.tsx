@@ -1,6 +1,7 @@
-import { createContext, useContext, useMemo, useState, type PropsWithChildren } from "react";
+import { createContext, useContext, useEffect, useMemo, useState, type PropsWithChildren } from "react";
 
 import { type LocalSession } from "./session-gate";
+import { loadPreviewSession, savePreviewSession } from "@/features/preview/storage";
 
 type SessionContextValue = {
   session: LocalSession;
@@ -11,7 +12,19 @@ type SessionContextValue = {
 const SessionContext = createContext<SessionContextValue | null>(null);
 
 export function SessionProvider({ children }: PropsWithChildren) {
-  const [session, setSession] = useState<LocalSession>({ status: "guest" });
+  const [session, setSession] = useState<LocalSession>({ status: "booting" });
+
+  useEffect(() => {
+    void loadPreviewSession().then(setSession);
+  }, []);
+
+  useEffect(() => {
+    if (session.status === "booting") {
+      return;
+    }
+
+    void savePreviewSession(session);
+  }, [session]);
 
   const value = useMemo<SessionContextValue>(
     () => ({
