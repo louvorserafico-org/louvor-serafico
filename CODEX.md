@@ -2738,3 +2738,44 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 56 - Checklist operacional EAS e Apple.
+
+Status: concluida em 2026-04-21.
+
+Objetivo esperado:
+
+- registrar bloqueio Apple Developer;
+- documentar pre-requisitos para retomar build iOS;
+- manter o plano de trabalho desbloqueado pelo Expo Go.
+
+Resultado:
+
+- Criado `docs/development/eas-apple-checklist.md`.
+- `docs/development/development-build.md` atualizado com bloqueio atual.
+- `README.md` atualizado com referencia ao checklist.
+
+Decisoes tecnicas e trade-offs:
+
+- Nao tentamos contornar o requisito Apple. Build iOS fisica exige Apple Developer Program pago.
+- O desenvolvimento segue pelo Expo Go enquanto custom scheme, RevenueCat e compras reais ficam bloqueados.
+- A etapa foi documental/operacional, sem alteracao de codigo.
+
+Hurdles & Fixes:
+
+- Hurdle: EAS autenticou o Apple ID, mas falhou por ausencia de Team associado.
+- Fix: registrar o pagamento do Apple Developer Program como pre-requisito antes de retomar build iOS.
+
+Checklist DoD:
+
+- [x] Bloqueio registrado.
+- [x] Checklist Apple criado.
+- [x] Fluxos bloqueados documentados.
+- [x] Fluxos que seguem no Expo Go documentados.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`docs: add eas apple checklist`
+
+## Proxima Etapa Planejada
+
+Etapa 57 - Revisar estabilidade auth.

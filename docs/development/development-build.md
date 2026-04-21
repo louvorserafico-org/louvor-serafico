@@ -60,3 +60,12 @@ louvor-serafico://auth/callback
 
 Esta etapa nao instala RevenueCat. O objetivo e deixar EAS preparado sem quebrar
 o ciclo atual de validacao com Expo Go.
+
+## Bloqueio Atual
+
+A build iOS depende de Apple Developer Program pago. Sem Team associado ao
+Apple ID, o EAS interrompe a autenticacao no Apple Developer Portal.
+
+Checklist:
+
+- `docs/development/eas-apple-checklist.md`
