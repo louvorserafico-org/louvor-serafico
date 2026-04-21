@@ -2612,3 +2612,46 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 53 - Tela de redefinicao de senha.
+
+Status: concluida em 2026-04-21.
+
+Objetivo esperado:
+
+- criar rota interna para redefinir senha;
+- validar senha minima e confirmacao;
+- chamar Supabase Auth para atualizar senha quando houver sessao de recuperacao valida.
+
+Resultado:
+
+- Criado `src/features/auth/password-reset.ts`.
+- Criado `src/features/auth/password-reset.test.ts`.
+- Criada tela `app/recuperar-senha.tsx`.
+- Script de testes raiz atualizado.
+- `docs/development/auth-deep-links.md` e `docs/product/auth-flow.md` atualizados.
+
+Decisoes tecnicas e trade-offs:
+
+- A tela chama `auth.updateUser({ password })`, que depende da sessao criada pelo link de recuperacao do Supabase.
+- Se a rota for aberta manualmente, sem sessao de recuperacao, a tela exibe o erro retornado pelo Supabase.
+- Nao foi adicionada personalizacao de template de email nesta etapa. Isso e configuracao de produto/Supabase e deve ser tratado separadamente.
+
+Hurdles & Fixes:
+
+- Nenhum bloqueio tecnico encontrado.
+
+Checklist DoD:
+
+- [x] TDD aplicado.
+- [x] Tela integrada.
+- [x] Testes passam.
+- [x] Typecheck passa.
+- [x] Lint passa.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: add password recovery screen`
+
+## Proxima Etapa Planejada
+
+Etapa 54 - Validacao manual do fluxo de recuperacao.

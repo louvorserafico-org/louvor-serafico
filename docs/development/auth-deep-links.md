@@ -40,6 +40,8 @@ louvor-serafico://auth/callback
 
 ## Limite Atual
 
-A rota interna `recuperar-senha` ainda nao foi implementada. Esta etapa define
-contrato de URL e prepara o envio correto pelo Supabase. A troca efetiva de
-senha dentro do app fica para uma etapa dedicada.
+A rota interna `recuperar-senha` foi criada e chama `auth.updateUser` para
+trocar a senha quando o app recebe uma sessao valida pelo link de recuperacao.
+
+Se o usuario abrir a tela manualmente, sem vir do email, o Supabase deve
+retornar erro de sessao ausente.

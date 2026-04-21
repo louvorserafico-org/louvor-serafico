@@ -56,10 +56,11 @@ Status remoto:
 - Cadastro usa `signUp` com metadata.
 - Recuperacao inicial usa `resetPasswordForEmail` a partir do email digitado no login.
 - Recuperacao envia `redirectTo` para `louvor-serafico://recuperar-senha`.
+- Tela `recuperar-senha` permite definir nova senha quando ha sessao de recuperacao valida.
 
 ## Fora Do Escopo Agora
 
-- tela interna de redefinicao de senha via deep link
+- personalizacao do template de email no Supabase
 - login social
 - refresh token manual
 - onboarding autenticado
