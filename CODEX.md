@@ -214,6 +214,14 @@ Uma etapa so e considerada pronta quando:
   e o `package.json` do app foi corrigido manualmente para manter estado
   coerente e rastreavel.
 
+### 2026-04-20 - Tabela remota comments ausente
+
+- Hurdle: leitura remota em `rest/v1/comments` respondeu `404`.
+- Causa confirmada: a tabela `public.comments` ainda nao existe no schema cache
+  do projeto Supabase.
+- Fix: manter preview local funcionando e expor o estado remoto na tab
+  `Comunidade` ate a migration real existir.
+
 ## Historico De Etapas
 
 ### Etapa 0 - Fundacao documental e workflow
@@ -1219,7 +1227,48 @@ Sugestao de commit:
 
 Etapa 21 - Catalogo remoto de comentarios.
 
+Status: concluida em 2026-04-20.
+
 Objetivo esperado:
 
 - Sair do preview local de comunidade.
 - Preparar leitura remota simples.
+
+Resultado:
+
+- Criado `src/features/comments/remote-comments.ts`.
+- Criado `src/features/comments/remote-comments.test.ts`.
+- Criado `src/components/RemoteCommentsCard.tsx`.
+- Criado `docs/product/remote-comments.md`.
+- A tab `Comunidade` agora mostra estado da leitura remota.
+- O preview local foi mantido porque a tabela remota ainda nao existe.
+
+Testes adicionados:
+
+- mapeamento de linhas remotas
+- ambiente nao configurado
+- erro de tabela ausente
+
+Validacoes executadas:
+
+- `node apps/mobile/src/features/comments/remote-comments.test.ts`
+
+Checklist DoD:
+
+- [x] Leitura remota preparada.
+- [x] Bloqueio real documentado.
+- [x] Preview local preservado.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`feat: add remote comments readiness`
+
+## Proxima Etapa Planejada
+
+Etapa 22 - Base remota para musicas.
+
+Objetivo esperado:
+
+- Preparar leitura remota do catalogo de musicas.
+- Repetir estrategia de readiness e fallback.

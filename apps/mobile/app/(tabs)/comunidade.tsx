@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 
 import { PageHeader } from "@/components/PageHeader";
+import { RemoteCommentsCard } from "@/components/RemoteCommentsCard";
 import { useSessionPreview } from "@/features/auth/SessionProvider";
 import { useCommentsPreview } from "@/features/comments/CommentsProvider";
 import { colors, spacing, typography } from "@/theme/tokens";
@@ -29,6 +30,8 @@ export default function CommunityScreen() {
             : "Ative sessao teste em Perfil para liberar UX condicionada."}
         </Text>
       </View>
+
+      <RemoteCommentsCard />
 
       <View style={styles.formCard}>
         <Text style={styles.panelTitle}>Novo comentario</Text>

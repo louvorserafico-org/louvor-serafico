@@ -110,6 +110,7 @@ Leia primeiro:
 - `docs/product/supabase-auth-email.md`
 - `docs/product/supabase-session-state.md`
 - `docs/product/supabase-profile.md`
+- `docs/product/remote-comments.md`
 
 ## Regra De Trabalho
 
