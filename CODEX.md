@@ -1937,3 +1937,44 @@ Checklist DoD:
 Sugestao de commit:
 
 `fix: stabilize expo go storage and env config`
+
+## Correcao De AsyncStorage Remanescente
+
+Status: concluida em 2026-04-21.
+
+Problemas reportados:
+
+- Expo avisava que `@react-native-async-storage/async-storage@3.0.2` estava instalado, mas Expo 54 esperava `2.2.0`.
+- Supabase Auth ainda tentava acessar AsyncStorage nativo durante inicializacao e auto refresh.
+
+Resultado:
+
+- Removida dependencia `@react-native-async-storage/async-storage` do app mobile.
+- Removida referencia remanescente no `pnpm-lock.yaml`.
+- Removido pacote obsoleto de `node_modules`.
+- `SupabaseClient` agora usa storage em memoria explicitamente no Expo Go.
+- Preview storage tambem usa memoria por padrao.
+
+Decisoes tecnicas e trade-offs:
+
+- Decidimos nao usar AsyncStorage no Expo Go neste momento. Isso elimina o crash e o warning.
+- Trade-off: sessao Supabase e estado preview nao persistem apos fechar o app.
+- Alternativa rejeitada: voltar para AsyncStorage `2.2.0`. Seria compativel com Expo, mas ainda exigiria modulo nativo corretamente disponivel; como estamos priorizando Expo Go, memoria e mais estavel agora.
+- Quando entrarmos em development build, podemos reintroduzir persistencia nativa com versao fixada pelo `expo install`.
+
+Hurdles & Fixes:
+
+- `pnpm install` atualizou lockfile, mas restou diretorio antigo em `node_modules`.
+- A remocao direta falhou no Windows por caminhos longos dentro de frameworks iOS.
+- Reexecutamos remocao com prefixo `\\?\` para apagar o pacote obsoleto.
+
+Checklist DoD:
+
+- [x] Pacote incompatível removido.
+- [x] Supabase Auth sem AsyncStorage nativo.
+- [x] Warning de compatibilidade removido da arvore do projeto.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`fix: remove async storage from expo go flow`

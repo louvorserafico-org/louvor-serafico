@@ -53,7 +53,7 @@ export function createPreviewStorage(nativeStorage: StorageAdapter | null): Prev
   };
 }
 
-const previewStorage = createPreviewStorage(getNativeAsyncStorage());
+const previewStorage = createPreviewStorage(null);
 
 export async function loadPreviewSession(): Promise<LocalSession> {
   return previewStorage.loadSession();
@@ -77,14 +77,4 @@ export async function loadPreviewComments(): Promise<LocalComment[]> {
 
 export async function savePreviewComments(comments: LocalComment[]): Promise<void> {
   await previewStorage.saveComments(comments);
-}
-
-function getNativeAsyncStorage(): StorageAdapter | null {
-  try {
-    const module = require("@react-native-async-storage/async-storage") as { default?: StorageAdapter };
-
-    return module.default ?? null;
-  } catch {
-    return null;
-  }
 }

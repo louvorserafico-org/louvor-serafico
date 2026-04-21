@@ -12,7 +12,7 @@ export const supabase = isSupabaseConfigured(config)
         autoRefreshToken: true,
         detectSessionInUrl: false,
         persistSession: true,
-        storage: getNativeAsyncStorage() ?? createMemoryStorage(),
+        storage: createMemoryStorage(),
       },
     })
   : null;
@@ -24,18 +24,6 @@ type SupabaseStorageAdapter = {
   removeItem: (key: string) => Promise<void> | void;
   setItem: (key: string, value: string) => Promise<void> | void;
 };
-
-function getNativeAsyncStorage(): SupabaseStorageAdapter | null {
-  try {
-    const module = require("@react-native-async-storage/async-storage") as {
-      default?: SupabaseStorageAdapter;
-    };
-
-    return module.default ?? null;
-  } catch {
-    return null;
-  }
-}
 
 function createMemoryStorage(): SupabaseStorageAdapter {
   const values = new Map<string, string>();
