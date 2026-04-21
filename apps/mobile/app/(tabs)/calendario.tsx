@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, View } from "react-native";
 
 import { CelebrationCard } from "@/components/CelebrationCard";
 import { PageHeader } from "@/components/PageHeader";
+import { RemoteCelebrationsCard } from "@/components/RemoteCelebrationsCard";
 import { SectionTitle } from "@/components/SectionTitle";
 import { colors, spacing } from "@/theme/tokens";
 
@@ -18,6 +19,8 @@ export default function CalendarScreen() {
       />
 
       <SectionTitle title="Janeiro" />
+
+      <RemoteCelebrationsCard />
 
       <View style={styles.list}>
         {celebrations.map((celebration) => (

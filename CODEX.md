@@ -230,6 +230,14 @@ Uma etapa so e considerada pronta quando:
 - Fix: manter catalogo local como fonte principal e expor estado remoto na tab
   `Repertorio` ate a migration real existir.
 
+### 2026-04-20 - Tabela remota celebrations ausente
+
+- Hurdle: leitura remota em `rest/v1/celebrations` respondeu `404`.
+- Causa confirmada: a tabela `public.celebrations` ainda nao existe no schema
+  cache do projeto Supabase.
+- Fix: manter calendario local como fonte principal e expor estado remoto na tab
+  `Calendario` ate a migration real existir.
+
 ## Historico De Etapas
 
 ### Etapa 0 - Fundacao documental e workflow
@@ -1317,7 +1325,48 @@ Sugestao de commit:
 
 Etapa 23 - Base remota para celebracoes.
 
+Status: concluida em 2026-04-20.
+
 Objetivo esperado:
 
 - Preparar leitura remota de celebracoes.
 - Repetir readiness e fallback.
+
+Resultado:
+
+- Criado `src/features/celebrations/remote-celebrations.ts`.
+- Criado `src/features/celebrations/remote-celebrations.test.ts`.
+- Criado `src/components/RemoteCelebrationsCard.tsx`.
+- Criado `docs/product/remote-celebrations.md`.
+- A tab `Calendario` agora mostra estado da leitura remota.
+- O calendario local foi mantido porque a tabela remota ainda nao existe.
+
+Testes adicionados:
+
+- mapeamento de linhas remotas
+- ambiente nao configurado
+- erro de tabela ausente
+
+Validacoes executadas:
+
+- `node apps/mobile/src/features/celebrations/remote-celebrations.test.ts`
+
+Checklist DoD:
+
+- [x] Leitura remota preparada.
+- [x] Bloqueio real documentado.
+- [x] Calendario local preservado.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`feat: add remote celebrations readiness`
+
+## Proxima Etapa Planejada
+
+Etapa 24 - Schema real Supabase.
+
+Objetivo esperado:
+
+- Criar tabelas base no projeto remoto.
+- Sair dos blockers `404`.

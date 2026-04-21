@@ -112,6 +112,7 @@ Leia primeiro:
 - `docs/product/supabase-profile.md`
 - `docs/product/remote-comments.md`
 - `docs/product/remote-songs.md`
+- `docs/product/remote-celebrations.md`
 
 ## Regra De Trabalho
 
