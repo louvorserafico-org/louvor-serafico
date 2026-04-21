@@ -1,23 +1,25 @@
 import { findSongBySlug } from "@louvor-serafico/shared";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { PageHeader } from "@/components/PageHeader";
 import { SectionTitle } from "@/components/SectionTitle";
+import { resolveSignedAssetUrl } from "@/features/assets/signed-asset-url";
 import { useSessionPreview } from "@/features/auth/SessionProvider";
 import { useSupabaseSession } from "@/features/auth/SupabaseSessionProvider";
 import { useFavorites } from "@/features/favorites/FavoritesProvider";
 import { fetchRemoteSongDetail } from "@/features/songs/remote-song-detail";
 import { resolveAssetAccess } from "@/features/subscription/premium-access";
 import { useSubscriptionPreview } from "@/features/subscription/SubscriptionPreviewProvider";
-import { supabaseConfig } from "@/services/supabase/client";
+import { supabase, supabaseConfig } from "@/services/supabase/client";
 import { colors, spacing, typography } from "@/theme/tokens";
 
 export default function SongDetailScreen() {
   const params = useLocalSearchParams<{ slug: string }>();
   const localSong = findSongBySlug(params.slug ?? "");
   const [remoteSong, setRemoteSong] = useState<typeof localSong | null>(null);
+  const [assetMessages, setAssetMessages] = useState<Record<string, string>>({});
   const [subtitle, setSubtitle] = useState("Detalhe inicial com materiais cadastrados no mock local.");
   const song = remoteSong ?? localSong;
   const { session } = useSessionPreview();
@@ -108,6 +110,34 @@ export default function SongDetailScreen() {
                 <Text style={styles.assetTitle}>{asset.title}</Text>
                 <Text style={styles.assetMeta}>{access.label}</Text>
                 <Text style={styles.assetPath}>{access.canAccess ? asset.path : access.message}</Text>
+                <Text style={styles.assetPath}>{assetMessages[asset.id]}</Text>
+                <Pressable
+                  disabled={!access.canAccess}
+                  onPress={() => {
+                    void resolveSignedAssetUrl(
+                      asset,
+                      { hasActiveSubscription, isAuthenticated },
+                      {
+                        bucket: supabaseConfig.assetBucket,
+                        client: supabase,
+                      },
+                    ).then((result) => {
+                      setAssetMessages((current) => ({
+                        ...current,
+                        [asset.id]: result.message,
+                      }));
+
+                      if (result.url) {
+                        void Linking.openURL(result.url);
+                      }
+                    });
+                  }}
+                  style={[styles.assetButton, !access.canAccess ? styles.assetButtonDisabled : undefined]}
+                >
+                  <Text style={[styles.assetButtonText, !access.canAccess ? styles.assetButtonTextDisabled : undefined]}>
+                    {access.canAccess ? "Abrir material" : "Premium bloqueado"}
+                  </Text>
+                </Pressable>
               </View>
             );
           })
@@ -130,6 +160,28 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     gap: spacing.xs,
     padding: spacing.md,
+  },
+  assetButton: {
+    alignSelf: "flex-start",
+    backgroundColor: colors.accent,
+    borderColor: colors.accent,
+    borderRadius: 8,
+    borderWidth: 1,
+    marginTop: spacing.sm,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+  },
+  assetButtonDisabled: {
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+  },
+  assetButtonText: {
+    color: colors.background,
+    fontSize: typography.caption,
+    fontWeight: "700",
+  },
+  assetButtonTextDisabled: {
+    color: colors.textMuted,
   },
   assetMeta: {
     color: colors.accent,

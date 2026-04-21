@@ -12,6 +12,7 @@ describe("supabase config", () => {
 
     assert.equal(config.projectHost, "engvbvdtdcveoebgrexl.supabase.co");
     assert.equal(config.projectRef, "engvbvdtdcveoebgrexl");
+    assert.equal(config.assetBucket, "song-assets");
     assert.equal(isSupabaseConfigured(config), true);
   });
 
@@ -23,6 +24,14 @@ describe("supabase config", () => {
 
     assert.equal(config.anonKey, "anon_test");
     assert.equal(isSupabaseConfigured(config), true);
+  });
+
+  it("allows custom public asset bucket", () => {
+    const config = buildSupabaseConfig({
+      EXPO_PUBLIC_SUPABASE_ASSET_BUCKET: "premium-assets",
+    });
+
+    assert.equal(config.assetBucket, "premium-assets");
   });
 
   it("returns not configured when url is missing", () => {

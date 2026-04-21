@@ -1807,3 +1807,50 @@ Checklist DoD:
 Sugestao de commit:
 
 `chore: prepare eas development build`
+
+## Proxima Etapa Planejada
+
+Etapa 38 - Preparacao de assets premium no Storage.
+
+Status: concluida em 2026-04-21.
+
+Objetivo esperado:
+
+- preparar abertura de materiais via signed URL
+- manter gate premium antes da tentativa de acesso
+- documentar limites de seguranca antes da assinatura real
+
+Resultado:
+
+- Criado `src/features/assets/signed-asset-url.ts`.
+- Criado `src/features/assets/signed-asset-url.test.ts`.
+- Criado `docs/product/premium-storage-assets.md`.
+- `.env.example` recebeu `EXPO_PUBLIC_SUPABASE_ASSET_BUCKET`.
+- `SupabaseConfig` agora expoe `assetBucket`.
+- Tela de musica ganhou botao `Abrir material` para assets liberados.
+
+Decisoes tecnicas e trade-offs:
+
+- Usamos signed URL curta com expiracao padrao de 300 segundos.
+- O bucket padrao ficou como `song-assets`, porque o nome do bucket nao e segredo e facilita ambientes locais/remotos.
+- Nao criamos policy permissiva de Storage nesta etapa. Isso evita liberar premium apenas por autenticacao.
+- Alternativa rejeitada: criar policy `authenticated can select` diretamente no bucket. Seria simples, mas insegura para conteudo premium.
+- Decisao futura: mover a geracao de signed URL premium para Edge Function ou backend, validando assinatura real no servidor.
+
+Hurdles & Fixes:
+
+- O primeiro teste ficou vermelho porque o modulo ainda nao existia, confirmando ciclo Red.
+- O teste direto em Node nao conseguia resolver alias `@/`; ajustamos a importacao interna da feature para caminho relativo testavel.
+- Mantivemos a integracao visual simples para nao antecipar RevenueCat nem Edge Function.
+
+Checklist DoD:
+
+- [x] TDD aplicado.
+- [x] Happy path coberto.
+- [x] Caso bloqueado coberto.
+- [x] Caso sem configuracao coberto.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: prepare premium storage asset links`
