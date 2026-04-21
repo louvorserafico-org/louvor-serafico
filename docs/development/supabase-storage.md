@@ -69,3 +69,11 @@ Resultado esperado:
 ## Limite Atual
 
 O botao `Abrir material` ainda pode retornar erro enquanto nao existir Edge Function para gerar signed URL com regra premium no servidor. Isso e esperado e seguro.
+
+A funcao planejada foi criada em:
+
+```text
+supabase/functions/create-asset-signed-url/index.ts
+```
+
+Ela ainda precisa ser implantada e integrada ao app.

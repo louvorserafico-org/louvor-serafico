@@ -2123,6 +2123,49 @@ Sugestao de commit:
 
 `feat: add private song assets bucket`
 
+## Proxima Etapa Planejada
+
+Etapa 43 - Edge Function para signed URL premium.
+
+Status: concluida em 2026-04-21.
+
+Objetivo esperado:
+
+- preparar backend seguro para gerar signed URL
+- validar sessao no servidor
+- bloquear premium sem assinatura ativa
+
+Resultado:
+
+- Criado `supabase/functions/create-asset-signed-url/index.ts`.
+- Criado `docs/development/supabase-edge-functions.md`.
+- Atualizado `docs/development/supabase-storage.md`.
+- README atualizado com o guia de Edge Functions.
+
+Decisoes tecnicas e trade-offs:
+
+- A funcao exige `Authorization: Bearer <access_token>`.
+- A funcao usa service role apenas no ambiente de servidor.
+- Asset premium exige assinatura ativa na tabela `subscriptions`.
+- Signed URL expira em 300 segundos.
+- Alternativa rejeitada: gerar signed URL direto no app. Isso dependeria de policy ampla ou service role no cliente, ambos inseguros.
+
+Hurdles & Fixes:
+
+- A funcao ainda nao foi integrada ao app. Primeiro deixamos o backend seguro desenhado e versionado.
+- Deploy real fica para etapa propria, porque pode depender de login CLI/rede.
+
+Checklist DoD:
+
+- [x] Funcao criada.
+- [x] Contrato documentado.
+- [x] Sem secrets no app.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`feat: add premium asset signed url function`
+
 ### Ajuste Solicitado
 
 Status: concluido em 2026-04-21.
