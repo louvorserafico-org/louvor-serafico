@@ -66,6 +66,20 @@ Resultado esperado:
 - `file_size_limit = 20971520`;
 - bucket retornado.
 
+## Upload Inicial
+
+Os PDFs locais do roteiro inicial podem ser enviados com:
+
+```powershell
+.\scripts\upload-song-assets.ps1
+```
+
+Guia:
+
+```text
+docs/development/upload-song-assets.md
+```
+
 ## Limite Atual
 
 O botao `Abrir material` chama a Edge Function `create-asset-signed-url`.

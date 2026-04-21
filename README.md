@@ -103,6 +103,7 @@ Leia primeiro:
 - `docs/development/supabase-setup.md`
 - `docs/development/supabase-edge-functions.md`
 - `docs/development/supabase-storage.md`
+- `docs/development/upload-song-assets.md`
 - `docs/architecture/supabase-schema-plan.md`
 - `docs/architecture/remote-schema-bootstrap.md`
 - `docs/architecture/remote-seed-bootstrap.md`

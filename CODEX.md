@@ -2315,3 +2315,52 @@ Checklist DoD:
 Sugestao de commit:
 
 `docs: record edge function smoke test`
+
+## Proxima Etapa Planejada
+
+Etapa 47 - Upload inicial de assets.
+
+Status: concluida em 2026-04-21.
+
+Objetivo esperado:
+
+- preparar upload idempotente dos PDFs locais para o bucket privado;
+- usar `song_assets.storage_path` remoto como fonte de verdade;
+- evitar expor service role no codigo do app.
+
+Resultado:
+
+- Criado `scripts/upload-song-assets.ps1`.
+- Criado `docs/development/upload-song-assets.md`.
+- README atualizado com referencia ao guia.
+- `docs/development/supabase-storage.md` atualizado com caminho de upload.
+- Criada migration `20260421193000_normalize_por_teu_nome_asset_path.sql`.
+- `supabase/seed.sql` atualizado com path normalizado.
+- Patch remoto aplicado no asset `por-teu-nome-o-senhor`.
+- PDFs enviados ao bucket privado `song-assets`.
+- Bucket validado via Storage API.
+
+Decisoes tecnicas e trade-offs:
+
+- O script le `.env.local` localmente e nunca versiona segredos.
+- O upload usa service role porque o bucket e privado e nao deve ter policy ampla para usuarios autenticados.
+- O script consulta os assets remotos antes do upload, evitando hardcode dos caminhos do bucket.
+- `x-upsert: true` permite reexecutar o upload sem criar duplicatas.
+
+Hurdles & Fixes:
+
+- Um dos PDFs tem nome local com encoding diferente do `storage_path` remoto.
+- Para reduzir fragilidade, o script mapeia arquivo local por slug e usa o `storage_path` remoto como destino.
+- O upload real falhou no arquivo `por-teu-nome-o-senhor` porque o `storage_path` remoto continha caracteres invalidos para chave do Storage.
+- Criada migration para normalizar o caminho remoto para `Por teu nome, o Senhor.pdf`.
+
+Checklist DoD:
+
+- [x] Dry run executado.
+- [x] Upload executado.
+- [x] Bucket validado.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: add song asset upload workflow`

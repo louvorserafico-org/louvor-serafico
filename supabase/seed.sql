@@ -37,7 +37,7 @@ from (
     ('fazei-em-nome-do-senhor', 'score_pdf', 'Partitura', 'Fazei em Nomedo Senhor.pdf', 'application/pdf', true, 'pending_review', 'published'),
     ('bendito-seja-o-nome-do-senhor', 'score_pdf', 'Partitura', 'Benndito seja o nome do Senhor (Salmo Responsotial).pdf', 'application/pdf', true, 'pending_review', 'published'),
     ('aleluia-bendizei-o-seu-nome', 'score_pdf', 'Partitura', 'Aleluia, bendizei o seu nome.pdf', 'application/pdf', true, 'pending_review', 'published'),
-    ('por-teu-nome-o-senhor', 'score_pdf', 'Partitura', 'Por teu nome, AÌƒÂ³ Senhor.pdf', 'application/pdf', true, 'pending_review', 'published'),
+    ('por-teu-nome-o-senhor', 'score_pdf', 'Partitura', 'Por teu nome, o Senhor.pdf', 'application/pdf', true, 'pending_review', 'published'),
     ('vamos-em-nome-do-senhor', 'score_pdf', 'Partitura', 'Vamos em nome do Senhor.pdf', 'application/pdf', true, 'pending_review', 'published')
 ) as seeded(song_slug, asset_type, title, storage_path, mime_type, premium, license_status, status)
 join public.songs s on s.slug = seeded.song_slug
