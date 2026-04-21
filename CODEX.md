@@ -2184,3 +2184,50 @@ Correcao:
 - Removido o `comment on table storage.objects`.
 - Mantidos bucket privado e remocao de policies inseguras.
 - `docs/development/supabase-storage.md` atualizado com a causa.
+
+## Proxima Etapa Planejada
+
+Etapa 44 - Integracao mobile com Edge Function.
+
+Status: concluida em 2026-04-21.
+
+Objetivo esperado:
+
+- trocar a geracao direta de signed URL no app por chamada a Edge Function;
+- exigir sessao Supabase real para abrir material protegido;
+- manter o app seguro enquanto a funcao ainda nao estiver implantada;
+- remover helper legado de acesso direto ao Storage.
+
+Resultado:
+
+- Criado `src/features/assets/edge-asset-url.ts`.
+- Criado `src/features/assets/edge-asset-url.test.ts`.
+- `SupabaseConfig` agora expoe `functionsUrl`.
+- `SongDetail` agora chama `create-asset-signed-url` via Edge Function.
+- Removido helper antigo `signed-asset-url`.
+- Documentacao de Storage, Edge Functions e assets premium atualizada.
+
+Decisoes tecnicas e trade-offs:
+
+- A URL da funcao e derivada do host Supabase configurado no app.
+- A chamada exige `accessToken` de sessao Supabase real.
+- Mantivemos erro claro quando a funcao, a URL ou a sessao nao estao disponiveis.
+- Alternativa rejeitada: manter fallback direto ao Storage no app. Isso facilitaria teste local, mas manteria um caminho inseguro e confuso para conteudo premium.
+
+Hurdles & Fixes:
+
+- O teste vermelho confirmou que o modulo de Edge Function ainda nao existia.
+- O helper direto de Storage ficou obsoleto apos a integracao e foi removido para reduzir superficie de erro.
+- O deploy da funcao permanece etapa operacional separada, pois depende do ambiente Supabase remoto.
+
+Checklist DoD:
+
+- [x] TDD aplicado.
+- [x] App chama Edge Function para material.
+- [x] Sessao real exigida.
+- [x] Helper direto removido.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: route asset links through edge function`

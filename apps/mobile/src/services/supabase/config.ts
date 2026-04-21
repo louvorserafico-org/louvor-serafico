@@ -8,6 +8,7 @@ type SupabaseEnvironment = {
 export type SupabaseConfig = {
   anonKey: string | null;
   assetBucket: string;
+  functionsUrl: string | null;
   projectHost: string | null;
   projectRef: string | null;
   publishableKey: string | null;
@@ -24,6 +25,7 @@ export function buildSupabaseConfig(env: SupabaseEnvironment): SupabaseConfig {
   return {
     anonKey,
     assetBucket,
+    functionsUrl: buildFunctionsUrl(projectHost),
     projectHost,
     projectRef: parseProjectRef(projectHost),
     publishableKey,
@@ -65,6 +67,12 @@ function parseProjectRef(projectHost: string | null): string | null {
   }
 
   return projectHost.split(".")[0] ?? null;
+}
+
+function buildFunctionsUrl(projectHost: string | null): string | null {
+  const projectRef = parseProjectRef(projectHost);
+
+  return projectRef ? `https://${projectRef}.functions.supabase.co` : null;
 }
 
 function getExpoConfigExtra(): SupabaseEnvironment {

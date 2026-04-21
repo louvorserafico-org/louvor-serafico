@@ -26,12 +26,12 @@ O bucket nao deve ter leitura publica.
 
 Tambem nao deve existir policy permitindo leitura direta para todo usuario autenticado. Isso permitiria que qualquer usuario logado acessasse arquivos premium sem passar pela regra de assinatura.
 
-## Fluxo Seguro Futuro
+## Fluxo Seguro
 
 1. App pede material premium.
-2. Backend/Edge Function recebe usuario e `assetId`.
-3. Backend valida assinatura.
-4. Backend gera signed URL curta com service role.
+2. Edge Function recebe usuario e `assetId`.
+3. Edge Function valida assinatura.
+4. Edge Function gera signed URL curta com service role.
 5. App abre o link temporario.
 
 ## Aplicacao Manual
@@ -68,7 +68,9 @@ Resultado esperado:
 
 ## Limite Atual
 
-O botao `Abrir material` ainda pode retornar erro enquanto nao existir Edge Function para gerar signed URL com regra premium no servidor. Isso e esperado e seguro.
+O botao `Abrir material` chama a Edge Function `create-asset-signed-url`.
+
+Ele ainda pode retornar erro enquanto a funcao nao estiver implantada ou enquanto o usuario nao tiver sessao Supabase real. Isso e esperado e seguro.
 
 A funcao planejada foi criada em:
 
@@ -76,4 +78,4 @@ A funcao planejada foi criada em:
 supabase/functions/create-asset-signed-url/index.ts
 ```
 
-Ela ainda precisa ser implantada e integrada ao app.
+Ela ja foi integrada ao app. O passo operacional pendente e o deploy remoto.

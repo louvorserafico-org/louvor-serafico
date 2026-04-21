@@ -5,14 +5,14 @@ import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from "react-na
 
 import { PageHeader } from "@/components/PageHeader";
 import { SectionTitle } from "@/components/SectionTitle";
-import { resolveSignedAssetUrl } from "@/features/assets/signed-asset-url";
+import { requestAssetSignedUrl } from "@/features/assets/edge-asset-url";
 import { useSessionPreview } from "@/features/auth/SessionProvider";
 import { useSupabaseSession } from "@/features/auth/SupabaseSessionProvider";
 import { useFavorites } from "@/features/favorites/FavoritesProvider";
 import { fetchRemoteSongDetail } from "@/features/songs/remote-song-detail";
 import { resolveAssetAccess } from "@/features/subscription/premium-access";
 import { useSubscriptionPreview } from "@/features/subscription/SubscriptionPreviewProvider";
-import { supabase, supabaseConfig } from "@/services/supabase/client";
+import { supabaseConfig } from "@/services/supabase/client";
 import { colors, spacing, typography } from "@/theme/tokens";
 
 export default function SongDetailScreen() {
@@ -114,12 +114,11 @@ export default function SongDetailScreen() {
                 <Pressable
                   disabled={!access.canAccess}
                   onPress={() => {
-                    void resolveSignedAssetUrl(
-                      asset,
-                      { hasActiveSubscription, isAuthenticated },
+                    void requestAssetSignedUrl(
+                      asset.id,
                       {
-                        bucket: supabaseConfig.assetBucket,
-                        client: supabase,
+                        accessToken: supabaseSession.accessToken,
+                        functionsUrl: supabaseConfig.functionsUrl,
                       },
                     ).then((result) => {
                       setAssetMessages((current) => ({

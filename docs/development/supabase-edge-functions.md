@@ -67,8 +67,25 @@ Secrets esperados no ambiente Supabase:
 
 Esses secrets sao providos pelo ambiente Supabase em Edge Functions. Nao devem ir para o app mobile.
 
+## Integracao Mobile
+
+O app mobile chama esta funcao quando o usuario toca em `Abrir material` em um asset liberado pelo gate premium.
+
+URL esperada:
+
+```text
+https://<project-ref>.functions.supabase.co/create-asset-signed-url
+```
+
+O app envia:
+
+- `Authorization: Bearer <access_token>` da sessao Supabase real;
+- body JSON com `assetId`.
+
+Sem sessao Supabase real, o app retorna erro claro e nao tenta abrir o arquivo.
+
 ## Limites
 
-A funcao ainda nao esta integrada ao app. A etapa atual prepara o backend seguro primeiro.
+A funcao precisa estar implantada no Supabase para o fluxo funcionar em dispositivo real.
 
-O proximo passo e trocar a chamada direta ao Storage no app por chamada a esta funcao.
+Enquanto a funcao nao estiver implantada, o app continua seguro: ele nao expoe caminho privado nem tenta usar service role no cliente.

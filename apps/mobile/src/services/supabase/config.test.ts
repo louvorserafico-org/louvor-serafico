@@ -12,6 +12,7 @@ describe("supabase config", () => {
 
     assert.equal(config.projectHost, "engvbvdtdcveoebgrexl.supabase.co");
     assert.equal(config.projectRef, "engvbvdtdcveoebgrexl");
+    assert.equal(config.functionsUrl, "https://engvbvdtdcveoebgrexl.functions.supabase.co");
     assert.equal(config.assetBucket, "song-assets");
     assert.equal(isSupabaseConfigured(config), true);
   });
