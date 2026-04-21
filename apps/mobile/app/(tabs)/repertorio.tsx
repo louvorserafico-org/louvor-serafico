@@ -2,6 +2,7 @@ import { getInitialSongCatalog } from "@louvor-serafico/shared";
 import { ScrollView, StyleSheet, View } from "react-native";
 
 import { PageHeader } from "@/components/PageHeader";
+import { RemoteSongsCard } from "@/components/RemoteSongsCard";
 import { SectionTitle } from "@/components/SectionTitle";
 import { useFavorites } from "@/features/favorites/FavoritesProvider";
 import { SongCard } from "@/components/SongCard";
@@ -20,6 +21,8 @@ export default function RepertoireScreen() {
       />
 
       <SectionTitle title="Catalogo inicial" />
+
+      <RemoteSongsCard />
 
       <View style={styles.list}>
         {songs.map((song) => (

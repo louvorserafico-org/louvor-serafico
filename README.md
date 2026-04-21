@@ -111,6 +111,7 @@ Leia primeiro:
 - `docs/product/supabase-session-state.md`
 - `docs/product/supabase-profile.md`
 - `docs/product/remote-comments.md`
+- `docs/product/remote-songs.md`
 
 ## Regra De Trabalho
 

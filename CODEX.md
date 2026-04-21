@@ -222,6 +222,14 @@ Uma etapa so e considerada pronta quando:
 - Fix: manter preview local funcionando e expor o estado remoto na tab
   `Comunidade` ate a migration real existir.
 
+### 2026-04-20 - Tabela remota songs ausente
+
+- Hurdle: leitura remota em `rest/v1/songs` respondeu `404`.
+- Causa confirmada: a tabela `public.songs` ainda nao existe no schema cache
+  do projeto Supabase.
+- Fix: manter catalogo local como fonte principal e expor estado remoto na tab
+  `Repertorio` ate a migration real existir.
+
 ## Historico De Etapas
 
 ### Etapa 0 - Fundacao documental e workflow
@@ -1268,7 +1276,48 @@ Sugestao de commit:
 
 Etapa 22 - Base remota para musicas.
 
+Status: concluida em 2026-04-20.
+
 Objetivo esperado:
 
 - Preparar leitura remota do catalogo de musicas.
 - Repetir estrategia de readiness e fallback.
+
+Resultado:
+
+- Criado `src/features/songs/remote-songs.ts`.
+- Criado `src/features/songs/remote-songs.test.ts`.
+- Criado `src/components/RemoteSongsCard.tsx`.
+- Criado `docs/product/remote-songs.md`.
+- A tab `Repertorio` agora mostra estado da leitura remota.
+- O catalogo local foi mantido porque a tabela remota ainda nao existe.
+
+Testes adicionados:
+
+- mapeamento de linhas remotas
+- ambiente nao configurado
+- erro de tabela ausente
+
+Validacoes executadas:
+
+- `node apps/mobile/src/features/songs/remote-songs.test.ts`
+
+Checklist DoD:
+
+- [x] Leitura remota preparada.
+- [x] Bloqueio real documentado.
+- [x] Catalogo local preservado.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`feat: add remote songs readiness`
+
+## Proxima Etapa Planejada
+
+Etapa 23 - Base remota para celebracoes.
+
+Objetivo esperado:
+
+- Preparar leitura remota de celebracoes.
+- Repetir readiness e fallback.
