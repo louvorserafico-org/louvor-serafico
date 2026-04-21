@@ -45,8 +45,21 @@ Esperado:
 1. Rodar `corepack pnpm dev`.
 2. Abrir app no Expo Go.
 3. Navegar ate tab `Perfil`.
-4. Validar card local do Supabase.
-5. Validar card de leitura remota do Supabase.
+4. Validar resumo principal de conta.
+5. Validar login, premium e navegacao basica.
+
+## Cards Tecnicos De Debug
+
+Por padrao, a tab `Perfil` esconde cards tecnicos de Supabase, sessao, perfil e
+preview local para manter a UX limpa.
+
+Para exibir esses cards durante diagnostico:
+
+```powershell
+EXPO_PUBLIC_DEBUG_CARDS=true
+```
+
+Depois de mudar `.env.local`, reinicie o Metro.
 
 ## Se QR Code Nao Funcionar
 
@@ -81,8 +94,8 @@ O app mobile le `.env.local` da raiz do monorepo via `app.config.js`. Somente va
 - [ ] Expo Go abriu app.
 - [ ] Navegacao basica funcionando.
 - [ ] Tab `Perfil` abriu.
-- [ ] Estado local Supabase visivel.
-- [ ] Leitura remota Supabase visivel.
+- [ ] Resumo principal de conta visivel.
+- [ ] Cards tecnicos aparecem somente com `EXPO_PUBLIC_DEBUG_CARDS=true`.
 
 ## Recuperacao De Senha
 

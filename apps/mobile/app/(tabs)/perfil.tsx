@@ -11,9 +11,12 @@ import { SupabaseProfileCard } from "@/components/SupabaseProfileCard";
 import { SupabaseRemoteStatusCard } from "@/components/SupabaseRemoteStatusCard";
 import { SupabaseSessionCard } from "@/components/SupabaseSessionCard";
 import { SupabaseStatusCard } from "@/components/SupabaseStatusCard";
+import { useDebugMode } from "@/features/debug/useDebugMode";
 import { colors, spacing } from "@/theme/tokens";
 
 export default function ProfileScreen() {
+  const showDebugCards = useDebugMode();
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <PageHeader
@@ -24,13 +27,17 @@ export default function ProfileScreen() {
       <ProfileOverviewCard />
       <AuthEntryCard />
       <PaywallPreviewCard />
-      <AuthStabilityCard />
-      <SupabaseStatusCard />
-      <SupabaseRemoteStatusCard />
-      <SupabaseSessionCard />
-      <SupabaseProfileCard />
-      <SubscriptionPreviewCard />
-      <SessionPreviewCard />
+      {showDebugCards ? (
+        <>
+          <AuthStabilityCard />
+          <SupabaseStatusCard />
+          <SupabaseRemoteStatusCard />
+          <SupabaseSessionCard />
+          <SupabaseProfileCard />
+          <SubscriptionPreviewCard />
+          <SessionPreviewCard />
+        </>
+      ) : null}
     </ScrollView>
   );
 }

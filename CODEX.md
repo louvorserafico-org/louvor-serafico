@@ -2868,3 +2868,47 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 59 - Preparar modo debug para cards tecnicos.
+
+Status: concluida em 2026-04-21.
+
+Objetivo esperado:
+
+- esconder cards tecnicos da tab Perfil por padrao;
+- manter diagnosticos disponiveis quando necessario;
+- controlar exibicao por variavel publica simples.
+
+Resultado:
+
+- Criado `src/features/debug/debug-mode.ts`.
+- Criado `src/features/debug/debug-mode.test.ts`.
+- Criado `src/features/debug/useDebugMode.ts`.
+- Tab `Perfil` passou a mostrar cards tecnicos somente com `EXPO_PUBLIC_DEBUG_CARDS=true` ou `1`.
+- `.env.example` atualizado.
+- `docs/development/run-iphone-expo-go.md` atualizado.
+
+Decisoes tecnicas e trade-offs:
+
+- O modo debug usa variavel `EXPO_PUBLIC_DEBUG_CARDS`, porque precisa ser lida no bundle Expo.
+- O default e esconder diagnosticos tecnicos, priorizando experiencia de produto.
+- Alternativa rejeitada: remover os cards tecnicos. Eles ainda sao uteis no ciclo de validacao com Supabase, Expo Go e builds futuras.
+
+Hurdles & Fixes:
+
+- Nenhum bloqueio tecnico encontrado.
+
+Checklist DoD:
+
+- [x] TDD aplicado.
+- [x] UI integrada.
+- [x] Testes passam.
+- [x] Typecheck passa.
+- [x] Lint passa.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: gate profile debug cards`
+
+## Proxima Etapa Planejada
+
+Etapa 60 - Revisar tela inicial autenticada.
