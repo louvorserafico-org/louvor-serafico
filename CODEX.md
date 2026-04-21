@@ -2483,3 +2483,42 @@ Correcao:
 Limite:
 
 - Se usuarios antigos foram criados antes da migration de profiles, alguns campos podem continuar nulos. Para novos cadastros, o trigger ja esta preparado.
+
+Validacao manual:
+
+- Usuario confirmou que login, acesso premium e abertura de partitura passaram a funcionar.
+- Etapa pode ser considerada concluida para o estado atual.
+
+## Proxima Etapa Planejada
+
+Etapa 50 - Logout real.
+
+Status: concluida em 2026-04-21.
+
+Objetivo esperado:
+
+- permitir encerrar sessao Supabase real pelo app;
+- melhorar ciclo de testes de login/cadastro;
+- manter escopo pequeno.
+
+Resultado:
+
+- Criado `src/features/auth/sign-out.ts`.
+- Criado `src/features/auth/sign-out.test.ts`.
+- `SupabaseSessionCard` agora exibe botao `Sair` quando ha sessao autenticada.
+- Script de testes raiz atualizado.
+
+Decisoes tecnicas e trade-offs:
+
+- Logout fica no card de sessao remota, porque e uma acao tecnica de conta.
+- Nenhum fluxo de confirmacao foi adicionado nesta etapa para manter o ciclo de teste rapido.
+
+Checklist DoD:
+
+- [x] TDD aplicado.
+- [x] UI integrada.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: add supabase sign out action`

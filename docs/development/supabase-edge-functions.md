@@ -143,3 +143,11 @@ O deploy ja foi realizado, mas o fluxo completo ainda depende de:
 - assinatura ativa em `subscriptions` para assets premium.
 
 Sem essas condicoes, o app deve retornar erro claro e permanecer seguro.
+
+## Validacao Manual
+
+Em 2026-04-21, o fluxo foi validado no app:
+
+- login real;
+- acesso premium;
+- abertura de partitura por signed URL.
