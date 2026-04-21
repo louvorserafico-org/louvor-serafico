@@ -1,5 +1,6 @@
 import { findSongBySlug } from "@louvor-serafico/shared";
 import { Stack, useLocalSearchParams } from "expo-router";
+import { useEffect, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { PageHeader } from "@/components/PageHeader";
@@ -7,15 +8,42 @@ import { SectionTitle } from "@/components/SectionTitle";
 import { useSessionPreview } from "@/features/auth/SessionProvider";
 import { useSupabaseSession } from "@/features/auth/SupabaseSessionProvider";
 import { useFavorites } from "@/features/favorites/FavoritesProvider";
+import { fetchRemoteSongDetail } from "@/features/songs/remote-song-detail";
+import { supabaseConfig } from "@/services/supabase/client";
 import { colors, spacing, typography } from "@/theme/tokens";
 
 export default function SongDetailScreen() {
   const params = useLocalSearchParams<{ slug: string }>();
-  const song = findSongBySlug(params.slug ?? "");
+  const localSong = findSongBySlug(params.slug ?? "");
+  const [remoteSong, setRemoteSong] = useState<typeof localSong | null>(null);
+  const [subtitle, setSubtitle] = useState("Detalhe inicial com materiais cadastrados no mock local.");
+  const song = remoteSong ?? localSong;
   const { session } = useSessionPreview();
   const { session: supabaseSession } = useSupabaseSession();
   const { isFavoriteSong, sourceMessage, toggleSongFavorite } = useFavorites();
   const canFavorite = session.status === "signed_in" || supabaseSession.status === "authenticated";
+
+  useEffect(() => {
+    let active = true;
+
+    void fetchRemoteSongDetail(
+      params.slug ?? "",
+      fetch,
+      supabaseConfig.url,
+      supabaseConfig.publishableKey ?? supabaseConfig.anonKey,
+    ).then((result) => {
+      if (!active) {
+        return;
+      }
+
+      setRemoteSong(result.song ?? null);
+      setSubtitle(result.message);
+    });
+
+    return () => {
+      active = false;
+    };
+  }, [params.slug]);
 
   if (!song) {
     return (
@@ -38,7 +66,7 @@ export default function SongDetailScreen() {
       <PageHeader
         eyebrow="Canto sacro"
         title={song.title}
-        subtitle="Detalhe inicial com materiais cadastrados no mock local."
+        subtitle={subtitle}
       />
 
       <SectionTitle title="Materiais" />

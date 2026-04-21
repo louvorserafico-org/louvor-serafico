@@ -1652,3 +1652,34 @@ Checklist DoD:
 Sugestao de commit:
 
 `feat: add remote celebration detail fallback`
+
+## Proxima Etapa Planejada
+
+Etapa 33 - Detalhe remoto de musica.
+
+Status: concluida em 2026-04-21.
+
+Objetivo esperado:
+
+- carregar musica remota por slug
+- carregar assets remotos
+- manter fallback local
+
+Resultado:
+
+- Criado `src/features/songs/remote-song-detail.ts`.
+- Criado `src/features/songs/remote-song-detail.test.ts`.
+- Criado `docs/product/remote-song-detail.md`.
+- `SongDetail` agora tenta remoto antes do local.
+
+Checklist DoD:
+
+- [x] Leitura remota preparada.
+- [x] Assets remotos mapeados.
+- [x] Fallback local preservado.
+- [x] TDD aplicado.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`feat: add remote song detail fallback`
