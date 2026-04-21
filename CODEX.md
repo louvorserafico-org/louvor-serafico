@@ -2023,3 +2023,58 @@ Checklist DoD:
 Sugestao de commit:
 
 `feat: add paywall preview card`
+
+## Proxima Etapa Planejada
+
+Etapa 41 - CI inicial.
+
+Status: concluida em 2026-04-21.
+
+Objetivo esperado:
+
+- criar primeira pipeline de qualidade
+- refletir comandos locais no GitHub Actions
+- evitar build nativo prematuro
+
+Resultado:
+
+- Criado `.github/workflows/ci.yml`.
+- Criado `docs/development/ci.md`.
+- README atualizado com referencia ao guia de CI.
+
+Decisoes tecnicas e trade-offs:
+
+- CI usa Node 24 para acompanhar o ambiente local atual.
+- CI usa Corepack e pnpm `10.10.0`, conforme `packageManager`.
+- Checks incluidos: install frozen, test, typecheck e lint.
+- Alternativa rejeitada: adicionar build EAS agora. Isso aumentaria tempo e exigiria configuracoes/secrets que ainda nao fazem parte do DoD atual.
+
+Hurdles & Fixes:
+
+- `.github` existia sem workflows, entao a etapa criou o primeiro arquivo de pipeline.
+- Nenhum secret foi usado.
+
+Checklist DoD:
+
+- [x] Workflow criado.
+- [x] Checks locais refletidos.
+- [x] Documentacao viva atualizada.
+- [x] Sem build nativo prematuro.
+
+Sugestao de commit:
+
+`ci: add quality workflow`
+
+### Ajuste Solicitado
+
+Status: concluido em 2026-04-21.
+
+Mudanca:
+
+- CI agora roda apenas em push para `main` e pull request direcionado para `main`.
+- Branch `dev` nao dispara pipeline.
+- `docs/development/ci.md` atualizado com a regra.
+
+Motivo:
+
+- `dev` deve permanecer leve para iteracao assistida e validacao manual.
