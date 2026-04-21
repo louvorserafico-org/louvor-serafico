@@ -1,10 +1,7 @@
 # Louvor Serafico
 
-Aplicativo mobile catolico para musicos da Santa Missa, construido com Expo,
+app mobile para musicos da Santa Missa, construido com Expo,
 React Native e TypeScript.
-
-O projeto usa monorepo leve. O foco inicial e o app mobile; backend, assinatura
-e conteudo premium serao integrados incrementalmente.
 
 ## Estrutura Inicial
 
@@ -120,6 +117,7 @@ Leia primeiro:
 - `docs/product/remote-favorite-toggle.md`
 - `docs/product/remote-celebration-detail.md`
 - `docs/product/remote-song-detail.md`
+- `docs/product/premium-asset-gate.md`
 - `docs/product/remote-songs.md`
 - `docs/product/remote-celebrations.md`
 - `docs/product/remote-fallback-catalogs.md`

@@ -9,6 +9,7 @@ import { useSessionPreview } from "@/features/auth/SessionProvider";
 import { useSupabaseSession } from "@/features/auth/SupabaseSessionProvider";
 import { useFavorites } from "@/features/favorites/FavoritesProvider";
 import { fetchRemoteSongDetail } from "@/features/songs/remote-song-detail";
+import { resolveAssetAccess } from "@/features/subscription/premium-access";
 import { supabaseConfig } from "@/services/supabase/client";
 import { colors, spacing, typography } from "@/theme/tokens";
 
@@ -22,6 +23,8 @@ export default function SongDetailScreen() {
   const { session: supabaseSession } = useSupabaseSession();
   const { isFavoriteSong, sourceMessage, toggleSongFavorite } = useFavorites();
   const canFavorite = session.status === "signed_in" || supabaseSession.status === "authenticated";
+  const isAuthenticated = session.status === "signed_in" || supabaseSession.status === "authenticated";
+  const hasActiveSubscription = false;
 
   useEffect(() => {
     let active = true;
@@ -96,13 +99,17 @@ export default function SongDetailScreen() {
 
       <View style={styles.list}>
         {song.assets.length > 0 ? (
-          song.assets.map((asset) => (
-            <View key={asset.id} style={styles.asset}>
-              <Text style={styles.assetTitle}>{asset.title}</Text>
-              <Text style={styles.assetMeta}>{asset.premium ? "Premium" : "Livre"}</Text>
-              <Text style={styles.assetPath}>{asset.path}</Text>
-            </View>
-          ))
+          song.assets.map((asset) => {
+            const access = resolveAssetAccess(asset, { hasActiveSubscription, isAuthenticated });
+
+            return (
+              <View key={asset.id} style={styles.asset}>
+                <Text style={styles.assetTitle}>{asset.title}</Text>
+                <Text style={styles.assetMeta}>{access.label}</Text>
+                <Text style={styles.assetPath}>{access.canAccess ? asset.path : access.message}</Text>
+              </View>
+            );
+          })
         ) : (
           <View style={styles.asset}>
             <Text style={styles.assetTitle}>Material pendente</Text>

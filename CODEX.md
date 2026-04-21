@@ -1683,3 +1683,34 @@ Checklist DoD:
 Sugestao de commit:
 
 `feat: add remote song detail fallback`
+
+## Proxima Etapa Planejada
+
+Etapa 34 - Gate premium de materiais.
+
+Status: concluida em 2026-04-21.
+
+Objetivo esperado:
+
+- centralizar regra premium
+- bloquear caminho de asset premium sem assinatura
+- preparar RevenueCat futuro
+
+Resultado:
+
+- Criado `src/features/subscription/premium-access.ts`.
+- Criado `src/features/subscription/premium-access.test.ts`.
+- Criado `docs/product/premium-asset-gate.md`.
+- `SongDetail` agora usa regra central para exibir materiais.
+- Assets premium sem assinatura nao exibem o caminho do arquivo.
+
+Checklist DoD:
+
+- [x] Regra premium centralizada.
+- [x] TDD aplicado.
+- [x] UI preservada.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`feat: add premium asset gate`
