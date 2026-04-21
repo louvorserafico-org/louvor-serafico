@@ -107,6 +107,8 @@ Leia primeiro:
 - `docs/product/favorites-preview.md`
 - `docs/product/comments-preview.md`
 - `docs/product/local-persistence.md`
+- `docs/product/supabase-auth-email.md`
+- `docs/product/supabase-session-state.md`
 
 ## Regra De Trabalho
 

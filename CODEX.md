@@ -1094,7 +1094,90 @@ Sugestao de commit:
 
 Etapa 18 - Autenticacao real com Supabase Auth.
 
+Status: concluida em 2026-04-20.
+
 Objetivo esperado:
 
 - Iniciar sessao real por email.
 - Separar preview local de sessao autentica.
+
+Resultado:
+
+- Criado `src/features/auth/email-auth.ts`.
+- Criado `src/features/auth/email-auth.test.ts`.
+- Criado `docs/product/supabase-auth-email.md`.
+- A tela `app/entrar.tsx` agora envia acesso por email via Supabase Auth.
+- O cliente Supabase agora usa AsyncStorage para persistencia nativa de auth.
+- Sessao preview continua separada da autenticacao real.
+
+Testes adicionados:
+
+- normalizacao de email
+- bloqueio de email invalido
+- erro sem cliente
+- mapeamento de erro Supabase
+
+Validacoes executadas:
+
+- `node apps/mobile/src/features/auth/email-auth.test.ts`
+
+Checklist DoD:
+
+- [x] Envio de email implementado.
+- [x] Auth real separado de preview local.
+- [x] Sem sessao remota aplicada no app inteiro ainda.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`feat: add supabase email auth request`
+
+## Proxima Etapa Planejada
+
+Etapa 19 - Sessao real observavel no app.
+
+Status: concluida em 2026-04-20.
+
+Objetivo esperado:
+
+- Ler sessao autenticada do Supabase.
+- Mostrar estado real no Perfil.
+
+Resultado:
+
+- Criado `src/features/auth/supabase-session.ts`.
+- Criado `src/features/auth/supabase-session.test.ts`.
+- Criado `src/features/auth/SupabaseSessionProvider.tsx`.
+- Criado `src/components/SupabaseSessionCard.tsx`.
+- Criado `docs/product/supabase-session-state.md`.
+- A tab `Perfil` agora mostra estado real de sessao autenticada.
+
+Testes adicionados:
+
+- sessao autenticada
+- sessao anonima
+- estado loading
+
+Validacoes executadas:
+
+- `node apps/mobile/src/features/auth/supabase-session.test.ts`
+
+Checklist DoD:
+
+- [x] Sessao real observavel.
+- [x] Perfil mostra estado real.
+- [x] Sem acoplar resto do app ainda.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`feat: observe supabase auth session`
+
+## Proxima Etapa Planejada
+
+Etapa 20 - Perfil remoto inicial.
+
+Objetivo esperado:
+
+- Ler dados basicos do usuario autenticado.
+- Preparar base para perfil e assinatura.
