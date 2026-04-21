@@ -2459,3 +2459,26 @@ Checklist DoD:
 Sugestao de commit:
 
 `feat: add password registration flow`
+
+### Ajuste Da Etapa 49
+
+Status: concluido em 2026-04-21.
+
+Problemas reportados:
+
+- Partitura premium nao abria e exibia `Unsupported JWT algorithm ES256`.
+- Perfil remoto nao atualizava apos login.
+
+Causa:
+
+- A Edge Function usava `admin.auth.getUser(token)`, que falhou com token ES256 neste ambiente.
+- `SupabaseProfileProvider` buscava perfil apenas uma vez no mount, antes da sessao autenticada estar disponivel.
+
+Correcao:
+
+- Edge Function passou a validar o usuario chamando diretamente `auth/v1/user` com o bearer token recebido.
+- `SupabaseProfileProvider` passou a observar `session.status` e `session.userId`, refazendo a leitura apos login.
+
+Limite:
+
+- Se usuarios antigos foram criados antes da migration de profiles, alguns campos podem continuar nulos. Para novos cadastros, o trigger ja esta preparado.

@@ -38,10 +38,10 @@ Deno.serve(async (request) => {
     },
   });
 
-  const { data: userData, error: userError } = await admin.auth.getUser(authorization.replace("Bearer ", ""));
+  const userResult = await fetchAuthenticatedUserId(supabaseUrl, serviceRoleKey, authorization);
 
-  if (userError || !userData.user) {
-    return json({ message: "Sessao invalida." }, 401);
+  if (!userResult.userId) {
+    return json({ message: userResult.message }, 401);
   }
 
   const body = await readJson(request);
@@ -68,7 +68,7 @@ Deno.serve(async (request) => {
     const { data: subscription } = await admin
       .from("subscriptions")
       .select("id")
-      .eq("profile_id", userData.user.id)
+      .eq("profile_id", userResult.userId)
       .eq("status", "active")
       .maybeSingle();
 
@@ -101,6 +101,33 @@ async function readJson(request: Request): Promise<RequestBody> {
   } catch {
     return {};
   }
+}
+
+async function fetchAuthenticatedUserId(
+  supabaseUrl: string,
+  serviceRoleKey: string,
+  authorization: string,
+): Promise<{ message: string; userId: string | null }> {
+  const response = await fetch(`${supabaseUrl}/auth/v1/user`, {
+    headers: {
+      apikey: serviceRoleKey,
+      Authorization: authorization,
+    },
+  });
+
+  if (!response.ok) {
+    return {
+      message: "Sessao invalida.",
+      userId: null,
+    };
+  }
+
+  const body = await response.json();
+
+  return {
+    message: "Sessao valida.",
+    userId: typeof body.id === "string" ? body.id : null,
+  };
 }
 
 function json(body: unknown, status = 200): Response {
