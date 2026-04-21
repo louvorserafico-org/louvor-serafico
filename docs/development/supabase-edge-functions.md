@@ -57,7 +57,7 @@ Resposta de sucesso:
 Comando usado:
 
 ```powershell
-npx supabase functions deploy create-asset-signed-url --project-ref engvbvdtdcveoebgrexl
+npx supabase functions deploy create-asset-signed-url --project-ref engvbvdtdcveoebgrexl --no-verify-jwt
 ```
 
 Status atual:
@@ -65,6 +65,12 @@ Status atual:
 - Supabase CLI autenticado localmente;
 - funcao `create-asset-signed-url` implantada no projeto `engvbvdtdcveoebgrexl`;
 - deploy validado pelo output do CLI em 2026-04-21.
+
+Nota:
+
+- `--no-verify-jwt` e necessario porque o gateway da Edge Function nao aceitou o token ES256 antes da funcao executar;
+- a funcao continua exigindo `Authorization`;
+- a validacao da sessao acontece dentro da funcao via `auth/v1/user`.
 
 ## Validacao Remota
 

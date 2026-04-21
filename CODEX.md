@@ -2478,6 +2478,7 @@ Correcao:
 
 - Edge Function passou a validar o usuario chamando diretamente `auth/v1/user` com o bearer token recebido.
 - `SupabaseProfileProvider` passou a observar `session.status` e `session.userId`, refazendo a leitura apos login.
+- Funcao redeployada com `--no-verify-jwt`, porque o gateway bloqueava tokens ES256 antes da funcao executar.
 
 Limite:
 
