@@ -103,6 +103,7 @@ Leia primeiro:
 - `docs/development/supabase-setup.md`
 - `docs/architecture/supabase-schema-plan.md`
 - `docs/product/auth-flow.md`
+- `docs/product/session-preview.md`
 
 ## Regra De Trabalho
 

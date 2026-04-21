@@ -914,7 +914,51 @@ Sugestao de commit:
 
 Etapa 14 - Sessao fake controlada para favoritos e comentarios.
 
+Status: concluida em 2026-04-20.
+
 Objetivo esperado:
 
 - Preparar estado local de sessao.
 - Liberar UX condicionada sem auth real.
+
+Resultado:
+
+- Criado `src/features/auth/session-gate.ts`.
+- Criado `src/features/auth/session-gate.test.ts`.
+- Criado `src/features/auth/SessionProvider.tsx`.
+- Criado `src/components/SessionPreviewCard.tsx`.
+- Criado `docs/product/session-preview.md`.
+- A tab `Perfil` agora ativa e encerra sessao teste.
+- A tela de musica mostra gate de favoritos.
+- A tab `Comunidade` reage ao estado da sessao teste.
+
+Testes adicionados:
+
+- Happy path para sessao ativa.
+- Edge case para estado guest.
+- Caso de erro substituido por estado booting controlado.
+
+Validacoes executadas:
+
+- `node apps/mobile/src/features/auth/session-gate.test.ts`
+
+Checklist DoD:
+
+- [x] Sessao local implementada.
+- [x] UX condicionada aplicada.
+- [x] Sem auth real nesta etapa.
+- [x] Sem persistencia nesta etapa.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`feat: add local session preview gates`
+
+## Proxima Etapa Planejada
+
+Etapa 15 - Favoritos locais com estado em memoria.
+
+Objetivo esperado:
+
+- Permitir favoritar musicas localmente.
+- Refletir estado em Repertorio e detalhe.

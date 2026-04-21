@@ -1,14 +1,17 @@
 import { findSongBySlug } from "@louvor-serafico/shared";
 import { Stack, useLocalSearchParams } from "expo-router";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { PageHeader } from "@/components/PageHeader";
 import { SectionTitle } from "@/components/SectionTitle";
+import { useSessionPreview } from "@/features/auth/SessionProvider";
 import { colors, spacing, typography } from "@/theme/tokens";
 
 export default function SongDetailScreen() {
   const params = useLocalSearchParams<{ slug: string }>();
   const song = findSongBySlug(params.slug ?? "");
+  const { session } = useSessionPreview();
+  const canFavorite = session.status === "signed_in";
 
   if (!song) {
     return (
@@ -33,6 +36,20 @@ export default function SongDetailScreen() {
       />
 
       <SectionTitle title="Materiais" />
+
+      <View style={[styles.favoriteCard, canFavorite ? styles.favoriteReady : styles.favoriteBlocked]}>
+        <Text style={styles.assetTitle}>{canFavorite ? "Favoritos liberados" : "Favoritos bloqueados"}</Text>
+        <Text style={styles.assetMeta}>
+          {canFavorite
+            ? "Sessao teste ativa. Proxima etapa pode salvar favoritos locais."
+            : "Ative sessao teste em Perfil para liberar fluxo protegido."}
+        </Text>
+        <Pressable disabled style={[styles.favoriteButton, !canFavorite ? styles.favoriteButtonDisabled : undefined]}>
+          <Text style={[styles.favoriteButtonText, !canFavorite ? styles.favoriteButtonTextDisabled : undefined]}>
+            {canFavorite ? "Salvar nos favoritos" : "Sessao necessaria"}
+          </Text>
+        </Pressable>
+      </View>
 
       <View style={styles.list}>
         {song.assets.length > 0 ? (
@@ -82,6 +99,42 @@ const styles = StyleSheet.create({
     gap: spacing.lg,
     padding: spacing.xl,
     paddingBottom: spacing.xxl,
+  },
+  favoriteBlocked: {
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+  },
+  favoriteButton: {
+    alignSelf: "flex-start",
+    backgroundColor: colors.olive,
+    borderColor: colors.olive,
+    borderRadius: 8,
+    borderWidth: 1,
+    marginTop: spacing.sm,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+  },
+  favoriteButtonDisabled: {
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+  },
+  favoriteButtonText: {
+    color: colors.background,
+    fontSize: typography.caption,
+    fontWeight: "700",
+  },
+  favoriteButtonTextDisabled: {
+    color: colors.textMuted,
+  },
+  favoriteCard: {
+    borderRadius: 8,
+    borderWidth: 1,
+    gap: spacing.xs,
+    padding: spacing.md,
+  },
+  favoriteReady: {
+    backgroundColor: colors.oliveSoft,
+    borderColor: colors.olive,
   },
   list: {
     gap: spacing.md,
