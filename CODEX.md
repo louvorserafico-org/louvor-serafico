@@ -1000,7 +1000,48 @@ Sugestao de commit:
 
 Etapa 16 - Comentarios locais guiados por sessao.
 
+Status: concluida em 2026-04-20.
+
 Objetivo esperado:
 
 - Liberar composicao basica de comentario.
 - Manter tudo local e controlado.
+
+Resultado:
+
+- Criado `src/features/comments/comment-store.ts`.
+- Criado `src/features/comments/comment-store.test.ts`.
+- Criado `src/features/comments/CommentsProvider.tsx`.
+- Criado `docs/product/comments-preview.md`.
+- A tab `Comunidade` agora permite comentar com sessao teste ativa.
+- Comentarios novos entram no topo da lista local.
+
+Testes adicionados:
+
+- Happy path para comentario valido.
+- Edge case para corpo vazio.
+- Caso de erro para autor vazio.
+
+Validacoes executadas:
+
+- `node apps/mobile/src/features/comments/comment-store.test.ts`
+
+Checklist DoD:
+
+- [x] Comentarios locais implementados.
+- [x] Gate por sessao aplicado.
+- [x] Sem persistencia nesta etapa.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`feat: add local comments preview`
+
+## Proxima Etapa Planejada
+
+Etapa 17 - Persistencia local de sessao, favoritos e comentarios.
+
+Objetivo esperado:
+
+- Manter preview entre reloads.
+- Continuar sem backend real nesses fluxos.

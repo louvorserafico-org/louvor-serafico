@@ -1,17 +1,17 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { useState } from "react";
+import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 
 import { PageHeader } from "@/components/PageHeader";
 import { useSessionPreview } from "@/features/auth/SessionProvider";
+import { useCommentsPreview } from "@/features/comments/CommentsProvider";
 import { colors, spacing, typography } from "@/theme/tokens";
-
-const comments = [
-  "Usamos este salmo no ensaio de quarta e funcionou muito bem com assembleia.",
-  "Comunhao ficou melhor um tom abaixo para comunidade acompanhar.",
-];
 
 export default function CommunityScreen() {
   const { session } = useSessionPreview();
+  const { comments, addCommunityComment } = useCommentsPreview();
   const canComment = session.status === "signed_in";
+  const [draft, setDraft] = useState("");
+  const canSubmit = canComment && draft.trim().length > 0;
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -25,14 +25,45 @@ export default function CommunityScreen() {
         <Text style={styles.panelTitle}>{canComment ? "Comentarios liberados" : "Comentarios bloqueados"}</Text>
         <Text style={styles.panelText}>
           {canComment
-            ? "Sessao local ativa. Proxima etapa pode liberar formulario de comentario."
+            ? "Sessao local ativa. Comentario local liberado para validacao de UX."
             : "Ative sessao teste em Perfil para liberar UX condicionada."}
         </Text>
       </View>
 
+      <View style={styles.formCard}>
+        <Text style={styles.panelTitle}>Novo comentario</Text>
+        <TextInput
+          editable={canComment}
+          multiline
+          onChangeText={setDraft}
+          placeholder="Compartilhe experiencia musical deste repertorio."
+          placeholderTextColor={colors.textMuted}
+          style={[styles.input, !canComment ? styles.inputDisabled : undefined]}
+          value={draft}
+        />
+        <Pressable
+          disabled={!canSubmit}
+          onPress={() => {
+            if (session.status === "signed_in" && draft.trim()) {
+              addCommunityComment({
+                authorName: session.displayName,
+                body: draft,
+              });
+              setDraft("");
+            }
+          }}
+          style={[styles.button, !canSubmit ? styles.buttonDisabled : undefined]}
+        >
+          <Text style={[styles.buttonText, !canSubmit ? styles.buttonTextDisabled : undefined]}>
+            {canComment ? "Publicar comentario" : "Sessao necessaria"}
+          </Text>
+        </Pressable>
+      </View>
+
       {comments.map((comment) => (
-        <View key={comment} style={styles.comment}>
-          <Text style={styles.commentText}>{comment}</Text>
+        <View key={comment.id} style={styles.comment}>
+          <Text style={styles.commentAuthor}>{comment.authorName}</Text>
+          <Text style={styles.commentText}>{comment.body}</Text>
         </View>
       ))}
     </ScrollView>
@@ -40,12 +71,40 @@ export default function CommunityScreen() {
 }
 
 const styles = StyleSheet.create({
+  button: {
+    alignSelf: "flex-start",
+    backgroundColor: colors.olive,
+    borderColor: colors.olive,
+    borderRadius: 8,
+    borderWidth: 1,
+    marginTop: spacing.sm,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+  },
+  buttonDisabled: {
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+  },
+  buttonText: {
+    color: colors.background,
+    fontSize: typography.caption,
+    fontWeight: "700",
+  },
+  buttonTextDisabled: {
+    color: colors.textMuted,
+  },
   comment: {
     backgroundColor: colors.surface,
     borderColor: colors.border,
     borderRadius: 8,
     borderWidth: 1,
+    gap: spacing.xs,
     padding: spacing.md,
+  },
+  commentAuthor: {
+    color: colors.textPrimary,
+    fontSize: typography.caption,
+    fontWeight: "800",
   },
   commentText: {
     color: colors.textSecondary,
@@ -57,6 +116,27 @@ const styles = StyleSheet.create({
     gap: spacing.lg,
     padding: spacing.xl,
     paddingBottom: spacing.xxl,
+  },
+  formCard: {
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    borderRadius: 8,
+    borderWidth: 1,
+    gap: spacing.xs,
+    padding: spacing.md,
+  },
+  input: {
+    borderColor: colors.border,
+    borderRadius: 8,
+    borderWidth: 1,
+    color: colors.textPrimary,
+    fontSize: typography.caption,
+    minHeight: 96,
+    padding: spacing.md,
+    textAlignVertical: "top",
+  },
+  inputDisabled: {
+    color: colors.textMuted,
   },
   panel: {
     backgroundColor: colors.oliveSoft,

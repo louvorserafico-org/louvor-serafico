@@ -8,7 +8,7 @@
     "dev": "corepack pnpm --filter @louvor-serafico/mobile start",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "lint": "node --check packages/shared/src/index.ts && node --check apps/mobile/metro.config.js",
-    "test": "node packages/shared/src/mass-template.test.ts && node packages/shared/src/celebration.test.ts && node apps/mobile/src/services/supabase/config.test.ts && node apps/mobile/src/services/supabase/remote-status.test.ts && node apps/mobile/src/features/auth/auth-readiness.test.ts && node apps/mobile/src/features/auth/session-gate.test.ts && node apps/mobile/src/features/favorites/favorite-store.test.ts",
+    "test": "node packages/shared/src/mass-template.test.ts && node packages/shared/src/celebration.test.ts && node apps/mobile/src/services/supabase/config.test.ts && node apps/mobile/src/services/supabase/remote-status.test.ts && node apps/mobile/src/features/auth/auth-readiness.test.ts && node apps/mobile/src/features/auth/session-gate.test.ts && node apps/mobile/src/features/favorites/favorite-store.test.ts && node apps/mobile/src/features/comments/comment-store.test.ts",
     "typecheck": "node node_modules/typescript/bin/tsc --noEmit -p packages/shared/tsconfig.json && node node_modules/typescript/bin/tsc --noEmit -p apps/mobile/tsconfig.json"
   },
   "devDependencies": {

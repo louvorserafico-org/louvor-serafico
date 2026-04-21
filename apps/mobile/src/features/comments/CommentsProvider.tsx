@@ -1,0 +1,50 @@
+import { createContext, useContext, useMemo, useState, type PropsWithChildren } from "react";
+
+import { createLocalComment, type LocalComment } from "./comment-store";
+
+type CommentsContextValue = {
+  comments: LocalComment[];
+  addCommunityComment: (input: { authorName: string; body: string }) => void;
+};
+
+const initialComments: LocalComment[] = [
+  {
+    authorName: "Coral Sao Miguel",
+    body: "Usamos este salmo no ensaio de quarta e funcionou muito bem com assembleia.",
+    id: "comment-initial-1",
+    scope: "community",
+  },
+  {
+    authorName: "Equipe de canto",
+    body: "Comunhao ficou melhor um tom abaixo para comunidade acompanhar.",
+    id: "comment-initial-2",
+    scope: "community",
+  },
+];
+
+const CommentsContext = createContext<CommentsContextValue | null>(null);
+
+export function CommentsProvider({ children }: PropsWithChildren) {
+  const [comments, setComments] = useState<LocalComment[]>(initialComments);
+
+  const value = useMemo<CommentsContextValue>(
+    () => ({
+      comments,
+      addCommunityComment: (input) =>
+        setComments((currentComments) => [createLocalComment(input), ...currentComments]),
+    }),
+    [comments],
+  );
+
+  return <CommentsContext.Provider value={value}>{children}</CommentsContext.Provider>;
+}
+
+export function useCommentsPreview() {
+  const context = useContext(CommentsContext);
+
+  if (!context) {
+    throw new Error("useCommentsPreview must run inside CommentsProvider.");
+  }
+
+  return context;
+}

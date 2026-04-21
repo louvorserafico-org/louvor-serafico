@@ -105,6 +105,7 @@ Leia primeiro:
 - `docs/product/auth-flow.md`
 - `docs/product/session-preview.md`
 - `docs/product/favorites-preview.md`
+- `docs/product/comments-preview.md`
 
 ## Regra De Trabalho
 
