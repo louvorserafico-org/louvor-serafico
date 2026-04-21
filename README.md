@@ -101,6 +101,7 @@ Leia primeiro:
 - `docs/development/local-environment.md`
 - `docs/development/ci.md`
 - `docs/development/supabase-setup.md`
+- `docs/development/auth-deep-links.md`
 - `docs/development/supabase-edge-functions.md`
 - `docs/development/supabase-storage.md`
 - `docs/development/upload-song-assets.md`

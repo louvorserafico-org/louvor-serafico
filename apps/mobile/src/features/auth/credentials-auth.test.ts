@@ -145,12 +145,14 @@ describe("credentials auth", () => {
 
   it("requests password reset with normalized email", async () => {
     let email = "";
+    let options: unknown = null;
 
     const result = await requestPasswordReset(
       {
         auth: {
-          resetPasswordForEmail: async (nextEmail) => {
+          resetPasswordForEmail: async (nextEmail, nextOptions) => {
             email = nextEmail;
+            options = nextOptions;
             return { data: {}, error: null };
           },
           signInWithPassword: async () => ({ data: {}, error: null }),
@@ -158,9 +160,13 @@ describe("credentials auth", () => {
         },
       },
       "  Frei@Example.com ",
+      "louvor-serafico://recuperar-senha",
     );
 
     assert.equal(email, "frei@example.com");
+    assert.deepEqual(options, {
+      redirectTo: "louvor-serafico://recuperar-senha",
+    });
     assert.deepEqual(result, {
       message: "Email de recuperacao enviado.",
       status: "success",

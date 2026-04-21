@@ -1,6 +1,6 @@
 type CredentialsClient = {
   auth: {
-    resetPasswordForEmail: (email: string) => Promise<AuthResponse>;
+    resetPasswordForEmail: (email: string, options?: { redirectTo?: string }) => Promise<AuthResponse>;
     signInWithPassword: (payload: { email: string; password: string }) => Promise<AuthResponse>;
     signUp: (payload: {
       email: string;
@@ -152,6 +152,7 @@ export async function signInWithPassword(
 export async function requestPasswordReset(
   client: CredentialsClient | null,
   emailInput: string,
+  redirectTo?: string,
 ): Promise<CredentialsAuthResult> {
   const email = normalizeAuthEmail(emailInput);
 
@@ -169,7 +170,14 @@ export async function requestPasswordReset(
     };
   }
 
-  const { error } = await client.auth.resetPasswordForEmail(email);
+  const { error } = await client.auth.resetPasswordForEmail(
+    email,
+    redirectTo
+      ? {
+          redirectTo,
+        }
+      : undefined,
+  );
 
   if (error) {
     return {

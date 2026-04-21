@@ -55,6 +55,7 @@ Status remoto:
 - Login usa `signInWithPassword`.
 - Cadastro usa `signUp` com metadata.
 - Recuperacao inicial usa `resetPasswordForEmail` a partir do email digitado no login.
+- Recuperacao envia `redirectTo` para `louvor-serafico://recuperar-senha`.
 
 ## Fora Do Escopo Agora
 

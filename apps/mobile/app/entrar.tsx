@@ -2,6 +2,7 @@ import { useState, type ComponentProps } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 
 import { PageHeader } from "@/components/PageHeader";
+import { getAuthRedirectUrl } from "@/features/auth/auth-deep-link";
 import {
   registerWithPassword,
   requestPasswordReset,
@@ -84,7 +85,11 @@ export default function SignInScreen() {
             disabled={submitting}
             onPress={async () => {
               setSubmitting(true);
-              const nextResult = await requestPasswordReset(supabase, loginEmail);
+              const nextResult = await requestPasswordReset(
+                supabase,
+                loginEmail,
+                getAuthRedirectUrl("passwordRecovery"),
+              );
               setResult(nextResult);
               setSubmitting(false);
             }}

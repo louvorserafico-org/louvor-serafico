@@ -2568,3 +2568,47 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 52 - Definir deep links de autenticacao.
+
+Status: concluida em 2026-04-21.
+
+Objetivo esperado:
+
+- definir URLs de retorno para autenticacao;
+- enviar `redirectTo` no fluxo de recuperacao de senha;
+- documentar configuracao necessaria no Supabase.
+
+Resultado:
+
+- Criado `src/features/auth/auth-deep-link.ts`.
+- Criado `src/features/auth/auth-deep-link.test.ts`.
+- `requestPasswordReset` agora aceita `redirectTo`.
+- Tela `Entrar` envia `louvor-serafico://recuperar-senha` no reset de senha.
+- Criado `docs/development/auth-deep-links.md`.
+- README e `docs/product/auth-flow.md` atualizados.
+
+Decisoes tecnicas e trade-offs:
+
+- O scheme usado foi o ja existente em `app.json`: `louvor-serafico`.
+- A etapa definiu tambem `louvor-serafico://auth/callback` como URL futura para callbacks gerais.
+- A rota `recuperar-senha` ainda nao foi implementada. Isso evita misturar contrato de URL com tela de redefinicao de senha.
+
+Hurdles & Fixes:
+
+- Nenhum bloqueio tecnico encontrado.
+
+Checklist DoD:
+
+- [x] TDD aplicado.
+- [x] Fluxo de reset usa redirect.
+- [x] Documentacao viva atualizada.
+- [x] Testes passam.
+- [x] Typecheck passa.
+- [x] Lint passa.
+
+Sugestao de commit:
+
+`feat: define auth deep links`
+
+## Proxima Etapa Planejada
+
+Etapa 53 - Tela de redefinicao de senha.
