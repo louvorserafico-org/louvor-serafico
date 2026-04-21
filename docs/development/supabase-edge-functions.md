@@ -66,6 +66,43 @@ Status atual:
 - funcao `create-asset-signed-url` implantada no projeto `engvbvdtdcveoebgrexl`;
 - deploy validado pelo output do CLI em 2026-04-21.
 
+## Validacao Remota
+
+Comando usado para listar funcoes:
+
+```powershell
+npx supabase functions list --project-ref engvbvdtdcveoebgrexl
+```
+
+Resultado esperado:
+
+- `create-asset-signed-url`;
+- status `ACTIVE`.
+
+Smoke test sem autenticacao:
+
+```powershell
+Invoke-WebRequest -Uri "https://engvbvdtdcveoebgrexl.functions.supabase.co/create-asset-signed-url" -Method Post -ContentType "application/json" -Body '{"assetId":"00000000-0000-0000-0000-000000000000"}'
+```
+
+Resultado observado:
+
+- HTTP `401`;
+- mensagem do gateway: `Missing authorization header`.
+
+Esse resultado e esperado. A plataforma bloqueia a chamada sem `Authorization` antes da funcao executar.
+
+Smoke test de preflight:
+
+```powershell
+Invoke-WebRequest -Uri "https://engvbvdtdcveoebgrexl.functions.supabase.co/create-asset-signed-url" -Method Options
+```
+
+Resultado observado:
+
+- HTTP `200`;
+- body `ok`.
+
 Secrets esperados no ambiente Supabase:
 
 - `SUPABASE_URL`;

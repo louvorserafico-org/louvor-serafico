@@ -2274,3 +2274,44 @@ Checklist DoD:
 Sugestao de commit:
 
 `docs: record edge function deployment`
+
+## Proxima Etapa Planejada
+
+Etapa 46 - Validacao remota da Edge Function.
+
+Status: concluida em 2026-04-21.
+
+Objetivo esperado:
+
+- confirmar que a funcao implantada esta ativa no Supabase;
+- validar comportamento remoto sem sessao;
+- confirmar preflight CORS basico.
+
+Resultado:
+
+- `npx supabase functions list --project-ref engvbvdtdcveoebgrexl` confirmou `create-asset-signed-url` com status `ACTIVE`.
+- POST remoto sem `Authorization` retornou HTTP 401.
+- A mensagem retornada foi do gateway Supabase: `Missing authorization header`.
+- OPTIONS remoto retornou HTTP 200 com body `ok`.
+- `docs/development/supabase-edge-functions.md` atualizado com a validacao remota.
+
+Decisoes tecnicas e trade-offs:
+
+- A chamada sem sessao deve falhar antes de chegar ao fluxo de negocio. Isso e correto para o endpoint.
+- Nao testamos ainda signed URL real porque depende de usuario autenticado, asset remoto com `storage_path`, arquivo no bucket e assinatura ativa quando premium.
+
+Hurdles & Fixes:
+
+- `Invoke-WebRequest -SkipHttpErrorCheck` nao estava disponivel nesta versao do PowerShell.
+- Ajustamos a leitura do erro via exception response stream.
+
+Checklist DoD:
+
+- [x] Funcao listada como ativa.
+- [x] Falha sem auth validada.
+- [x] Preflight validado.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`docs: record edge function smoke test`
