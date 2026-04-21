@@ -1408,3 +1408,31 @@ Checklist DoD:
 Sugestao de commit:
 
 `feat: scaffold initial supabase schema migration`
+
+## Proxima Etapa Planejada
+
+Etapa 25 - Seed remoto inicial.
+
+Status: concluida em 2026-04-20.
+
+Objetivo esperado:
+
+- Preparar dados iniciais no projeto remoto.
+- Alinhar base local e base remota.
+
+Resultado:
+
+- Criado `supabase/seed.sql`.
+- Criado `docs/architecture/remote-seed-bootstrap.md`.
+- Seed cobre season, moments, songs, assets, celebration e recommendations.
+- Seed foi preparado de forma idempotente com `on conflict` e `where not exists`.
+
+Checklist DoD:
+
+- [x] Seed inicial preparado.
+- [x] Arquivo documentado.
+- [ ] Seed aplicado no projeto remoto.
+
+Sugestao de commit:
+
+`feat: add initial remote seed data`

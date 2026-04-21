@@ -103,6 +103,7 @@ Leia primeiro:
 - `docs/development/supabase-setup.md`
 - `docs/architecture/supabase-schema-plan.md`
 - `docs/architecture/remote-schema-bootstrap.md`
+- `docs/architecture/remote-seed-bootstrap.md`
 - `docs/product/auth-flow.md`
 - `docs/product/session-preview.md`
 - `docs/product/favorites-preview.md`
