@@ -958,7 +958,49 @@ Sugestao de commit:
 
 Etapa 15 - Favoritos locais com estado em memoria.
 
+Status: concluida em 2026-04-20.
+
 Objetivo esperado:
 
 - Permitir favoritar musicas localmente.
 - Refletir estado em Repertorio e detalhe.
+
+Resultado:
+
+- Criado `src/features/favorites/favorite-store.ts`.
+- Criado `src/features/favorites/favorite-store.test.ts`.
+- Criado `src/features/favorites/FavoritesProvider.tsx`.
+- Criado `docs/product/favorites-preview.md`.
+- O detalhe da musica agora salva e remove favoritos locais.
+- A tab `Repertorio` mostra contagem local de favoritos.
+- `SongCard` mostra selo visual para musica favoritada.
+
+Testes adicionados:
+
+- Happy path para favorito novo.
+- Edge case para remocao.
+- Caso de consistencia para ids unicos.
+
+Validacoes executadas:
+
+- `node apps/mobile/src/features/favorites/favorite-store.test.ts`
+
+Checklist DoD:
+
+- [x] Favoritos locais implementados.
+- [x] Estado refletido em lista e detalhe.
+- [x] Sem persistencia nesta etapa.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`feat: add in-memory favorites`
+
+## Proxima Etapa Planejada
+
+Etapa 16 - Comentarios locais guiados por sessao.
+
+Objetivo esperado:
+
+- Liberar composicao basica de comentario.
+- Manter tudo local e controlado.

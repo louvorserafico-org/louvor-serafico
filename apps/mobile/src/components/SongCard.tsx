@@ -2,6 +2,7 @@ import type { Song } from "@louvor-serafico/shared";
 import { Link } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
+import { useFavorites } from "@/features/favorites/FavoritesProvider";
 import { colors, spacing, typography } from "@/theme/tokens";
 
 type SongCardProps = {
@@ -10,12 +11,17 @@ type SongCardProps = {
 
 export function SongCard({ song }: SongCardProps) {
   const hasAssets = song.assets.length > 0;
+  const { isFavoriteSong } = useFavorites();
+  const isFavorite = isFavoriteSong(song.id);
 
   return (
     <Link asChild href={`/musicas/${song.slug}`}>
       <Pressable style={({ pressed }) => [styles.card, pressed && styles.pressed]}>
         <View style={styles.content}>
-          <Text style={styles.title}>{song.title}</Text>
+          <View style={styles.row}>
+            <Text style={styles.title}>{song.title}</Text>
+            {isFavorite ? <Text style={styles.favorite}>Favorito</Text> : null}
+          </View>
           <Text style={styles.meta}>
             {hasAssets ? `${song.assets.length} material premium` : "Material pendente"}
           </Text>
@@ -52,6 +58,17 @@ const styles = StyleSheet.create({
   },
   pressed: {
     opacity: 0.82,
+  },
+  row: {
+    alignItems: "center",
+    flexDirection: "row",
+    gap: spacing.sm,
+    justifyContent: "space-between",
+  },
+  favorite: {
+    color: colors.olive,
+    fontSize: typography.caption,
+    fontWeight: "800",
   },
   title: {
     color: colors.textPrimary,

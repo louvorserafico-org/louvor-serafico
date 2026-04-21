@@ -3,18 +3,20 @@ import { ScrollView, StyleSheet, View } from "react-native";
 
 import { PageHeader } from "@/components/PageHeader";
 import { SectionTitle } from "@/components/SectionTitle";
+import { useFavorites } from "@/features/favorites/FavoritesProvider";
 import { SongCard } from "@/components/SongCard";
 import { colors, spacing } from "@/theme/tokens";
 
 export default function RepertoireScreen() {
   const songs = getInitialSongCatalog();
+  const { favoriteSongIds } = useFavorites();
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <PageHeader
         eyebrow={`${songs.length} cantos`}
         title="Repertorio"
-        subtitle="Cantos iniciais da Missa do Santissimo Nome de Jesus."
+        subtitle={`${favoriteSongIds.length} favorito(s) local(is) no catalogo inicial.`}
       />
 
       <SectionTitle title="Catalogo inicial" />

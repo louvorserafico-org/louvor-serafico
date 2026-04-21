@@ -104,6 +104,7 @@ Leia primeiro:
 - `docs/architecture/supabase-schema-plan.md`
 - `docs/product/auth-flow.md`
 - `docs/product/session-preview.md`
+- `docs/product/favorites-preview.md`
 
 ## Regra De Trabalho
 

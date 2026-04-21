@@ -5,12 +5,14 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { PageHeader } from "@/components/PageHeader";
 import { SectionTitle } from "@/components/SectionTitle";
 import { useSessionPreview } from "@/features/auth/SessionProvider";
+import { useFavorites } from "@/features/favorites/FavoritesProvider";
 import { colors, spacing, typography } from "@/theme/tokens";
 
 export default function SongDetailScreen() {
   const params = useLocalSearchParams<{ slug: string }>();
   const song = findSongBySlug(params.slug ?? "");
   const { session } = useSessionPreview();
+  const { isFavoriteSong, toggleSongFavorite } = useFavorites();
   const canFavorite = session.status === "signed_in";
 
   if (!song) {
@@ -25,6 +27,8 @@ export default function SongDetailScreen() {
       </ScrollView>
     );
   }
+
+  const isFavorite = isFavoriteSong(song.id);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -41,12 +45,16 @@ export default function SongDetailScreen() {
         <Text style={styles.assetTitle}>{canFavorite ? "Favoritos liberados" : "Favoritos bloqueados"}</Text>
         <Text style={styles.assetMeta}>
           {canFavorite
-            ? "Sessao teste ativa. Proxima etapa pode salvar favoritos locais."
+            ? "Sessao teste ativa. Favorito local liberado."
             : "Ative sessao teste em Perfil para liberar fluxo protegido."}
         </Text>
-        <Pressable disabled style={[styles.favoriteButton, !canFavorite ? styles.favoriteButtonDisabled : undefined]}>
+        <Pressable
+          disabled={!canFavorite}
+          onPress={() => toggleSongFavorite(song.id)}
+          style={[styles.favoriteButton, !canFavorite ? styles.favoriteButtonDisabled : undefined]}
+        >
           <Text style={[styles.favoriteButtonText, !canFavorite ? styles.favoriteButtonTextDisabled : undefined]}>
-            {canFavorite ? "Salvar nos favoritos" : "Sessao necessaria"}
+            {canFavorite ? (isFavorite ? "Remover dos favoritos" : "Salvar nos favoritos") : "Sessao necessaria"}
           </Text>
         </Pressable>
       </View>
