@@ -1622,3 +1622,33 @@ Checklist DoD:
 Sugestao de commit:
 
 `feat: add remote favorite toggle flow`
+
+## Proxima Etapa Planejada
+
+Etapa 32 - Detalhe remoto de celebracao.
+
+Status: concluida em 2026-04-20.
+
+Objetivo esperado:
+
+- carregar celebracao remota por slug
+- manter fallback local
+
+Resultado:
+
+- Criado `src/features/celebrations/remote-celebration-detail.ts`.
+- Criado `src/features/celebrations/remote-celebration-detail.test.ts`.
+- Criado `docs/product/remote-celebration-detail.md`.
+- `CelebrationDetail` agora tenta remoto antes do local.
+- `packages/shared` agora expõe busca local por slug.
+
+Checklist DoD:
+
+- [x] Leitura remota preparada.
+- [x] Fallback local preservado.
+- [x] TDD aplicado.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`feat: add remote celebration detail fallback`
