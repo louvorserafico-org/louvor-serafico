@@ -119,6 +119,7 @@ Leia primeiro:
 - `docs/product/remote-song-detail.md`
 - `docs/product/premium-asset-gate.md`
 - `docs/product/subscription-preview.md`
+- `docs/product/revenuecat-readiness.md`
 - `docs/product/remote-songs.md`
 - `docs/product/remote-celebrations.md`
 - `docs/product/remote-fallback-catalogs.md`

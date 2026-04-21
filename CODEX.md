@@ -1746,3 +1746,34 @@ Checklist DoD:
 Sugestao de commit:
 
 `feat: add subscription preview state`
+
+## Proxima Etapa Planejada
+
+Etapa 36 - Preparacao RevenueCat.
+
+Status: concluida em 2026-04-21.
+
+Objetivo esperado:
+
+- preparar variaveis RevenueCat
+- manter Expo Go funcionando
+- evitar dependencia nativa prematura
+
+Resultado:
+
+- Criado `src/features/subscription/revenuecat-config.ts`.
+- Criado `src/features/subscription/revenuecat-config.test.ts`.
+- Criado `docs/product/revenuecat-readiness.md`.
+- `.env.example` recebeu chaves publicas futuras do RevenueCat.
+- SDK RevenueCat nao foi instalado nesta etapa porque exige development build.
+
+Checklist DoD:
+
+- [x] Configuracao futura preparada.
+- [x] Expo Go preservado.
+- [x] TDD aplicado.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`chore: prepare revenuecat configuration`
