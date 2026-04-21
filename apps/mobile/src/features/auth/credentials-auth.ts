@@ -1,5 +1,6 @@
 type CredentialsClient = {
   auth: {
+    resetPasswordForEmail: (email: string) => Promise<AuthResponse>;
     signInWithPassword: (payload: { email: string; password: string }) => Promise<AuthResponse>;
     signUp: (payload: {
       email: string;
@@ -144,6 +145,41 @@ export async function signInWithPassword(
 
   return {
     message: "Login realizado.",
+    status: "success",
+  };
+}
+
+export async function requestPasswordReset(
+  client: CredentialsClient | null,
+  emailInput: string,
+): Promise<CredentialsAuthResult> {
+  const email = normalizeAuthEmail(emailInput);
+
+  if (!isValidEmail(email)) {
+    return {
+      message: "Digite um email valido para recuperar a senha.",
+      status: "error",
+    };
+  }
+
+  if (!client) {
+    return {
+      message: "Cliente Supabase indisponivel para recuperacao.",
+      status: "error",
+    };
+  }
+
+  const { error } = await client.auth.resetPasswordForEmail(email);
+
+  if (error) {
+    return {
+      message: error.message,
+      status: "error",
+    };
+  }
+
+  return {
+    message: "Email de recuperacao enviado.",
     status: "success",
   };
 }

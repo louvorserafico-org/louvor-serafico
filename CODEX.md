@@ -2522,3 +2522,49 @@ Checklist DoD:
 Sugestao de commit:
 
 `feat: add supabase sign out action`
+
+## Proxima Etapa Planejada
+
+Etapa 51 - Recuperacao inicial de senha.
+
+Status: concluida em 2026-04-21.
+
+Objetivo esperado:
+
+- permitir solicitar recuperacao de senha por email;
+- manter o fluxo compativel com Expo Go;
+- evitar criar deep link antes de definir URLs finais do app.
+
+Resultado:
+
+- `requestPasswordReset` foi adicionado ao modulo de autenticacao por credenciais.
+- Testes cobrem email normalizado e email invalido antes de chamar Supabase.
+- Tela `Entrar` recebeu a acao `Esqueci minha senha`.
+- `docs/product/auth-flow.md` foi atualizado.
+
+Decisoes tecnicas e trade-offs:
+
+- A etapa usa `resetPasswordForEmail` sem `redirectTo`. Isso permite validar o envio pelo Supabase sem amarrar agora um deep link final.
+- A tela interna para trocar senha apos abrir o link fica fora deste passo, porque depende da estrategia definitiva de URL/deep link.
+- Alternativa rejeitada: implementar reset completo no app agora. Seria maior que o necessario para a etapa atual.
+
+Hurdles & Fixes:
+
+- O primeiro typecheck falhou porque a UI usava uma cor inexistente (`colors.wine`). Corrigido para `colors.accent`.
+
+Checklist DoD:
+
+- [x] TDD aplicado.
+- [x] UI integrada.
+- [x] Testes passam.
+- [x] Typecheck passa.
+- [x] Lint passa.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: add password reset request`
+
+## Proxima Etapa Planejada
+
+Etapa 52 - Definir deep links de autenticacao.

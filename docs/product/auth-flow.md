@@ -54,10 +54,11 @@ Status remoto:
 - Tela `Entrar` alterna entre login e cadastro.
 - Login usa `signInWithPassword`.
 - Cadastro usa `signUp` com metadata.
+- Recuperacao inicial usa `resetPasswordForEmail` a partir do email digitado no login.
 
 ## Fora Do Escopo Agora
 
-- recuperacao de conta
+- tela interna de redefinicao de senha via deep link
 - login social
 - refresh token manual
 - onboarding autenticado

@@ -6,6 +6,7 @@ import {
   normalizeAuthEmail,
   normalizePhone,
   registerWithPassword,
+  requestPasswordReset,
   signInWithPassword,
   type RegistrationForm,
 } from "./credentials-auth.ts";
@@ -28,6 +29,7 @@ describe("credentials auth", () => {
     const result = await registerWithPassword(
       {
         auth: {
+          resetPasswordForEmail: async () => ({ data: {}, error: null }),
           signInWithPassword: async () => ({ data: {}, error: null }),
           signUp: async (nextPayload) => {
             payload = nextPayload;
@@ -62,6 +64,7 @@ describe("credentials auth", () => {
     const result = await registerWithPassword(
       {
         auth: {
+          resetPasswordForEmail: async () => ({ data: {}, error: null }),
           signInWithPassword: async () => ({ data: {}, error: null }),
           signUp: async () => {
             throw new Error("should not run");
@@ -83,6 +86,7 @@ describe("credentials auth", () => {
     const result = await signInWithPassword(
       {
         auth: {
+          resetPasswordForEmail: async () => ({ data: {}, error: null }),
           signInWithPassword: async (nextPayload) => {
             payload = nextPayload;
             return { data: {}, error: null };
@@ -108,6 +112,7 @@ describe("credentials auth", () => {
     const result = await signInWithPassword(
       {
         auth: {
+          resetPasswordForEmail: async () => ({ data: {}, error: null }),
           signInWithPassword: async () => ({
             data: {},
             error: { message: "Invalid login credentials" },
@@ -135,6 +140,50 @@ describe("credentials auth", () => {
       parish: null,
       phone: "24999990000",
       state: "RJ",
+    });
+  });
+
+  it("requests password reset with normalized email", async () => {
+    let email = "";
+
+    const result = await requestPasswordReset(
+      {
+        auth: {
+          resetPasswordForEmail: async (nextEmail) => {
+            email = nextEmail;
+            return { data: {}, error: null };
+          },
+          signInWithPassword: async () => ({ data: {}, error: null }),
+          signUp: async () => ({ data: {}, error: null }),
+        },
+      },
+      "  Frei@Example.com ",
+    );
+
+    assert.equal(email, "frei@example.com");
+    assert.deepEqual(result, {
+      message: "Email de recuperacao enviado.",
+      status: "success",
+    });
+  });
+
+  it("blocks invalid reset email before calling Supabase", async () => {
+    const result = await requestPasswordReset(
+      {
+        auth: {
+          resetPasswordForEmail: async () => {
+            throw new Error("should not run");
+          },
+          signInWithPassword: async () => ({ data: {}, error: null }),
+          signUp: async () => ({ data: {}, error: null }),
+        },
+      },
+      "frei",
+    );
+
+    assert.deepEqual(result, {
+      message: "Digite um email valido para recuperar a senha.",
+      status: "error",
     });
   });
 });

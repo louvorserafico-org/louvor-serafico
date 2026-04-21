@@ -2,7 +2,12 @@ import { useState, type ComponentProps } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 
 import { PageHeader } from "@/components/PageHeader";
-import { registerWithPassword, signInWithPassword, type RegistrationForm } from "@/features/auth/credentials-auth";
+import {
+  registerWithPassword,
+  requestPasswordReset,
+  signInWithPassword,
+  type RegistrationForm,
+} from "@/features/auth/credentials-auth";
 import { supabase } from "@/services/supabase/client";
 import { colors, spacing, typography } from "@/theme/tokens";
 
@@ -74,6 +79,19 @@ export default function SignInScreen() {
               setSubmitting(false);
             }}
           />
+          <Pressable
+            accessibilityRole="button"
+            disabled={submitting}
+            onPress={async () => {
+              setSubmitting(true);
+              const nextResult = await requestPasswordReset(supabase, loginEmail);
+              setResult(nextResult);
+              setSubmitting(false);
+            }}
+            style={styles.secondaryAction}
+          >
+            <Text style={styles.secondaryActionText}>Esqueci minha senha</Text>
+          </Pressable>
         </View>
       ) : (
         <View style={styles.formCard}>
@@ -293,6 +311,15 @@ const styles = StyleSheet.create({
   resultText: {
     color: colors.textPrimary,
     fontSize: typography.caption,
+  },
+  secondaryAction: {
+    alignSelf: "flex-start",
+    paddingVertical: spacing.xs,
+  },
+  secondaryActionText: {
+    color: colors.accent,
+    fontSize: typography.caption,
+    fontWeight: "800",
   },
   success: {
     backgroundColor: colors.oliveSoft,
