@@ -8,6 +8,7 @@ type SupabaseSessionContextValue = {
 };
 
 const initialState: SupabaseSessionState = {
+  accessToken: null,
   email: null,
   provider: null,
   status: "loading",
@@ -22,6 +23,7 @@ export function SupabaseSessionProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     if (!supabase) {
       setSession({
+        accessToken: null,
         email: null,
         provider: null,
         status: "anonymous",

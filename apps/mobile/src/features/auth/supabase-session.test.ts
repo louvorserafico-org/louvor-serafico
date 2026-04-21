@@ -7,6 +7,7 @@ describe("supabase session", () => {
   it("maps authenticated session into ready state", () => {
     const state = buildSupabaseSessionState({
       session: {
+        access_token: "token-1",
         user: {
           app_metadata: {
             provider: "email",
@@ -19,6 +20,7 @@ describe("supabase session", () => {
     });
 
     assert.deepEqual(state, {
+      accessToken: "token-1",
       email: "frei@example.com",
       provider: "email",
       status: "authenticated",
@@ -33,6 +35,7 @@ describe("supabase session", () => {
     });
 
     assert.deepEqual(state, {
+      accessToken: null,
       email: null,
       provider: null,
       status: "anonymous",
@@ -47,6 +50,7 @@ describe("supabase session", () => {
     });
 
     assert.deepEqual(state, {
+      accessToken: null,
       email: null,
       provider: null,
       status: "loading",

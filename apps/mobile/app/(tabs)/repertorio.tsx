@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 
 import { PageHeader } from "@/components/PageHeader";
+import { RemoteFavoritesCard } from "@/components/RemoteFavoritesCard";
 import { RemoteSongsCard } from "@/components/RemoteSongsCard";
 import { SectionTitle } from "@/components/SectionTitle";
 import { useFavorites } from "@/features/favorites/FavoritesProvider";
@@ -47,6 +48,7 @@ export default function RepertoireScreen() {
       <SectionTitle title="Catalogo inicial" />
 
       <RemoteSongsCard />
+      <RemoteFavoritesCard />
 
       <View style={styles.list}>
         {songs.map((song) => (

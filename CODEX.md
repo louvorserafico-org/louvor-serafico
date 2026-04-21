@@ -1499,3 +1499,36 @@ Checklist DoD:
 Sugestao de commit:
 
 `feat: add remote comments feed fallback`
+
+## Proxima Etapa Planejada
+
+Etapa 28 - Favoritos remotos por usuario.
+
+Status: concluida em 2026-04-20.
+
+Objetivo esperado:
+
+- preparar leitura remota de favoritos
+- exigir sessao Supabase real
+- registrar schema necessario
+
+Resultado:
+
+- Criado `src/features/favorites/remote-favorites.ts`.
+- Criado `src/features/favorites/remote-favorites.test.ts`.
+- Criado `src/components/RemoteFavoritesCard.tsx`.
+- Criado `docs/product/remote-favorites.md`.
+- Criado `supabase/migrations/20260420224000_add_favorite_songs.sql`.
+- `SupabaseSessionState` agora expõe `accessToken`.
+- `Repertorio` agora mostra estado remoto de favoritos.
+
+Checklist DoD:
+
+- [x] Leitura remota preparada.
+- [x] Sessao autenticada considerada.
+- [x] Migration incremental criada.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`feat: add remote favorites readiness`
