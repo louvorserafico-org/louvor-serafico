@@ -2122,3 +2122,22 @@ Checklist DoD:
 Sugestao de commit:
 
 `feat: add private song assets bucket`
+
+### Ajuste Solicitado
+
+Status: concluido em 2026-04-21.
+
+Erro reportado:
+
+- `ERROR: 42501: must be owner of table objects`.
+
+Causa:
+
+- A migration tentava executar `comment on table storage.objects`.
+- O usuario do SQL Editor nao e dono da tabela interna `storage.objects`.
+
+Correcao:
+
+- Removido o `comment on table storage.objects`.
+- Mantidos bucket privado e remocao de policies inseguras.
+- `docs/development/supabase-storage.md` atualizado com a causa.

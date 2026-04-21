@@ -27,6 +27,3 @@ set
 
 drop policy if exists "song assets are publicly readable" on storage.objects;
 drop policy if exists "authenticated users read song assets" on storage.objects;
-
-comment on table storage.objects is
-  'Louvor Serafico keeps song-assets private. Premium access must be mediated by a backend or Edge Function.';

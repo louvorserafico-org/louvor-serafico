@@ -48,6 +48,8 @@ Execute:
 supabase/migrations/20260421120000_create_song_assets_bucket.sql
 ```
 
+Se aparecer `must be owner of table objects`, confirme que a migration nao contem `comment on table storage.objects`. Usuarios do dashboard podem criar bucket e policies, mas nao sao donos da tabela interna `storage.objects`.
+
 ## Validacao
 
 No SQL Editor:
