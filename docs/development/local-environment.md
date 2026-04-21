@@ -94,6 +94,10 @@ Fluxo preferencial atual de testes:
 - usar `s` no terminal quando precisar trocar modo no Expo CLI
 - abrir a tab `Perfil` quando a etapa envolver integracao Supabase
 
+Guia detalhado:
+
+- `docs/development/run-iphone-expo-go.md`
+
 Development Build sera necessario quando o projeto usar recursos nativos que nao
 funcionam no Expo Go, especialmente compras/assinaturas com RevenueCat.
 

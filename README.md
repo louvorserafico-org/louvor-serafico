@@ -65,6 +65,10 @@ Depois:
 - pressionar `s` quando quiser trocar modo no Expo CLI
 - abrir tab `Perfil` para validar estado local e leitura remota inicial do Supabase
 
+Guia detalhado:
+
+- `docs/development/run-iphone-expo-go.md`
+
 Com o Android Emulator aberto:
 
 ```powershell
@@ -98,6 +102,7 @@ Leia primeiro:
 - `docs/development/local-environment.md`
 - `docs/development/supabase-setup.md`
 - `docs/architecture/supabase-schema-plan.md`
+- `docs/product/auth-flow.md`
 
 ## Regra De Trabalho
 

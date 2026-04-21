@@ -61,6 +61,7 @@ Atualizacao apos validacao manual mais recente:
 - Testes manuais do app passarao a usar iPhone com Expo Go como fluxo padrao.
 - Android Studio continua util para validacoes especificas, mas nao sera o fluxo
   principal de teste enquanto estivermos em Expo Go.
+- Guia detalhado criado em `docs/development/run-iphone-expo-go.md`.
 
 ## Produto Inicial
 
@@ -869,8 +870,51 @@ Sugestao de commit:
 
 Etapa 13 - Base inicial de autenticacao documental e UX.
 
+Status: concluida em 2026-04-20.
+
 Objetivo esperado:
 
-- Definir fluxo de login.
-- Preparar estados de sessao.
-- Ainda sem compra e sem RLS aplicada no app.
+- Definir fluxo inicial de login.
+- Preparar UX de entrada.
+- Ainda sem sessao real, compra ou RLS no app.
+
+Resultado:
+
+- Criado `docs/product/auth-flow.md`.
+- Criado `src/features/auth/auth-readiness.ts`.
+- Criado `src/features/auth/auth-readiness.test.ts`.
+- Criado `src/components/AuthEntryCard.tsx`.
+- Criada tela `app/entrar.tsx`.
+- A tab `Perfil` agora mostra readiness de autenticacao e CTA para a base visual do fluxo.
+
+Testes adicionados:
+
+- Happy path para autenticacao pronta.
+- Edge case para autenticacao limitada com signup bloqueado.
+- Caso de erro para autenticacao bloqueada por falha remota.
+
+Validacoes executadas:
+
+- `node apps/mobile/src/features/auth/auth-readiness.test.ts`
+
+Checklist DoD:
+
+- [x] Fluxo inicial documentado.
+- [x] Estado de readiness implementado.
+- [x] Base visual do fluxo criada.
+- [x] Sem login real nesta etapa.
+- [x] Sem compra nesta etapa.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`feat: add initial auth ux foundation`
+
+## Proxima Etapa Planejada
+
+Etapa 14 - Sessao fake controlada para favoritos e comentarios.
+
+Objetivo esperado:
+
+- Preparar estado local de sessao.
+- Liberar UX condicionada sem auth real.
