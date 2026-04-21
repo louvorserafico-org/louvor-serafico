@@ -3,6 +3,7 @@ import { createContext, useContext, useEffect, useMemo, useState, type PropsWith
 import { useSupabaseSession } from "@/features/auth/SupabaseSessionProvider";
 import { toggleFavoriteSong } from "./favorite-store";
 import { resolveFavoriteSource } from "./favorite-source";
+import { toggleRemoteFavorite } from "./remote-favorite-toggle";
 import { fetchRemoteFavorites } from "./remote-favorites";
 import { loadPreviewFavoriteSongIds, savePreviewFavoriteSongIds } from "@/features/preview/storage";
 import { supabaseConfig } from "@/services/supabase/client";
@@ -11,7 +12,7 @@ type FavoritesContextValue = {
   favoriteSongIds: string[];
   isFavoriteSong: (songId: string) => boolean;
   sourceMessage: string;
-  toggleSongFavorite: (songId: string) => void;
+  toggleSongFavorite: (songId: string) => Promise<void>;
 };
 
 const FavoritesContext = createContext<FavoritesContextValue | null>(null);
@@ -62,12 +63,41 @@ export function FavoritesProvider({ children }: PropsWithChildren) {
       favoriteSongIds: source.songIds,
       isFavoriteSong: (songId: string) => source.songIds.includes(songId),
       sourceMessage: source.message,
-      toggleSongFavorite: (songId: string) =>
+      toggleSongFavorite: async (songId: string) => {
+        const isFavorite = source.songIds.includes(songId);
+
+        if (session.status === "authenticated" && session.userId) {
+          const result = await toggleRemoteFavorite(
+            {
+              accessToken: session.accessToken,
+              isFavorite,
+              profileId: session.userId,
+              publicKey: supabaseConfig.publishableKey ?? supabaseConfig.anonKey,
+              songId,
+              url: supabaseConfig.url,
+            },
+            fetch,
+          );
+
+          if (result.ok) {
+            const remote = await fetchRemoteFavorites(
+              fetch,
+              supabaseConfig.url,
+              supabaseConfig.publishableKey ?? supabaseConfig.anonKey,
+              session.accessToken,
+            );
+            setRemoteState(remote);
+          }
+
+          return;
+        }
+
         setLocalFavoriteSongIds((currentFavoriteSongIds) =>
           toggleFavoriteSong(currentFavoriteSongIds, songId),
-        ),
+        );
+      },
     }),
-    [source],
+    [session, source],
   );
 
   return <FavoritesContext.Provider value={value}>{children}</FavoritesContext.Provider>;

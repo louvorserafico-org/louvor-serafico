@@ -117,6 +117,7 @@ Leia primeiro:
 - `docs/product/remote-comment-submit.md`
 - `docs/product/remote-favorites.md`
 - `docs/product/remote-favorites-feed.md`
+- `docs/product/remote-favorite-toggle.md`
 - `docs/product/remote-songs.md`
 - `docs/product/remote-celebrations.md`
 - `docs/product/remote-fallback-catalogs.md`

@@ -1592,3 +1592,33 @@ Checklist DoD:
 Sugestao de commit:
 
 `feat: add remote comment submit flow`
+
+## Proxima Etapa Planejada
+
+Etapa 31 - Sincronizacao remota de favoritos.
+
+Status: concluida em 2026-04-20.
+
+Objetivo esperado:
+
+- permitir toggle remoto com sessao real
+- preservar preview local
+
+Resultado:
+
+- Criado `src/features/favorites/remote-favorite-toggle.ts`.
+- Criado `src/features/favorites/remote-favorite-toggle.test.ts`.
+- Criado `docs/product/remote-favorite-toggle.md`.
+- `FavoritesProvider` agora tenta salvar ou remover favorito remoto.
+- `SongDetail` agora libera favorito remoto com sessao Supabase.
+
+Checklist DoD:
+
+- [x] Escrita remota preparada.
+- [x] Preview local preservado.
+- [x] TDD aplicado.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`feat: add remote favorite toggle flow`
