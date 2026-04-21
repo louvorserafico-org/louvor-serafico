@@ -101,6 +101,7 @@ Leia primeiro:
 - `docs/development/local-environment.md`
 - `docs/development/ci.md`
 - `docs/development/supabase-setup.md`
+- `docs/development/supabase-storage.md`
 - `docs/architecture/supabase-schema-plan.md`
 - `docs/architecture/remote-schema-bootstrap.md`
 - `docs/architecture/remote-seed-bootstrap.md`

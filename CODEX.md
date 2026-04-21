@@ -2078,3 +2078,47 @@ Mudanca:
 Motivo:
 
 - `dev` deve permanecer leve para iteracao assistida e validacao manual.
+
+## Proxima Etapa Planejada
+
+Etapa 42 - Bucket privado de Storage.
+
+Status: concluida em 2026-04-21.
+
+Objetivo esperado:
+
+- preparar bucket `song-assets`
+- manter arquivos premium privados
+- evitar policy ampla para usuarios autenticados
+
+Resultado:
+
+- Criado `supabase/migrations/20260421120000_create_song_assets_bucket.sql`.
+- Criado `docs/development/supabase-storage.md`.
+- Atualizado `docs/development/apply-supabase-sql-manually.md`.
+- Atualizado `docs/product/premium-storage-assets.md`.
+- README atualizado com referencia ao guia de Storage.
+
+Decisoes tecnicas e trade-offs:
+
+- Bucket `song-assets` fica privado.
+- Limite inicial definido em 20 MB por arquivo.
+- Tipos permitidos: PDF, MP3, JPEG e PNG.
+- Nao criamos policy de leitura para `anon` nem para `authenticated`.
+- Alternativa rejeitada: permitir leitura para todo usuario autenticado. Isso facilitaria signed URL direto no app, mas quebraria a regra premium.
+
+Hurdles & Fixes:
+
+- A abertura final de arquivo premium ainda depende de Edge Function ou backend usando service role.
+- O botao atual pode retornar erro ate a Edge Function existir; isso e esperado e seguro.
+
+Checklist DoD:
+
+- [x] Migration do bucket criada.
+- [x] Bucket privado documentado.
+- [x] Aplicacao manual atualizada.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`feat: add private song assets bucket`

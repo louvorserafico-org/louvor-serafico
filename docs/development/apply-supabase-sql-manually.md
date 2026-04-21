@@ -16,7 +16,8 @@ Execute nesta ordem:
 
 1. `supabase/migrations/20260420215500_initial_remote_schema.sql`
 2. `supabase/migrations/20260420224000_add_favorite_songs.sql`
-3. `supabase/seed.sql`
+3. `supabase/migrations/20260421120000_create_song_assets_bucket.sql`
+4. `supabase/seed.sql`
 
 Execute um arquivo por vez. Se um erro acontecer, pare e registre o erro antes de continuar.
 
@@ -38,6 +39,10 @@ from public.celebration_recommendations;
 
 select count(*) as total_assets
 from public.song_assets;
+
+select id, public, file_size_limit
+from storage.buckets
+where id = 'song-assets';
 ```
 
 Resultado esperado inicial:
@@ -46,6 +51,7 @@ Resultado esperado inicial:
 - 1 celebração publicada.
 - 6 recomendações.
 - 5 assets de partitura.
+- 1 bucket privado `song-assets`.
 
 ## Validação Pelo App
 
@@ -78,7 +84,7 @@ No iPhone com Expo Go:
 
 Este guia aplica apenas tabelas, policies de tabelas e seed inicial.
 
-O bucket `song-assets` deve ser criado separadamente antes de testes reais de arquivos premium. A decisão atual é manter o bucket privado e não criar policy pública de leitura para materiais premium.
+O bucket `song-assets` fica privado. A decisão atual é não criar policy pública de leitura nem leitura ampla para `authenticated`. A entrega segura de arquivos premium deve passar por Edge Function ou backend.
 
 ## Hurdles & Fixes
 

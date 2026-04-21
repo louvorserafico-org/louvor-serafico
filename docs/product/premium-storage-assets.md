@@ -21,6 +21,12 @@ EXPO_PUBLIC_SUPABASE_ASSET_BUCKET=song-assets
 
 O nome do bucket pode ser publico. Caminhos internos e arquivos premium continuam sendo tratados como conteudo protegido.
 
+O bucket deve ser privado. A migration inicial de Storage esta em:
+
+```text
+supabase/migrations/20260421120000_create_song_assets_bucket.sql
+```
+
 ## Segurança
 
 O app agora possui uma funcao local para gerar signed URL via Supabase Storage.
@@ -48,6 +54,7 @@ Na tela de musica:
 ## Hurdles & Fixes
 
 - Evitamos criar policy permissiva no Storage agora, porque isso poderia liberar premium para qualquer usuario autenticado.
+- Criamos apenas o bucket privado, sem leitura direta publica.
 - Mantivemos signed URL com expiracao curta, inicialmente 300 segundos.
 - O caminho final seguro deve passar por backend/Edge Function antes de monetizacao real.
 
