@@ -2353,6 +2353,9 @@ Hurdles & Fixes:
 - Para reduzir fragilidade, o script mapeia arquivo local por slug e usa o `storage_path` remoto como destino.
 - O upload real falhou no arquivo `por-teu-nome-o-senhor` porque o `storage_path` remoto continha caracteres invalidos para chave do Storage.
 - Criada migration para normalizar o caminho remoto para `Por teu nome, o Senhor.pdf`.
+- A migration nova ainda nao foi registrada no historico remoto via Supabase CLI porque a conexao Postgres segue bloqueada por DNS para `db.engvbvdtdcveoebgrexl.supabase.co`.
+- O efeito da migration foi aplicado remotamente por REST com service role: o registro de `song_assets` foi atualizado para `Por teu nome, o Senhor.pdf`.
+- O seed local foi atualizado para manter o estado futuro coerente; nao foi reexecutado integralmente no banco remoto.
 
 Checklist DoD:
 
@@ -2364,3 +2367,95 @@ Checklist DoD:
 Sugestao de commit:
 
 `feat: add song asset upload workflow`
+
+## Proxima Etapa Planejada
+
+Etapa 48 - Assinatura manual de teste.
+
+Status: concluida em 2026-04-21.
+
+Objetivo esperado:
+
+- preparar caminho controlado para ativar assinatura premium de teste;
+- permitir validar Edge Function com usuario real;
+- manter RevenueCat fora do escopo ate development build.
+
+Resultado:
+
+- Criado `scripts/grant-test-subscription.ps1`.
+- Criado `docs/development/grant-test-subscription.md`.
+- README atualizado com referencia ao guia.
+
+Decisoes tecnicas e trade-offs:
+
+- O script recebe `ProfileId` em vez de email. Isso evita depender de endpoint admin de Auth e usa a tabela publica `profiles`.
+- A assinatura manual usa `provider = manual_test` e `entitlement = premium_content`.
+- O script usa service role apenas localmente.
+- Alternativa rejeitada: criar assinatura pelo app. Isso colocaria poder administrativo no cliente e seria inseguro.
+
+Hurdles & Fixes:
+
+- A validacao completa ainda depende do usuario fazer login real no app para criar `profiles.id`.
+- A UI atual ainda usa premium preview para liberar visualmente o botao. A assinatura manual valida o lado servidor pela Edge Function.
+
+Checklist DoD:
+
+- [x] Script criado.
+- [x] Guia criado.
+- [x] Sem segredo versionado.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`chore: add manual test subscription script`
+
+## Proxima Etapa Planejada
+
+Etapa 49 - Cadastro e login com senha.
+
+Status: concluida em 2026-04-21.
+
+Objetivo esperado:
+
+- substituir magic link por cadastro e login com email/senha;
+- coletar dados iniciais de perfil;
+- manter fluxo compatível com Expo Go e testes locais;
+- preparar schema remoto para versão final.
+
+Resultado:
+
+- Criado `src/features/auth/credentials-auth.ts`.
+- Criado `src/features/auth/credentials-auth.test.ts`.
+- Tela `Entrar` reescrita com modo `Entrar` e `Cadastrar`.
+- Cadastro coleta nome, email, senha, telefone, estado, cidade, paroquia opcional e pastoral/banda opcional.
+- Criada migration `20260421200000_expand_profiles_for_registration.sql`.
+- Supabase CLI foi linkado ao projeto remoto.
+- `supabase db push --linked --include-all --yes` aplicou migrations remotas, incluindo a nova migration de profiles.
+- `SupabaseProfileCard` passou a exibir telefone, estado, cidade, paroquia e pastoral/banda.
+- `docs/product/auth-flow.md` atualizado.
+
+Decisoes tecnicas e trade-offs:
+
+- Telefone foi tratado como dado de perfil, nao como auth por SMS. Isso reduz complexidade e melhora teste local.
+- Dados de cadastro seguem em `user_metadata` do Supabase Auth e tambem sao preparados em `profiles`.
+- Magic link deixa de ser o fluxo principal.
+- Login social continua fora do escopo desta etapa.
+
+Hurdles & Fixes:
+
+- A conexao Postgres via CLI voltou a funcionar apos `supabase link`.
+- `db push` reaplicou migrations idempotentes antigas e registrou tambem as novas migrations locais.
+- O aviso de npm sobre `node-linker` permaneceu, mas nao bloqueou a operacao.
+
+Checklist DoD:
+
+- [x] TDD aplicado.
+- [x] Tela integrada.
+- [x] Schema preparado.
+- [x] Migration aplicada remotamente.
+- [x] Validacoes locais passam.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: add password registration flow`

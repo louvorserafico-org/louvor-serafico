@@ -13,7 +13,14 @@ describe("supabase profile", () => {
               app_metadata: { provider: "email" },
               email: "frei@example.com",
               id: "user-1",
-              user_metadata: { full_name: "Frei Luis" },
+              user_metadata: {
+                city: "Petropolis",
+                full_name: "Frei Luis",
+                ministry: "Banda Sao Francisco",
+                parish: "Paroquia Sao Pedro",
+                phone: "24999990000",
+                state: "RJ",
+              },
             },
           },
           error: null,
@@ -22,10 +29,15 @@ describe("supabase profile", () => {
     });
 
     assert.deepEqual(profile, {
+      city: "Petropolis",
       displayName: "Frei Luis",
       email: "frei@example.com",
+      ministry: "Banda Sao Francisco",
+      parish: "Paroquia Sao Pedro",
+      phone: "24999990000",
       provider: "email",
       status: "ready",
+      state: "RJ",
       userId: "user-1",
     });
   });
@@ -41,10 +53,15 @@ describe("supabase profile", () => {
     });
 
     assert.deepEqual(profile, {
+      city: null,
       displayName: null,
       email: null,
+      ministry: null,
+      parish: null,
+      phone: null,
       provider: null,
       status: "anonymous",
+      state: null,
       userId: null,
     });
   });
@@ -60,20 +77,30 @@ describe("supabase profile", () => {
     });
 
     assert.deepEqual(profile, {
+      city: null,
       displayName: null,
       email: null,
+      ministry: null,
+      parish: null,
+      phone: null,
       provider: null,
       status: "error",
+      state: null,
       userId: null,
     });
   });
 
   it("builds loading profile state", () => {
     assert.deepEqual(buildSupabaseProfileState("loading"), {
+      city: null,
       displayName: null,
       email: null,
+      ministry: null,
+      parish: null,
+      phone: null,
       provider: null,
       status: "loading",
+      state: null,
       userId: null,
     });
   });

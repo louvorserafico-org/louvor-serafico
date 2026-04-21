@@ -94,6 +94,13 @@ Correcao:
 - patch remoto aplicado no registro de `song_assets`;
 - upload reexecutado com sucesso.
 
+Observacao operacional:
+
+- a migration foi criada no repositorio para rastreabilidade;
+- a conexao Postgres via Supabase CLI ainda falhou por DNS neste ambiente;
+- por isso, o efeito da migration foi aplicado remotamente via REST usando service role;
+- o seed local foi atualizado, mas nao foi reexecutado integralmente no banco remoto.
+
 ## Proximo Passo
 
 Depois do upload, o teste real da Edge Function ainda precisa de:

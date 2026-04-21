@@ -9,7 +9,12 @@ type SupabaseUserClient = {
           email?: string | null;
           id: string;
           user_metadata?: {
+            city?: string;
             full_name?: string;
+            ministry?: string;
+            parish?: string;
+            phone?: string;
+            state?: string;
           };
         } | null;
       };
@@ -19,10 +24,15 @@ type SupabaseUserClient = {
 };
 
 export type SupabaseProfileState = {
+  city: string | null;
   displayName: string | null;
   email: string | null;
+  ministry: string | null;
+  parish: string | null;
+  phone: string | null;
   provider: string | null;
   status: "anonymous" | "error" | "loading" | "ready";
+  state: string | null;
   userId: string | null;
 };
 
@@ -30,10 +40,15 @@ export function buildSupabaseProfileState(
   status: SupabaseProfileState["status"],
 ): SupabaseProfileState {
   return {
+    city: null,
     displayName: null,
     email: null,
+    ministry: null,
+    parish: null,
+    phone: null,
     provider: null,
     status,
+    state: null,
     userId: null,
   };
 }
@@ -56,10 +71,15 @@ export async function fetchSupabaseProfile(
   }
 
   return {
+    city: data.user.user_metadata?.city ?? null,
     displayName: data.user.user_metadata?.full_name ?? data.user.email ?? null,
     email: data.user.email ?? null,
+    ministry: data.user.user_metadata?.ministry ?? null,
+    parish: data.user.user_metadata?.parish ?? null,
+    phone: data.user.user_metadata?.phone ?? null,
     provider: data.user.app_metadata?.provider ?? null,
     status: "ready",
+    state: data.user.user_metadata?.state ?? null,
     userId: data.user.id,
   };
 }
