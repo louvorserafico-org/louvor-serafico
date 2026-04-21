@@ -2912,3 +2912,48 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 60 - Revisar tela inicial autenticada.
+
+Status: concluida em 2026-04-21.
+
+Objetivo esperado:
+
+- ajustar a tela Hoje para responder ao estado autenticado;
+- orientar usuarios anonimos para login quando tentarem acessar materiais;
+- manter o roteiro de hoje como experiencia principal.
+
+Resultado:
+
+- Criado `src/features/home/home-summary.ts`.
+- Criado `src/features/home/home-summary.test.ts`.
+- Tab `Hoje` passou a usar sessao Supabase e estado premium para montar copy e CTA.
+- CTA principal abre a celebracao para usuario autenticado e leva para `Entrar` para usuario anonimo.
+- Script de testes raiz atualizado.
+
+Decisoes tecnicas e trade-offs:
+
+- A tela continua usando a celebracao inicial local como fallback principal.
+- A regra de copy ficou isolada e testada fora da UI.
+- A assinatura ainda usa o preview local ate RevenueCat estar ativo em development build.
+- Alternativa rejeitada: buscar celebracao remota na tela Hoje nesta etapa. O app ja tem fallback funcional e a prioridade era UX autenticada.
+
+Hurdles & Fixes:
+
+- Hurdle: o teste importando `@louvor-serafico/shared` falhou no runner Node direto por resolucao ESM sem extensao.
+- Fix: o teste passou a importar o arquivo fonte com caminho explicito, seguindo o padrao pragmatico ja usado no workspace.
+
+Checklist DoD:
+
+- [x] TDD aplicado.
+- [x] UI integrada.
+- [x] Testes passam.
+- [x] Typecheck passa.
+- [x] Lint passa.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: improve authenticated home summary`
+
+## Proxima Etapa Planejada
+
+Etapa 61 - Revisar fluxo premium na tela de musica.
