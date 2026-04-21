@@ -1532,3 +1532,33 @@ Checklist DoD:
 Sugestao de commit:
 
 `feat: add remote favorites readiness`
+
+## Proxima Etapa Planejada
+
+Etapa 29 - Feed de favoritos com fallback remoto.
+
+Status: concluida em 2026-04-20.
+
+Objetivo esperado:
+
+- unir favoritos remotos e locais
+- manter preview local durante migracao
+
+Resultado:
+
+- Criado `src/features/favorites/favorite-source.ts`.
+- Criado `src/features/favorites/favorite-source.test.ts`.
+- Criado `docs/product/remote-favorites-feed.md`.
+- `FavoritesProvider` agora tenta ler favoritos remotos quando houver sessao.
+- `SongDetail` e `Repertorio` agora refletem mensagem da fonte ativa.
+
+Checklist DoD:
+
+- [x] Feed remoto preparado.
+- [x] Preview local preservado.
+- [x] TDD aplicado ao resolver de feed.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`feat: add remote favorites feed fallback`

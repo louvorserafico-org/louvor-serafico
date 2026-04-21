@@ -12,7 +12,7 @@ export default function SongDetailScreen() {
   const params = useLocalSearchParams<{ slug: string }>();
   const song = findSongBySlug(params.slug ?? "");
   const { session } = useSessionPreview();
-  const { isFavoriteSong, toggleSongFavorite } = useFavorites();
+  const { isFavoriteSong, sourceMessage, toggleSongFavorite } = useFavorites();
   const canFavorite = session.status === "signed_in";
 
   if (!song) {
@@ -48,6 +48,7 @@ export default function SongDetailScreen() {
             ? "Sessao teste ativa. Favorito local liberado."
             : "Ative sessao teste em Perfil para liberar fluxo protegido."}
         </Text>
+        <Text style={styles.assetPath}>{sourceMessage}</Text>
         <Pressable
           disabled={!canFavorite}
           onPress={() => toggleSongFavorite(song.id)}

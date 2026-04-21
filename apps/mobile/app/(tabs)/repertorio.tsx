@@ -15,7 +15,7 @@ import { colors, spacing } from "@/theme/tokens";
 
 export default function RepertoireScreen() {
   const localSongs = useMemo(() => getInitialSongCatalog(), []);
-  const { favoriteSongIds } = useFavorites();
+  const { favoriteSongIds, sourceMessage } = useFavorites();
   const [songs, setSongs] = useState(localSongs);
   const [subtitle, setSubtitle] = useState(`${favoriteSongIds.length} favorito(s) local(is) no catalogo inicial.`);
 
@@ -27,7 +27,7 @@ export default function RepertoireScreen() {
         if (active) {
           const source = resolveSongCatalogSource(remote, localSongs);
           setSongs(source.songs);
-          setSubtitle(`${favoriteSongIds.length} favorito(s) local(is). ${source.message}`);
+          setSubtitle(`${favoriteSongIds.length} favorito(s). ${source.message} ${sourceMessage}`);
         }
       },
     );
@@ -35,7 +35,7 @@ export default function RepertoireScreen() {
     return () => {
       active = false;
     };
-  }, [favoriteSongIds.length, localSongs]);
+  }, [favoriteSongIds.length, localSongs, sourceMessage]);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
