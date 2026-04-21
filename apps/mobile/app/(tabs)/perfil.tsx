@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet } from "react-native";
 import { PageHeader } from "@/components/PageHeader";
 import { AuthEntryCard } from "@/components/AuthEntryCard";
 import { SessionPreviewCard } from "@/components/SessionPreviewCard";
+import { SubscriptionPreviewCard } from "@/components/SubscriptionPreviewCard";
 import { SupabaseProfileCard } from "@/components/SupabaseProfileCard";
 import { SupabaseRemoteStatusCard } from "@/components/SupabaseRemoteStatusCard";
 import { SupabaseSessionCard } from "@/components/SupabaseSessionCard";
@@ -22,6 +23,7 @@ export default function ProfileScreen() {
       <SupabaseSessionCard />
       <SupabaseProfileCard />
       <AuthEntryCard />
+      <SubscriptionPreviewCard />
       <SessionPreviewCard />
     </ScrollView>
   );

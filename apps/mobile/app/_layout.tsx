@@ -6,6 +6,7 @@ import { SessionProvider } from "@/features/auth/SessionProvider";
 import { SupabaseSessionProvider } from "@/features/auth/SupabaseSessionProvider";
 import { CommentsProvider } from "@/features/comments/CommentsProvider";
 import { FavoritesProvider } from "@/features/favorites/FavoritesProvider";
+import { SubscriptionPreviewProvider } from "@/features/subscription/SubscriptionPreviewProvider";
 import { colors } from "@/theme/tokens";
 
 export default function RootLayout() {
@@ -14,18 +15,20 @@ export default function RootLayout() {
       <SupabaseProfileProvider>
         <SessionProvider>
           <CommentsProvider>
-            <FavoritesProvider>
-              <StatusBar style="dark" />
-              <Stack
-                screenOptions={{
-                  contentStyle: { backgroundColor: colors.background },
-                  headerShown: false,
-                  headerStyle: { backgroundColor: colors.background },
-                  headerTitleStyle: { color: colors.textPrimary },
-                  headerTintColor: colors.accent,
-                }}
-              />
-            </FavoritesProvider>
+            <SubscriptionPreviewProvider>
+              <FavoritesProvider>
+                <StatusBar style="dark" />
+                <Stack
+                  screenOptions={{
+                    contentStyle: { backgroundColor: colors.background },
+                    headerShown: false,
+                    headerStyle: { backgroundColor: colors.background },
+                    headerTitleStyle: { color: colors.textPrimary },
+                    headerTintColor: colors.accent,
+                  }}
+                />
+              </FavoritesProvider>
+            </SubscriptionPreviewProvider>
           </CommentsProvider>
         </SessionProvider>
       </SupabaseProfileProvider>

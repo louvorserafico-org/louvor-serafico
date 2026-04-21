@@ -1714,3 +1714,35 @@ Checklist DoD:
 Sugestao de commit:
 
 `feat: add premium asset gate`
+
+## Proxima Etapa Planejada
+
+Etapa 35 - Preview local de assinatura.
+
+Status: concluida em 2026-04-21.
+
+Objetivo esperado:
+
+- validar desbloqueio premium no Expo Go
+- manter RevenueCat fora do escopo por enquanto
+
+Resultado:
+
+- Criado `src/features/subscription/subscription-state.ts`.
+- Criado `src/features/subscription/subscription-state.test.ts`.
+- Criado `src/features/subscription/SubscriptionPreviewProvider.tsx`.
+- Criado `src/components/SubscriptionPreviewCard.tsx`.
+- Criado `docs/product/subscription-preview.md`.
+- `Perfil` agora permite ativar/desativar premium local.
+- `SongDetail` agora usa assinatura local para liberar assets premium.
+
+Checklist DoD:
+
+- [x] Estado premium local criado.
+- [x] Gate premium integrado.
+- [x] TDD aplicado.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`feat: add subscription preview state`

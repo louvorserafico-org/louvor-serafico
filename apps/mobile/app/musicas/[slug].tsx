@@ -10,6 +10,7 @@ import { useSupabaseSession } from "@/features/auth/SupabaseSessionProvider";
 import { useFavorites } from "@/features/favorites/FavoritesProvider";
 import { fetchRemoteSongDetail } from "@/features/songs/remote-song-detail";
 import { resolveAssetAccess } from "@/features/subscription/premium-access";
+import { useSubscriptionPreview } from "@/features/subscription/SubscriptionPreviewProvider";
 import { supabaseConfig } from "@/services/supabase/client";
 import { colors, spacing, typography } from "@/theme/tokens";
 
@@ -22,9 +23,9 @@ export default function SongDetailScreen() {
   const { session } = useSessionPreview();
   const { session: supabaseSession } = useSupabaseSession();
   const { isFavoriteSong, sourceMessage, toggleSongFavorite } = useFavorites();
+  const { hasActiveSubscription } = useSubscriptionPreview();
   const canFavorite = session.status === "signed_in" || supabaseSession.status === "authenticated";
   const isAuthenticated = session.status === "signed_in" || supabaseSession.status === "authenticated";
-  const hasActiveSubscription = false;
 
   useEffect(() => {
     let active = true;
