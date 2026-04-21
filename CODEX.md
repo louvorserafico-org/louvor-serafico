@@ -1177,7 +1177,49 @@ Sugestao de commit:
 
 Etapa 20 - Perfil remoto inicial.
 
+Status: concluida em 2026-04-20.
+
 Objetivo esperado:
 
 - Ler dados basicos do usuario autenticado.
 - Preparar base para perfil e assinatura.
+
+Resultado:
+
+- Criado `src/features/auth/supabase-profile.ts`.
+- Criado `src/features/auth/supabase-profile.test.ts`.
+- Criado `src/features/auth/SupabaseProfileProvider.tsx`.
+- Criado `src/components/SupabaseProfileCard.tsx`.
+- Criado `docs/product/supabase-profile.md`.
+- A tab `Perfil` agora mostra dados basicos do usuario autenticado.
+
+Testes adicionados:
+
+- perfil pronto
+- perfil anonimo
+- perfil com erro
+- loading inicial
+
+Validacoes executadas:
+
+- `node apps/mobile/src/features/auth/supabase-profile.test.ts`
+
+Checklist DoD:
+
+- [x] Perfil remoto lido.
+- [x] Base pronta para assinatura.
+- [x] Sem tabela `profiles` ainda.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`feat: add initial remote profile state`
+
+## Proxima Etapa Planejada
+
+Etapa 21 - Catalogo remoto de comentarios.
+
+Objetivo esperado:
+
+- Sair do preview local de comunidade.
+- Preparar leitura remota simples.

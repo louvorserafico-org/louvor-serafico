@@ -109,6 +109,7 @@ Leia primeiro:
 - `docs/product/local-persistence.md`
 - `docs/product/supabase-auth-email.md`
 - `docs/product/supabase-session-state.md`
+- `docs/product/supabase-profile.md`
 
 ## Regra De Trabalho
 
