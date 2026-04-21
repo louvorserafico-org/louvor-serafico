@@ -2,6 +2,7 @@ import { ScrollView, StyleSheet } from "react-native";
 
 import { PageHeader } from "@/components/PageHeader";
 import { AuthEntryCard } from "@/components/AuthEntryCard";
+import { AuthStabilityCard } from "@/components/AuthStabilityCard";
 import { PaywallPreviewCard } from "@/components/PaywallPreviewCard";
 import { SessionPreviewCard } from "@/components/SessionPreviewCard";
 import { SubscriptionPreviewCard } from "@/components/SubscriptionPreviewCard";
@@ -19,6 +20,7 @@ export default function ProfileScreen() {
         title="Conta e assinatura"
         subtitle="Estado local e leitura remota inicial do projeto Supabase."
       />
+      <AuthStabilityCard />
       <SupabaseStatusCard />
       <SupabaseRemoteStatusCard />
       <SupabaseSessionCard />

@@ -50,6 +50,7 @@ Status remoto:
 ## UX Inicial
 
 - Tab `Perfil` mostra estado de sessao.
+- Card de estabilidade resume se sessao e perfil remoto estao coerentes.
 - CTA leva para tela `Entrar`.
 - Tela `Entrar` alterna entre login e cadastro.
 - Login usa `signInWithPassword`.

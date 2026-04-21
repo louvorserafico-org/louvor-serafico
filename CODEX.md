@@ -2779,3 +2779,47 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 57 - Revisar estabilidade auth.
+
+Status: concluida em 2026-04-21.
+
+Objetivo esperado:
+
+- consolidar leitura de estabilidade entre sessao real e perfil remoto;
+- exibir resumo simples na tab Perfil;
+- manter diagnosticos tecnicos existentes para desenvolvimento.
+
+Resultado:
+
+- Criado `src/features/auth/auth-stability.ts`.
+- Criado `src/features/auth/auth-stability.test.ts`.
+- Criado `src/components/AuthStabilityCard.tsx`.
+- Tab `Perfil` passou a mostrar o resumo de estabilidade antes dos cards tecnicos.
+- Script de testes raiz atualizado.
+- `docs/product/auth-flow.md` atualizado.
+
+Decisoes tecnicas e trade-offs:
+
+- O resumo considera estavel apenas quando `session.status` e autenticado e `profile.status` e ready.
+- Sessao autenticada com perfil em erro vira estado parcial, porque o usuario pode estar logado mas com dados incompletos.
+- Os cards tecnicos foram mantidos por enquanto. A limpeza visual fica para etapa posterior de modo debug.
+
+Hurdles & Fixes:
+
+- Nenhum bloqueio tecnico encontrado.
+
+Checklist DoD:
+
+- [x] TDD aplicado.
+- [x] UI integrada.
+- [x] Testes passam.
+- [x] Typecheck passa.
+- [x] Lint passa.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: add auth stability summary`
+
+## Proxima Etapa Planejada
+
+Etapa 58 - Melhorar UX de Perfil.
