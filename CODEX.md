@@ -1436,3 +1436,66 @@ Checklist DoD:
 Sugestao de commit:
 
 `feat: add initial remote seed data`
+
+## Proxima Etapa Planejada
+
+Etapa 26 - Catalogos com fallback remoto.
+
+Status: concluida em 2026-04-20.
+
+Objetivo esperado:
+
+- usar remoto quando houver dados
+- manter local como fallback
+
+Resultado:
+
+- Criado `src/features/songs/song-catalog-source.ts`.
+- Criado `src/features/songs/song-catalog-source.test.ts`.
+- Criado `src/features/celebrations/celebration-catalog-source.ts`.
+- Criado `src/features/celebrations/celebration-catalog-source.test.ts`.
+- Criado `docs/product/remote-fallback-catalogs.md`.
+- `Repertorio` agora tenta remoto antes do local.
+- `Calendario` agora tenta remoto antes do local.
+
+Checklist DoD:
+
+- [x] Fallback remoto implementado.
+- [x] Fallback local preservado.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`feat: add remote-first catalog fallback`
+
+## Proxima Etapa Planejada
+
+Etapa 27 - Feed de comentarios com fallback remoto.
+
+Status: concluida em 2026-04-20.
+
+Objetivo esperado:
+
+- usar comentarios remotos quando existirem
+- manter preview local visivel
+
+Resultado:
+
+- Criado `src/features/comments/comment-feed-source.ts`.
+- Criado `src/features/comments/comment-feed-source.test.ts`.
+- Criado `docs/product/remote-comments-feed.md`.
+- `Comunidade` agora tenta ler comentarios remotos ao abrir.
+- Quando Supabase responde dados, comentarios remotos entram no topo.
+- Comentarios locais continuam visiveis no aparelho.
+- Quando feed remoto vier vazio ou falhar, preview local continua ativo.
+
+Checklist DoD:
+
+- [x] Feed remoto preparado.
+- [x] Preview local preservado.
+- [x] TDD aplicado ao resolver de feed.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`feat: add remote comments feed fallback`

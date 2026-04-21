@@ -1,21 +1,47 @@
 import { getInitialCelebrationCatalog } from "@louvor-serafico/shared";
+import { useEffect, useMemo, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 
 import { CelebrationCard } from "@/components/CelebrationCard";
 import { PageHeader } from "@/components/PageHeader";
 import { RemoteCelebrationsCard } from "@/components/RemoteCelebrationsCard";
 import { SectionTitle } from "@/components/SectionTitle";
+import { resolveCelebrationCatalogSource } from "@/features/celebrations/celebration-catalog-source";
+import { fetchRemoteCelebrations } from "@/features/celebrations/remote-celebrations";
+import { supabaseConfig } from "@/services/supabase/client";
 import { colors, spacing } from "@/theme/tokens";
 
 export default function CalendarScreen() {
-  const celebrations = getInitialCelebrationCatalog();
+  const localCelebrations = useMemo(() => getInitialCelebrationCatalog(), []);
+  const [celebrations, setCelebrations] = useState(localCelebrations);
+  const [subtitle, setSubtitle] = useState("Datas liturgicas iniciais disponiveis para consulta.");
+
+  useEffect(() => {
+    let active = true;
+
+    void fetchRemoteCelebrations(
+      fetch,
+      supabaseConfig.url,
+      supabaseConfig.publishableKey ?? supabaseConfig.anonKey,
+    ).then((remote) => {
+      if (active) {
+        const source = resolveCelebrationCatalogSource(remote, localCelebrations);
+        setCelebrations(source.celebrations);
+        setSubtitle(source.message);
+      }
+    });
+
+    return () => {
+      active = false;
+    };
+  }, [localCelebrations]);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <PageHeader
         eyebrow={`${celebrations.length} celebracao`}
         title="Calendario"
-        subtitle="Datas liturgicas iniciais disponiveis para consulta."
+        subtitle={subtitle}
       />
 
       <SectionTitle title="Janeiro" />

@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 
 import { PageHeader } from "@/components/PageHeader";
 import { RemoteCommentsCard } from "@/components/RemoteCommentsCard";
 import { useSessionPreview } from "@/features/auth/SessionProvider";
+import { resolveCommentFeedSource } from "@/features/comments/comment-feed-source";
 import { useCommentsPreview } from "@/features/comments/CommentsProvider";
+import { fetchRemoteComments } from "@/features/comments/remote-comments";
+import { supabaseConfig } from "@/services/supabase/client";
 import { colors, spacing, typography } from "@/theme/tokens";
 
 export default function CommunityScreen() {
@@ -12,7 +15,33 @@ export default function CommunityScreen() {
   const { comments, addCommunityComment } = useCommentsPreview();
   const canComment = session.status === "signed_in";
   const [draft, setDraft] = useState("");
+  const [remoteState, setRemoteState] = useState<Awaited<ReturnType<typeof fetchRemoteComments>>>({
+    comments: [],
+    message: "Carregando comentarios remotos.",
+    status: "ready",
+  });
   const canSubmit = canComment && draft.trim().length > 0;
+  const feedSource = useMemo(() => resolveCommentFeedSource(remoteState, comments), [comments, remoteState]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function loadRemoteComments() {
+      const remote = await fetchRemoteComments(fetch, supabaseConfig.url, supabaseConfig.publishableKey ?? supabaseConfig.anonKey);
+
+      if (!isMounted) {
+        return;
+      }
+
+      setRemoteState(remote);
+    }
+
+    void loadRemoteComments();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -29,6 +58,7 @@ export default function CommunityScreen() {
             ? "Sessao local ativa. Comentario local liberado para validacao de UX."
             : "Ative sessao teste em Perfil para liberar UX condicionada."}
         </Text>
+        <Text style={styles.panelText}>{feedSource.message}</Text>
       </View>
 
       <RemoteCommentsCard />
@@ -63,7 +93,7 @@ export default function CommunityScreen() {
         </Pressable>
       </View>
 
-      {comments.map((comment) => (
+      {feedSource.comments.map((comment) => (
         <View key={comment.id} style={styles.comment}>
           <Text style={styles.commentAuthor}>{comment.authorName}</Text>
           <Text style={styles.commentText}>{comment.body}</Text>

@@ -113,8 +113,10 @@ Leia primeiro:
 - `docs/product/supabase-session-state.md`
 - `docs/product/supabase-profile.md`
 - `docs/product/remote-comments.md`
+- `docs/product/remote-comments-feed.md`
 - `docs/product/remote-songs.md`
 - `docs/product/remote-celebrations.md`
+- `docs/product/remote-fallback-catalogs.md`
 
 ## Regra De Trabalho
 
