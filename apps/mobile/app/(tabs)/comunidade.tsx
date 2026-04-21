@@ -4,17 +4,21 @@ import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-
 import { PageHeader } from "@/components/PageHeader";
 import { RemoteCommentsCard } from "@/components/RemoteCommentsCard";
 import { useSessionPreview } from "@/features/auth/SessionProvider";
+import { useSupabaseSession } from "@/features/auth/SupabaseSessionProvider";
 import { resolveCommentFeedSource } from "@/features/comments/comment-feed-source";
 import { useCommentsPreview } from "@/features/comments/CommentsProvider";
+import { postRemoteComment } from "@/features/comments/remote-comment-submit";
 import { fetchRemoteComments } from "@/features/comments/remote-comments";
 import { supabaseConfig } from "@/services/supabase/client";
 import { colors, spacing, typography } from "@/theme/tokens";
 
 export default function CommunityScreen() {
   const { session } = useSessionPreview();
+  const { session: supabaseSession } = useSupabaseSession();
   const { comments, addCommunityComment } = useCommentsPreview();
-  const canComment = session.status === "signed_in";
+  const canComment = session.status === "signed_in" || supabaseSession.status === "authenticated";
   const [draft, setDraft] = useState("");
+  const [submitMessage, setSubmitMessage] = useState("Nenhum envio remoto nesta sessao.");
   const [remoteState, setRemoteState] = useState<Awaited<ReturnType<typeof fetchRemoteComments>>>({
     comments: [],
     message: "Carregando comentarios remotos.",
@@ -43,6 +47,11 @@ export default function CommunityScreen() {
     };
   }, []);
 
+  async function refreshRemoteComments() {
+    const remote = await fetchRemoteComments(fetch, supabaseConfig.url, supabaseConfig.publishableKey ?? supabaseConfig.anonKey);
+    setRemoteState(remote);
+  }
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <PageHeader
@@ -54,11 +63,14 @@ export default function CommunityScreen() {
       <View style={styles.panel}>
         <Text style={styles.panelTitle}>{canComment ? "Comentarios liberados" : "Comentarios bloqueados"}</Text>
         <Text style={styles.panelText}>
-          {canComment
-            ? "Sessao local ativa. Comentario local liberado para validacao de UX."
-            : "Ative sessao teste em Perfil para liberar UX condicionada."}
+          {supabaseSession.status === "authenticated"
+            ? "Sessao Supabase ativa. Comentario remoto pode ser publicado."
+            : canComment
+              ? "Sessao local ativa. Comentario local liberado para validacao de UX."
+              : "Ative sessao teste em Perfil para liberar UX condicionada."}
         </Text>
         <Text style={styles.panelText}>{feedSource.message}</Text>
+        <Text style={styles.panelText}>{submitMessage}</Text>
       </View>
 
       <RemoteCommentsCard />
@@ -76,19 +88,46 @@ export default function CommunityScreen() {
         />
         <Pressable
           disabled={!canSubmit}
-          onPress={() => {
+          onPress={async () => {
+            if (supabaseSession.status === "authenticated" && supabaseSession.userId && draft.trim()) {
+              const result = await postRemoteComment(
+                {
+                  body: draft,
+                  profileId: supabaseSession.userId,
+                },
+                fetch,
+                supabaseConfig.url,
+                supabaseConfig.publishableKey ?? supabaseConfig.anonKey,
+                supabaseSession.accessToken,
+              );
+
+              setSubmitMessage(result.message);
+
+              if (result.ok) {
+                setDraft("");
+                await refreshRemoteComments();
+              }
+
+              return;
+            }
+
             if (session.status === "signed_in" && draft.trim()) {
               addCommunityComment({
                 authorName: session.displayName,
                 body: draft,
               });
+              setSubmitMessage("Comentario salvo apenas no preview local.");
               setDraft("");
             }
           }}
           style={[styles.button, !canSubmit ? styles.buttonDisabled : undefined]}
         >
           <Text style={[styles.buttonText, !canSubmit ? styles.buttonTextDisabled : undefined]}>
-            {canComment ? "Publicar comentario" : "Sessao necessaria"}
+            {supabaseSession.status === "authenticated"
+              ? "Publicar comentario remoto"
+              : canComment
+                ? "Publicar comentario"
+                : "Sessao necessaria"}
           </Text>
         </Pressable>
       </View>

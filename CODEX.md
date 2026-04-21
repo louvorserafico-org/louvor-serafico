@@ -1562,3 +1562,33 @@ Checklist DoD:
 Sugestao de commit:
 
 `feat: add remote favorites feed fallback`
+
+## Proxima Etapa Planejada
+
+Etapa 30 - Publicacao remota de comentarios.
+
+Status: concluida em 2026-04-20.
+
+Objetivo esperado:
+
+- permitir escrita remota com sessao real
+- preservar preview local
+
+Resultado:
+
+- Criado `src/features/comments/remote-comment-submit.ts`.
+- Criado `src/features/comments/remote-comment-submit.test.ts`.
+- Criado `docs/product/remote-comment-submit.md`.
+- `Comunidade` agora tenta publicar remoto quando houver sessao Supabase.
+- Preview local continua ativo quando houver apenas sessao teste.
+
+Checklist DoD:
+
+- [x] Escrita remota preparada.
+- [x] Preview local preservado.
+- [x] TDD aplicado.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`feat: add remote comment submit flow`

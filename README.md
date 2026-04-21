@@ -114,6 +114,7 @@ Leia primeiro:
 - `docs/product/supabase-profile.md`
 - `docs/product/remote-comments.md`
 - `docs/product/remote-comments-feed.md`
+- `docs/product/remote-comment-submit.md`
 - `docs/product/remote-favorites.md`
 - `docs/product/remote-favorites-feed.md`
 - `docs/product/remote-songs.md`
