@@ -238,6 +238,14 @@ Uma etapa so e considerada pronta quando:
 - Fix: manter calendario local como fonte principal e expor estado remoto na tab
   `Calendario` ate a migration real existir.
 
+### 2026-04-20 - Push remoto do schema bloqueado
+
+- Hurdle: `supabase db push` nao conseguiu conectar no Postgres remoto.
+- Causa confirmada: hostname `db.engvbvdtdcveoebgrexl.supabase.co` nao resolve
+  neste ambiente, mesmo com `--dns-resolver https`.
+- Fix: migration inicial foi preparada localmente em `supabase/migrations`, e o
+  blocker foi documentado para execucao em ambiente com DNS/host valido.
+
 ## Historico De Etapas
 
 ### Etapa 0 - Fundacao documental e workflow
@@ -1366,7 +1374,37 @@ Sugestao de commit:
 
 Etapa 24 - Schema real Supabase.
 
+Status: preparada em 2026-04-20. Bloqueada na aplicacao remota.
+
 Objetivo esperado:
 
 - Criar tabelas base no projeto remoto.
 - Sair dos blockers `404`.
+
+Resultado parcial:
+
+- `supabase init` executado.
+- Criado `supabase/config.toml`.
+- Criado `supabase/migrations/20260420215500_initial_remote_schema.sql`.
+- Schema inicial cobre seasons, moments, songs, celebrations, assets,
+  recommendations, profiles, subscriptions e comments.
+- Push remoto bloqueado por falha de resolucao DNS no host Postgres.
+
+Validacoes executadas:
+
+- `npx supabase --version`
+- `npx supabase db push --help`
+- `npx supabase db push --dry-run --include-all --yes`
+- `npx supabase db push --dry-run --include-all --yes --dns-resolver https`
+
+Checklist DoD:
+
+- [x] Projeto Supabase inicializado localmente.
+- [x] Migration inicial criada.
+- [x] Blocker remoto confirmado e documentado.
+- [ ] Tabelas aplicadas no projeto remoto.
+- [ ] Blockers `404` removidos.
+
+Sugestao de commit:
+
+`feat: scaffold initial supabase schema migration`
