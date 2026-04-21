@@ -52,13 +52,19 @@ Resposta de sucesso:
 - se asset for premium, exige assinatura ativa em `subscriptions`;
 - gera signed URL com expiracao de 300 segundos.
 
-## Deploy Futuro
+## Deploy
 
-Quando for usar CLI:
+Comando usado:
 
 ```powershell
 npx supabase functions deploy create-asset-signed-url --project-ref engvbvdtdcveoebgrexl
 ```
+
+Status atual:
+
+- Supabase CLI autenticado localmente;
+- funcao `create-asset-signed-url` implantada no projeto `engvbvdtdcveoebgrexl`;
+- deploy validado pelo output do CLI em 2026-04-21.
 
 Secrets esperados no ambiente Supabase:
 
@@ -86,6 +92,11 @@ Sem sessao Supabase real, o app retorna erro claro e nao tenta abrir o arquivo.
 
 ## Limites
 
-A funcao precisa estar implantada no Supabase para o fluxo funcionar em dispositivo real.
+O deploy ja foi realizado, mas o fluxo completo ainda depende de:
 
-Enquanto a funcao nao estiver implantada, o app continua seguro: ele nao expoe caminho privado nem tenta usar service role no cliente.
+- usuario com sessao Supabase real;
+- asset cadastrado em `song_assets`;
+- arquivo existente no bucket privado `song-assets`;
+- assinatura ativa em `subscriptions` para assets premium.
+
+Sem essas condicoes, o app deve retornar erro claro e permanecer seguro.

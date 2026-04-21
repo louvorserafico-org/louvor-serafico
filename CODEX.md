@@ -2231,3 +2231,46 @@ Checklist DoD:
 Sugestao de commit:
 
 `feat: route asset links through edge function`
+
+## Proxima Etapa Planejada
+
+Etapa 45 - Deploy da Edge Function.
+
+Status: concluida em 2026-04-21.
+
+Objetivo esperado:
+
+- autenticar o Supabase CLI no ambiente local;
+- implantar a funcao `create-asset-signed-url`;
+- registrar o novo estado operacional do backend.
+
+Resultado:
+
+- `npx supabase login` executado pelo usuario com sucesso.
+- Token local do Supabase CLI criado.
+- `npx supabase functions deploy create-asset-signed-url --project-ref engvbvdtdcveoebgrexl` executado com sucesso.
+- Funcao `create-asset-signed-url` implantada no projeto `engvbvdtdcveoebgrexl`.
+- Guia `docs/development/supabase-edge-functions.md` atualizado com estado de deploy.
+
+Decisoes tecnicas e trade-offs:
+
+- O login CLI fica no ambiente local do usuario, nao no repositorio.
+- Nenhum token ou segredo foi versionado.
+- O deploy da funcao foi tratado como etapa operacional, separada da implementacao do app.
+
+Hurdles & Fixes:
+
+- O CLI emitiu aviso de npm sobre `node-linker`; isso nao bloqueou login nem deploy.
+- O Edge Runtime foi baixado via Docker durante o deploy.
+- A funcao foi implantada sem necessidade de alterar codigo.
+
+Checklist DoD:
+
+- [x] Supabase CLI autenticado.
+- [x] Edge Function implantada.
+- [x] Nenhum segredo documentado.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`docs: record edge function deployment`
