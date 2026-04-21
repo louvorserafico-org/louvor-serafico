@@ -65,6 +65,7 @@ Depois:
 Guia detalhado:
 
 - `docs/development/run-iphone-expo-go.md`
+- `docs/development/development-build.md`
 
 Com o Android Emulator aberto:
 

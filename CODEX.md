@@ -1777,3 +1777,33 @@ Checklist DoD:
 Sugestao de commit:
 
 `chore: prepare revenuecat configuration`
+
+## Proxima Etapa Planejada
+
+Etapa 37 - Preparacao development build.
+
+Status: concluida em 2026-04-21.
+
+Objetivo esperado:
+
+- preparar EAS development build
+- manter Expo Go como fluxo principal
+- criar caminho futuro para RevenueCat
+
+Resultado:
+
+- Criado `apps/mobile/eas.json`.
+- Criado `docs/development/development-build.md`.
+- README atualizado com o novo guia.
+- Nenhum SDK nativo foi instalado.
+
+Checklist DoD:
+
+- [x] EAS configurado para development, preview e production.
+- [x] Expo Go preservado.
+- [x] Documentacao atualizada.
+- [x] `CODEX.md` atualizado.
+
+Sugestao de commit:
+
+`chore: prepare eas development build`
