@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "main": "expo-router/entry",
   "scripts": {
+    "build:development:ios": "npx eas-cli build --profile development --platform ios",
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",

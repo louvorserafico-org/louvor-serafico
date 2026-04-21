@@ -5,6 +5,7 @@
   "packageManager": "pnpm@10.10.0",
   "scripts": {
     "android": "corepack pnpm --filter @louvor-serafico/mobile android",
+    "build:development:ios": "corepack pnpm --filter @louvor-serafico/mobile build:development:ios",
     "dev": "corepack pnpm --filter @louvor-serafico/mobile start",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "lint": "node --check packages/shared/src/index.ts && node --check apps/mobile/metro.config.js && node --check apps/mobile/app.config.js",

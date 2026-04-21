@@ -83,3 +83,12 @@ O app mobile le `.env.local` da raiz do monorepo via `app.config.js`. Somente va
 - [ ] Tab `Perfil` abriu.
 - [ ] Estado local Supabase visivel.
 - [ ] Leitura remota Supabase visivel.
+
+## Recuperacao De Senha
+
+Expo Go permite validar o envio do email de recuperacao, mas o retorno completo
+por `louvor-serafico://recuperar-senha` deve ser validado em development build.
+
+Guia:
+
+- `docs/development/validate-password-recovery.md`

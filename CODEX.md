@@ -2655,3 +2655,86 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 54 - Validacao manual do fluxo de recuperacao.
+
+Status: concluida em 2026-04-21.
+
+Objetivo esperado:
+
+- documentar como validar recuperacao de senha;
+- separar validacao parcial no Expo Go da validacao completa em development build;
+- registrar DoD manual do fluxo.
+
+Resultado:
+
+- Criado `docs/development/validate-password-recovery.md`.
+- `README.md` atualizado com o novo guia.
+- `docs/development/run-iphone-expo-go.md` atualizado com limite do Expo Go para deep links.
+
+Decisoes tecnicas e trade-offs:
+
+- A validacao completa foi marcada como dependente de development build, porque Expo Go nao e ambiente confiavel para custom scheme do app.
+- A validacao parcial no Expo Go continua util para confirmar envio do email e estados de erro.
+- Nenhum codigo foi alterado nesta etapa, pois o objetivo era operacional e de QA manual.
+
+Hurdles & Fixes:
+
+- Risco identificado: confundir sucesso no Expo Go com validacao completa do deep link. O guia agora separa explicitamente os dois cenarios.
+
+Checklist DoD:
+
+- [x] Guia criado.
+- [x] Limite do Expo Go documentado.
+- [x] DoD manual registrado.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`docs: add password recovery validation guide`
+
+## Proxima Etapa Planejada
+
+Etapa 55 - Preparar build de desenvolvimento para deep links.
+
+Status: concluida em 2026-04-21.
+
+Objetivo esperado:
+
+- preparar comando padrao para gerar development build iOS;
+- alinhar docs de deep link com development build;
+- manter Expo Go como fluxo principal ate a necessidade de testar custom scheme real.
+
+Resultado:
+
+- Adicionado script raiz `build:development:ios`.
+- Adicionado script mobile `build:development:ios`.
+- `docs/development/development-build.md` atualizado com fluxo de deep links.
+- `docs/development/validate-password-recovery.md` atualizado com comando de build.
+
+Decisoes tecnicas e trade-offs:
+
+- O comando usa `npx eas-cli build --profile development --platform ios` dentro do app mobile.
+- O script raiz delega para o package mobile via pnpm filter.
+- A build real nao foi executada nesta etapa, porque isso consome ambiente externo, credenciais Apple/EAS e tempo operacional.
+- Alternativa rejeitada: trocar o fluxo principal para development build agora. Expo Go segue mais rapido para iteracao diaria.
+
+Hurdles & Fixes:
+
+- Nenhum bloqueio tecnico encontrado.
+
+Checklist DoD:
+
+- [x] Script criado.
+- [x] Guia atualizado.
+- [x] Validacao de deep link orientada.
+- [x] Testes passam.
+- [x] Typecheck passa.
+- [x] Lint passa.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`chore: add ios development build script`
+
+## Proxima Etapa Planejada
+
+Etapa 56 - Checklist operacional EAS e Apple.
