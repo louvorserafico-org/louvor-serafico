@@ -1895,3 +1895,45 @@ Checklist DoD:
 Sugestao de commit:
 
 `docs: add manual supabase sql apply guide`
+
+## Correcao De Erro Em Expo Go
+
+Status: concluida em 2026-04-21.
+
+Problemas reportados:
+
+- `AsyncStorageError: Native module is null, cannot access legacy storage`.
+- Supabase aparecendo como nao configurado no iPhone, mesmo com `.env.local` na raiz.
+
+Resultado:
+
+- Criado `src/features/preview/storage.test.ts`.
+- `src/features/preview/storage.ts` agora usa fallback em memoria quando AsyncStorage nativo nao existe no Expo Go.
+- `src/services/supabase/client.ts` agora usa storage seguro em memoria como fallback para auth do Supabase.
+- Criado `apps/mobile/app.config.js` para carregar variaveis `EXPO_PUBLIC_*` da raiz do monorepo.
+- `docs/development/run-iphone-expo-go.md` atualizado com instrucao de limpar cache quando variaveis nao aparecerem.
+- `package.json` agora valida `app.config.js` no lint e inclui o novo teste.
+
+Decisoes tecnicas e trade-offs:
+
+- Mantivemos AsyncStorage como caminho preferencial quando disponivel.
+- No Expo Go, se o modulo nativo estiver ausente, o app usa memoria. Isso evita crash, mas nao persiste dados apos fechar o app.
+- Alternativa rejeitada: exigir development build imediatamente. Isso resolveria o modulo nativo, mas atrasaria o fluxo atual de teste por iPhone com Expo Go.
+- `app.config.js` so expoe variaveis `EXPO_PUBLIC_*`; service role e DB URL continuam fora do bundle.
+
+Hurdles & Fixes:
+
+- O teste vermelho inicial confirmou que a camada de storage dependia do modulo nativo no carregamento.
+- Removemos import nativo direto no topo e passamos a resolver storage com fallback seguro.
+- O monorepo mantem `.env.local` na raiz, entao o app Expo precisava de ponte explicita via config.
+
+Checklist DoD:
+
+- [x] Erro de AsyncStorage tratado.
+- [x] Supabase configuravel a partir da raiz do monorepo.
+- [x] TDD aplicado para fallback de storage.
+- [x] Documentacao atualizada.
+
+Sugestao de commit:
+
+`fix: stabilize expo go storage and env config`

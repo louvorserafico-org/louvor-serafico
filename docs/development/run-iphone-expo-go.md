@@ -62,6 +62,18 @@ Esperado:
 2. Fechar Expo Go e abrir novamente.
 3. Reiniciar Metro.
 
+## Se Supabase Aparecer Pendente
+
+Se a tab `Perfil` mostrar `Supabase pendente`, reinicie o Metro limpando cache:
+
+```powershell
+cd C:\Users\myPC\Desktop\dev\personal\frei-luis\louvor-serafico\apps\mobile
+$env:COREPACK_HOME='C:\Users\myPC\Desktop\dev\personal\frei-luis\louvor-serafico\.corepack'
+corepack pnpm start -- --clear
+```
+
+O app mobile le `.env.local` da raiz do monorepo via `app.config.js`. Somente variaveis `EXPO_PUBLIC_*` entram no bundle.
+
 ## Checklist Rapido
 
 - [ ] Metro iniciado sem erro.

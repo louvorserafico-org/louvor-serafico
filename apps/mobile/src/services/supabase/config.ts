@@ -36,7 +36,10 @@ export function isSupabaseConfigured(config: SupabaseConfig): boolean {
 }
 
 export function getSupabaseConfig(): SupabaseConfig {
-  return buildSupabaseConfig(process.env);
+  return buildSupabaseConfig({
+    ...getExpoConfigExtra(),
+    ...process.env,
+  });
 }
 
 function normalize(value?: string): string | null {
@@ -62,4 +65,16 @@ function parseProjectRef(projectHost: string | null): string | null {
   }
 
   return projectHost.split(".")[0] ?? null;
+}
+
+function getExpoConfigExtra(): SupabaseEnvironment {
+  try {
+    const module = require("expo-constants") as {
+      default?: { expoConfig?: { extra?: SupabaseEnvironment } };
+    };
+
+    return module.default?.expoConfig?.extra ?? {};
+  } catch {
+    return {};
+  }
 }
