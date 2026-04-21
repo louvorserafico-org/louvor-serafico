@@ -121,6 +121,7 @@ Leia primeiro:
 - `docs/product/remote-song-detail.md`
 - `docs/product/premium-asset-gate.md`
 - `docs/product/premium-storage-assets.md`
+- `docs/product/paywall-preview.md`
 - `docs/product/subscription-preview.md`
 - `docs/product/revenuecat-readiness.md`
 - `docs/product/remote-songs.md`

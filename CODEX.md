@@ -1978,3 +1978,48 @@ Checklist DoD:
 Sugestao de commit:
 
 `fix: remove async storage from expo go flow`
+
+## Proxima Etapa Planejada
+
+Etapa 40 - Paywall preview.
+
+Status: concluida em 2026-04-21.
+
+Objetivo esperado:
+
+- criar primeira experiencia clara de paywall
+- manter fluxo sem compra real
+- preparar transicao futura para RevenueCat
+
+Resultado:
+
+- Criado `src/features/subscription/paywall-copy.ts`.
+- Criado `src/features/subscription/paywall-copy.test.ts`.
+- Criado `src/components/PaywallPreviewCard.tsx`.
+- Criado `docs/product/paywall-preview.md`.
+- Perfil agora mostra card de paywall antes do controle tecnico de premium preview.
+- README atualizado com o novo documento.
+
+Decisoes tecnicas e trade-offs:
+
+- O paywall usa estado local de preview para manter Expo Go estavel.
+- Usuario anonimo e levado para `/entrar`.
+- Usuario autenticado pode alternar premium localmente.
+- Alternativa rejeitada: instalar SDK RevenueCat agora. Isso exigiria development build e interromperia o fluxo atual de teste no iPhone com Expo Go.
+
+Hurdles & Fixes:
+
+- O teste vermelho confirmou que a regra de copy ainda nao existia.
+- Mantivemos copy em funcao pura para facilitar troca futura por offerings reais.
+
+Checklist DoD:
+
+- [x] TDD aplicado.
+- [x] Estado anonimo coberto.
+- [x] Estado autenticado sem premium coberto.
+- [x] Estado premium coberto.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: add paywall preview card`
