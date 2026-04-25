@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.background,
     gap: spacing.lg,
-    padding: spacing.xl,
+    padding: spacing.lg,
     paddingBottom: spacing.xxl,
   },
 });

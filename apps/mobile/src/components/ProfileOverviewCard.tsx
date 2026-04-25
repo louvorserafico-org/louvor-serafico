@@ -5,7 +5,7 @@ import { buildProfileOverview } from "@/features/auth/profile-overview";
 import { useSupabaseProfile } from "@/features/auth/SupabaseProfileProvider";
 import { useSupabaseSession } from "@/features/auth/SupabaseSessionProvider";
 import { useSubscriptionPreview } from "@/features/subscription/SubscriptionPreviewProvider";
-import { colors, spacing, typography } from "@/theme/tokens";
+import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
 
 export function ProfileOverviewCard() {
   const { profile } = useSupabaseProfile();
@@ -29,8 +29,10 @@ export function ProfileOverviewCard() {
     >
       <Text style={styles.eyebrow}>Minha conta</Text>
       <Text style={styles.title}>{overview.title}</Text>
-      <Text style={styles.text}>{overview.accountLine}</Text>
-      <Text style={styles.text}>{overview.detailLine}</Text>
+      <View style={styles.copyBlock}>
+        <Text style={styles.lead}>{overview.accountLine}</Text>
+        <Text style={styles.text}>{overview.detailLine}</Text>
+      </View>
       <Text style={styles.badge}>{overview.premiumLine}</Text>
       {showEntryAction ? (
         <Link asChild href="/entrar">
@@ -51,41 +53,57 @@ const styles = StyleSheet.create({
   badge: {
     alignSelf: "flex-start",
     borderColor: colors.border,
-    borderRadius: 8,
+    borderRadius: radii.pill,
     borderWidth: 1,
-    color: colors.accent,
+    color: colors.accentStrong,
+    fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "800",
     marginTop: spacing.xs,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: spacing.xs,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
   },
   button: {
     alignSelf: "flex-start",
     backgroundColor: colors.accent,
     borderColor: colors.accent,
-    borderRadius: 8,
+    borderRadius: radii.pill,
     borderWidth: 1,
     marginTop: spacing.sm,
-    paddingHorizontal: spacing.md,
+    paddingHorizontal: spacing.lg,
     paddingVertical: spacing.sm,
   },
   buttonText: {
     color: colors.background,
+    fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "800",
   },
   card: {
-    borderRadius: 8,
+    borderRadius: radii.xl,
     borderWidth: 1,
+    gap: spacing.sm,
+    padding: spacing.lg,
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.06,
+    shadowRadius: 16,
+  },
+  copyBlock: {
     gap: spacing.xs,
-    padding: spacing.md,
   },
   eyebrow: {
     color: colors.accent,
+    fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "800",
     textTransform: "uppercase",
+  },
+  lead: {
+    color: colors.textPrimary,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.lead,
+    lineHeight: 28,
   },
   loading: {
     backgroundColor: colors.surface,
@@ -101,12 +119,15 @@ const styles = StyleSheet.create({
   },
   text: {
     color: colors.textSecondary,
-    fontSize: typography.caption,
-    lineHeight: 19,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.body,
+    lineHeight: 24,
   },
   title: {
     color: colors.textPrimary,
+    fontFamily: fontFamilies.display,
     fontSize: typography.heading,
-    fontWeight: "900",
+    fontStyle: "italic",
+    fontWeight: "700",
   },
 });

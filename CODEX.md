@@ -3894,3 +3894,248 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 77 - Refinar UX dos detalhes de dia sem repertorio.
+
+## Etapa 78 - Home para dias sem repertorio
+
+Resumo do que foi feito:
+
+- Refinada a Home para diferenciar dia comum sem roteiro e data liturgica sem repertorio.
+- Adicionada regra para destacar dias preparados relevantes ao momento do ano.
+- Quando nao ha proximos dias em 2026, a Home passa a exibir os dias ja publicados no app.
+
+Arquivos alterados:
+
+- `apps/mobile/src/features/home/home-prepared-days.ts`
+- `apps/mobile/src/features/home/home-prepared-days.test.ts`
+- `apps/mobile/src/features/home/home-summary.ts`
+- `apps/mobile/src/features/home/home-summary.test.ts`
+- `apps/mobile/app/(tabs)/index.tsx`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: improve home states for days without repertoire`
+
+## Proxima Etapa Planejada
+
+Etapa 79 - Navegacao mensal real no calendario 2026.
+
+## Etapa 79 - Navegacao mensal do calendario
+
+Resumo do que foi feito:
+
+- Calendario passou a navegar mes a mes em 2026.
+- Grade, datas marcadas e lista editorial passaram a seguir o mes selecionado.
+- Meses sem marcacao agora mostram estado vazio proprio.
+
+Arquivos alterados:
+
+- `apps/mobile/src/features/celebrations/calendar-month-view.ts`
+- `apps/mobile/src/features/celebrations/calendar-month-view.test.ts`
+- `apps/mobile/app/(tabs)/calendario.tsx`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: add monthly navigation to 2026 calendar`
+
+## Proxima Etapa Planejada
+
+Etapa 80 - Tornar dias do calendario navegaveis.
+
+## Etapa 80 - Rotas por dia no calendario
+
+Resumo do que foi feito:
+
+- Dias da grade mensal passaram a ser clicaveis.
+- Datas marcadas do mes tambem passaram a abrir o detalhe correto.
+- Navegacao foi unificada por `slug` quando ha roteiro e por `monthDay` nos demais casos.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/calendario.tsx`
+- `apps/mobile/src/features/celebrations/calendar-day-route.ts`
+- `apps/mobile/src/features/celebrations/calendar-day-route.test.ts`
+- `package.json`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: make 2026 calendar days open the correct detail state`
+
+## Proxima Etapa Planejada
+
+Etapa 81 - Refinar estados vazios do detalhe do dia.
+
+## Etapa 81 - Detalhe de dia sem repertorio
+
+Resumo do que foi feito:
+
+- Refinada a copy dos detalhes para dia liturgico sem repertorio e dia comum.
+- Card principal ganhou hierarquia editorial mais clara, com titulo, texto principal e CTA melhor resolvido.
+
+Arquivos alterados:
+
+- `apps/mobile/src/features/celebrations/liturgical-day-detail.ts`
+- `apps/mobile/src/features/celebrations/liturgical-day-detail.test.ts`
+- `apps/mobile/app/celebracoes/[id].tsx`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: refine empty liturgical day detail states`
+
+## Proxima Etapa Planejada
+
+Etapa 82 - Refinar composicao visual da Home.
+
+## Etapa 82 - Composicao da Home
+
+Resumo do que foi feito:
+
+- Reforcada a hierarquia visual do bloco principal de hoje.
+- Adicionados badge de data, CTA principal mais presente e atalhos editoriais para calendario e repertorio.
+- O bloco mensal ganhou cabecalho proprio e acesso direto ao calendario.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/index.tsx`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: refine home composition and hierarchy`
+
+## Proxima Etapa Planejada
+
+Etapa 83 - Refinar visual e copy da tab Repertorio.
+
+## Etapa 83 - Repertorio editorial
+
+Resumo do que foi feito:
+
+- Repertorio ganhou resumo inicial mais forte e metricas editoriais.
+- Cards de musica passaram a enfatizar materiais e disponibilidade com linguagem menos tecnica.
+- O overview do catalogo ficou mais humano e menos operacional.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/repertorio.tsx`
+- `apps/mobile/src/components/SongCard.tsx`
+- `apps/mobile/src/features/songs/repertoire-overview.ts`
+- `apps/mobile/src/features/songs/repertoire-overview.test.ts`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: refine repertoire visual hierarchy and copy`
+
+## Proxima Etapa Planejada
+
+Etapa 84 - Refinar visual e copy da tab Comunidade.
+
+## Etapa 84 - Comunidade mais humana
+
+Resumo do que foi feito:
+
+- Estados de acesso foram reescritos com linguagem menos tecnica.
+- Bloco principal ganhou metrica de partilhas e formulario melhor distribuido.
+- Cards e estado vazio passaram a usar copy mais acolhedora.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/comunidade.tsx`
+- `apps/mobile/src/features/comments/community-access.ts`
+- `apps/mobile/src/features/comments/community-access.test.ts`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: refine community visual hierarchy and copy`
+
+## Proxima Etapa Planejada
+
+Etapa 85 - Refinar visual e copy da tab Perfil.
+
+## Etapa 85 - Perfil e assinatura
+
+Resumo do que foi feito:
+
+- A tab Perfil ganhou copy mais madura para conta anonima, conta em carga e conta pronta.
+- Os cards principais de perfil e assinatura receberam hierarquia visual mais forte, com melhor leitura dos textos e estados.
+- O bloco premium passou a falar com mais clareza sobre acesso ativo, assinatura disponivel e entrada necessaria.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/perfil.tsx`
+- `apps/mobile/src/components/ProfileOverviewCard.tsx`
+- `apps/mobile/src/components/SubscriptionOverviewCard.tsx`
+- `apps/mobile/src/features/auth/profile-overview.ts`
+- `apps/mobile/src/features/auth/profile-overview.test.ts`
+- `apps/mobile/src/features/subscription/subscription-overview.ts`
+- `apps/mobile/src/features/subscription/subscription-overview.test.ts`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: refine profile and subscription hierarchy`
+
+## Proxima Etapa Planejada
+
+Etapa 86 - Refinar visual e copy da tela de autenticacao.

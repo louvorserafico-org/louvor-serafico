@@ -59,11 +59,11 @@ describe("profile overview", () => {
     });
 
     assert.deepEqual(result, {
-      accountLine: "Entre para liberar favoritos, comentarios e materiais premium.",
-      detailLine: "Cadastro por email e senha.",
+      accountLine: "Entre para guardar favoritos, acompanhar partilhas e acessar materiais completos.",
+      detailLine: "Use seu email e senha para manter seu ministerio em ordem.",
       premiumLine: "Premium inativo",
       status: "anonymous",
-      title: "Conta nao conectada",
+      title: "Sua conta ainda nao entrou",
     });
   });
 
@@ -76,7 +76,7 @@ describe("profile overview", () => {
 
     assert.deepEqual(result, {
       accountLine: "louvor@example.com",
-      detailLine: "Perfil remoto ainda nao carregado.",
+      detailLine: "Seu perfil ainda esta sendo organizado.",
       premiumLine: "Premium ativo",
       status: "partial",
       title: "Conta conectada",

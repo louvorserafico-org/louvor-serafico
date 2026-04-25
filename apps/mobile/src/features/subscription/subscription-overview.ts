@@ -12,22 +12,22 @@ export type SubscriptionOverview = {
 export function buildSubscriptionOverview(input: SubscriptionOverviewInput): SubscriptionOverview {
   if (input.hasActiveSubscription) {
     return {
-      helperText: "Materiais premium liberados. Partituras, cifras e arquivos completos seguem ativos nesta conta.",
+      helperText: "Partituras, cifras e materiais completos seguem liberados nesta conta.",
       status: "active",
-      title: "Premium ativo",
+      title: "Assinatura ativa",
     };
   }
 
   if (input.isAuthenticated) {
     return {
-      helperText: "Conta pronta para assinatura. Falta ativar premium para liberar materiais completos.",
+      helperText: "Sua conta ja esta pronta. Falta apenas ativar o premium para liberar o acervo completo.",
       status: "ready",
-      title: "Assinatura disponivel",
+      title: "Premium disponivel",
     };
   }
 
   return {
-    helperText: "Entre na conta antes de assinar. Depois disso, o fluxo premium fica pronto para liberacao.",
+    helperText: "Entre na sua conta antes de assinar e manter o acesso premium vinculado ao seu perfil.",
     status: "locked",
     title: "Entrada necessaria",
   };

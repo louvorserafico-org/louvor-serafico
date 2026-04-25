@@ -20,28 +20,28 @@ export function buildProfileOverview(input: ProfileOverviewInput): ProfileOvervi
 
   if (input.session.status === "loading" || input.profile.status === "loading") {
     return {
-      accountLine: "Lendo sessao e perfil.",
-      detailLine: "Aguarde a leitura remota.",
+      accountLine: "Lendo sua conta.",
+      detailLine: "Organizando seus dados para esta tela.",
       premiumLine,
       status: "loading",
-      title: "Carregando conta",
+      title: "Preparando seu perfil",
     };
   }
 
   if (input.session.status !== "authenticated") {
     return {
-      accountLine: "Entre para liberar favoritos, comentarios e materiais premium.",
-      detailLine: "Cadastro por email e senha.",
+      accountLine: "Entre para guardar favoritos, acompanhar partilhas e acessar materiais completos.",
+      detailLine: "Use seu email e senha para manter seu ministerio em ordem.",
       premiumLine,
       status: "anonymous",
-      title: "Conta nao conectada",
+      title: "Sua conta ainda nao entrou",
     };
   }
 
   if (input.profile.status !== "ready") {
     return {
       accountLine: input.session.email ?? "Sessao ativa.",
-      detailLine: "Perfil remoto ainda nao carregado.",
+      detailLine: "Seu perfil ainda esta sendo organizado.",
       premiumLine,
       status: "partial",
       title: "Conta conectada",
