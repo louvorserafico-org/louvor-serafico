@@ -3445,3 +3445,45 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 72 - Revisar warnings tecnicos restantes dos testes.
+
+Status: concluida em 2026-04-25.
+
+Objetivo esperado:
+
+- remover warnings ruidosos dos testes;
+- manter pipeline local mais limpa;
+- preservar comando simples de validacao.
+
+Resultado:
+
+- Runner raiz de testes migrou de `node` para `tsx`.
+- Adicionado `tsx` em `devDependencies`.
+- `pnpm-lock.yaml` atualizado.
+- Warnings `MODULE_TYPELESS_PACKAGE_JSON` deixaram de aparecer no `pnpm test`.
+
+Decisoes tecnicas e trade-offs:
+
+- Escolha por `tsx` evitou mexer no `type` do pacote mobile.
+- Isso preserva `metro.config.js` e `app.config.js` em CommonJS.
+- Alternativa rejeitada: tornar `apps/mobile` ESM agora. Risco desnecessario.
+
+Hurdles & Fixes:
+
+- Hurdle: primeiro `pnpm install` falhou com `ERR_PNPM_ENOENT` em diretoria temporaria do `metro-core`.
+- Fix: repetir `pnpm install`; segunda execucao concluiu normalmente.
+
+Checklist DoD:
+
+- [x] TDD preservado.
+- [x] Testes passam sem warning anterior.
+- [x] Typecheck passa.
+- [x] Lint passa.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`chore: clean test runner warnings`
+
+## Proxima Etapa Planejada
+
+Etapa 73 - Listar pendencias finais do plano atual.
