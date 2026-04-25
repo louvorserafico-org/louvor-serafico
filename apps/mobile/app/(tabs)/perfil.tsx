@@ -12,18 +12,21 @@ import { SupabaseProfileCard } from "@/components/SupabaseProfileCard";
 import { SupabaseRemoteStatusCard } from "@/components/SupabaseRemoteStatusCard";
 import { SupabaseSessionCard } from "@/components/SupabaseSessionCard";
 import { SupabaseStatusCard } from "@/components/SupabaseStatusCard";
+import { useSupabaseSession } from "@/features/auth/SupabaseSessionProvider";
 import { useDebugMode } from "@/features/debug/useDebugMode";
+import { buildProfileTabSubtitle } from "@/features/tabs/main-tab-copy";
 import { colors, spacing } from "@/theme/tokens";
 
 export default function ProfileScreen() {
   const showDebugCards = useDebugMode();
+  const { session } = useSupabaseSession();
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <PageHeader
         eyebrow="Perfil"
         title="Conta e assinatura"
-        subtitle="Estado local e leitura remota inicial do projeto Supabase."
+        subtitle={buildProfileTabSubtitle(session.status === "authenticated")}
       />
       <ProfileOverviewCard />
       <SubscriptionOverviewCard />

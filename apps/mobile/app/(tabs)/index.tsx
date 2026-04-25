@@ -8,6 +8,7 @@ import { initialCelebration } from "@/data/initialCelebration";
 import { useSupabaseSession } from "@/features/auth/SupabaseSessionProvider";
 import { buildHomeSummary } from "@/features/home/home-summary";
 import { useSubscriptionPreview } from "@/features/subscription/SubscriptionPreviewProvider";
+import { buildTodayTabSubtitle } from "@/features/tabs/main-tab-copy";
 import { colors, spacing, typography } from "@/theme/tokens";
 
 export default function TodayScreen() {
@@ -26,7 +27,7 @@ export default function TodayScreen() {
       <PageHeader
         eyebrow={initialCelebration.dateLabel}
         title={initialCelebration.title}
-        subtitle="Roteiro liturgico-musical para a celebracao de hoje."
+        subtitle={buildTodayTabSubtitle(session.status === "authenticated")}
       />
 
       <View style={styles.summary}>

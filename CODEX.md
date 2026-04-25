@@ -3402,3 +3402,46 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 71 - Revisar consistencia final das tabs principais.
+
+Status: concluida em 2026-04-25.
+
+Objetivo esperado:
+
+- alinhar tom das tabs principais;
+- remover subtitulos tecnicos restantes;
+- manter linguagem mais pastoral e objetiva.
+
+Resultado:
+
+- Criado `src/features/tabs/main-tab-copy.ts`.
+- Criado `src/features/tabs/main-tab-copy.test.ts`.
+- Tabs `Hoje`, `Comunidade` e `Perfil` agora usam copy mais consistente.
+- Script de testes raiz atualizado.
+
+Decisoes tecnicas e trade-offs:
+
+- A regra de copy ficou isolada e testada fora da UI.
+- A copy responde ao estado autenticado quando isso melhora contexto.
+- Mantive headers atuais, ajustando apenas subtitulos.
+- Alternativa rejeitada: refatorar `PageHeader` agora. Nao era necessario.
+
+Hurdles & Fixes:
+
+- Nenhum bloqueio tecnico novo.
+
+Checklist DoD:
+
+- [x] TDD aplicado.
+- [x] UI integrada.
+- [x] Testes passam.
+- [x] Typecheck passa.
+- [x] Lint passa.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: align main tab copy`
+
+## Proxima Etapa Planejada
+
+Etapa 72 - Revisar warnings tecnicos restantes dos testes.

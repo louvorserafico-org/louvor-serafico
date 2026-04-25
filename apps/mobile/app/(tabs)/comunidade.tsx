@@ -13,6 +13,7 @@ import { postRemoteComment } from "@/features/comments/remote-comment-submit";
 import { fetchRemoteComments } from "@/features/comments/remote-comments";
 import { buildRemoteFeedback } from "@/features/remote/remote-feedback";
 import { supabaseConfig } from "@/services/supabase/client";
+import { buildCommunityTabSubtitle } from "@/features/tabs/main-tab-copy";
 import { colors, spacing, typography } from "@/theme/tokens";
 
 export default function CommunityScreen() {
@@ -69,7 +70,7 @@ export default function CommunityScreen() {
       <PageHeader
         eyebrow="Comunidade"
         title="Partilha entre musicos"
-        subtitle="Base inicial para comentarios publicos e experiencias de repertorio."
+        subtitle={buildCommunityTabSubtitle(canComment)}
       />
 
       <View
