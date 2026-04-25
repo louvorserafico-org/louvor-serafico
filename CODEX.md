@@ -3487,3 +3487,73 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 73 - Listar pendencias finais do plano atual.
+
+Status: concluida em 2026-04-25.
+
+Objetivo esperado:
+
+- consolidar o que ainda falta;
+- separar pendencias de produto, infra e publicacao;
+- encerrar ciclo atual com visao clara.
+
+Resultado:
+
+- Revisado estado atual do repositorio.
+- Confirmado `git status` limpo na branch `dev`.
+- Consolidada lista de pendencias finais do plano atual.
+
+Pendencias finais do plano atual:
+
+1. Assinatura real:
+   - integrar RevenueCat de verdade;
+   - conectar entitlement real no app;
+   - validar compra, restauracao e expiracao.
+
+2. Build nativo:
+   - concluir Apple Developer pago;
+   - gerar development build iOS;
+   - validar fluxo fora do Expo Go para assinaturas nativas.
+
+3. Conteudo editorial:
+   - ampliar celebracoes alem de 03 de janeiro;
+   - cadastrar repertorio remoto real;
+   - subir assets premium reais para bucket.
+
+4. Operacao Supabase:
+   - revisar RLS final;
+   - revisar seeds e migrations finais;
+   - validar buckets, policies e edge functions em ambiente estavel.
+
+5. UX final:
+   - rodada visual completa em device real;
+   - revisar microcopy restante;
+   - revisar loading states finais.
+
+6. Release readiness:
+   - revisar icones, splash e metadata das stores;
+   - preparar CI/CD de release;
+   - fechar checklist de publicacao Android/iOS.
+
+Decisoes tecnicas e trade-offs:
+
+- O ciclo atual focou fundacao, UX base e fluxos principais.
+- Publicacao e monetizacao real ficaram para fase seguinte por dependerem de credenciais e contas finais.
+- Alternativa rejeitada: forcar release readiness agora. Ainda faltam dependencias externas.
+
+Hurdles & Fixes:
+
+- Nenhum bloqueio novo nesta consolidacao.
+
+Checklist DoD:
+
+- [x] Pendencias consolidadas.
+- [x] Estado do repositorio revisado.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`docs: list remaining plan items`
+
+## Proxima Etapa Planejada
+
+Etapa 74 - Definir proximo ciclo de execucao.
