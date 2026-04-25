@@ -1,15 +1,16 @@
 import { buildCelebrationMomentRows, findCelebrationBySlug } from "@louvor-serafico/shared";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { EditorialStatus } from "@/components/EditorialStatus";
 import { MomentCard } from "@/components/MomentCard";
 import { PageHeader } from "@/components/PageHeader";
 import { SectionTitle } from "@/components/SectionTitle";
+import { buildCelebrationDetailOverview } from "@/features/celebrations/celebration-detail-overview";
 import { fetchRemoteCelebrationDetail } from "@/features/celebrations/remote-celebration-detail";
 import { supabaseConfig } from "@/services/supabase/client";
-import { colors, spacing } from "@/theme/tokens";
+import { colors, spacing, typography } from "@/theme/tokens";
 
 export default function CelebrationDetailScreen() {
   const params = useLocalSearchParams<{ id: string }>();
@@ -18,6 +19,7 @@ export default function CelebrationDetailScreen() {
     [params.id],
   );
   const [remoteCelebration, setRemoteCelebration] = useState<typeof localCelebration | null>(null);
+  const [sourceMode, setSourceMode] = useState<"local" | "remote">("local");
   const [subtitle, setSubtitle] = useState(`Identificador: ${params.id ?? localCelebration?.slug ?? "celebracao"}`);
   const celebration = remoteCelebration ?? localCelebration;
   const momentRows = useMemo(
@@ -25,6 +27,11 @@ export default function CelebrationDetailScreen() {
     [celebration],
   );
   const missingMaterials = momentRows.filter((item) => item.song.assets.length === 0).length;
+  const overview = buildCelebrationDetailOverview({
+    missingMaterials,
+    momentCount: momentRows.length,
+    sourceMode,
+  });
 
   useEffect(() => {
     let active = true;
@@ -40,6 +47,7 @@ export default function CelebrationDetailScreen() {
       }
 
       setRemoteCelebration(result.celebration);
+      setSourceMode(result.celebration ? "remote" : "local");
       setSubtitle(result.message);
     });
 
@@ -61,6 +69,11 @@ export default function CelebrationDetailScreen() {
     <ScrollView contentContainerStyle={styles.container}>
       <Stack.Screen options={{ headerShown: true, title: "Celebracao" }} />
       <PageHeader eyebrow={celebration.dateLabel} subtitle={subtitle} title={celebration.title} />
+
+      <View style={[styles.summary, sourceMode === "remote" ? styles.summaryRemote : styles.summaryLocal]}>
+        <Text style={styles.summaryTitle}>{overview.title}</Text>
+        <Text style={styles.summaryText}>{overview.helperText}</Text>
+      </View>
 
       <EditorialStatus missingCount={missingMaterials} />
 
@@ -89,5 +102,28 @@ const styles = StyleSheet.create({
   },
   list: {
     gap: spacing.md,
+  },
+  summary: {
+    borderRadius: 8,
+    borderWidth: 1,
+    gap: spacing.xs,
+    padding: spacing.md,
+  },
+  summaryLocal: {
+    backgroundColor: colors.goldSoft,
+    borderColor: colors.gold,
+  },
+  summaryRemote: {
+    backgroundColor: colors.oliveSoft,
+    borderColor: colors.olive,
+  },
+  summaryText: {
+    color: colors.textSecondary,
+    fontSize: typography.caption,
+  },
+  summaryTitle: {
+    color: colors.textPrimary,
+    fontSize: typography.body,
+    fontWeight: "800",
   },
 });

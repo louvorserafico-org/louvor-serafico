@@ -3139,3 +3139,47 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 65 - Revisar detalhes de celebracao remota.
+
+Status: concluida em 2026-04-25.
+
+Objetivo esperado:
+
+- deixar detalhe de celebracao menos tecnico;
+- resumir claramente quando roteiro local ou remoto estiver ativo;
+- destacar quantidade de momentos e lacunas editoriais.
+
+Resultado:
+
+- Criado `src/features/celebrations/celebration-detail-overview.ts`.
+- Criado `src/features/celebrations/celebration-detail-overview.test.ts`.
+- Tela de detalhe da celebracao ganhou resumo visual do roteiro atual.
+- Script de testes raiz atualizado.
+
+Decisoes tecnicas e trade-offs:
+
+- A regra de copy ficou isolada e testada fora da UI.
+- O `EditorialStatus` foi mantido, porque ainda e util para curadoria.
+- O fallback local segue padrao quando detalhe remoto nao existe.
+- Alternativa rejeitada: unificar tudo em um unico card gigante. Mantive resumo e status separados para leitura mais clara.
+
+Hurdles & Fixes:
+
+- Hurdle: `apply_patch` inicial nao encaixou por contexto divergente no arquivo.
+- Fix: reler arquivo atual e reaplicar patch com contexto correto.
+
+Checklist DoD:
+
+- [x] TDD aplicado.
+- [x] UI integrada.
+- [x] Testes passam.
+- [x] Typecheck passa.
+- [x] Lint passa.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: improve celebration detail summary`
+
+## Proxima Etapa Planejada
+
+Etapa 66 - Revisar UX do detalhe de musica.
