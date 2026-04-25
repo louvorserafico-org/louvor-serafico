@@ -2957,3 +2957,49 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 61 - Revisar fluxo premium na tela de musica.
+
+Status: concluida em 2026-04-21.
+
+Objetivo esperado:
+
+- tornar o bloqueio premium mais acionavel na tela de musica;
+- direcionar usuario anonimo para login;
+- direcionar usuario autenticado sem acesso para a area premium/perfil;
+- manter abertura real de material quando acesso estiver liberado.
+
+Resultado:
+
+- Criado `src/features/songs/song-asset-action.ts`.
+- Criado `src/features/songs/song-asset-action.test.ts`.
+- Tela de musica passou a exibir CTA navegavel quando material premium esta bloqueado.
+- Usuario anonimo ve `Entrar para acessar`.
+- Usuario autenticado sem acesso ve `Ver premium`.
+- Script de testes raiz atualizado.
+
+Decisoes tecnicas e trade-offs:
+
+- A regra de acao do material ficou isolada e testada fora da UI.
+- A abertura de material continua usando Edge Function e signed URL quando `access.canAccess` e verdadeiro.
+- O destino `Perfil` foi usado como area premium temporaria, porque RevenueCat e paywall final ainda dependem de development build e configuracao operacional.
+- Alternativa rejeitada: implementar paywall final nesta etapa. Isso exigiria RevenueCat real e foge do escopo atual em Expo Go.
+
+Hurdles & Fixes:
+
+- Nenhum bloqueio tecnico encontrado.
+
+Checklist DoD:
+
+- [x] TDD aplicado.
+- [x] UI integrada.
+- [x] Testes passam.
+- [x] Typecheck passa.
+- [x] Lint passa.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: improve song premium actions`
+
+## Proxima Etapa Planejada
+
+Etapa 62 - Revisar UX de comunidade autenticada.

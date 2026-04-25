@@ -1,5 +1,5 @@
 import { findSongBySlug } from "@louvor-serafico/shared";
-import { Stack, useLocalSearchParams } from "expo-router";
+import { Link, Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
@@ -10,6 +10,7 @@ import { useSessionPreview } from "@/features/auth/SessionProvider";
 import { useSupabaseSession } from "@/features/auth/SupabaseSessionProvider";
 import { useFavorites } from "@/features/favorites/FavoritesProvider";
 import { fetchRemoteSongDetail } from "@/features/songs/remote-song-detail";
+import { resolveSongAssetAction } from "@/features/songs/song-asset-action";
 import { resolveAssetAccess } from "@/features/subscription/premium-access";
 import { useSubscriptionPreview } from "@/features/subscription/SubscriptionPreviewProvider";
 import { supabaseConfig } from "@/services/supabase/client";
@@ -104,6 +105,11 @@ export default function SongDetailScreen() {
         {song.assets.length > 0 ? (
           song.assets.map((asset) => {
             const access = resolveAssetAccess(asset, { hasActiveSubscription, isAuthenticated });
+            const action = resolveSongAssetAction({
+              canAccess: access.canAccess,
+              hasActiveSubscription,
+              isAuthenticated,
+            });
 
             return (
               <View key={asset.id} style={styles.asset}>
@@ -111,32 +117,37 @@ export default function SongDetailScreen() {
                 <Text style={styles.assetMeta}>{access.label}</Text>
                 <Text style={styles.assetPath}>{access.canAccess ? asset.path : access.message}</Text>
                 <Text style={styles.assetPath}>{assetMessages[asset.id]}</Text>
-                <Pressable
-                  disabled={!access.canAccess}
-                  onPress={() => {
-                    void requestAssetSignedUrl(
-                      asset.id,
-                      {
-                        accessToken: supabaseSession.accessToken,
-                        functionsUrl: supabaseConfig.functionsUrl,
-                      },
-                    ).then((result) => {
-                      setAssetMessages((current) => ({
-                        ...current,
-                        [asset.id]: result.message,
-                      }));
+                {action.kind === "open" ? (
+                  <Pressable
+                    onPress={() => {
+                      void requestAssetSignedUrl(
+                        asset.id,
+                        {
+                          accessToken: supabaseSession.accessToken,
+                          functionsUrl: supabaseConfig.functionsUrl,
+                        },
+                      ).then((result) => {
+                        setAssetMessages((current) => ({
+                          ...current,
+                          [asset.id]: result.message,
+                        }));
 
-                      if (result.url) {
-                        void Linking.openURL(result.url);
-                      }
-                    });
-                  }}
-                  style={[styles.assetButton, !access.canAccess ? styles.assetButtonDisabled : undefined]}
-                >
-                  <Text style={[styles.assetButtonText, !access.canAccess ? styles.assetButtonTextDisabled : undefined]}>
-                    {access.canAccess ? "Abrir material" : "Premium bloqueado"}
-                  </Text>
-                </Pressable>
+                        if (result.url) {
+                          void Linking.openURL(result.url);
+                        }
+                      });
+                    }}
+                    style={styles.assetButton}
+                  >
+                    <Text style={styles.assetButtonText}>{action.label}</Text>
+                  </Pressable>
+                ) : (
+                  <Link asChild href={action.href}>
+                    <Pressable style={[styles.assetButton, styles.assetButtonSecondary]}>
+                      <Text style={[styles.assetButtonText, styles.assetButtonTextSecondary]}>{action.label}</Text>
+                    </Pressable>
+                  </Link>
+                )}
               </View>
             );
           })
@@ -174,6 +185,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderColor: colors.border,
   },
+  assetButtonSecondary: {
+    backgroundColor: colors.surface,
+    borderColor: colors.accent,
+  },
   assetButtonText: {
     color: colors.background,
     fontSize: typography.caption,
@@ -181,6 +196,9 @@ const styles = StyleSheet.create({
   },
   assetButtonTextDisabled: {
     color: colors.textMuted,
+  },
+  assetButtonTextSecondary: {
+    color: colors.accent,
   },
   assetMeta: {
     color: colors.accent,
