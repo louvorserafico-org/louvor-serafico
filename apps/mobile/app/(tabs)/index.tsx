@@ -13,6 +13,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { SectionTitle } from "@/components/SectionTitle";
 import { useSupabaseSession } from "@/features/auth/SupabaseSessionProvider";
 import { buildHomeCalendar } from "@/features/home/home-calendar";
+import { buildHomePreparedDays } from "@/features/home/home-prepared-days";
 import { buildHomeSummary } from "@/features/home/home-summary";
 import { useSubscriptionPreview } from "@/features/subscription/SubscriptionPreviewProvider";
 import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
@@ -25,6 +26,7 @@ export default function TodayScreen() {
   const todayCelebration = today.celebrationSlug ? findCelebrationBySlug(today.celebrationSlug) : undefined;
   const todayMoments = todayCelebration ? buildCelebrationMomentRows(todayCelebration) : [];
   const calendar = buildHomeCalendar(today);
+  const preparedDays = buildHomePreparedDays(celebrations, today);
   const summary = buildHomeSummary({
     celebration: todayCelebration,
     day: today,
@@ -124,10 +126,12 @@ export default function TodayScreen() {
         </>
       ) : (
         <>
-          <SectionTitle title="Dias preparados" />
+          <SectionTitle title={preparedDays.title} />
+
+          <Text style={styles.sectionText}>{preparedDays.helperText}</Text>
 
           <View style={styles.list}>
-            {celebrations.map((celebration) => (
+            {preparedDays.items.map((celebration) => (
               <CelebrationCard celebration={celebration} key={celebration.id} />
             ))}
           </View>
@@ -232,6 +236,13 @@ const styles = StyleSheet.create({
   },
   list: {
     gap: spacing.md,
+  },
+  sectionText: {
+    color: colors.textSecondary,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.body,
+    lineHeight: 24,
+    marginTop: -spacing.sm,
   },
   summary: {
     backgroundColor: colors.surface,

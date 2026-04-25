@@ -18,6 +18,15 @@ export type HomeSummary = {
 };
 
 export function buildHomeSummary(input: HomeSummaryInput): HomeSummary {
+  if (input.day.kind === "liturgical_day_without_repertoire") {
+    return {
+      actionLabel: "Ver calendario",
+      helperText: `${input.day.title} ja aparece no calendario liturgico, mas o repertorio deste dia ainda esta em preparacao.`,
+      premiumText: "Consulte os dias marcados para encontrar os roteiros ja publicados.",
+      title: "Hoje a liturgia recorda",
+    };
+  }
+
   if (input.day.kind !== "has_repertoire" || !input.celebration) {
     return {
       actionLabel: "Abrir calendario",

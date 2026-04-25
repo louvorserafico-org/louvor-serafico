@@ -82,4 +82,20 @@ describe("home summary", () => {
       title: "Hoje sem roteiro publicado",
     });
   });
+
+  it("builds liturgical day copy when the day exists without repertoire", () => {
+    const result = buildHomeSummary({
+      celebration: undefined,
+      day: getLiturgicalDayForDate(new Date("2026-12-25T12:00:00.000Z")),
+      session: anonymousSession,
+      subscription: inactiveSubscription,
+    });
+
+    assert.deepEqual(result, {
+      actionLabel: "Ver calendario",
+      helperText: "Natal do Senhor ja aparece no calendario liturgico, mas o repertorio deste dia ainda esta em preparacao.",
+      premiumText: "Consulte os dias marcados para encontrar os roteiros ja publicados.",
+      title: "Hoje a liturgia recorda",
+    });
+  });
 });
