@@ -65,20 +65,27 @@ export default function RepertoireScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <PageHeader
-        eyebrow={overview.eyebrow}
-        title={overview.title}
-        subtitle={subtitle}
-      />
+      <PageHeader eyebrow={overview.eyebrow} title={overview.title} subtitle={subtitle} />
 
       <View style={[styles.summary, sourceMode === "remote" ? styles.summaryRemote : styles.summaryLocal]}>
+        <View style={styles.summaryTopRow}>
+          <View style={styles.metricBadge}>
+            <Text style={styles.metricBadgeText}>{songs.length} cantos</Text>
+          </View>
+          <View style={styles.metricBadge}>
+            <Text style={styles.metricBadgeText}>{favoriteSongIds.length} guardados</Text>
+          </View>
+        </View>
         <Text style={styles.summaryTitle}>{overview.title}</Text>
-        <Text style={styles.summaryText}>
-          {sourceMode === "remote" ? remoteFeedback.detail : `${localSongs.length} cantos reunidos para estudo e preparacao.`}
-        </Text>
+        <Text style={styles.summaryText}>{sourceMode === "remote" ? remoteFeedback.detail : `${localSongs.length} cantos reunidos para estudo e preparacao.`}</Text>
       </View>
 
-      <SectionTitle title="Catalogo inicial" />
+      <View style={styles.sectionHeader}>
+        <SectionTitle title="Catalogo musical" />
+        <Text style={styles.sectionText}>
+          Percorra o acervo com calma e abra cada canto para ver os materiais disponiveis.
+        </Text>
+      </View>
 
       <View style={styles.list}>
         {songs.length > 0 ? (
@@ -116,10 +123,33 @@ const styles = StyleSheet.create({
   list: {
     gap: spacing.md,
   },
+  metricBadge: {
+    backgroundColor: colors.goldSoft,
+    borderColor: colors.border,
+    borderRadius: radii.pill,
+    borderWidth: 1,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+  },
+  metricBadgeText: {
+    color: colors.accent,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
+  },
+  sectionHeader: {
+    gap: spacing.xs,
+  },
+  sectionText: {
+    color: colors.textSecondary,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.body,
+    lineHeight: 24,
+  },
   summary: {
     borderRadius: radii.xl,
     borderWidth: 1,
-    gap: spacing.xs,
+    gap: spacing.sm,
     padding: spacing.lg,
     shadowColor: colors.ink,
     shadowOffset: { width: 0, height: 8 },
@@ -139,6 +169,10 @@ const styles = StyleSheet.create({
     fontFamily: fontFamilies.body,
     fontSize: typography.body,
     lineHeight: 24,
+  },
+  summaryTopRow: {
+    flexDirection: "row",
+    gap: spacing.sm,
   },
   summaryTitle: {
     color: colors.textPrimary,

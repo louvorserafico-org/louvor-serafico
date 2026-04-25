@@ -382,6 +382,32 @@ Validacao:
 - `corepack pnpm lint`
 - `git diff --check`
 
+### Etapa 83 - Refinar visual e copy da tab Repertorio
+
+Status: concluida em 2026-04-25.
+
+Entregue:
+
+- A tab `Repertorio` ganhou resumo inicial com metricas de cantos e guardados.
+- O cabecalho do catalogo recebeu texto de apoio mais editorial.
+- Os cards de canto passaram a exibir eyebrow de materiais e uma copy mais
+  clara para disponibilidade ou preparo do material.
+- O overview textual do repertorio foi ajustado para um tom menos tecnico.
+
+Arquivos principais:
+
+- `apps/mobile/app/(tabs)/repertorio.tsx`
+- `apps/mobile/src/components/SongCard.tsx`
+- `apps/mobile/src/features/songs/repertoire-overview.ts`
+- `apps/mobile/src/features/songs/repertoire-overview.test.ts`
+
+Validacao:
+
+- `corepack pnpm test`
+- `corepack pnpm --filter @louvor-serafico/mobile typecheck`
+- `corepack pnpm lint`
+- `git diff --check`
+
 ### Etapa 0 - Fundacao documental e workflow
 
 Status: concluida em 2026-04-20.

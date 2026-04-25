@@ -13,8 +13,8 @@ describe("repertoire overview", () => {
       }),
       {
         eyebrow: "8 cantos",
-        helperText: "2 favorito(s). Catalogo remoto ativo para consulta.",
-        title: "Repertorio publicado",
+        helperText: "2 guardado(s). Catalogo publicado pronto para consulta.",
+        title: "Acervo publicado",
       },
     );
   });
@@ -28,8 +28,8 @@ describe("repertoire overview", () => {
       }),
       {
         eyebrow: "6 cantos",
-        helperText: "1 favorito(s). Catalogo local ativo neste aparelho.",
-        title: "Repertorio inicial",
+        helperText: "1 guardado(s). Acervo inicial disponivel neste aparelho.",
+        title: "Acervo inicial",
       },
     );
   });
