@@ -7,6 +7,7 @@ import { RemoteFavoritesCard } from "@/components/RemoteFavoritesCard";
 import { RemoteSongsCard } from "@/components/RemoteSongsCard";
 import { SectionTitle } from "@/components/SectionTitle";
 import { useFavorites } from "@/features/favorites/FavoritesProvider";
+import { buildRemoteFeedback } from "@/features/remote/remote-feedback";
 import { buildRepertoireOverview } from "@/features/songs/repertoire-overview";
 import { resolveSongCatalogSource } from "@/features/songs/song-catalog-source";
 import { fetchRemoteSongs } from "@/features/songs/remote-songs";
@@ -21,6 +22,8 @@ export default function RepertoireScreen() {
   const [songs, setSongs] = useState(localSongs);
   const [sourceMode, setSourceMode] = useState<"local" | "remote">("local");
   const [remoteCount, setRemoteCount] = useState(localSongs.length);
+  const [remoteStatus, setRemoteStatus] = useState<"error" | "not_configured" | "ready">("not_configured");
+  const [remoteMessage, setRemoteMessage] = useState("Configurar Supabase antes da leitura remota de musicas.");
   const [subtitle, setSubtitle] = useState(`${favoriteSongIds.length} favorito(s) local(is) no catalogo inicial.`);
 
   useEffect(() => {
@@ -33,6 +36,8 @@ export default function RepertoireScreen() {
           setSongs(source.songs);
           setSourceMode(source.mode);
           setRemoteCount(remote.songs.length);
+          setRemoteStatus(remote.status);
+          setRemoteMessage(remote.message);
           setSubtitle(`${favoriteSongIds.length} favorito(s). ${source.message} ${sourceMessage}`);
         }
       },
@@ -48,6 +53,13 @@ export default function RepertoireScreen() {
     remoteCount: songs.length,
     sourceMode,
   });
+  const remoteFeedback = buildRemoteFeedback({
+    emptyLabel: "Nenhuma musica remota encontrada.",
+    itemCount: remoteCount,
+    readyLabel: "musicas remotas consultadas",
+    status: remoteStatus,
+    statusMessage: remoteMessage,
+  });
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -60,9 +72,7 @@ export default function RepertoireScreen() {
       <View style={[styles.summary, sourceMode === "remote" ? styles.summaryRemote : styles.summaryLocal]}>
         <Text style={styles.summaryTitle}>{overview.helperText}</Text>
         <Text style={styles.summaryText}>
-          {sourceMode === "remote"
-            ? `${remoteCount} musicas remotas consultadas.`
-            : `${localSongs.length} musicas locais disponiveis para estudo.`}
+          {sourceMode === "remote" ? remoteFeedback.detail : `${localSongs.length} musicas locais disponiveis para estudo.`}
         </Text>
       </View>
 
@@ -72,9 +82,14 @@ export default function RepertoireScreen() {
       <RemoteFavoritesCard />
 
       <View style={styles.list}>
-        {songs.map((song) => (
-          <SongCard key={song.id} song={song} />
-        ))}
+        {songs.length > 0 ? (
+          songs.map((song) => <SongCard key={song.id} song={song} />)
+        ) : (
+          <View style={styles.emptyCard}>
+            <Text style={styles.summaryTitle}>Repertorio vazio</Text>
+            <Text style={styles.summaryText}>Nenhuma musica disponivel neste momento.</Text>
+          </View>
+        )}
       </View>
     </ScrollView>
   );
@@ -86,6 +101,14 @@ const styles = StyleSheet.create({
     gap: spacing.lg,
     padding: spacing.xl,
     paddingBottom: spacing.xxl,
+  },
+  emptyCard: {
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    borderRadius: 8,
+    borderWidth: 1,
+    gap: spacing.xs,
+    padding: spacing.md,
   },
   list: {
     gap: spacing.md,

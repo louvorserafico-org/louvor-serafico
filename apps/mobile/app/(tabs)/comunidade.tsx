@@ -11,6 +11,7 @@ import { resolveCommentFeedSource } from "@/features/comments/comment-feed-sourc
 import { useCommentsPreview } from "@/features/comments/CommentsProvider";
 import { postRemoteComment } from "@/features/comments/remote-comment-submit";
 import { fetchRemoteComments } from "@/features/comments/remote-comments";
+import { buildRemoteFeedback } from "@/features/remote/remote-feedback";
 import { supabaseConfig } from "@/services/supabase/client";
 import { colors, spacing, typography } from "@/theme/tokens";
 
@@ -30,6 +31,13 @@ export default function CommunityScreen() {
   const canSubmit = canComment && draft.trim().length > 0;
   const feedSource = useMemo(() => resolveCommentFeedSource(remoteState, comments), [comments, remoteState]);
   const communityAccess = buildCommunityAccess({ canComment, hasRemoteSession });
+  const remoteFeedback = buildRemoteFeedback({
+    emptyLabel: "Nenhum comentario remoto publicado ainda.",
+    itemCount: remoteState.comments.length,
+    readyLabel: "comentarios remotos prontos",
+    status: remoteState.status,
+    statusMessage: remoteState.message,
+  });
 
   useEffect(() => {
     let isMounted = true;
@@ -76,6 +84,7 @@ export default function CommunityScreen() {
       >
         <Text style={styles.panelTitle}>{communityAccess.title}</Text>
         <Text style={styles.panelText}>{communityAccess.helperText}</Text>
+        <Text style={styles.panelText}>{remoteFeedback.detail}</Text>
         <Text style={styles.panelText}>{feedSource.message}</Text>
         <Text style={styles.panelText}>{submitMessage}</Text>
         {!canComment ? (
@@ -160,7 +169,7 @@ export default function CommunityScreen() {
       ) : (
         <View style={styles.comment}>
           <Text style={styles.commentAuthor}>Partilha inicial</Text>
-          <Text style={styles.commentText}>Ainda sem comentarios publicados.</Text>
+          <Text style={styles.commentText}>Ainda sem comentarios publicados. Assim que primeira partilha entrar, ela aparecera aqui.</Text>
         </View>
       )}
     </ScrollView>

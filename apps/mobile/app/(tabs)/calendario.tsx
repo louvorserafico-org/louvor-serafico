@@ -9,6 +9,7 @@ import { SectionTitle } from "@/components/SectionTitle";
 import { buildCalendarOverview } from "@/features/celebrations/calendar-overview";
 import { resolveCelebrationCatalogSource } from "@/features/celebrations/celebration-catalog-source";
 import { fetchRemoteCelebrations } from "@/features/celebrations/remote-celebrations";
+import { buildRemoteFeedback } from "@/features/remote/remote-feedback";
 import { supabaseConfig } from "@/services/supabase/client";
 import { colors, spacing, typography } from "@/theme/tokens";
 
@@ -17,7 +18,9 @@ export default function CalendarScreen() {
   const [celebrations, setCelebrations] = useState(localCelebrations);
   const [sourceMode, setSourceMode] = useState<"local" | "remote">("local");
   const [remoteCount, setRemoteCount] = useState(0);
+  const [remoteStatus, setRemoteStatus] = useState<"error" | "not_configured" | "ready">("not_configured");
   const [subtitle, setSubtitle] = useState("Datas liturgicas iniciais disponiveis para consulta.");
+  const [remoteMessage, setRemoteMessage] = useState("Configurar Supabase antes da leitura remota de celebracoes.");
 
   useEffect(() => {
     let active = true;
@@ -32,6 +35,8 @@ export default function CalendarScreen() {
         setCelebrations(source.celebrations);
         setSourceMode(source.mode);
         setRemoteCount(remote.celebrations.length);
+        setRemoteStatus(remote.status);
+        setRemoteMessage(remote.message);
         setSubtitle(source.message);
       }
     });
@@ -46,6 +51,13 @@ export default function CalendarScreen() {
     remoteCount,
     sourceMode,
   });
+  const remoteFeedback = buildRemoteFeedback({
+    emptyLabel: "Nenhuma celebracao remota encontrada.",
+    itemCount: remoteCount,
+    readyLabel: "celebracoes remotas prontas",
+    status: remoteStatus,
+    statusMessage: remoteMessage,
+  });
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -58,9 +70,7 @@ export default function CalendarScreen() {
       <View style={[styles.summary, sourceMode === "remote" ? styles.summaryRemote : styles.summaryLocal]}>
         <Text style={styles.summaryTitle}>{overview.helperText}</Text>
         <Text style={styles.summaryText}>
-          {sourceMode === "remote"
-            ? `${remoteCount} celebracoes remotas prontas para leitura.`
-            : `${localCelebrations.length} celebracoes locais disponiveis neste aparelho.`}
+          {sourceMode === "remote" ? remoteFeedback.detail : `${localCelebrations.length} celebracoes locais disponiveis neste aparelho.`}
         </Text>
       </View>
 
@@ -69,9 +79,14 @@ export default function CalendarScreen() {
       <RemoteCelebrationsCard />
 
       <View style={styles.list}>
-        {celebrations.map((celebration) => (
-          <CelebrationCard celebration={celebration} key={celebration.id} />
-        ))}
+        {celebrations.length > 0 ? (
+          celebrations.map((celebration) => <CelebrationCard celebration={celebration} key={celebration.id} />)
+        ) : (
+          <View style={styles.emptyCard}>
+            <Text style={styles.summaryTitle}>Calendario vazio</Text>
+            <Text style={styles.summaryText}>Nenhuma celebracao disponivel neste momento.</Text>
+          </View>
+        )}
       </View>
     </ScrollView>
   );
@@ -83,6 +98,14 @@ const styles = StyleSheet.create({
     gap: spacing.lg,
     padding: spacing.xl,
     paddingBottom: spacing.xxl,
+  },
+  emptyCard: {
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    borderRadius: 8,
+    borderWidth: 1,
+    gap: spacing.xs,
+    padding: spacing.md,
   },
   list: {
     gap: spacing.md,

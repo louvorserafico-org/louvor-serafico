@@ -3357,3 +3357,48 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 70 - Revisar UX de estados vazios e erros remotos.
+
+Status: concluida em 2026-04-25.
+
+Objetivo esperado:
+
+- melhorar leitura de estados remotos;
+- deixar vazio e erro mais claros nas tabs principais;
+- evitar mensagens tecnicas soltas na interface.
+
+Resultado:
+
+- Criado `src/features/remote/remote-feedback.ts`.
+- Criado `src/features/remote/remote-feedback.test.ts`.
+- Tabs `Calendario`, `Repertorio` e `Comunidade` agora resumem melhor estado remoto.
+- `Calendario` e `Repertorio` ganharam empty state explicito.
+- Script de testes raiz atualizado.
+
+Decisoes tecnicas e trade-offs:
+
+- A regra de copy ficou isolada e testada fora da UI.
+- Mantive mensagens originais vindas dos fetchers quando ha erro ou falta configuracao.
+- Empty states locais ficaram simples e reutilizaram estilos existentes.
+- Alternativa rejeitada: criar componente visual global agora. Funcao pura bastou.
+
+Hurdles & Fixes:
+
+- Hurdle: `rg.exe` falhou com acesso negado no ambiente.
+- Fix: seguir leitura direta dos arquivos-alvo.
+
+Checklist DoD:
+
+- [x] TDD aplicado.
+- [x] UI integrada.
+- [x] Testes passam.
+- [x] Typecheck passa.
+- [x] Lint passa.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: improve remote empty and error states`
+
+## Proxima Etapa Planejada
+
+Etapa 71 - Revisar consistencia final das tabs principais.
