@@ -11,11 +11,11 @@ describe("community access", () => {
         hasRemoteSession: true,
       }),
       {
-        helperText: "Sessao Supabase ativa. Sua partilha pode ser publicada para toda comunidade.",
-        inputPlaceholder: "Compartilhe como este repertorio funcionou na missa.",
-        primaryLabel: "Publicar comentario remoto",
+        helperText: "Compartilhe como o repertorio serviu a celebracao e ajude outros ministerios.",
+        inputPlaceholder: "Conte como este canto ajudou a assembleia, o coro ou o ensaio.",
+        primaryLabel: "Publicar partilha",
         status: "remote",
-        title: "Comunidade ativa",
+        title: "Partilhe com a comunidade",
       },
     );
   });
@@ -27,11 +27,11 @@ describe("community access", () => {
         hasRemoteSession: false,
       }),
       {
-        helperText: "Sessao local ativa. A partilha fica salva apenas neste aparelho para validar UX.",
-        inputPlaceholder: "Compartilhe experiencia local de ensaio ou celebracao.",
-        primaryLabel: "Publicar comentario",
+        helperText: "Sua partilha fica guardada neste aparelho ate que a comunidade completa esteja disponivel.",
+        inputPlaceholder: "Conte como foi o ensaio, a escolha dos cantos ou a celebracao.",
+        primaryLabel: "Guardar partilha",
         status: "local",
-        title: "Preview local ativo",
+        title: "Espaco de partilha",
       },
     );
   });
@@ -43,11 +43,11 @@ describe("community access", () => {
         hasRemoteSession: false,
       }),
       {
-        helperText: "Entre para comentar, responder e acompanhar partilhas da comunidade.",
-        inputPlaceholder: "Entre para liberar comentarios.",
-        primaryLabel: "Entrar para comentar",
+        helperText: "Entre na sua conta para acompanhar partilhas, guardar experiencias e contribuir com outros musicos.",
+        inputPlaceholder: "Entre para escrever sua partilha.",
+        primaryLabel: "Entrar para participar",
         status: "blocked",
-        title: "Comunidade bloqueada",
+        title: "Partilhe sua experiencia",
       },
     );
   });

@@ -21,7 +21,7 @@ export default function CommunityScreen() {
   const canComment = session.status === "signed_in" || supabaseSession.status === "authenticated";
   const hasRemoteSession = supabaseSession.status === "authenticated";
   const [draft, setDraft] = useState("");
-  const [submitMessage, setSubmitMessage] = useState("Sua partilha pode inspirar outros musicos.");
+  const [submitMessage, setSubmitMessage] = useState("Sua partilha pode fortalecer outros ministerios.");
   const [remoteState, setRemoteState] = useState<Awaited<ReturnType<typeof fetchRemoteComments>>>({
     comments: [],
     message: "Carregando comentarios remotos.",
@@ -74,10 +74,15 @@ export default function CommunityScreen() {
               : styles.panelBlocked,
         ]}
       >
+        <View style={styles.panelTopRow}>
+          <View style={styles.metricBadge}>
+            <Text style={styles.metricBadgeText}>{feedSource.comments.length} partilhas</Text>
+          </View>
+        </View>
         <Text style={styles.panelTitle}>{communityAccess.title}</Text>
         <Text style={styles.panelText}>{communityAccess.helperText}</Text>
         <Text style={styles.panelText}>
-          {canComment ? submitMessage : "Entre para guardar favoritos, comentar e acompanhar novas partilhas."}
+          {canComment ? submitMessage : "Entre para acompanhar novas vozes da comunidade e registrar sua experiencia."}
         </Text>
         {!canComment ? (
           <Link asChild href="/entrar">
@@ -89,6 +94,7 @@ export default function CommunityScreen() {
       </View>
 
       <View style={styles.formCard}>
+        <Text style={styles.formEyebrow}>Escrever</Text>
         <Text style={styles.panelTitle}>Nova partilha</Text>
         <TextInput
           editable={canComment}
@@ -130,7 +136,7 @@ export default function CommunityScreen() {
                   authorName: session.displayName,
                   body: draft,
                 });
-                setSubmitMessage("Partilha guardada nesta sessao.");
+                setSubmitMessage("Partilha guardada neste aparelho.");
                 setDraft("");
               }
             }}
@@ -152,15 +158,17 @@ export default function CommunityScreen() {
       {feedSource.comments.length > 0 ? (
         feedSource.comments.map((comment) => (
           <View key={comment.id} style={styles.comment}>
+            <Text style={styles.commentEyebrow}>Partilha</Text>
             <Text style={styles.commentAuthor}>{comment.authorName}</Text>
             <Text style={styles.commentText}>{comment.body}</Text>
           </View>
         ))
       ) : (
         <View style={styles.comment}>
-          <Text style={styles.commentAuthor}>Partilha inicial</Text>
+          <Text style={styles.commentEyebrow}>Comunidade</Text>
+          <Text style={styles.commentAuthor}>Ainda sem partilhas</Text>
           <Text style={styles.commentText}>
-            Ainda sem comentarios publicados. Assim que primeira partilha entrar, ela aparecera aqui.
+            Quando a primeira experiencia for registrada, ela aparecera aqui para inspirar outros musicos.
           </Text>
         </View>
       )}
@@ -208,6 +216,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.06,
     shadowRadius: 16,
   },
+  commentEyebrow: {
+    color: colors.gold,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
+    textTransform: "uppercase",
+  },
   commentAuthor: {
     color: colors.textPrimary,
     fontFamily: fontFamilies.display,
@@ -235,6 +250,13 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
     padding: spacing.lg,
   },
+  formEyebrow: {
+    color: colors.gold,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
+    textTransform: "uppercase",
+  },
   input: {
     backgroundColor: colors.surfaceMuted,
     borderColor: colors.border,
@@ -253,8 +275,12 @@ const styles = StyleSheet.create({
   panel: {
     borderRadius: radii.xl,
     borderWidth: 1,
-    gap: spacing.xs,
+    gap: spacing.sm,
     padding: spacing.lg,
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.06,
+    shadowRadius: 16,
   },
   panelBlocked: {
     backgroundColor: colors.surface,
@@ -274,11 +300,28 @@ const styles = StyleSheet.create({
     fontSize: typography.body,
     lineHeight: 24,
   },
+  panelTopRow: {
+    flexDirection: "row",
+  },
   panelTitle: {
     color: colors.textPrimary,
     fontFamily: fontFamilies.display,
     fontSize: typography.heading,
     fontStyle: "italic",
     fontWeight: "700",
+  },
+  metricBadge: {
+    backgroundColor: colors.goldSoft,
+    borderColor: colors.border,
+    borderRadius: radii.pill,
+    borderWidth: 1,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+  },
+  metricBadgeText: {
+    color: colors.accent,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
   },
 });

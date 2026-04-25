@@ -408,6 +408,33 @@ Validacao:
 - `corepack pnpm lint`
 - `git diff --check`
 
+### Etapa 84 - Refinar visual e copy da tab Comunidade
+
+Status: concluida em 2026-04-25.
+
+Entregue:
+
+- A tab `Comunidade` recebeu copy menos tecnica e mais humana.
+- Os estados de acesso remoto, local e bloqueado passaram a usar linguagem de
+  partilha em vez de linguagem de ambiente.
+- O bloco principal ganhou metrica visivel de partilhas.
+- O formulario ganhou hierarquia visual melhor.
+- Os cards de comentarios passaram a ter eyebrow editorial e estado vazio mais
+  acolhedor.
+
+Arquivos principais:
+
+- `apps/mobile/app/(tabs)/comunidade.tsx`
+- `apps/mobile/src/features/comments/community-access.ts`
+- `apps/mobile/src/features/comments/community-access.test.ts`
+
+Validacao:
+
+- `corepack pnpm test`
+- `corepack pnpm --filter @louvor-serafico/mobile typecheck`
+- `corepack pnpm lint`
+- `git diff --check`
+
 ### Etapa 0 - Fundacao documental e workflow
 
 Status: concluida em 2026-04-20.
