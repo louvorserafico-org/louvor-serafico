@@ -6,6 +6,7 @@ import { AuthStabilityCard } from "@/components/AuthStabilityCard";
 import { PaywallPreviewCard } from "@/components/PaywallPreviewCard";
 import { ProfileOverviewCard } from "@/components/ProfileOverviewCard";
 import { SessionPreviewCard } from "@/components/SessionPreviewCard";
+import { SubscriptionOverviewCard } from "@/components/SubscriptionOverviewCard";
 import { SubscriptionPreviewCard } from "@/components/SubscriptionPreviewCard";
 import { SupabaseProfileCard } from "@/components/SupabaseProfileCard";
 import { SupabaseRemoteStatusCard } from "@/components/SupabaseRemoteStatusCard";
@@ -25,6 +26,7 @@ export default function ProfileScreen() {
         subtitle="Estado local e leitura remota inicial do projeto Supabase."
       />
       <ProfileOverviewCard />
+      <SubscriptionOverviewCard />
       <AuthEntryCard />
       <PaywallPreviewCard />
       {showDebugCards ? (

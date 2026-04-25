@@ -3227,3 +3227,47 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 67 - Revisar UX do fluxo de assinatura.
+
+Status: concluida em 2026-04-25.
+
+Objetivo esperado:
+
+- deixar fluxo de assinatura menos tecnico;
+- resumir claramente se conta ja pode assinar ou se premium ja esta ativo;
+- manter leitura rapida na tela Perfil.
+
+Resultado:
+
+- Criado `src/features/subscription/subscription-overview.ts`.
+- Criado `src/features/subscription/subscription-overview.test.ts`.
+- Criado `src/components/SubscriptionOverviewCard.tsx`.
+- Tela Perfil ganhou resumo visual do estado da assinatura.
+- Script de testes raiz atualizado.
+
+Decisoes tecnicas e trade-offs:
+
+- A regra de copy ficou isolada e testada fora da UI.
+- O novo resumo ficou separado do `PaywallPreviewCard` para nao misturar status com acao principal.
+- O card tecnico de assinatura segue disponivel apenas em debug.
+- Alternativa rejeitada: fundir resumo e paywall em um unico card. Ficaria menos legivel.
+
+Hurdles & Fixes:
+
+- Nenhum bloqueio tecnico novo.
+
+Checklist DoD:
+
+- [x] TDD aplicado.
+- [x] UI integrada.
+- [x] Testes passam.
+- [x] Typecheck passa.
+- [x] Lint passa.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: improve subscription flow summary`
+
+## Proxima Etapa Planejada
+
+Etapa 68 - Revisar UX da tela de entrada.
