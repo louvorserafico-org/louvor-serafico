@@ -330,6 +330,32 @@ Validacao:
 - `corepack pnpm lint`
 - `git diff --check`
 
+### Etapa 81 - Refinar detalhe de dia sem repertorio
+
+Status: concluida em 2026-04-25.
+
+Entregue:
+
+- O detalhe de dia liturgico sem repertorio ganhou copy mais final e menos
+  tecnica.
+- O detalhe de dia comum ganhou copy propria, orientada a consulta futura do
+  calendario.
+- O card principal do detalhe passou a exibir eyebrow, titulo editorial, texto
+  de contexto e observacao curta antes do CTA.
+
+Arquivos principais:
+
+- `apps/mobile/src/features/celebrations/liturgical-day-detail.ts`
+- `apps/mobile/src/features/celebrations/liturgical-day-detail.test.ts`
+- `apps/mobile/app/celebracoes/[id].tsx`
+
+Validacao:
+
+- `corepack pnpm test`
+- `corepack pnpm --filter @louvor-serafico/mobile typecheck`
+- `corepack pnpm lint`
+- `git diff --check`
+
 ### Etapa 0 - Fundacao documental e workflow
 
 Status: concluida em 2026-04-20.

@@ -76,8 +76,10 @@ export default function CelebrationDetailScreen() {
         <PageHeader eyebrow={dayDetail.eyebrow} subtitle={dayDetail.helperText} title={dayDetail.title} />
 
         <View style={[styles.summary, styles.summaryLocal]}>
-          <Text style={styles.summaryTitle}>Roteiro em preparacao</Text>
+          <Text style={styles.summaryEyebrow}>Calendário 2026</Text>
+          <Text style={styles.summaryTitle}>{dayDetail.cardTitle}</Text>
           <Text style={styles.summaryText}>{dayDetail.helperText}</Text>
+          <Text style={styles.summaryNote}>{dayDetail.note}</Text>
           <Link asChild href="/calendario">
             <Pressable style={styles.button}>
               <Text style={styles.buttonText}>{dayDetail.ctaLabel}</Text>
@@ -154,8 +156,19 @@ const styles = StyleSheet.create({
   summary: {
     borderRadius: radii.xl,
     borderWidth: 1,
-    gap: spacing.xs,
+    gap: spacing.sm,
     padding: spacing.lg,
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.06,
+    shadowRadius: 16,
+  },
+  summaryEyebrow: {
+    color: colors.gold,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
+    textTransform: "uppercase",
   },
   summaryLocal: {
     backgroundColor: colors.surfaceMuted,
@@ -170,6 +183,12 @@ const styles = StyleSheet.create({
     fontFamily: fontFamilies.body,
     fontSize: typography.body,
     lineHeight: 24,
+  },
+  summaryNote: {
+    color: colors.textMuted,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.caption,
+    lineHeight: 20,
   },
   summaryTitle: {
     color: colors.textPrimary,

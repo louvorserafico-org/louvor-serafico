@@ -12,9 +12,13 @@ describe("liturgical day detail", () => {
     );
 
     assert.deepEqual(result, {
-      ctaLabel: "Ver calendario",
+      cardTitle: "Repertório em preparação",
+      ctaLabel: "Voltar ao calendário",
       eyebrow: "25 de dezembro",
-      helperText: "Esta data litúrgica já está registrada no calendário, mas o repertório musical ainda será preparado.",
+      helperText:
+        "Esta celebração já aparece no calendário litúrgico, mas o roteiro musical deste dia ainda está sendo preparado.",
+      note:
+        "Consulte outros dias marcados para encontrar roteiros já publicados enquanto este material é concluído.",
       title: "Natal do Senhor",
     });
   });
@@ -25,9 +29,12 @@ describe("liturgical day detail", () => {
     );
 
     assert.deepEqual(result, {
-      ctaLabel: "Ver calendario",
+      cardTitle: "Dia sem roteiro publicado",
+      ctaLabel: "Abrir calendário",
       eyebrow: "25 de abril",
-      helperText: "Hoje não há celebração com roteiro publicado. Consulte os próximos dias preparados no calendário.",
+      helperText: "Hoje não há celebração com roteiro musical publicado no app.",
+      note:
+        "Use o calendário para encontrar as próximas datas preparadas e organizar o ministério com antecedência.",
       title: "Dia comum",
     });
   });

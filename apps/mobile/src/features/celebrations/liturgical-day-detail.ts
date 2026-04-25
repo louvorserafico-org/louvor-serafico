@@ -1,28 +1,35 @@
 import type { LiturgicalDay } from "@louvor-serafico/shared";
 
 export type LiturgicalDayDetail = {
+  cardTitle: string;
   ctaLabel: string;
   eyebrow: string;
   helperText: string;
+  note: string;
   title: string;
 };
 
 export function buildLiturgicalDayDetail(day: LiturgicalDay): LiturgicalDayDetail {
   if (day.kind === "liturgical_day_without_repertoire") {
     return {
-      ctaLabel: "Ver calendario",
+      cardTitle: "Repertório em preparação",
+      ctaLabel: "Voltar ao calendário",
       eyebrow: day.dateLabel.toLowerCase(),
       helperText:
-        "Esta data litúrgica já está registrada no calendário, mas o repertório musical ainda será preparado.",
+        "Esta celebração já aparece no calendário litúrgico, mas o roteiro musical deste dia ainda está sendo preparado.",
+      note:
+        "Consulte outros dias marcados para encontrar roteiros já publicados enquanto este material é concluído.",
       title: day.title,
     };
   }
 
   return {
-    ctaLabel: "Ver calendario",
+    cardTitle: "Dia sem roteiro publicado",
+    ctaLabel: "Abrir calendário",
     eyebrow: day.dateLabel.toLowerCase(),
-    helperText:
-      "Hoje não há celebração com roteiro publicado. Consulte os próximos dias preparados no calendário.",
+    helperText: "Hoje não há celebração com roteiro musical publicado no app.",
+    note:
+      "Use o calendário para encontrar as próximas datas preparadas e organizar o ministério com antecedência.",
     title: day.title,
   };
 }
