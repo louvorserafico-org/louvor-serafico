@@ -73,8 +73,8 @@ export default function TodayScreen() {
 
       <View style={styles.calendarCard}>
         <View style={styles.weekRow}>
-          {["D", "S", "T", "Q", "Q", "S", "S"].map((item) => (
-            <Text key={item} style={styles.weekLabel}>{item}</Text>
+          {["D", "S", "T", "Q", "Q", "S", "S"].map((item, index) => (
+            <Text key={`${item}-${index}`} style={styles.weekLabel}>{item}</Text>
           ))}
         </View>
         <View style={styles.calendarGrid}>
