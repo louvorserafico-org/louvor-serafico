@@ -6,11 +6,12 @@ import {
   getLiturgicalMonthLabel,
 } from "@louvor-serafico/shared";
 import { useEffect, useMemo, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { CelebrationCard } from "@/components/CelebrationCard";
 import { PageHeader } from "@/components/PageHeader";
 import { SectionTitle } from "@/components/SectionTitle";
+import { buildCalendarMonthView } from "@/features/celebrations/calendar-month-view";
 import { buildCalendarOverview } from "@/features/celebrations/calendar-overview";
 import { resolveCelebrationCatalogSource } from "@/features/celebrations/celebration-catalog-source";
 import { fetchRemoteCelebrations } from "@/features/celebrations/remote-celebrations";
@@ -21,10 +22,8 @@ import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens
 export default function CalendarScreen() {
   const localCelebrations = useMemo(() => getInitialCelebrationCatalog(), []);
   const today = getLiturgicalDayForDate(new Date());
-  const monthDays = useMemo(() => getLiturgicalMonthDays2026(today.monthNumber), [today.monthNumber]);
-  const markedDays = useMemo(() => getLiturgicalMarkedDays2026(today.monthNumber), [today.monthNumber]);
-  const monthLabel = getLiturgicalMonthLabel(today.monthNumber);
   const [celebrations, setCelebrations] = useState(localCelebrations);
+  const [selectedMonth, setSelectedMonth] = useState(today.monthNumber);
   const [sourceMode, setSourceMode] = useState<"local" | "remote">("local");
   const [remoteCount, setRemoteCount] = useState(0);
   const [remoteStatus, setRemoteStatus] = useState<"error" | "not_configured" | "ready">("not_configured");
@@ -67,8 +66,16 @@ export default function CalendarScreen() {
     status: remoteStatus,
     statusMessage: remoteMessage,
   });
-  const firstDayWeekday = new Date(Date.UTC(2026, today.monthNumber - 1, 1)).getUTCDay();
-  const leadingEmptyCells = Array.from({ length: firstDayWeekday }, (_, index) => `empty-${index}`);
+  const monthView = useMemo(
+    () => buildCalendarMonthView(selectedMonth, celebrations),
+    [celebrations, selectedMonth],
+  );
+  const leadingEmptyCells = Array.from(
+    { length: monthView.leadingEmptyCellCount },
+    (_, index) => `empty-${monthView.monthNumber}-${index}`,
+  );
+  const canGoPrev = selectedMonth > 1;
+  const canGoNext = selectedMonth < 12;
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -79,13 +86,33 @@ export default function CalendarScreen() {
         <Text style={styles.summaryText}>
           {sourceMode === "remote"
             ? remoteFeedback.detail
-            : `${markedDays.length} data${markedDays.length > 1 ? "s" : ""} liturgica${markedDays.length > 1 ? "s" : ""} marcada${markedDays.length > 1 ? "s" : ""} em ${monthLabel}.`}
+            : `${monthView.markedDays.length} data${monthView.markedDays.length > 1 ? "s" : ""} liturgica${monthView.markedDays.length > 1 ? "s" : ""} marcada${monthView.markedDays.length > 1 ? "s" : ""} em ${monthView.monthLabel}.`}
         </Text>
       </View>
 
-      <SectionTitle title={`Calendario de ${monthLabel}`} />
+      <SectionTitle title={`Calendário de ${monthView.monthLabel}`} />
 
       <View style={styles.monthCard}>
+        <View style={styles.monthHeader}>
+          <Pressable
+            accessibilityRole="button"
+            disabled={!canGoPrev}
+            onPress={() => setSelectedMonth((current) => Math.max(1, current - 1))}
+            style={[styles.monthNavButton, !canGoPrev ? styles.monthNavButtonDisabled : undefined]}
+          >
+            <Text style={[styles.monthNavText, !canGoPrev ? styles.monthNavTextDisabled : undefined]}>Anterior</Text>
+          </Pressable>
+          <Text style={styles.monthTitle}>{monthView.monthLabel}</Text>
+          <Pressable
+            accessibilityRole="button"
+            disabled={!canGoNext}
+            onPress={() => setSelectedMonth((current) => Math.min(12, current + 1))}
+            style={[styles.monthNavButton, !canGoNext ? styles.monthNavButtonDisabled : undefined]}
+          >
+            <Text style={[styles.monthNavText, !canGoNext ? styles.monthNavTextDisabled : undefined]}>Próximo</Text>
+          </Pressable>
+        </View>
+
         <View style={styles.weekRow}>
           {["D", "S", "T", "Q", "Q", "S", "S"].map((item, index) => (
             <Text key={`${item}-${index}`} style={styles.weekLabel}>
@@ -99,7 +126,7 @@ export default function CalendarScreen() {
             <View key={item} style={[styles.dayCell, styles.dayCellEmpty]} />
           ))}
 
-          {monthDays.map((day) => (
+          {monthView.monthDays.map((day) => (
             <View
               key={day.monthDay}
               style={[
@@ -139,31 +166,38 @@ export default function CalendarScreen() {
         </View>
       </View>
 
-      <SectionTitle title="Datas marcadas neste mes" />
+      <SectionTitle title={`Datas marcadas em ${monthView.monthLabel}`} />
 
       <View style={styles.markedList}>
-        {markedDays.map((day) => (
-          <View key={day.monthDay} style={styles.markedCard}>
-            <Text style={styles.markedEyebrow}>{day.dateLabel}</Text>
-            <Text style={styles.markedTitle}>{day.title}</Text>
-            <Text style={styles.markedText}>
-              {day.kind === "has_repertoire"
-                ? "Roteiro musical disponivel para consulta."
-                : "Data liturgica registrada. Repertorio ainda nao publicado."}
-            </Text>
-          </View>
-        ))}
-      </View>
-
-      <SectionTitle title="Dias preparados" />
-
-      <View style={styles.list}>
-        {celebrations.length > 0 ? (
-          celebrations.map((celebration) => <CelebrationCard celebration={celebration} key={celebration.id} />)
+        {monthView.markedDays.length > 0 ? (
+          monthView.markedDays.map((day) => (
+            <View key={day.monthDay} style={styles.markedCard}>
+              <Text style={styles.markedEyebrow}>{day.dateLabel}</Text>
+              <Text style={styles.markedTitle}>{day.title}</Text>
+              <Text style={styles.markedText}>
+                {day.kind === "has_repertoire"
+                  ? "Roteiro musical disponível para consulta."
+                  : "Data litúrgica registrada. Repertório ainda não publicado."}
+              </Text>
+            </View>
+          ))
         ) : (
           <View style={styles.emptyCard}>
-            <Text style={styles.summaryTitle}>Ainda sem celebracoes neste trecho</Text>
-            <Text style={styles.summaryText}>Em breve novos dias liturgicos aparecerao aqui.</Text>
+            <Text style={styles.summaryTitle}>Sem marcações neste mês</Text>
+            <Text style={styles.summaryText}>Siga pelos meses do calendário de 2026 para localizar as próximas datas preparadas.</Text>
+          </View>
+        )}
+      </View>
+
+      <SectionTitle title={`Roteiros de ${monthView.monthLabel}`} />
+
+      <View style={styles.list}>
+        {monthView.celebrations.length > 0 ? (
+          monthView.celebrations.map((celebration) => <CelebrationCard celebration={celebration} key={celebration.id} />)
+        ) : (
+          <View style={styles.emptyCard}>
+            <Text style={styles.summaryTitle}>Ainda sem roteiros neste mês</Text>
+            <Text style={styles.summaryText}>Acompanhe as datas marcadas acima ou avance pelos próximos meses de 2026.</Text>
           </View>
         )}
       </View>
@@ -290,6 +324,30 @@ const styles = StyleSheet.create({
     fontSize: typography.body,
     fontWeight: "700",
   },
+  monthHeader: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  monthNavButton: {
+    borderColor: colors.border,
+    borderRadius: radii.pill,
+    borderWidth: 1,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+  },
+  monthNavButtonDisabled: {
+    borderColor: colors.surfaceMuted,
+  },
+  monthNavText: {
+    color: colors.accent,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
+  },
+  monthNavTextDisabled: {
+    color: colors.textMuted,
+  },
   monthCard: {
     backgroundColor: colors.surface,
     borderColor: colors.borderStrong,
@@ -297,6 +355,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     gap: spacing.md,
     padding: spacing.lg,
+  },
+  monthTitle: {
+    color: colors.textPrimary,
+    fontFamily: fontFamilies.display,
+    fontSize: typography.heading,
+    fontStyle: "italic",
+    fontWeight: "700",
+    textTransform: "capitalize",
   },
   summary: {
     borderRadius: radii.xl,
