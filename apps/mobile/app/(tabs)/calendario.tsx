@@ -1,4 +1,10 @@
-import { getInitialCelebrationCatalog } from "@louvor-serafico/shared";
+import {
+  getInitialCelebrationCatalog,
+  getLiturgicalDayForDate,
+  getLiturgicalMarkedDays2026,
+  getLiturgicalMonthDays2026,
+  getLiturgicalMonthLabel,
+} from "@louvor-serafico/shared";
 import { useEffect, useMemo, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
@@ -14,6 +20,10 @@ import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens
 
 export default function CalendarScreen() {
   const localCelebrations = useMemo(() => getInitialCelebrationCatalog(), []);
+  const today = getLiturgicalDayForDate(new Date());
+  const monthDays = useMemo(() => getLiturgicalMonthDays2026(today.monthNumber), [today.monthNumber]);
+  const markedDays = useMemo(() => getLiturgicalMarkedDays2026(today.monthNumber), [today.monthNumber]);
+  const monthLabel = getLiturgicalMonthLabel(today.monthNumber);
   const [celebrations, setCelebrations] = useState(localCelebrations);
   const [sourceMode, setSourceMode] = useState<"local" | "remote">("local");
   const [remoteCount, setRemoteCount] = useState(0);
@@ -57,23 +67,95 @@ export default function CalendarScreen() {
     status: remoteStatus,
     statusMessage: remoteMessage,
   });
+  const firstDayWeekday = new Date(Date.UTC(2026, today.monthNumber - 1, 1)).getUTCDay();
+  const leadingEmptyCells = Array.from({ length: firstDayWeekday }, (_, index) => `empty-${index}`);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <PageHeader
-        eyebrow={overview.eyebrow}
-        title={overview.title}
-        subtitle={subtitle}
-      />
+      <PageHeader eyebrow={overview.eyebrow} title={overview.title} subtitle={subtitle} />
 
       <View style={[styles.summary, sourceMode === "remote" ? styles.summaryRemote : styles.summaryLocal]}>
         <Text style={styles.summaryTitle}>{overview.title}</Text>
         <Text style={styles.summaryText}>
-          {sourceMode === "remote" ? remoteFeedback.detail : `${localCelebrations.length} celebracoes reunidas para acompanhar este tempo liturgico.`}
+          {sourceMode === "remote"
+            ? remoteFeedback.detail
+            : `${markedDays.length} data${markedDays.length > 1 ? "s" : ""} liturgica${markedDays.length > 1 ? "s" : ""} marcada${markedDays.length > 1 ? "s" : ""} em ${monthLabel}.`}
         </Text>
       </View>
 
-      <SectionTitle title="Janeiro" />
+      <SectionTitle title={`Calendario de ${monthLabel}`} />
+
+      <View style={styles.monthCard}>
+        <View style={styles.weekRow}>
+          {["D", "S", "T", "Q", "Q", "S", "S"].map((item, index) => (
+            <Text key={`${item}-${index}`} style={styles.weekLabel}>
+              {item}
+            </Text>
+          ))}
+        </View>
+
+        <View style={styles.grid}>
+          {leadingEmptyCells.map((item) => (
+            <View key={item} style={[styles.dayCell, styles.dayCellEmpty]} />
+          ))}
+
+          {monthDays.map((day) => (
+            <View
+              key={day.monthDay}
+              style={[
+                styles.dayCell,
+                day.kind === "has_repertoire" ? styles.dayCellRepertoire : undefined,
+                day.kind === "liturgical_day_without_repertoire" ? styles.dayCellLiturgical : undefined,
+                day.monthDay === today.monthDay ? styles.dayCellToday : undefined,
+              ]}
+            >
+              <Text
+                style={[
+                  styles.dayNumber,
+                  day.kind === "has_repertoire" ? styles.dayNumberRepertoire : undefined,
+                  day.kind === "liturgical_day_without_repertoire" ? styles.dayNumberLiturgical : undefined,
+                  day.monthDay === today.monthDay ? styles.dayNumberToday : undefined,
+                ]}
+              >
+                {day.dayNumber}
+              </Text>
+            </View>
+          ))}
+        </View>
+
+        <View style={styles.legend}>
+          <View style={styles.legendItem}>
+            <View style={[styles.legendDot, styles.dayCellRepertoire]} />
+            <Text style={styles.legendText}>Com repertório</Text>
+          </View>
+          <View style={styles.legendItem}>
+            <View style={[styles.legendDot, styles.dayCellLiturgical]} />
+            <Text style={styles.legendText}>Data litúrgica</Text>
+          </View>
+          <View style={styles.legendItem}>
+            <View style={[styles.legendDot, styles.dayCellToday]} />
+            <Text style={styles.legendText}>Hoje</Text>
+          </View>
+        </View>
+      </View>
+
+      <SectionTitle title="Datas marcadas neste mes" />
+
+      <View style={styles.markedList}>
+        {markedDays.map((day) => (
+          <View key={day.monthDay} style={styles.markedCard}>
+            <Text style={styles.markedEyebrow}>{day.dateLabel}</Text>
+            <Text style={styles.markedTitle}>{day.title}</Text>
+            <Text style={styles.markedText}>
+              {day.kind === "has_repertoire"
+                ? "Roteiro musical disponivel para consulta."
+                : "Data liturgica registrada. Repertorio ainda nao publicado."}
+            </Text>
+          </View>
+        ))}
+      </View>
+
+      <SectionTitle title="Dias preparados" />
 
       <View style={styles.list}>
         {celebrations.length > 0 ? (
@@ -96,6 +178,47 @@ const styles = StyleSheet.create({
     padding: spacing.xl,
     paddingBottom: spacing.xxl,
   },
+  dayCell: {
+    alignItems: "center",
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    borderRadius: radii.md,
+    borderWidth: 1,
+    height: 40,
+    justifyContent: "center",
+    width: "13.2%",
+  },
+  dayCellEmpty: {
+    borderColor: "transparent",
+    opacity: 0,
+  },
+  dayCellLiturgical: {
+    backgroundColor: colors.surfaceMuted,
+    borderColor: colors.gold,
+  },
+  dayCellRepertoire: {
+    backgroundColor: colors.goldSoft,
+    borderColor: colors.gold,
+  },
+  dayCellToday: {
+    backgroundColor: colors.accent,
+    borderColor: colors.accent,
+  },
+  dayNumber: {
+    color: colors.textSecondary,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "700",
+  },
+  dayNumberLiturgical: {
+    color: colors.gold,
+  },
+  dayNumberRepertoire: {
+    color: colors.accent,
+  },
+  dayNumberToday: {
+    color: colors.background,
+  },
   emptyCard: {
     backgroundColor: colors.surface,
     borderColor: colors.border,
@@ -108,8 +231,72 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.06,
     shadowRadius: 16,
   },
+  grid: {
+    columnGap: spacing.xs,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    rowGap: spacing.xs,
+  },
+  legend: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: spacing.md,
+  },
+  legendDot: {
+    borderRadius: radii.pill,
+    height: 12,
+    width: 12,
+  },
+  legendItem: {
+    alignItems: "center",
+    flexDirection: "row",
+    gap: spacing.xs,
+  },
+  legendText: {
+    color: colors.textSecondary,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.caption,
+  },
   list: {
     gap: spacing.md,
+  },
+  markedCard: {
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    borderRadius: radii.lg,
+    borderWidth: 1,
+    gap: spacing.xs,
+    padding: spacing.md,
+  },
+  markedEyebrow: {
+    color: colors.gold,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
+    textTransform: "uppercase",
+  },
+  markedList: {
+    gap: spacing.md,
+  },
+  markedText: {
+    color: colors.textSecondary,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.caption,
+    lineHeight: 20,
+  },
+  markedTitle: {
+    color: colors.textPrimary,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.body,
+    fontWeight: "700",
+  },
+  monthCard: {
+    backgroundColor: colors.surface,
+    borderColor: colors.borderStrong,
+    borderRadius: radii.xl,
+    borderWidth: 1,
+    gap: spacing.md,
+    padding: spacing.lg,
   },
   summary: {
     borderRadius: radii.xl,
@@ -141,5 +328,18 @@ const styles = StyleSheet.create({
     fontSize: typography.heading,
     fontStyle: "italic",
     fontWeight: "700",
+  },
+  weekLabel: {
+    color: colors.textMuted,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "700",
+    textAlign: "center",
+    width: "13.2%",
+  },
+  weekRow: {
+    columnGap: spacing.xs,
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });

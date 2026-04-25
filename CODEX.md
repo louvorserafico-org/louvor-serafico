@@ -3666,3 +3666,44 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 76 - Expandir dominio de dias liturgicos sem repertorio e evoluir calendario principal.
+
+## Etapa 76 - Dias liturgicos sem repertorio
+
+Resumo do que foi feito:
+
+- Expandido dominio do calendario 2026 para diferenciar dias comuns e datas liturgicas sem repertorio.
+- Adicionadas marcacoes liturgicas iniciais para 2026, incluindo tempos fortes e solenidades principais.
+- Calendario principal passou a exibir grade mensal real com tres estados visuais: hoje, data liturgica e dia com repertorio.
+- Incluida lista de datas marcadas do mes atual, separando visualmente o que ja tem roteiro do que ainda aguarda repertorio.
+
+Arquivos alterados:
+
+- `packages/shared/src/liturgical-calendar.ts`
+- `packages/shared/src/liturgical-calendar.test.ts`
+- `apps/mobile/app/(tabs)/calendario.tsx`
+
+Decisoes tecnicas e trade-offs:
+
+- Mantida uma base inicial enxuta de datas liturgicas 2026, suficiente para evoluir UX sem inventar um calendario completo ainda.
+- Alternativa rejeitada: preencher o ano inteiro manualmente nesta etapa. Melhor validar estrutura primeiro e expandir editorialmente depois.
+- O calendario principal continua compatível com repertorio remoto, mas a camada visual agora independe de existir conteudo musical em todos os dias.
+
+Hurdles & Fixes:
+
+- Nenhum bloqueio funcional relevante.
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: mark liturgical days without repertoire in 2026 calendar`
+
+## Proxima Etapa Planejada
+
+Etapa 77 - Refinar UX dos detalhes de dia sem repertorio.

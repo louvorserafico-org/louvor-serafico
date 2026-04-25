@@ -5,6 +5,7 @@ import {
   getLiturgicalDayForDate,
   getLiturgicalMonthDays2026,
   getLiturgicalMonthLabel,
+  getLiturgicalMarkedDays2026,
 } from "./liturgical-calendar.ts";
 
 describe("liturgical calendar 2026", () => {
@@ -24,6 +25,14 @@ describe("liturgical calendar 2026", () => {
     assert.equal(result.hasRepertoire, false);
   });
 
+  it("marks fixed liturgical days without repertoire", () => {
+    const result = getLiturgicalDayForDate(new Date("2026-12-25T12:00:00.000Z"));
+
+    assert.equal(result.kind, "liturgical_day_without_repertoire");
+    assert.equal(result.title, "Natal do Senhor");
+    assert.equal(result.hasRepertoire, false);
+  });
+
   it("builds full month days for 2026", () => {
     const result = getLiturgicalMonthDays2026(1);
 
@@ -34,5 +43,13 @@ describe("liturgical calendar 2026", () => {
 
   it("returns month label in portuguese", () => {
     assert.equal(getLiturgicalMonthLabel(4), "abril");
+  });
+
+  it("returns marked days for a month", () => {
+    const result = getLiturgicalMarkedDays2026(1);
+
+    assert.equal(result.length >= 2, true);
+    assert.equal(result.some((item) => item.kind === "has_repertoire"), true);
+    assert.equal(result.some((item) => item.kind === "liturgical_day_without_repertoire"), true);
   });
 });
