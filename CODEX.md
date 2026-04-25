@@ -3050,3 +3050,48 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 63 - Revisar UX do calendario remoto.
+
+Status: concluida em 2026-04-25.
+
+Objetivo esperado:
+
+- deixar a tela Calendario menos tecnica;
+- resumir claramente quando fonte local ou remota estiver ativa;
+- manter lista funcional com fallback local.
+
+Resultado:
+
+- Criado `src/features/celebrations/calendar-overview.ts`.
+- Criado `src/features/celebrations/calendar-overview.test.ts`.
+- Tab `Calendario` ganhou resumo visual de fonte local/remota.
+- Header passou a responder ao modo atual do catalogo.
+- Script de testes raiz atualizado.
+
+Decisoes tecnicas e trade-offs:
+
+- A regra de copy ficou isolada e testada fora da UI.
+- O card tecnico remoto foi mantido para diagnostico durante desenvolvimento.
+- O fallback local segue como comportamento padrao quando leitura remota falha.
+- Alternativa rejeitada: remover o card remoto agora. Ainda e util enquanto Supabase segue em evolucao.
+
+Hurdles & Fixes:
+
+- Hurdle: `typecheck` falhou porque `Text` nao estava importado na tela `calendario`.
+- Fix: importar `Text` de `react-native` e revalidar.
+
+Checklist DoD:
+
+- [x] TDD aplicado.
+- [x] UI integrada.
+- [x] Testes passam.
+- [x] Typecheck passa.
+- [x] Lint passa.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: improve calendar source summary`
+
+## Proxima Etapa Planejada
+
+Etapa 64 - Revisar UX do repertorio remoto.
