@@ -356,6 +356,32 @@ Validacao:
 - `corepack pnpm lint`
 - `git diff --check`
 
+### Etapa 82 - Refinar composicao visual da Home
+
+Status: concluida em 2026-04-25.
+
+Entregue:
+
+- A Home ganhou hierarquia visual mais clara no bloco principal de hoje.
+- O estado principal passou a exibir badge de data, titulo com mais peso e CTA
+  mais presente.
+- Foram adicionados atalhos editoriais para `Calendario` e `Repertorio`.
+- O bloco mensal da Home ganhou cabecalho proprio e CTA direto para o
+  calendario completo.
+- O texto de apoio do roteiro sugerido foi refinado para reforcar contexto e
+  ordem de leitura.
+
+Arquivos principais:
+
+- `apps/mobile/app/(tabs)/index.tsx`
+
+Validacao:
+
+- `corepack pnpm test`
+- `corepack pnpm --filter @louvor-serafico/mobile typecheck`
+- `corepack pnpm lint`
+- `git diff --check`
+
 ### Etapa 0 - Fundacao documental e workflow
 
 Status: concluida em 2026-04-20.

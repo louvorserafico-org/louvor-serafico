@@ -44,7 +44,7 @@ export default function TodayScreen() {
     <ScrollView contentContainerStyle={styles.container}>
       <PageHeader
         eyebrow={today.dateLabel}
-        title={todayCelebration ? todayCelebration.title : "Louvor Seráfico"}
+        title={todayCelebration ? todayCelebration.title : "Louvor Serafico"}
         subtitle={
           todayCelebration
             ? "Roteiro do dia pronto para acompanhar a celebracao com beleza e ordem."
@@ -53,7 +53,12 @@ export default function TodayScreen() {
       />
 
       <View style={styles.summary}>
-        <Text style={styles.summaryEyebrow}>Hoje</Text>
+        <View style={styles.summaryTopRow}>
+          <View style={styles.dateBadge}>
+            <Text style={styles.dateBadgeText}>{today.dateLabel}</Text>
+          </View>
+          <Text style={styles.summaryEyebrow}>Hoje</Text>
+        </View>
         <Text style={styles.summaryTitle}>{summary.title}</Text>
         <Text style={styles.summaryText}>{summary.helperText}</Text>
         <Text style={styles.summaryMeta}>{summary.premiumText}</Text>
@@ -65,18 +70,49 @@ export default function TodayScreen() {
       </View>
 
       <View style={styles.aboutCard}>
+        <Text style={styles.aboutEyebrow}>Vida do ministerio</Text>
         <Text style={styles.aboutTitle}>Para cada tempo liturgico</Text>
         <Text style={styles.aboutText}>
-          O Louvor Seráfico reune repertorios, momentos da missa e materiais de estudo para ajudar musicos a servir com mais clareza.
+          O Louvor Serafico reune repertorios, momentos da missa e materiais de estudo para ajudar musicos a servir com mais clareza.
         </Text>
+      </View>
+
+      <View style={styles.quickGrid}>
+        <Link asChild href="/calendario">
+          <Pressable style={styles.quickCard}>
+            <Text style={styles.quickEyebrow}>Calendario</Text>
+            <Text style={styles.quickTitle}>Dias preparados</Text>
+            <Text style={styles.quickText}>Consulte as proximas celebracoes e memorias marcadas em 2026.</Text>
+          </Pressable>
+        </Link>
+        <Link asChild href="/repertorio">
+          <Pressable style={styles.quickCard}>
+            <Text style={styles.quickEyebrow}>Repertorio</Text>
+            <Text style={styles.quickTitle}>Catalogo musical</Text>
+            <Text style={styles.quickText}>Encontre cantos, materiais e acessos essenciais do ministerio.</Text>
+          </Pressable>
+        </Link>
       </View>
 
       <SectionTitle title={`Calendario de ${calendar.monthLabel}`} />
 
       <View style={styles.calendarCard}>
+        <View style={styles.calendarHeader}>
+          <View style={styles.calendarHeaderCopy}>
+            <Text style={styles.calendarTitle}>Mes liturgico</Text>
+            <Text style={styles.calendarText}>Os dias marcados conduzem para celebracoes ja preparadas.</Text>
+          </View>
+          <Link asChild href="/calendario">
+            <Pressable style={styles.calendarButton}>
+              <Text style={styles.calendarButtonText}>Abrir</Text>
+            </Pressable>
+          </Link>
+        </View>
         <View style={styles.weekRow}>
           {["D", "S", "T", "Q", "Q", "S", "S"].map((item, index) => (
-            <Text key={`${item}-${index}`} style={styles.weekLabel}>{item}</Text>
+            <Text key={`${item}-${index}`} style={styles.weekLabel}>
+              {item}
+            </Text>
           ))}
         </View>
         <View style={styles.calendarGrid}>
@@ -111,6 +147,9 @@ export default function TodayScreen() {
       {todayCelebration ? (
         <>
           <SectionTitle title="Roteiro sugerido" />
+          <Text style={styles.sectionText}>
+            Os momentos abaixo ajudam a organizar a celebracao de hoje com unidade e previsao.
+          </Text>
 
           <View style={styles.list}>
             {todayMoments.map((item) => (
@@ -127,7 +166,6 @@ export default function TodayScreen() {
       ) : (
         <>
           <SectionTitle title={preparedDays.title} />
-
           <Text style={styles.sectionText}>{preparedDays.helperText}</Text>
 
           <View style={styles.list}>
@@ -150,6 +188,13 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
     padding: spacing.lg,
   },
+  aboutEyebrow: {
+    color: colors.olive,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
+    textTransform: "uppercase",
+  },
   aboutText: {
     color: colors.textSecondary,
     fontFamily: fontFamilies.body,
@@ -169,12 +214,25 @@ const styles = StyleSheet.create({
     borderColor: colors.accent,
     borderRadius: radii.pill,
     borderWidth: 1,
-    marginTop: spacing.sm,
+    marginTop: spacing.md,
     paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.sm,
+    paddingVertical: spacing.md,
   },
   buttonText: {
     color: colors.background,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.body,
+    fontWeight: "800",
+  },
+  calendarButton: {
+    borderColor: colors.borderStrong,
+    borderRadius: radii.pill,
+    borderWidth: 1,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+  },
+  calendarButtonText: {
+    color: colors.accent,
     fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "800",
@@ -193,17 +251,54 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     rowGap: spacing.xs,
   },
+  calendarHeader: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  calendarHeaderCopy: {
+    flex: 1,
+    paddingRight: spacing.md,
+  },
   calendarHint: {
     color: colors.textSecondary,
     fontFamily: fontFamilies.body,
     fontSize: typography.caption,
     lineHeight: 20,
   },
+  calendarText: {
+    color: colors.textSecondary,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.caption,
+    lineHeight: 20,
+  },
+  calendarTitle: {
+    color: colors.textPrimary,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.body,
+    fontWeight: "700",
+    marginBottom: spacing.xs,
+  },
   container: {
     backgroundColor: colors.background,
     gap: spacing.lg,
     padding: spacing.xl,
     paddingBottom: spacing.xxl,
+  },
+  dateBadge: {
+    backgroundColor: colors.goldSoft,
+    borderColor: colors.border,
+    borderRadius: radii.pill,
+    borderWidth: 1,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+  },
+  dateBadgeText: {
+    color: colors.accent,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
+    textTransform: "uppercase",
   },
   dayCell: {
     alignItems: "center",
@@ -237,6 +332,39 @@ const styles = StyleSheet.create({
   list: {
     gap: spacing.md,
   },
+  quickCard: {
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    borderRadius: radii.lg,
+    borderWidth: 1,
+    flex: 1,
+    gap: spacing.xs,
+    minHeight: 128,
+    padding: spacing.md,
+  },
+  quickEyebrow: {
+    color: colors.gold,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
+    textTransform: "uppercase",
+  },
+  quickGrid: {
+    flexDirection: "row",
+    gap: spacing.md,
+  },
+  quickText: {
+    color: colors.textSecondary,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.caption,
+    lineHeight: 20,
+  },
+  quickTitle: {
+    color: colors.textPrimary,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.body,
+    fontWeight: "800",
+  },
   sectionText: {
     color: colors.textSecondary,
     fontFamily: fontFamilies.body,
@@ -249,7 +377,7 @@ const styles = StyleSheet.create({
     borderColor: colors.borderStrong,
     borderRadius: radii.xl,
     borderWidth: 1,
-    gap: spacing.xs,
+    gap: spacing.sm,
     padding: spacing.lg,
     shadowColor: colors.ink,
     shadowOffset: { width: 0, height: 10 },
@@ -278,9 +406,16 @@ const styles = StyleSheet.create({
   summaryTitle: {
     color: colors.textPrimary,
     fontFamily: fontFamilies.display,
-    fontSize: typography.heading,
+    fontSize: typography.title,
     fontStyle: "italic",
     fontWeight: "700",
+    lineHeight: 46,
+  },
+  summaryTopRow: {
+    alignItems: "center",
+    flexDirection: "row",
+    gap: spacing.sm,
+    justifyContent: "space-between",
   },
   weekLabel: {
     color: colors.textMuted,
