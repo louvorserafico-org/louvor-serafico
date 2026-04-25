@@ -3,6 +3,7 @@ import { useState, type ComponentProps } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 
 import { PageHeader } from "@/components/PageHeader";
+import { buildPasswordRecoveryOverview } from "@/features/auth/password-recovery-overview";
 import { updatePasswordFromRecovery } from "@/features/auth/password-reset";
 import { supabase } from "@/services/supabase/client";
 import { colors, spacing, typography } from "@/theme/tokens";
@@ -12,6 +13,7 @@ export default function PasswordRecoveryScreen() {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [result, setResult] = useState<{ message: string; status: "error" | "success" } | null>(null);
+  const overview = buildPasswordRecoveryOverview();
 
   return (
     <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
@@ -20,6 +22,11 @@ export default function PasswordRecoveryScreen() {
         title="Redefinir senha"
         subtitle="Digite uma nova senha depois de abrir o link enviado por email."
       />
+
+      <View style={styles.summaryCard}>
+        <Text style={styles.summaryTitle}>{overview.title}</Text>
+        <Text style={styles.summaryText}>{overview.helperText}</Text>
+      </View>
 
       <View style={styles.formCard}>
         <Text style={styles.cardTitle}>Nova senha</Text>
@@ -175,5 +182,23 @@ const styles = StyleSheet.create({
   success: {
     backgroundColor: colors.oliveSoft,
     borderColor: colors.olive,
+  },
+  summaryCard: {
+    backgroundColor: colors.goldSoft,
+    borderColor: colors.gold,
+    borderRadius: 8,
+    borderWidth: 1,
+    gap: spacing.xs,
+    padding: spacing.md,
+  },
+  summaryText: {
+    color: colors.textSecondary,
+    fontSize: typography.caption,
+    lineHeight: 18,
+  },
+  summaryTitle: {
+    color: colors.textPrimary,
+    fontSize: typography.body,
+    fontWeight: "800",
   },
 });

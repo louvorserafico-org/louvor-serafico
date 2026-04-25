@@ -3314,3 +3314,46 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 69 - Revisar UX da redefinicao de senha.
+
+Status: concluida em 2026-04-25.
+
+Objetivo esperado:
+
+- deixar tela de recuperacao menos tecnica;
+- resumir claramente ordem do fluxo;
+- manter foco em uso por link do email.
+
+Resultado:
+
+- Criado `src/features/auth/password-recovery-overview.ts`.
+- Criado `src/features/auth/password-recovery-overview.test.ts`.
+- Tela `recuperar-senha` ganhou resumo visual do fluxo.
+- Script de testes raiz atualizado.
+
+Decisoes tecnicas e trade-offs:
+
+- A regra de copy ficou isolada e testada fora da UI.
+- O resumo ficou acima do formulario para orientar antes da acao.
+- Mantive card final explicando que link do email continua necessario.
+- Alternativa rejeitada: esconder card informativo final. Ainda ajuda em suporte.
+
+Hurdles & Fixes:
+
+- Nenhum bloqueio tecnico novo.
+
+Checklist DoD:
+
+- [x] TDD aplicado.
+- [x] UI integrada.
+- [x] Testes passam.
+- [x] Typecheck passa.
+- [x] Lint passa.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: improve password recovery summary`
+
+## Proxima Etapa Planejada
+
+Etapa 70 - Revisar UX de estados vazios e erros remotos.
