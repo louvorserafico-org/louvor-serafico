@@ -10,6 +10,7 @@ import { useSessionPreview } from "@/features/auth/SessionProvider";
 import { useSupabaseSession } from "@/features/auth/SupabaseSessionProvider";
 import { useFavorites } from "@/features/favorites/FavoritesProvider";
 import { fetchRemoteSongDetail } from "@/features/songs/remote-song-detail";
+import { buildSongDetailOverview } from "@/features/songs/song-detail-overview";
 import { resolveSongAssetAction } from "@/features/songs/song-asset-action";
 import { resolveAssetAccess } from "@/features/subscription/premium-access";
 import { useSubscriptionPreview } from "@/features/subscription/SubscriptionPreviewProvider";
@@ -21,6 +22,7 @@ export default function SongDetailScreen() {
   const localSong = findSongBySlug(params.slug ?? "");
   const [remoteSong, setRemoteSong] = useState<typeof localSong | null>(null);
   const [assetMessages, setAssetMessages] = useState<Record<string, string>>({});
+  const [sourceMode, setSourceMode] = useState<"local" | "remote">("local");
   const [subtitle, setSubtitle] = useState("Detalhe inicial com materiais cadastrados no mock local.");
   const song = remoteSong ?? localSong;
   const { session } = useSessionPreview();
@@ -44,6 +46,7 @@ export default function SongDetailScreen() {
       }
 
       setRemoteSong(result.song ?? null);
+      setSourceMode(result.song ? "remote" : "local");
       setSubtitle(result.message);
     });
 
@@ -66,6 +69,11 @@ export default function SongDetailScreen() {
   }
 
   const isFavorite = isFavoriteSong(song.id);
+  const overview = buildSongDetailOverview({
+    assetCount: song.assets.length,
+    favoriteEnabled: canFavorite,
+    sourceMode,
+  });
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -75,6 +83,11 @@ export default function SongDetailScreen() {
         title={song.title}
         subtitle={subtitle}
       />
+
+      <View style={[styles.summary, sourceMode === "remote" ? styles.summaryRemote : styles.summaryLocal]}>
+        <Text style={styles.summaryTitle}>{overview.title}</Text>
+        <Text style={styles.summaryText}>{overview.helperText}</Text>
+      </View>
 
       <SectionTitle title="Materiais" />
 
@@ -258,5 +271,28 @@ const styles = StyleSheet.create({
   },
   list: {
     gap: spacing.md,
+  },
+  summary: {
+    borderRadius: 8,
+    borderWidth: 1,
+    gap: spacing.xs,
+    padding: spacing.md,
+  },
+  summaryLocal: {
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+  },
+  summaryRemote: {
+    backgroundColor: colors.goldSoft,
+    borderColor: colors.accent,
+  },
+  summaryText: {
+    color: colors.textMuted,
+    fontSize: typography.caption,
+  },
+  summaryTitle: {
+    color: colors.textPrimary,
+    fontSize: typography.body,
+    fontWeight: "800",
   },
 });

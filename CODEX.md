@@ -3183,3 +3183,47 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 66 - Revisar UX do detalhe de musica.
+
+Status: concluida em 2026-04-25.
+
+Objetivo esperado:
+
+- deixar detalhe de musica menos tecnico;
+- resumir claramente quando catalogo local ou remoto estiver ativo;
+- manter favoritos e materiais em leitura mais objetiva.
+
+Resultado:
+
+- Criado `src/features/songs/song-detail-overview.ts`.
+- Criado `src/features/songs/song-detail-overview.test.ts`.
+- Tela de detalhe da musica ganhou resumo visual do catalogo atual.
+- Script de testes raiz atualizado.
+
+Decisoes tecnicas e trade-offs:
+
+- A regra de copy ficou isolada e testada fora da UI.
+- O card de favoritos foi mantido separado do resumo para nao misturar estado de sessao com origem do catalogo.
+- O fallback local segue padrao quando detalhe remoto nao existe.
+- Alternativa rejeitada: mover toda a copy para dentro da tela. Mantive funcao pura para continuar escalavel.
+
+Hurdles & Fixes:
+
+- Hurdle: `typecheck` falhou porque `colors.accentSoft` nao existe no tema.
+- Fix: usar `colors.goldSoft`, ja presente no design system.
+
+Checklist DoD:
+
+- [x] TDD aplicado.
+- [x] UI integrada.
+- [x] Testes passam.
+- [x] Typecheck passa.
+- [x] Lint passa.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: improve song detail summary`
+
+## Proxima Etapa Planejada
+
+Etapa 67 - Revisar UX do fluxo de assinatura.
