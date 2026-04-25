@@ -7,16 +7,20 @@ import { RemoteFavoritesCard } from "@/components/RemoteFavoritesCard";
 import { RemoteSongsCard } from "@/components/RemoteSongsCard";
 import { SectionTitle } from "@/components/SectionTitle";
 import { useFavorites } from "@/features/favorites/FavoritesProvider";
+import { buildRepertoireOverview } from "@/features/songs/repertoire-overview";
 import { resolveSongCatalogSource } from "@/features/songs/song-catalog-source";
 import { fetchRemoteSongs } from "@/features/songs/remote-songs";
 import { supabaseConfig } from "@/services/supabase/client";
 import { SongCard } from "@/components/SongCard";
-import { colors, spacing } from "@/theme/tokens";
+import { colors, spacing, typography } from "@/theme/tokens";
+import { Text } from "react-native";
 
 export default function RepertoireScreen() {
   const localSongs = useMemo(() => getInitialSongCatalog(), []);
   const { favoriteSongIds, sourceMessage } = useFavorites();
   const [songs, setSongs] = useState(localSongs);
+  const [sourceMode, setSourceMode] = useState<"local" | "remote">("local");
+  const [remoteCount, setRemoteCount] = useState(localSongs.length);
   const [subtitle, setSubtitle] = useState(`${favoriteSongIds.length} favorito(s) local(is) no catalogo inicial.`);
 
   useEffect(() => {
@@ -27,6 +31,8 @@ export default function RepertoireScreen() {
         if (active) {
           const source = resolveSongCatalogSource(remote, localSongs);
           setSongs(source.songs);
+          setSourceMode(source.mode);
+          setRemoteCount(remote.songs.length);
           setSubtitle(`${favoriteSongIds.length} favorito(s). ${source.message} ${sourceMessage}`);
         }
       },
@@ -37,13 +43,28 @@ export default function RepertoireScreen() {
     };
   }, [favoriteSongIds.length, localSongs, sourceMessage]);
 
+  const overview = buildRepertoireOverview({
+    favoriteCount: favoriteSongIds.length,
+    remoteCount: songs.length,
+    sourceMode,
+  });
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <PageHeader
-        eyebrow={`${songs.length} cantos`}
-        title="Repertorio"
+        eyebrow={overview.eyebrow}
+        title={overview.title}
         subtitle={subtitle}
       />
+
+      <View style={[styles.summary, sourceMode === "remote" ? styles.summaryRemote : styles.summaryLocal]}>
+        <Text style={styles.summaryTitle}>{overview.helperText}</Text>
+        <Text style={styles.summaryText}>
+          {sourceMode === "remote"
+            ? `${remoteCount} musicas remotas consultadas.`
+            : `${localSongs.length} musicas locais disponiveis para estudo.`}
+        </Text>
+      </View>
 
       <SectionTitle title="Catalogo inicial" />
 
@@ -68,5 +89,28 @@ const styles = StyleSheet.create({
   },
   list: {
     gap: spacing.md,
+  },
+  summary: {
+    borderRadius: 8,
+    borderWidth: 1,
+    gap: spacing.xs,
+    padding: spacing.md,
+  },
+  summaryLocal: {
+    backgroundColor: colors.goldSoft,
+    borderColor: colors.gold,
+  },
+  summaryRemote: {
+    backgroundColor: colors.oliveSoft,
+    borderColor: colors.olive,
+  },
+  summaryText: {
+    color: colors.textSecondary,
+    fontSize: typography.caption,
+  },
+  summaryTitle: {
+    color: colors.textPrimary,
+    fontSize: typography.body,
+    fontWeight: "800",
   },
 });

@@ -3095,3 +3095,47 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 64 - Revisar UX do repertorio remoto.
+
+Status: concluida em 2026-04-25.
+
+Objetivo esperado:
+
+- deixar a tela Repertorio menos tecnica;
+- resumir claramente quando catalogo local ou remoto estiver ativo;
+- manter favoritos visiveis junto da fonte atual.
+
+Resultado:
+
+- Criado `src/features/songs/repertoire-overview.ts`.
+- Criado `src/features/songs/repertoire-overview.test.ts`.
+- Tab `Repertorio` ganhou resumo visual do catalogo atual.
+- Header passou a responder ao modo local/remoto.
+- Script de testes raiz atualizado.
+
+Decisoes tecnicas e trade-offs:
+
+- A regra de copy ficou isolada e testada fora da UI.
+- O card remoto e o card de favoritos foram mantidos para diagnostico operacional.
+- O fallback local segue como comportamento padrao quando leitura remota falha.
+- Alternativa rejeitada: simplificar demais a tela removendo diagnosticos. Ainda precisamos deles nesta fase.
+
+Hurdles & Fixes:
+
+- Nenhum bloqueio tecnico encontrado.
+
+Checklist DoD:
+
+- [x] TDD aplicado.
+- [x] UI integrada.
+- [x] Testes passam.
+- [x] Typecheck passa.
+- [x] Lint passa.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: improve repertoire source summary`
+
+## Proxima Etapa Planejada
+
+Etapa 65 - Revisar detalhes de celebracao remota.
