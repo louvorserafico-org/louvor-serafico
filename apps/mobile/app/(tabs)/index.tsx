@@ -9,7 +9,7 @@ import { useSupabaseSession } from "@/features/auth/SupabaseSessionProvider";
 import { buildHomeSummary } from "@/features/home/home-summary";
 import { useSubscriptionPreview } from "@/features/subscription/SubscriptionPreviewProvider";
 import { buildTodayTabSubtitle } from "@/features/tabs/main-tab-copy";
-import { colors, spacing, typography } from "@/theme/tokens";
+import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
 
 export default function TodayScreen() {
   const { session } = useSupabaseSession();
@@ -31,7 +31,7 @@ export default function TodayScreen() {
       />
 
       <View style={styles.summary}>
-        <Text style={styles.summaryEyebrow}>Hoje</Text>
+        <Text style={styles.summaryEyebrow}>Celebracao do dia</Text>
         <Text style={styles.summaryTitle}>{summary.title}</Text>
         <Text style={styles.summaryText}>{summary.helperText}</Text>
         <Text style={styles.summaryMeta}>{summary.premiumText}</Text>
@@ -64,14 +64,15 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     backgroundColor: colors.accent,
     borderColor: colors.accent,
-    borderRadius: 8,
+    borderRadius: radii.pill,
     borderWidth: 1,
     marginTop: spacing.sm,
-    paddingHorizontal: spacing.md,
+    paddingHorizontal: spacing.lg,
     paddingVertical: spacing.sm,
   },
   buttonText: {
     color: colors.background,
+    fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "800",
   },
@@ -85,32 +86,41 @@ const styles = StyleSheet.create({
     gap: spacing.md,
   },
   summary: {
-    backgroundColor: colors.oliveSoft,
-    borderColor: colors.olive,
-    borderRadius: 8,
+    backgroundColor: colors.surface,
+    borderColor: colors.borderStrong,
+    borderRadius: radii.xl,
     borderWidth: 1,
     gap: spacing.xs,
-    padding: spacing.md,
+    padding: spacing.lg,
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.08,
+    shadowRadius: 18,
   },
   summaryEyebrow: {
-    color: colors.olive,
+    color: colors.gold,
+    fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "900",
     textTransform: "uppercase",
   },
   summaryMeta: {
     color: colors.accent,
+    fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "800",
   },
   summaryText: {
     color: colors.textSecondary,
-    fontSize: typography.body,
-    lineHeight: 23,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.lead,
+    lineHeight: 28,
   },
   summaryTitle: {
     color: colors.textPrimary,
+    fontFamily: fontFamilies.display,
     fontSize: typography.heading,
-    fontWeight: "900",
+    fontStyle: "italic",
+    fontWeight: "700",
   },
 });

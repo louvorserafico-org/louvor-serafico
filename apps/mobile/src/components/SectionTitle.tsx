@@ -1,6 +1,6 @@
 import { StyleSheet, Text } from "react-native";
 
-import { colors, typography } from "@/theme/tokens";
+import { colors, fontFamilies, typography } from "@/theme/tokens";
 
 type SectionTitleProps = {
   title: string;
@@ -13,7 +13,9 @@ export function SectionTitle({ title }: SectionTitleProps) {
 const styles = StyleSheet.create({
   title: {
     color: colors.textPrimary,
+    fontFamily: fontFamilies.display,
     fontSize: typography.heading,
-    fontWeight: "800",
+    fontStyle: "italic",
+    fontWeight: "700",
   },
 });

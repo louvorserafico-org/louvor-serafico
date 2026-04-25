@@ -7,7 +7,7 @@ import { SupabaseSessionProvider } from "@/features/auth/SupabaseSessionProvider
 import { CommentsProvider } from "@/features/comments/CommentsProvider";
 import { FavoritesProvider } from "@/features/favorites/FavoritesProvider";
 import { SubscriptionPreviewProvider } from "@/features/subscription/SubscriptionPreviewProvider";
-import { colors } from "@/theme/tokens";
+import { colors, fontFamilies } from "@/theme/tokens";
 
 export default function RootLayout() {
   return (
@@ -17,13 +17,13 @@ export default function RootLayout() {
           <CommentsProvider>
             <SubscriptionPreviewProvider>
               <FavoritesProvider>
-                <StatusBar style="dark" />
+                <StatusBar backgroundColor={colors.background} style="dark" />
                 <Stack
                   screenOptions={{
                     contentStyle: { backgroundColor: colors.background },
                     headerShown: false,
                     headerStyle: { backgroundColor: colors.background },
-                    headerTitleStyle: { color: colors.textPrimary },
+                    headerTitleStyle: { color: colors.textPrimary, fontFamily: fontFamilies.display },
                     headerTintColor: colors.accent,
                   }}
                 />

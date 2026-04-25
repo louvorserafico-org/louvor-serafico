@@ -30,7 +30,7 @@ export default function ProfileScreen() {
       />
       <ProfileOverviewCard />
       <SubscriptionOverviewCard />
-      <AuthEntryCard />
+      {session.status === "authenticated" ? null : <AuthEntryCard />}
       <PaywallPreviewCard />
       {showDebugCards ? (
         <>

@@ -5,7 +5,7 @@ import { useSessionPreview } from "@/features/auth/SessionProvider";
 import { useSupabaseSession } from "@/features/auth/SupabaseSessionProvider";
 import { buildPaywallCopy } from "@/features/subscription/paywall-copy";
 import { useSubscriptionPreview } from "@/features/subscription/SubscriptionPreviewProvider";
-import { colors, spacing, typography } from "@/theme/tokens";
+import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
 
 export function PaywallPreviewCard() {
   const { session } = useSessionPreview();
@@ -41,32 +41,39 @@ const styles = StyleSheet.create({
   },
   body: {
     color: colors.textSecondary,
-    fontSize: typography.caption,
-    lineHeight: 19,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.body,
+    lineHeight: 24,
   },
   button: {
     alignSelf: "flex-start",
     backgroundColor: colors.accent,
     borderColor: colors.accent,
-    borderRadius: 8,
+    borderRadius: radii.pill,
     borderWidth: 1,
     marginTop: spacing.sm,
-    paddingHorizontal: spacing.md,
+    paddingHorizontal: spacing.lg,
     paddingVertical: spacing.sm,
   },
   buttonText: {
     color: colors.background,
+    fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "700",
   },
   card: {
-    borderRadius: 8,
+    borderRadius: radii.xl,
     borderWidth: 1,
     gap: spacing.xs,
-    padding: spacing.md,
+    padding: spacing.lg,
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.06,
+    shadowRadius: 16,
   },
   eyebrow: {
-    color: colors.accent,
+    color: colors.gold,
+    fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "800",
     textTransform: "uppercase",
@@ -77,7 +84,9 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.textPrimary,
+    fontFamily: fontFamilies.display,
     fontSize: typography.heading,
-    fontWeight: "900",
+    fontStyle: "italic",
+    fontWeight: "700",
   },
 });

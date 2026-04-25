@@ -3,8 +3,6 @@ import { useEffect, useMemo, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 
 import { PageHeader } from "@/components/PageHeader";
-import { RemoteFavoritesCard } from "@/components/RemoteFavoritesCard";
-import { RemoteSongsCard } from "@/components/RemoteSongsCard";
 import { SectionTitle } from "@/components/SectionTitle";
 import { useFavorites } from "@/features/favorites/FavoritesProvider";
 import { buildRemoteFeedback } from "@/features/remote/remote-feedback";
@@ -13,18 +11,18 @@ import { resolveSongCatalogSource } from "@/features/songs/song-catalog-source";
 import { fetchRemoteSongs } from "@/features/songs/remote-songs";
 import { supabaseConfig } from "@/services/supabase/client";
 import { SongCard } from "@/components/SongCard";
-import { colors, spacing, typography } from "@/theme/tokens";
+import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
 import { Text } from "react-native";
 
 export default function RepertoireScreen() {
   const localSongs = useMemo(() => getInitialSongCatalog(), []);
-  const { favoriteSongIds, sourceMessage } = useFavorites();
+  const { favoriteSongIds } = useFavorites();
   const [songs, setSongs] = useState(localSongs);
   const [sourceMode, setSourceMode] = useState<"local" | "remote">("local");
   const [remoteCount, setRemoteCount] = useState(localSongs.length);
   const [remoteStatus, setRemoteStatus] = useState<"error" | "not_configured" | "ready">("not_configured");
-  const [remoteMessage, setRemoteMessage] = useState("Configurar Supabase antes da leitura remota de musicas.");
-  const [subtitle, setSubtitle] = useState(`${favoriteSongIds.length} favorito(s) local(is) no catalogo inicial.`);
+  const [remoteMessage, setRemoteMessage] = useState("Leitura do acervo em preparacao.");
+  const [subtitle, setSubtitle] = useState("Um acervo liturgico para estudar, organizar e escolher com mais paz.");
 
   useEffect(() => {
     let active = true;
@@ -38,7 +36,11 @@ export default function RepertoireScreen() {
           setRemoteCount(remote.songs.length);
           setRemoteStatus(remote.status);
           setRemoteMessage(remote.message);
-          setSubtitle(`${favoriteSongIds.length} favorito(s). ${source.message} ${sourceMessage}`);
+          setSubtitle(
+            favoriteSongIds.length > 0
+              ? `${favoriteSongIds.length} canto${favoriteSongIds.length > 1 ? "s" : ""} guardado${favoriteSongIds.length > 1 ? "s" : ""} para consulta rapida.`
+              : "Navegue pelo repertorio e encontre o canto certo para cada momento.",
+          );
         }
       },
     );
@@ -46,7 +48,7 @@ export default function RepertoireScreen() {
     return () => {
       active = false;
     };
-  }, [favoriteSongIds.length, localSongs, sourceMessage]);
+  }, [favoriteSongIds.length, localSongs]);
 
   const overview = buildRepertoireOverview({
     favoriteCount: favoriteSongIds.length,
@@ -70,24 +72,21 @@ export default function RepertoireScreen() {
       />
 
       <View style={[styles.summary, sourceMode === "remote" ? styles.summaryRemote : styles.summaryLocal]}>
-        <Text style={styles.summaryTitle}>{overview.helperText}</Text>
+        <Text style={styles.summaryTitle}>{overview.title}</Text>
         <Text style={styles.summaryText}>
-          {sourceMode === "remote" ? remoteFeedback.detail : `${localSongs.length} musicas locais disponiveis para estudo.`}
+          {sourceMode === "remote" ? remoteFeedback.detail : `${localSongs.length} cantos reunidos para estudo e preparacao.`}
         </Text>
       </View>
 
       <SectionTitle title="Catalogo inicial" />
-
-      <RemoteSongsCard />
-      <RemoteFavoritesCard />
 
       <View style={styles.list}>
         {songs.length > 0 ? (
           songs.map((song) => <SongCard key={song.id} song={song} />)
         ) : (
           <View style={styles.emptyCard}>
-            <Text style={styles.summaryTitle}>Repertorio vazio</Text>
-            <Text style={styles.summaryText}>Nenhuma musica disponivel neste momento.</Text>
+            <Text style={styles.summaryTitle}>Acervo ainda em formacao</Text>
+            <Text style={styles.summaryText}>Novos cantos aparecerao aqui conforme o repertorio crescer.</Text>
           </View>
         )}
       </View>
@@ -105,35 +104,47 @@ const styles = StyleSheet.create({
   emptyCard: {
     backgroundColor: colors.surface,
     borderColor: colors.border,
-    borderRadius: 8,
+    borderRadius: radii.xl,
     borderWidth: 1,
     gap: spacing.xs,
-    padding: spacing.md,
+    padding: spacing.lg,
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.06,
+    shadowRadius: 16,
   },
   list: {
     gap: spacing.md,
   },
   summary: {
-    borderRadius: 8,
+    borderRadius: radii.xl,
     borderWidth: 1,
     gap: spacing.xs,
-    padding: spacing.md,
+    padding: spacing.lg,
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.06,
+    shadowRadius: 16,
   },
   summaryLocal: {
-    backgroundColor: colors.goldSoft,
-    borderColor: colors.gold,
+    backgroundColor: colors.surfaceMuted,
+    borderColor: colors.borderStrong,
   },
   summaryRemote: {
-    backgroundColor: colors.oliveSoft,
-    borderColor: colors.olive,
+    backgroundColor: colors.surface,
+    borderColor: colors.borderStrong,
   },
   summaryText: {
     color: colors.textSecondary,
-    fontSize: typography.caption,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.body,
+    lineHeight: 24,
   },
   summaryTitle: {
     color: colors.textPrimary,
-    fontSize: typography.body,
-    fontWeight: "800",
+    fontFamily: fontFamilies.display,
+    fontSize: typography.heading,
+    fontStyle: "italic",
+    fontWeight: "700",
   },
 });

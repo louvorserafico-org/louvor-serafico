@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { buildAuthReadiness } from "@/features/auth/auth-readiness";
 import { fetchSupabaseRemoteStatus, type SupabaseRemoteStatus } from "@/services/supabase/remote-status";
-import { colors, spacing, typography } from "@/theme/tokens";
+import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
 
 type CardState =
   | {
@@ -33,7 +33,7 @@ export function AuthEntryCard() {
     return (
       <View style={[styles.card, styles.loading]}>
         <Text style={styles.title}>Preparando fluxo de entrada</Text>
-        <Text style={styles.text}>Lendo disponibilidade de autenticacao.</Text>
+        <Text style={styles.text}>Organizando acesso para sua conta.</Text>
       </View>
     );
   }
@@ -68,20 +68,21 @@ const styles = StyleSheet.create({
     borderColor: colors.gold,
   },
   button: {
-    borderRadius: 8,
+    borderRadius: radii.pill,
     borderWidth: 1,
     marginTop: spacing.sm,
-    paddingHorizontal: spacing.md,
+    paddingHorizontal: spacing.lg,
     paddingVertical: spacing.sm,
   },
   buttonDisabled: {
     borderColor: colors.border,
   },
   buttonReady: {
-    backgroundColor: colors.olive,
-    borderColor: colors.olive,
+    backgroundColor: colors.accent,
+    borderColor: colors.accent,
   },
   buttonText: {
+    fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "700",
   },
@@ -89,10 +90,14 @@ const styles = StyleSheet.create({
     color: colors.textMuted,
   },
   card: {
-    borderRadius: 8,
+    borderRadius: radii.xl,
     borderWidth: 1,
     gap: spacing.xs,
-    padding: spacing.md,
+    padding: spacing.lg,
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.06,
+    shadowRadius: 16,
   },
   limited: {
     backgroundColor: colors.goldSoft,
@@ -108,11 +113,15 @@ const styles = StyleSheet.create({
   },
   text: {
     color: colors.textSecondary,
-    fontSize: typography.caption,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.body,
+    lineHeight: 24,
   },
   title: {
     color: colors.textPrimary,
-    fontSize: typography.body,
-    fontWeight: "800",
+    fontFamily: fontFamilies.display,
+    fontSize: typography.heading,
+    fontStyle: "italic",
+    fontWeight: "700",
   },
 });

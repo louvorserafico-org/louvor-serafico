@@ -3557,3 +3557,62 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 74 - Definir proximo ciclo de execucao.
+
+## Etapa 74 - Refinamento visual inicial
+
+Resumo do que foi feito:
+
+- Consolidado novo tema visual com paleta mais sacra e acabamento mais nobre.
+- Ajustadas tipografia, bordas, sombras e ritmos visuais de componentes compartilhados.
+- Refinadas telas principais: Hoje, Calendario, Repertorio, Comunidade, Entrar, Recuperar senha, Perfil, detalhe de celebracao e detalhe de musica.
+- Removidos varios textos tecnicos da interface visivel ao usuario.
+
+Arquivos principais alterados:
+
+- `apps/mobile/src/theme/tokens.ts`
+- `apps/mobile/app/_layout.tsx`
+- `apps/mobile/app/(tabs)/_layout.tsx`
+- `apps/mobile/src/components/PageHeader.tsx`
+- `apps/mobile/src/components/SectionTitle.tsx`
+- `apps/mobile/src/components/MomentCard.tsx`
+- `apps/mobile/src/components/CelebrationCard.tsx`
+- `apps/mobile/src/components/SongCard.tsx`
+- `apps/mobile/src/components/AuthEntryCard.tsx`
+- `apps/mobile/src/components/PaywallPreviewCard.tsx`
+- `apps/mobile/app/(tabs)/index.tsx`
+- `apps/mobile/app/(tabs)/calendario.tsx`
+- `apps/mobile/app/(tabs)/repertorio.tsx`
+- `apps/mobile/app/(tabs)/comunidade.tsx`
+- `apps/mobile/app/(tabs)/perfil.tsx`
+- `apps/mobile/app/entrar.tsx`
+- `apps/mobile/app/recuperar-senha.tsx`
+- `apps/mobile/app/celebracoes/[id].tsx`
+- `apps/mobile/app/musicas/[slug].tsx`
+
+Decisoes tecnicas e trade-offs:
+
+- Mantido uso de fontes nativas do sistema via tokens para evitar adicionar dependencias de fontes agora.
+- Alternativa rejeitada: instalar familias tipograficas externas nesta etapa. Tentativa falhou por problema transitivo do pnpm; como o foco era acabamento rapido e seguro, ficou melhor seguir com serifas nativas e validar UI primeiro.
+- Cards tecnicos remotos foram removidos das tabs principais para limpar experiencia do usuario. Estrutura de debug permanece protegida por flag.
+- Fluxos e logica principal foram preservados; mudanca concentrou-se em aparencia, copy e hierarquia visual.
+
+Hurdles & Fixes:
+
+- `corepack pnpm add` falhou ao tentar instalar fontes extras por erro transitivo de pasta temporaria do pnpm.
+- Solucao aplicada: seguir com tipografia nativa e tokens globais, sem bloquear refinamento visual.
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: refine sacred visual language across main screens`
+
+## Proxima Etapa Planejada
+
+Etapa 75 - Validacao visual em device e segundo passe de UI/UX.

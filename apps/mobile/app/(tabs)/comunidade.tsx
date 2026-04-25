@@ -3,7 +3,6 @@ import { useEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 
 import { PageHeader } from "@/components/PageHeader";
-import { RemoteCommentsCard } from "@/components/RemoteCommentsCard";
 import { useSessionPreview } from "@/features/auth/SessionProvider";
 import { useSupabaseSession } from "@/features/auth/SupabaseSessionProvider";
 import { buildCommunityAccess } from "@/features/comments/community-access";
@@ -11,10 +10,9 @@ import { resolveCommentFeedSource } from "@/features/comments/comment-feed-sourc
 import { useCommentsPreview } from "@/features/comments/CommentsProvider";
 import { postRemoteComment } from "@/features/comments/remote-comment-submit";
 import { fetchRemoteComments } from "@/features/comments/remote-comments";
-import { buildRemoteFeedback } from "@/features/remote/remote-feedback";
 import { supabaseConfig } from "@/services/supabase/client";
 import { buildCommunityTabSubtitle } from "@/features/tabs/main-tab-copy";
-import { colors, spacing, typography } from "@/theme/tokens";
+import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
 
 export default function CommunityScreen() {
   const { session } = useSessionPreview();
@@ -23,7 +21,7 @@ export default function CommunityScreen() {
   const canComment = session.status === "signed_in" || supabaseSession.status === "authenticated";
   const hasRemoteSession = supabaseSession.status === "authenticated";
   const [draft, setDraft] = useState("");
-  const [submitMessage, setSubmitMessage] = useState("Nenhum envio remoto nesta sessao.");
+  const [submitMessage, setSubmitMessage] = useState("Sua partilha pode inspirar outros musicos.");
   const [remoteState, setRemoteState] = useState<Awaited<ReturnType<typeof fetchRemoteComments>>>({
     comments: [],
     message: "Carregando comentarios remotos.",
@@ -32,13 +30,6 @@ export default function CommunityScreen() {
   const canSubmit = canComment && draft.trim().length > 0;
   const feedSource = useMemo(() => resolveCommentFeedSource(remoteState, comments), [comments, remoteState]);
   const communityAccess = buildCommunityAccess({ canComment, hasRemoteSession });
-  const remoteFeedback = buildRemoteFeedback({
-    emptyLabel: "Nenhum comentario remoto publicado ainda.",
-    itemCount: remoteState.comments.length,
-    readyLabel: "comentarios remotos prontos",
-    status: remoteState.status,
-    statusMessage: remoteState.message,
-  });
 
   useEffect(() => {
     let isMounted = true;
@@ -85,9 +76,9 @@ export default function CommunityScreen() {
       >
         <Text style={styles.panelTitle}>{communityAccess.title}</Text>
         <Text style={styles.panelText}>{communityAccess.helperText}</Text>
-        <Text style={styles.panelText}>{remoteFeedback.detail}</Text>
-        <Text style={styles.panelText}>{feedSource.message}</Text>
-        <Text style={styles.panelText}>{submitMessage}</Text>
+        <Text style={styles.panelText}>
+          {canComment ? submitMessage : "Entre para guardar favoritos, comentar e acompanhar novas partilhas."}
+        </Text>
         {!canComment ? (
           <Link asChild href="/entrar">
             <Pressable style={[styles.button, styles.buttonAccent]}>
@@ -97,10 +88,8 @@ export default function CommunityScreen() {
         ) : null}
       </View>
 
-      <RemoteCommentsCard />
-
       <View style={styles.formCard}>
-        <Text style={styles.panelTitle}>Novo comentario</Text>
+        <Text style={styles.panelTitle}>Nova partilha</Text>
         <TextInput
           editable={canComment}
           multiline
@@ -126,7 +115,7 @@ export default function CommunityScreen() {
                   supabaseSession.accessToken,
                 );
 
-                setSubmitMessage(result.message);
+                setSubmitMessage(result.ok ? "Partilha publicada com sucesso." : result.message);
 
                 if (result.ok) {
                   setDraft("");
@@ -141,7 +130,7 @@ export default function CommunityScreen() {
                   authorName: session.displayName,
                   body: draft,
                 });
-                setSubmitMessage("Comentario salvo apenas no preview local.");
+                setSubmitMessage("Partilha guardada nesta sessao.");
                 setDraft("");
               }
             }}
@@ -170,7 +159,9 @@ export default function CommunityScreen() {
       ) : (
         <View style={styles.comment}>
           <Text style={styles.commentAuthor}>Partilha inicial</Text>
-          <Text style={styles.commentText}>Ainda sem comentarios publicados. Assim que primeira partilha entrar, ela aparecera aqui.</Text>
+          <Text style={styles.commentText}>
+            Ainda sem comentarios publicados. Assim que primeira partilha entrar, ela aparecera aqui.
+          </Text>
         </View>
       )}
     </ScrollView>
@@ -182,10 +173,10 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     backgroundColor: colors.olive,
     borderColor: colors.olive,
-    borderRadius: 8,
+    borderRadius: radii.pill,
     borderWidth: 1,
     marginTop: spacing.sm,
-    paddingHorizontal: spacing.md,
+    paddingHorizontal: spacing.lg,
     paddingVertical: spacing.sm,
   },
   buttonDisabled: {
@@ -198,6 +189,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: colors.background,
+    fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "700",
   },
@@ -207,20 +199,27 @@ const styles = StyleSheet.create({
   comment: {
     backgroundColor: colors.surface,
     borderColor: colors.border,
-    borderRadius: 8,
+    borderRadius: radii.xl,
     borderWidth: 1,
     gap: spacing.xs,
-    padding: spacing.md,
+    padding: spacing.lg,
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.06,
+    shadowRadius: 16,
   },
   commentAuthor: {
     color: colors.textPrimary,
+    fontFamily: fontFamilies.display,
     fontSize: typography.caption,
-    fontWeight: "800",
+    fontStyle: "italic",
+    fontWeight: "700",
   },
   commentText: {
     color: colors.textSecondary,
-    fontSize: typography.caption,
-    lineHeight: 18,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.body,
+    lineHeight: 24,
   },
   container: {
     backgroundColor: colors.background,
@@ -230,18 +229,20 @@ const styles = StyleSheet.create({
   },
   formCard: {
     backgroundColor: colors.surface,
-    borderColor: colors.border,
-    borderRadius: 8,
+    borderColor: colors.borderStrong,
+    borderRadius: radii.xl,
     borderWidth: 1,
     gap: spacing.xs,
-    padding: spacing.md,
+    padding: spacing.lg,
   },
   input: {
+    backgroundColor: colors.surfaceMuted,
     borderColor: colors.border,
-    borderRadius: 8,
+    borderRadius: radii.lg,
     borderWidth: 1,
     color: colors.textPrimary,
-    fontSize: typography.caption,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.body,
     minHeight: 96,
     padding: spacing.md,
     textAlignVertical: "top",
@@ -250,30 +251,34 @@ const styles = StyleSheet.create({
     color: colors.textMuted,
   },
   panel: {
-    borderRadius: 8,
+    borderRadius: radii.xl,
     borderWidth: 1,
     gap: spacing.xs,
-    padding: spacing.md,
+    padding: spacing.lg,
   },
   panelBlocked: {
     backgroundColor: colors.surface,
     borderColor: colors.border,
   },
   panelLocal: {
-    backgroundColor: colors.goldSoft,
-    borderColor: colors.gold,
+    backgroundColor: colors.surfaceMuted,
+    borderColor: colors.borderStrong,
   },
   panelRemote: {
-    backgroundColor: colors.oliveSoft,
-    borderColor: colors.olive,
+    backgroundColor: colors.surface,
+    borderColor: colors.borderStrong,
   },
   panelText: {
     color: colors.textSecondary,
-    fontSize: typography.caption,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.body,
+    lineHeight: 24,
   },
   panelTitle: {
     color: colors.textPrimary,
-    fontSize: typography.body,
-    fontWeight: "800",
+    fontFamily: fontFamilies.display,
+    fontSize: typography.heading,
+    fontStyle: "italic",
+    fontWeight: "700",
   },
 });

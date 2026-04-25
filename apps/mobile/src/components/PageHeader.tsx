@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 
-import { colors, spacing, typography } from "@/theme/tokens";
+import { colors, fontFamilies, spacing, typography } from "@/theme/tokens";
 
 type PageHeaderProps = {
   eyebrow: string;
@@ -21,22 +21,29 @@ export function PageHeader({ eyebrow, title, subtitle }: PageHeaderProps) {
 const styles = StyleSheet.create({
   container: {
     gap: spacing.sm,
+    paddingBottom: spacing.md,
+    borderBottomColor: colors.border,
+    borderBottomWidth: 1,
   },
   eyebrow: {
-    color: colors.accent,
+    color: colors.gold,
+    fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
-    fontWeight: "700",
+    fontWeight: "800",
     textTransform: "uppercase",
   },
   subtitle: {
     color: colors.textSecondary,
-    fontSize: typography.body,
-    lineHeight: 24,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.lead,
+    lineHeight: 28,
   },
   title: {
     color: colors.textPrimary,
+    fontFamily: fontFamilies.display,
     fontSize: typography.title,
-    fontWeight: "800",
-    lineHeight: 38,
+    fontStyle: "italic",
+    fontWeight: "700",
+    lineHeight: 48,
   },
 });

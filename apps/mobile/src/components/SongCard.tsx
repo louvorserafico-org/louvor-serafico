@@ -3,7 +3,7 @@ import { Link } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { useFavorites } from "@/features/favorites/FavoritesProvider";
-import { colors, spacing, typography } from "@/theme/tokens";
+import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
 
 type SongCardProps = {
   song: Song;
@@ -20,13 +20,13 @@ export function SongCard({ song }: SongCardProps) {
         <View style={styles.content}>
           <View style={styles.row}>
             <Text style={styles.title}>{song.title}</Text>
-            {isFavorite ? <Text style={styles.favorite}>Favorito</Text> : null}
+            {isFavorite ? <Text style={styles.favorite}>Guardado</Text> : null}
           </View>
           <Text style={styles.meta}>
-            {hasAssets ? `${song.assets.length} material premium` : "Material pendente"}
+            {hasAssets ? `${song.assets.length} material${song.assets.length > 1 ? "s" : ""} disponivel${song.assets.length > 1 ? "is" : ""}` : "Material em preparacao"}
           </Text>
         </View>
-        <Text style={styles.action}>Abrir</Text>
+        <Text style={styles.action}>Ver canto</Text>
       </Pressable>
     </Link>
   );
@@ -35,18 +35,23 @@ export function SongCard({ song }: SongCardProps) {
 const styles = StyleSheet.create({
   action: {
     color: colors.accent,
-    fontSize: typography.body,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
     fontWeight: "800",
   },
   card: {
     alignItems: "center",
     backgroundColor: colors.surface,
     borderColor: colors.border,
-    borderRadius: 8,
+    borderRadius: radii.lg,
     borderWidth: 1,
     flexDirection: "row",
     gap: spacing.md,
     padding: spacing.md,
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.08,
+    shadowRadius: 18,
   },
   content: {
     flex: 1,
@@ -54,6 +59,7 @@ const styles = StyleSheet.create({
   },
   meta: {
     color: colors.textMuted,
+    fontFamily: fontFamilies.body,
     fontSize: typography.caption,
   },
   pressed: {
@@ -67,11 +73,13 @@ const styles = StyleSheet.create({
   },
   favorite: {
     color: colors.olive,
+    fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "800",
   },
   title: {
     color: colors.textPrimary,
+    fontFamily: fontFamilies.body,
     fontSize: typography.body,
     fontWeight: "800",
   },

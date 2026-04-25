@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 
-import { colors, typography } from "@/theme/tokens";
+import { colors, fontFamilies, radii, typography } from "@/theme/tokens";
 
 type TabIconName = keyof typeof Ionicons.glyphMap;
 
@@ -21,15 +21,20 @@ export default function TabsLayout() {
         tabBarActiveTintColor: colors.accent,
         tabBarInactiveTintColor: colors.textMuted,
         tabBarLabelStyle: {
+          fontFamily: fontFamilies.ui,
           fontSize: typography.tab,
           fontWeight: "700",
         },
         tabBarStyle: {
-          backgroundColor: colors.surface,
+          backgroundColor: colors.tabBackground,
           borderTopColor: colors.border,
-          height: 66,
-          paddingBottom: 8,
-          paddingTop: 8,
+          height: 72,
+          paddingBottom: 10,
+          paddingTop: 10,
+        },
+        tabBarItemStyle: {
+          borderRadius: radii.lg,
+          marginHorizontal: 2,
         },
         tabBarIcon: ({ color, size }) => (
           <Ionicons color={color} name={tabs[route.name] ?? "ellipse-outline"} size={size} />
@@ -39,7 +44,7 @@ export default function TabsLayout() {
       <Tabs.Screen name="index" options={{ title: "Hoje" }} />
       <Tabs.Screen name="calendario" options={{ title: "Calendario" }} />
       <Tabs.Screen name="repertorio" options={{ title: "Repertorio" }} />
-      <Tabs.Screen name="comunidade" options={{ title: "Comunidade" }} />
+      <Tabs.Screen name="comunidade" options={{ title: "Partilha" }} />
       <Tabs.Screen name="perfil" options={{ title: "Perfil" }} />
     </Tabs>
   );

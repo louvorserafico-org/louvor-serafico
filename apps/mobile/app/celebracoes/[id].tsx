@@ -10,7 +10,7 @@ import { SectionTitle } from "@/components/SectionTitle";
 import { buildCelebrationDetailOverview } from "@/features/celebrations/celebration-detail-overview";
 import { fetchRemoteCelebrationDetail } from "@/features/celebrations/remote-celebration-detail";
 import { supabaseConfig } from "@/services/supabase/client";
-import { colors, spacing, typography } from "@/theme/tokens";
+import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
 
 export default function CelebrationDetailScreen() {
   const params = useLocalSearchParams<{ id: string }>();
@@ -20,7 +20,7 @@ export default function CelebrationDetailScreen() {
   );
   const [remoteCelebration, setRemoteCelebration] = useState<typeof localCelebration | null>(null);
   const [sourceMode, setSourceMode] = useState<"local" | "remote">("local");
-  const [subtitle, setSubtitle] = useState(`Identificador: ${params.id ?? localCelebration?.slug ?? "celebracao"}`);
+  const [subtitle, setSubtitle] = useState("Roteiro organizado para acompanhar cada momento da celebracao.");
   const celebration = remoteCelebration ?? localCelebration;
   const momentRows = useMemo(
     () => (celebration ? buildCelebrationMomentRows(celebration) : []),
@@ -48,7 +48,7 @@ export default function CelebrationDetailScreen() {
 
       setRemoteCelebration(result.celebration);
       setSourceMode(result.celebration ? "remote" : "local");
-      setSubtitle(result.message);
+      setSubtitle(result.celebration ? "Roteiro preparado para conduzir a musica da celebracao." : "Roteiro inicial disponivel para consulta e preparacao.");
     });
 
     return () => {
@@ -71,7 +71,7 @@ export default function CelebrationDetailScreen() {
       <PageHeader eyebrow={celebration.dateLabel} subtitle={subtitle} title={celebration.title} />
 
       <View style={[styles.summary, sourceMode === "remote" ? styles.summaryRemote : styles.summaryLocal]}>
-        <Text style={styles.summaryTitle}>{overview.title}</Text>
+        <Text style={styles.summaryTitle}>Roteiro da celebracao</Text>
         <Text style={styles.summaryText}>{overview.helperText}</Text>
       </View>
 
@@ -104,26 +104,30 @@ const styles = StyleSheet.create({
     gap: spacing.md,
   },
   summary: {
-    borderRadius: 8,
+    borderRadius: radii.xl,
     borderWidth: 1,
     gap: spacing.xs,
-    padding: spacing.md,
+    padding: spacing.lg,
   },
   summaryLocal: {
-    backgroundColor: colors.goldSoft,
-    borderColor: colors.gold,
+    backgroundColor: colors.surfaceMuted,
+    borderColor: colors.borderStrong,
   },
   summaryRemote: {
-    backgroundColor: colors.oliveSoft,
-    borderColor: colors.olive,
+    backgroundColor: colors.surface,
+    borderColor: colors.borderStrong,
   },
   summaryText: {
     color: colors.textSecondary,
-    fontSize: typography.caption,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.body,
+    lineHeight: 24,
   },
   summaryTitle: {
     color: colors.textPrimary,
-    fontSize: typography.body,
-    fontWeight: "800",
+    fontFamily: fontFamilies.display,
+    fontSize: typography.heading,
+    fontStyle: "italic",
+    fontWeight: "700",
   },
 });

@@ -1,7 +1,7 @@
 import type { MassMoment } from "@louvor-serafico/shared";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
-import { colors, spacing, typography } from "@/theme/tokens";
+import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
 
 type MomentCardProps = {
   assetCount: number;
@@ -20,7 +20,7 @@ export function MomentCard({ assetCount, moment, onPress, songTitle }: MomentCar
         <Text style={styles.label}>{moment.label}</Text>
         <Text style={styles.song}>{songTitle}</Text>
         <Text style={styles.assets}>
-          {assetCount > 0 ? `${assetCount} material premium` : "Material pendente"}
+          {assetCount > 0 ? `${assetCount} material${assetCount > 1 ? "s" : ""} disponivel${assetCount > 1 ? "is" : ""}` : "Material em preparacao"}
         </Text>
       </View>
     </Root>
@@ -32,36 +32,46 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     backgroundColor: colors.surface,
     borderColor: colors.border,
-    borderRadius: 8,
+    borderRadius: radii.lg,
     borderWidth: 1,
     flexDirection: "row",
     gap: spacing.md,
     padding: spacing.md,
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.08,
+    shadowRadius: 18,
   },
   content: {
     flex: 1,
     gap: spacing.xs,
   },
   label: {
-    color: colors.textSecondary,
+    color: colors.accent,
+    fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
-    fontWeight: "700",
+    fontWeight: "800",
+    textTransform: "uppercase",
   },
   assets: {
     color: colors.textMuted,
+    fontFamily: fontFamilies.body,
     fontSize: typography.caption,
   },
   order: {
     color: colors.gold,
-    fontSize: typography.body,
-    fontWeight: "800",
-    minWidth: 20,
+    fontFamily: fontFamilies.display,
+    fontSize: typography.heading,
+    fontStyle: "italic",
+    fontWeight: "700",
+    minWidth: 28,
   },
   pressed: {
     opacity: 0.82,
   },
   song: {
     color: colors.textPrimary,
+    fontFamily: fontFamilies.body,
     fontSize: typography.body,
     fontWeight: "700",
   },

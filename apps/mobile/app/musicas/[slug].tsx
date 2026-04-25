@@ -15,7 +15,7 @@ import { resolveSongAssetAction } from "@/features/songs/song-asset-action";
 import { resolveAssetAccess } from "@/features/subscription/premium-access";
 import { useSubscriptionPreview } from "@/features/subscription/SubscriptionPreviewProvider";
 import { supabaseConfig } from "@/services/supabase/client";
-import { colors, spacing, typography } from "@/theme/tokens";
+import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
 
 export default function SongDetailScreen() {
   const params = useLocalSearchParams<{ slug: string }>();
@@ -23,14 +23,14 @@ export default function SongDetailScreen() {
   const [remoteSong, setRemoteSong] = useState<typeof localSong | null>(null);
   const [assetMessages, setAssetMessages] = useState<Record<string, string>>({});
   const [sourceMode, setSourceMode] = useState<"local" | "remote">("local");
-  const [subtitle, setSubtitle] = useState("Detalhe inicial com materiais cadastrados no mock local.");
+  const [subtitle, setSubtitle] = useState("Um canto preparado para servir a celebracao com beleza e ordem.");
   const song = remoteSong ?? localSong;
   const { session } = useSessionPreview();
   const { session: supabaseSession } = useSupabaseSession();
-  const { isFavoriteSong, sourceMessage, toggleSongFavorite } = useFavorites();
+  const { isFavoriteSong, toggleSongFavorite } = useFavorites();
   const { hasActiveSubscription } = useSubscriptionPreview();
   const canFavorite = session.status === "signed_in" || supabaseSession.status === "authenticated";
-  const isAuthenticated = session.status === "signed_in" || supabaseSession.status === "authenticated";
+  const isAuthenticated = canFavorite;
 
   useEffect(() => {
     let active = true;
@@ -47,7 +47,7 @@ export default function SongDetailScreen() {
 
       setRemoteSong(result.song ?? null);
       setSourceMode(result.song ? "remote" : "local");
-      setSubtitle(result.message);
+      setSubtitle(result.song ? "Materiais prontos para acompanhar seu estudo e preparo." : "Detalhe inicial disponivel para consulta e estudo.");
     });
 
     return () => {
@@ -62,7 +62,7 @@ export default function SongDetailScreen() {
         <PageHeader
           eyebrow="Nao encontrada"
           title="Canto indisponivel"
-          subtitle="Este canto ainda nao existe no catalogo local."
+          subtitle="Este canto ainda nao esta disponivel no acervo."
         />
       </ScrollView>
     );
@@ -78,40 +78,37 @@ export default function SongDetailScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Stack.Screen options={{ headerShown: true, title: "Musica" }} />
-      <PageHeader
-        eyebrow="Canto sacro"
-        title={song.title}
-        subtitle={subtitle}
-      />
+      <PageHeader eyebrow="Canto sacro" title={song.title} subtitle={subtitle} />
 
       <View style={[styles.summary, sourceMode === "remote" ? styles.summaryRemote : styles.summaryLocal]}>
-        <Text style={styles.summaryTitle}>{overview.title}</Text>
+        <Text style={styles.summaryTitle}>Materiais do canto</Text>
         <Text style={styles.summaryText}>{overview.helperText}</Text>
       </View>
 
       <SectionTitle title="Materiais" />
 
       <View style={[styles.favoriteCard, canFavorite ? styles.favoriteReady : styles.favoriteBlocked]}>
-        <Text style={styles.assetTitle}>{canFavorite ? "Favoritos liberados" : "Favoritos bloqueados"}</Text>
+        <Text style={styles.assetTitle}>{canFavorite ? "Guardar entre favoritos" : "Entre para guardar este canto"}</Text>
         <Text style={styles.assetMeta}>
-          {supabaseSession.status === "authenticated"
-            ? "Sessao Supabase ativa. Favorito remoto liberado."
-            : canFavorite
-            ? "Sessao teste ativa. Favorito local liberado."
-            : "Ative sessao teste em Perfil para liberar fluxo protegido."}
+          {canFavorite
+            ? "Mantenha este canto por perto para voltar a ele sempre que precisar."
+            : "Com sua conta ativa, seus cantos preferidos ficam sempre mais proximos."}
         </Text>
-        <Text style={styles.assetPath}>{sourceMessage}</Text>
-        <Pressable
-          disabled={!canFavorite}
-          onPress={() => {
-            void toggleSongFavorite(song.id);
-          }}
-          style={[styles.favoriteButton, !canFavorite ? styles.favoriteButtonDisabled : undefined]}
-        >
-          <Text style={[styles.favoriteButtonText, !canFavorite ? styles.favoriteButtonTextDisabled : undefined]}>
-            {canFavorite ? (isFavorite ? "Remover dos favoritos" : "Salvar nos favoritos") : "Sessao necessaria"}
-          </Text>
-        </Pressable>
+        <Link asChild href={canFavorite ? `/musicas/${song.slug}` : "/entrar"}>
+          <Pressable
+            disabled={!canFavorite}
+            onPress={() => {
+              if (canFavorite) {
+                void toggleSongFavorite(song.id);
+              }
+            }}
+            style={[styles.favoriteButton, !canFavorite ? styles.favoriteButtonSecondary : undefined]}
+          >
+            <Text style={[styles.favoriteButtonText, !canFavorite ? styles.favoriteButtonTextSecondary : undefined]}>
+              {canFavorite ? (isFavorite ? "Remover dos favoritos" : "Guardar favorito") : "Entrar na conta"}
+            </Text>
+          </Pressable>
+        </Link>
       </View>
 
       <View style={styles.list}>
@@ -128,8 +125,10 @@ export default function SongDetailScreen() {
               <View key={asset.id} style={styles.asset}>
                 <Text style={styles.assetTitle}>{asset.title}</Text>
                 <Text style={styles.assetMeta}>{access.label}</Text>
-                <Text style={styles.assetPath}>{access.canAccess ? asset.path : access.message}</Text>
-                <Text style={styles.assetPath}>{assetMessages[asset.id]}</Text>
+                <Text style={styles.assetPath}>
+                  {access.canAccess ? "Disponivel para abrir agora." : access.message}
+                </Text>
+                {assetMessages[asset.id] ? <Text style={styles.assetPath}>{assetMessages[asset.id]}</Text> : null}
                 {action.kind === "open" ? (
                   <Pressable
                     onPress={() => {
@@ -179,24 +178,20 @@ const styles = StyleSheet.create({
   asset: {
     backgroundColor: colors.surface,
     borderColor: colors.border,
-    borderRadius: 8,
+    borderRadius: radii.xl,
     borderWidth: 1,
     gap: spacing.xs,
-    padding: spacing.md,
+    padding: spacing.lg,
   },
   assetButton: {
     alignSelf: "flex-start",
     backgroundColor: colors.accent,
     borderColor: colors.accent,
-    borderRadius: 8,
+    borderRadius: radii.pill,
     borderWidth: 1,
     marginTop: spacing.sm,
-    paddingHorizontal: spacing.md,
+    paddingHorizontal: spacing.lg,
     paddingVertical: spacing.sm,
-  },
-  assetButtonDisabled: {
-    backgroundColor: colors.surface,
-    borderColor: colors.border,
   },
   assetButtonSecondary: {
     backgroundColor: colors.surface,
@@ -204,28 +199,30 @@ const styles = StyleSheet.create({
   },
   assetButtonText: {
     color: colors.background,
+    fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "700",
-  },
-  assetButtonTextDisabled: {
-    color: colors.textMuted,
   },
   assetButtonTextSecondary: {
     color: colors.accent,
   },
   assetMeta: {
     color: colors.accent,
+    fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "800",
   },
   assetPath: {
     color: colors.textMuted,
+    fontFamily: fontFamilies.body,
     fontSize: typography.caption,
   },
   assetTitle: {
     color: colors.textPrimary,
-    fontSize: typography.body,
-    fontWeight: "800",
+    fontFamily: fontFamilies.display,
+    fontSize: typography.heading,
+    fontStyle: "italic",
+    fontWeight: "700",
   },
   container: {
     backgroundColor: colors.background,
@@ -241,29 +238,30 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     backgroundColor: colors.olive,
     borderColor: colors.olive,
-    borderRadius: 8,
+    borderRadius: radii.pill,
     borderWidth: 1,
     marginTop: spacing.sm,
-    paddingHorizontal: spacing.md,
+    paddingHorizontal: spacing.lg,
     paddingVertical: spacing.sm,
   },
-  favoriteButtonDisabled: {
+  favoriteButtonSecondary: {
     backgroundColor: colors.surface,
-    borderColor: colors.border,
+    borderColor: colors.accent,
   },
   favoriteButtonText: {
     color: colors.background,
+    fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "700",
   },
-  favoriteButtonTextDisabled: {
-    color: colors.textMuted,
+  favoriteButtonTextSecondary: {
+    color: colors.accent,
   },
   favoriteCard: {
-    borderRadius: 8,
+    borderRadius: radii.xl,
     borderWidth: 1,
     gap: spacing.xs,
-    padding: spacing.md,
+    padding: spacing.lg,
   },
   favoriteReady: {
     backgroundColor: colors.oliveSoft,
@@ -273,26 +271,30 @@ const styles = StyleSheet.create({
     gap: spacing.md,
   },
   summary: {
-    borderRadius: 8,
+    borderRadius: radii.xl,
     borderWidth: 1,
     gap: spacing.xs,
-    padding: spacing.md,
+    padding: spacing.lg,
   },
   summaryLocal: {
-    backgroundColor: colors.surface,
-    borderColor: colors.border,
+    backgroundColor: colors.surfaceMuted,
+    borderColor: colors.borderStrong,
   },
   summaryRemote: {
-    backgroundColor: colors.goldSoft,
-    borderColor: colors.accent,
+    backgroundColor: colors.surface,
+    borderColor: colors.borderStrong,
   },
   summaryText: {
-    color: colors.textMuted,
-    fontSize: typography.caption,
+    color: colors.textSecondary,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.body,
+    lineHeight: 24,
   },
   summaryTitle: {
     color: colors.textPrimary,
-    fontSize: typography.body,
-    fontWeight: "800",
+    fontFamily: fontFamilies.display,
+    fontSize: typography.heading,
+    fontStyle: "italic",
+    fontWeight: "700",
   },
 });

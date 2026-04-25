@@ -11,7 +11,7 @@ import {
   type RegistrationForm,
 } from "@/features/auth/credentials-auth";
 import { supabase } from "@/services/supabase/client";
-import { colors, spacing, typography } from "@/theme/tokens";
+import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
 
 type AuthMode = "login" | "register";
 
@@ -47,7 +47,7 @@ export default function SignInScreen() {
       <PageHeader
         eyebrow="Conta"
         title={mode === "login" ? "Entrar" : "Criar conta"}
-        subtitle="Use email e senha para testar o fluxo real no Supabase Auth."
+        subtitle="Aproxime-se do seu acervo, da sua partilha e do repertorio completo."
       />
 
       <View style={styles.switchRow}>
@@ -62,18 +62,18 @@ export default function SignInScreen() {
 
       {mode === "login" ? (
         <View style={styles.formCard}>
-          <Text style={styles.cardTitle}>Login</Text>
+          <Text style={styles.cardTitle}>Entrar</Text>
           <AuthInput
             autoComplete="email"
             keyboardType="email-address"
             onChangeText={setLoginEmail}
-            placeholder="email"
+            placeholder="Seu email"
             value={loginEmail}
           />
           <AuthInput
             autoComplete="password"
             onChangeText={setLoginPassword}
-            placeholder="senha"
+            placeholder="Sua senha"
             secureTextEntry
             value={loginPassword}
           />
@@ -107,24 +107,24 @@ export default function SignInScreen() {
         </View>
       ) : (
         <View style={styles.formCard}>
-          <Text style={styles.cardTitle}>Cadastro</Text>
+          <Text style={styles.cardTitle}>Nova conta</Text>
           <AuthInput
             autoComplete="name"
             onChangeText={(value) => updateRegistration("fullName", value)}
-            placeholder="nome completo"
+            placeholder="Nome completo"
             value={registration.fullName}
           />
           <AuthInput
             autoComplete="email"
             keyboardType="email-address"
             onChangeText={(value) => updateRegistration("email", value)}
-            placeholder="email"
+            placeholder="Seu email"
             value={registration.email}
           />
           <AuthInput
             autoComplete="password-new"
             onChangeText={(value) => updateRegistration("password", value)}
-            placeholder="senha com 8+ caracteres"
+            placeholder="Crie uma senha com 8 ou mais caracteres"
             secureTextEntry
             value={registration.password}
           />
@@ -132,30 +132,30 @@ export default function SignInScreen() {
             autoComplete="tel"
             keyboardType="phone-pad"
             onChangeText={(value) => updateRegistration("phone", value)}
-            placeholder="telefone"
+            placeholder="Telefone"
             value={registration.phone}
           />
           <View style={styles.inlineFields}>
             <AuthInput
               autoCapitalize="characters"
               onChangeText={(value) => updateRegistration("state", value)}
-              placeholder="estado"
+              placeholder="Estado"
               value={registration.state}
             />
             <AuthInput
               onChangeText={(value) => updateRegistration("city", value)}
-              placeholder="cidade"
+              placeholder="Cidade"
               value={registration.city}
             />
           </View>
           <AuthInput
             onChangeText={(value) => updateRegistration("parish", value)}
-            placeholder="paroquia opcional"
+            placeholder="Paroquia (opcional)"
             value={registration.parish}
           />
           <AuthInput
             onChangeText={(value) => updateRegistration("ministry", value)}
-            placeholder="pastoral ou banda opcional"
+            placeholder="Pastoral ou banda (opcional)"
             value={registration.ministry}
           />
           <SubmitButton
@@ -178,9 +178,9 @@ export default function SignInScreen() {
       ) : null}
 
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>Dados usados</Text>
+        <Text style={styles.cardTitle}>Seus dados</Text>
         <Text style={styles.cardText}>
-          Nome, email, telefone, estado e cidade entram no cadastro. Paroquia e pastoral ou banda ficam opcionais.
+          Nome, email, telefone, estado e cidade ajudam a cuidar melhor da sua experiencia. Paroquia e pastoral podem ser adicionadas livremente.
         </Text>
       </View>
     </ScrollView>
@@ -226,12 +226,12 @@ function AuthInput(props: ComponentProps<typeof TextInput>) {
 const styles = StyleSheet.create({
   button: {
     alignSelf: "flex-start",
-    backgroundColor: colors.olive,
-    borderColor: colors.olive,
-    borderRadius: 8,
+    backgroundColor: colors.accent,
+    borderColor: colors.accent,
+    borderRadius: radii.pill,
     borderWidth: 1,
     marginTop: spacing.sm,
-    paddingHorizontal: spacing.md,
+    paddingHorizontal: spacing.lg,
     paddingVertical: spacing.sm,
   },
   buttonDisabled: {
@@ -240,6 +240,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: colors.background,
+    fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "700",
   },
@@ -249,20 +250,27 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: colors.surface,
     borderColor: colors.border,
-    borderRadius: 8,
+    borderRadius: radii.xl,
     borderWidth: 1,
     gap: spacing.xs,
-    padding: spacing.md,
+    padding: spacing.lg,
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.06,
+    shadowRadius: 16,
   },
   cardText: {
     color: colors.textSecondary,
+    fontFamily: fontFamilies.body,
     fontSize: typography.caption,
     lineHeight: 18,
   },
   cardTitle: {
     color: colors.textPrimary,
+    fontFamily: fontFamilies.display,
     fontSize: typography.body,
-    fontWeight: "800",
+    fontStyle: "italic",
+    fontWeight: "700",
   },
   container: {
     backgroundColor: colors.background,
@@ -276,38 +284,45 @@ const styles = StyleSheet.create({
   },
   formCard: {
     backgroundColor: colors.surface,
-    borderColor: colors.border,
-    borderRadius: 8,
+    borderColor: colors.borderStrong,
+    borderRadius: radii.xl,
     borderWidth: 1,
     gap: spacing.sm,
-    padding: spacing.md,
+    padding: spacing.lg,
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.06,
+    shadowRadius: 16,
   },
   inlineFields: {
     flexDirection: "row",
     gap: spacing.sm,
   },
   input: {
+    backgroundColor: colors.surfaceMuted,
     borderColor: colors.border,
-    borderRadius: 8,
+    borderRadius: radii.lg,
     borderWidth: 1,
     color: colors.textPrimary,
     flex: 1,
+    fontFamily: fontFamilies.body,
     fontSize: typography.caption,
     padding: spacing.md,
   },
   modeButton: {
     borderColor: colors.border,
-    borderRadius: 8,
+    borderRadius: radii.pill,
     borderWidth: 1,
     flex: 1,
-    padding: spacing.sm,
+    padding: spacing.md,
   },
   modeButtonActive: {
-    backgroundColor: colors.olive,
-    borderColor: colors.olive,
+    backgroundColor: colors.accent,
+    borderColor: colors.accent,
   },
   modeButtonText: {
     color: colors.textSecondary,
+    fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "800",
     textAlign: "center",
@@ -316,12 +331,13 @@ const styles = StyleSheet.create({
     color: colors.background,
   },
   resultCard: {
-    borderRadius: 8,
+    borderRadius: radii.xl,
     borderWidth: 1,
-    padding: spacing.md,
+    padding: spacing.lg,
   },
   resultText: {
     color: colors.textPrimary,
+    fontFamily: fontFamilies.body,
     fontSize: typography.caption,
   },
   secondaryAction: {
@@ -330,6 +346,7 @@ const styles = StyleSheet.create({
   },
   secondaryActionText: {
     color: colors.accent,
+    fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "800",
   },
@@ -338,28 +355,35 @@ const styles = StyleSheet.create({
     borderColor: colors.olive,
   },
   summaryCard: {
-    borderRadius: 8,
+    borderRadius: radii.xl,
     borderWidth: 1,
     gap: spacing.xs,
-    padding: spacing.md,
+    padding: spacing.lg,
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.06,
+    shadowRadius: 16,
   },
   summaryLogin: {
-    backgroundColor: colors.surface,
-    borderColor: colors.border,
+    backgroundColor: colors.surfaceMuted,
+    borderColor: colors.borderStrong,
   },
   summaryRegister: {
-    backgroundColor: colors.goldSoft,
-    borderColor: colors.gold,
+    backgroundColor: colors.surface,
+    borderColor: colors.borderStrong,
   },
   summaryText: {
     color: colors.textSecondary,
-    fontSize: typography.caption,
-    lineHeight: 18,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.body,
+    lineHeight: 24,
   },
   summaryTitle: {
     color: colors.textPrimary,
-    fontSize: typography.body,
-    fontWeight: "800",
+    fontFamily: fontFamilies.display,
+    fontSize: typography.heading,
+    fontStyle: "italic",
+    fontWeight: "700",
   },
   switchRow: {
     flexDirection: "row",

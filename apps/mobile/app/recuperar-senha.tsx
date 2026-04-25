@@ -6,7 +6,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { buildPasswordRecoveryOverview } from "@/features/auth/password-recovery-overview";
 import { updatePasswordFromRecovery } from "@/features/auth/password-reset";
 import { supabase } from "@/services/supabase/client";
-import { colors, spacing, typography } from "@/theme/tokens";
+import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
 
 export default function PasswordRecoveryScreen() {
   const [password, setPassword] = useState("");
@@ -20,7 +20,7 @@ export default function PasswordRecoveryScreen() {
       <PageHeader
         eyebrow="Conta"
         title="Redefinir senha"
-        subtitle="Digite uma nova senha depois de abrir o link enviado por email."
+        subtitle="Renove seu acesso com serenidade e volte ao app com tudo em ordem."
       />
 
       <View style={styles.summaryCard}>
@@ -33,14 +33,14 @@ export default function PasswordRecoveryScreen() {
         <PasswordInput
           autoComplete="password-new"
           onChangeText={setPassword}
-          placeholder="nova senha"
+          placeholder="Nova senha"
           secureTextEntry
           value={password}
         />
         <PasswordInput
           autoComplete="password-new"
           onChangeText={setPasswordConfirmation}
-          placeholder="confirmar nova senha"
+          placeholder="Confirme a nova senha"
           secureTextEntry
           value={passwordConfirmation}
         />
@@ -75,7 +75,7 @@ export default function PasswordRecoveryScreen() {
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Link necessario</Text>
         <Text style={styles.cardText}>
-          Esta tela precisa ser aberta pelo email de recuperacao para receber uma sessao valida do Supabase.
+          Abra esta tela a partir do email de recuperacao para concluir a troca da senha sem interrupcoes.
         </Text>
       </View>
     </ScrollView>
@@ -96,12 +96,12 @@ function PasswordInput(props: ComponentProps<typeof TextInput>) {
 const styles = StyleSheet.create({
   button: {
     alignSelf: "flex-start",
-    backgroundColor: colors.olive,
-    borderColor: colors.olive,
-    borderRadius: 8,
+    backgroundColor: colors.accent,
+    borderColor: colors.accent,
+    borderRadius: radii.pill,
     borderWidth: 1,
     marginTop: spacing.sm,
-    paddingHorizontal: spacing.md,
+    paddingHorizontal: spacing.lg,
     paddingVertical: spacing.sm,
   },
   buttonDisabled: {
@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: colors.background,
+    fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "700",
   },
@@ -119,20 +120,23 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: colors.surface,
     borderColor: colors.border,
-    borderRadius: 8,
+    borderRadius: radii.xl,
     borderWidth: 1,
     gap: spacing.xs,
-    padding: spacing.md,
+    padding: spacing.lg,
   },
   cardText: {
     color: colors.textSecondary,
+    fontFamily: fontFamilies.body,
     fontSize: typography.caption,
     lineHeight: 18,
   },
   cardTitle: {
     color: colors.textPrimary,
+    fontFamily: fontFamilies.display,
     fontSize: typography.body,
-    fontWeight: "800",
+    fontStyle: "italic",
+    fontWeight: "700",
   },
   container: {
     backgroundColor: colors.background,
@@ -146,28 +150,31 @@ const styles = StyleSheet.create({
   },
   formCard: {
     backgroundColor: colors.surface,
-    borderColor: colors.border,
-    borderRadius: 8,
+    borderColor: colors.borderStrong,
+    borderRadius: radii.xl,
     borderWidth: 1,
     gap: spacing.sm,
-    padding: spacing.md,
+    padding: spacing.lg,
   },
   input: {
+    backgroundColor: colors.surfaceMuted,
     borderColor: colors.border,
-    borderRadius: 8,
+    borderRadius: radii.lg,
     borderWidth: 1,
     color: colors.textPrimary,
+    fontFamily: fontFamilies.body,
     fontSize: typography.caption,
     padding: spacing.md,
   },
   resultCard: {
-    borderRadius: 8,
+    borderRadius: radii.xl,
     borderWidth: 1,
     gap: spacing.xs,
-    padding: spacing.md,
+    padding: spacing.lg,
   },
   resultText: {
     color: colors.textPrimary,
+    fontFamily: fontFamilies.body,
     fontSize: typography.caption,
   },
   secondaryAction: {
@@ -176,6 +183,7 @@ const styles = StyleSheet.create({
   },
   secondaryActionText: {
     color: colors.accent,
+    fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "800",
   },
@@ -184,21 +192,24 @@ const styles = StyleSheet.create({
     borderColor: colors.olive,
   },
   summaryCard: {
-    backgroundColor: colors.goldSoft,
-    borderColor: colors.gold,
-    borderRadius: 8,
+    backgroundColor: colors.surface,
+    borderColor: colors.borderStrong,
+    borderRadius: radii.xl,
     borderWidth: 1,
     gap: spacing.xs,
-    padding: spacing.md,
+    padding: spacing.lg,
   },
   summaryText: {
     color: colors.textSecondary,
-    fontSize: typography.caption,
-    lineHeight: 18,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.body,
+    lineHeight: 24,
   },
   summaryTitle: {
     color: colors.textPrimary,
-    fontSize: typography.body,
-    fontWeight: "800",
+    fontFamily: fontFamilies.display,
+    fontSize: typography.heading,
+    fontStyle: "italic",
+    fontWeight: "700",
   },
 });

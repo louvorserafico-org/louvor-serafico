@@ -2,7 +2,7 @@ import type { Celebration } from "@louvor-serafico/shared";
 import { Link } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
-import { colors, spacing, typography } from "@/theme/tokens";
+import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
 
 type CelebrationCardProps = {
   celebration: Celebration;
@@ -17,7 +17,7 @@ export function CelebrationCard({ celebration }: CelebrationCardProps) {
           <Text style={styles.title}>{celebration.title}</Text>
           <Text style={styles.meta}>{celebration.recommendations.length} cantos sugeridos</Text>
         </View>
-        <Text style={styles.action}>Abrir</Text>
+        <Text style={styles.action}>Ver roteiro</Text>
       </Pressable>
     </Link>
   );
@@ -26,31 +26,38 @@ export function CelebrationCard({ celebration }: CelebrationCardProps) {
 const styles = StyleSheet.create({
   action: {
     color: colors.accent,
-    fontSize: typography.body,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
     fontWeight: "800",
   },
   card: {
     alignItems: "center",
     backgroundColor: colors.surface,
     borderColor: colors.border,
-    borderRadius: 8,
+    borderRadius: radii.lg,
     borderWidth: 1,
     flexDirection: "row",
     gap: spacing.md,
     padding: spacing.md,
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.08,
+    shadowRadius: 18,
   },
   content: {
     flex: 1,
     gap: spacing.xs,
   },
   date: {
-    color: colors.accent,
+    color: colors.gold,
+    fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "800",
     textTransform: "uppercase",
   },
   meta: {
     color: colors.textMuted,
+    fontFamily: fontFamilies.body,
     fontSize: typography.caption,
   },
   pressed: {
@@ -58,6 +65,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.textPrimary,
+    fontFamily: fontFamilies.body,
     fontSize: typography.body,
     fontWeight: "800",
   },
