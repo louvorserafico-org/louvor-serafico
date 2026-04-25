@@ -5,12 +5,14 @@ import {
   getLiturgicalMonthDays2026,
   getLiturgicalMonthLabel,
 } from "@louvor-serafico/shared";
+import { router } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { CelebrationCard } from "@/components/CelebrationCard";
 import { PageHeader } from "@/components/PageHeader";
 import { SectionTitle } from "@/components/SectionTitle";
+import { buildCalendarDayRoute } from "@/features/celebrations/calendar-day-route";
 import { buildCalendarMonthView } from "@/features/celebrations/calendar-month-view";
 import { buildCalendarOverview } from "@/features/celebrations/calendar-overview";
 import { resolveCelebrationCatalogSource } from "@/features/celebrations/celebration-catalog-source";
@@ -127,10 +129,14 @@ export default function CalendarScreen() {
           ))}
 
           {monthView.monthDays.map((day) => (
-            <View
+            <Pressable
+              accessibilityLabel={`${day.title} em ${day.dateLabel}`}
+              accessibilityRole="button"
               key={day.monthDay}
+              onPress={() => router.push(buildCalendarDayRoute(day))}
               style={[
                 styles.dayCell,
+                styles.dayCellPressable,
                 day.kind === "has_repertoire" ? styles.dayCellRepertoire : undefined,
                 day.kind === "liturgical_day_without_repertoire" ? styles.dayCellLiturgical : undefined,
                 day.monthDay === today.monthDay ? styles.dayCellToday : undefined,
@@ -146,7 +152,7 @@ export default function CalendarScreen() {
               >
                 {day.dayNumber}
               </Text>
-            </View>
+            </Pressable>
           ))}
         </View>
 
@@ -171,7 +177,13 @@ export default function CalendarScreen() {
       <View style={styles.markedList}>
         {monthView.markedDays.length > 0 ? (
           monthView.markedDays.map((day) => (
-            <View key={day.monthDay} style={styles.markedCard}>
+            <Pressable
+              accessibilityLabel={`${day.title} em ${day.dateLabel}`}
+              accessibilityRole="button"
+              key={day.monthDay}
+              onPress={() => router.push(buildCalendarDayRoute(day))}
+              style={({ pressed }) => [styles.markedCard, pressed ? styles.cardPressed : undefined]}
+            >
               <Text style={styles.markedEyebrow}>{day.dateLabel}</Text>
               <Text style={styles.markedTitle}>{day.title}</Text>
               <Text style={styles.markedText}>
@@ -179,7 +191,7 @@ export default function CalendarScreen() {
                   ? "Roteiro musical disponível para consulta."
                   : "Data litúrgica registrada. Repertório ainda não publicado."}
               </Text>
-            </View>
+            </Pressable>
           ))
         ) : (
           <View style={styles.emptyCard}>
@@ -206,6 +218,9 @@ export default function CalendarScreen() {
 }
 
 const styles = StyleSheet.create({
+  cardPressed: {
+    opacity: 0.82,
+  },
   container: {
     backgroundColor: colors.background,
     gap: spacing.lg,
@@ -225,6 +240,9 @@ const styles = StyleSheet.create({
   dayCellEmpty: {
     borderColor: "transparent",
     opacity: 0,
+  },
+  dayCellPressable: {
+    overflow: "hidden",
   },
   dayCellLiturgical: {
     backgroundColor: colors.surfaceMuted,

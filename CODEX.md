@@ -248,6 +248,88 @@ Uma etapa so e considerada pronta quando:
 
 ## Historico De Etapas
 
+### Etapa 78 - Home sem repertorio com proximo passo claro
+
+Status: concluida em 2026-04-25.
+
+Entregue:
+
+- Home passou a distinguir entre dia comum sem roteiro e data liturgica sem
+  repertorio publicado.
+- Regra nova passou a selecionar os proximos dias preparados a partir do ponto
+  atual do ano; quando nao houver proximos, a Home mostra os dias ja
+  publicados.
+- Foram adicionados testes especificos para a copy e para a selecao dos dias
+  preparados.
+
+Arquivos principais:
+
+- `apps/mobile/src/features/home/home-summary.ts`
+- `apps/mobile/src/features/home/home-summary.test.ts`
+- `apps/mobile/src/features/home/home-prepared-days.ts`
+- `apps/mobile/src/features/home/home-prepared-days.test.ts`
+- `apps/mobile/app/(tabs)/index.tsx`
+
+Validacao:
+
+- `corepack pnpm test`
+- `corepack pnpm --filter @louvor-serafico/mobile typecheck`
+
+### Etapa 79 - Calendario mensal navegavel em 2026
+
+Status: concluida em 2026-04-25.
+
+Entregue:
+
+- A tab `Calendario` deixou de ficar presa ao mes atual e passou a navegar por
+  todos os meses de 2026.
+- Grade, datas marcadas e roteiros seguem o mes selecionado.
+- Meses sem datas marcadas e meses sem roteiros publicados agora possuem
+  estados vazios proprios.
+- A regra do mes selecionado foi isolada em arquivo proprio com teste dedicado.
+
+Arquivos principais:
+
+- `apps/mobile/src/features/celebrations/calendar-month-view.ts`
+- `apps/mobile/src/features/celebrations/calendar-month-view.test.ts`
+- `apps/mobile/app/(tabs)/calendario.tsx`
+- `package.json`
+
+Validacao:
+
+- `corepack pnpm test`
+- `corepack pnpm --filter @louvor-serafico/mobile typecheck`
+- `corepack pnpm lint`
+- `git diff --check`
+
+### Etapa 80 - Dias do calendario com navegação para detalhe
+
+Status: concluida em 2026-04-25.
+
+Entregue:
+
+- Os dias da grade mensal passaram a ser clicaveis.
+- As datas marcadas do mes tambem passaram a abrir o detalhe correto.
+- A navegacao agora distingue automaticamente entre:
+  - celebracao com roteiro, usando `slug`
+  - data liturgica sem repertorio, usando `monthDay`
+  - dia comum, usando `monthDay`
+- A regra de rota foi isolada e coberta por teste.
+
+Arquivos principais:
+
+- `apps/mobile/src/features/celebrations/calendar-day-route.ts`
+- `apps/mobile/src/features/celebrations/calendar-day-route.test.ts`
+- `apps/mobile/app/(tabs)/calendario.tsx`
+- `package.json`
+
+Validacao:
+
+- `corepack pnpm test`
+- `corepack pnpm --filter @louvor-serafico/mobile typecheck`
+- `corepack pnpm lint`
+- `git diff --check`
+
 ### Etapa 0 - Fundacao documental e workflow
 
 Status: concluida em 2026-04-20.
