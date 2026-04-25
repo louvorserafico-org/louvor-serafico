@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
 import { santissimoNomeDeJesusCelebration } from "../../../../../packages/shared/src/celebration.ts";
+import { getLiturgicalDayForDate } from "../../../../../packages/shared/src/liturgical-calendar.ts";
 
 import type { SupabaseSessionState } from "@/features/auth/supabase-session";
 import type { SubscriptionPreviewState } from "@/features/subscription/subscription-state";
@@ -37,6 +38,7 @@ describe("home summary", () => {
   it("builds authenticated home copy", () => {
     const result = buildHomeSummary({
       celebration: santissimoNomeDeJesusCelebration,
+      day: getLiturgicalDayForDate(new Date("2026-01-03T12:00:00.000Z")),
       session: authenticatedSession,
       subscription: activeSubscription,
     });
@@ -52,6 +54,7 @@ describe("home summary", () => {
   it("builds anonymous home copy", () => {
     const result = buildHomeSummary({
       celebration: santissimoNomeDeJesusCelebration,
+      day: getLiturgicalDayForDate(new Date("2026-01-03T12:00:00.000Z")),
       session: anonymousSession,
       subscription: inactiveSubscription,
     });
@@ -61,6 +64,22 @@ describe("home summary", () => {
       helperText: "6 cantos sugeridos visiveis.",
       premiumText: "Materiais premium exigem assinatura ativa.",
       title: "Celebre com ordem e clareza",
+    });
+  });
+
+  it("builds ordinary day copy when today has no repertoire", () => {
+    const result = buildHomeSummary({
+      celebration: undefined,
+      day: getLiturgicalDayForDate(new Date("2026-04-25T12:00:00.000Z")),
+      session: anonymousSession,
+      subscription: inactiveSubscription,
+    });
+
+    assert.deepEqual(result, {
+      actionLabel: "Abrir calendario",
+      helperText: "Nem todos os dias do ano recebem roteiro musical publicado. Consulte o calendario para encontrar os dias ja preparados.",
+      premiumText: "Os dias marcados indicam celebracoes com repertorio disponivel.",
+      title: "Hoje sem roteiro publicado",
     });
   });
 });

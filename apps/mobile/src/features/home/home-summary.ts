@@ -1,10 +1,11 @@
-import type { Celebration } from "@louvor-serafico/shared";
+import type { Celebration, LiturgicalDay } from "@louvor-serafico/shared";
 
 import type { SupabaseSessionState } from "@/features/auth/supabase-session";
 import type { SubscriptionPreviewState } from "@/features/subscription/subscription-state";
 
 export type HomeSummaryInput = {
-  celebration: Celebration;
+  celebration?: Celebration;
+  day: LiturgicalDay;
   session: SupabaseSessionState;
   subscription: SubscriptionPreviewState;
 };
@@ -17,6 +18,16 @@ export type HomeSummary = {
 };
 
 export function buildHomeSummary(input: HomeSummaryInput): HomeSummary {
+  if (input.day.kind !== "has_repertoire" || !input.celebration) {
+    return {
+      actionLabel: "Abrir calendario",
+      helperText:
+        "Nem todos os dias do ano recebem roteiro musical publicado. Consulte o calendario para encontrar os dias ja preparados.",
+      premiumText: "Os dias marcados indicam celebracoes com repertorio disponivel.",
+      title: "Hoje sem roteiro publicado",
+    };
+  }
+
   const premiumText =
     input.subscription.status === "active"
       ? "Materiais premium liberados."

@@ -3616,3 +3616,53 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 75 - Validacao visual em device e segundo passe de UI/UX.
+
+## Etapa 75 - Base dinamica da Home em 2026
+
+Resumo do que foi feito:
+
+- Removida dependencia da Home em uma missa fixa.
+- Introduzido modelo local de calendario liturgico 2026.
+- Resolucao do dia atual passou a usar a data real do aparelho, mapeada para o calendario 2026.
+- Home agora distingue dia com repertorio e dia sem repertorio.
+- Adicionado mini calendario mensal com marcacao visual dos dias que possuem repertorio.
+- Em dias sem repertorio, a Home passou a apresentar explicacao do app e lista de dias ja preparados.
+
+Arquivos alterados:
+
+- `packages/shared/src/liturgical-calendar.ts`
+- `packages/shared/src/liturgical-calendar.test.ts`
+- `packages/shared/src/index.ts`
+- `apps/mobile/src/features/home/home-summary.ts`
+- `apps/mobile/src/features/home/home-summary.test.ts`
+- `apps/mobile/src/features/home/home-calendar.ts`
+- `apps/mobile/src/features/home/home-calendar.test.ts`
+- `apps/mobile/app/(tabs)/index.tsx`
+- `package.json`
+
+Decisoes tecnicas e trade-offs:
+
+- Mantido calendario 2026 local e simples, com apenas o dia que ja possui repertorio publicado.
+- Alternativa rejeitada: preencher artificialmente outros dias liturgicos sem fonte confiavel. Melhor seguir com base real e expandir depois.
+- O tipo `liturgical_day_without_repertoire` ja esta previsto no dominio, mas nesta etapa os dias sem cadastro seguem como `ordinary_day`.
+- A Home agora usa calendario do mes atual, mas o catalogo publicado continua pequeno; por isso alguns meses aparecem sem marcacoes, o que reflete fielmente o estado atual do conteudo.
+
+Hurdles & Fixes:
+
+- Nao houve bloqueio funcional nesta etapa.
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: make home follow 2026 liturgical calendar`
+
+## Proxima Etapa Planejada
+
+Etapa 76 - Expandir dominio de dias liturgicos sem repertorio e evoluir calendario principal.
