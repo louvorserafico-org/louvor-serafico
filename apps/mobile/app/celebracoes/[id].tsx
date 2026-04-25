@@ -1,13 +1,18 @@
-import { buildCelebrationMomentRows, findCelebrationBySlug } from "@louvor-serafico/shared";
-import { Stack, useLocalSearchParams } from "expo-router";
+import {
+  buildCelebrationMomentRows,
+  findCelebrationBySlug,
+  getLiturgicalMonthDays2026,
+} from "@louvor-serafico/shared";
+import { Link, Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { EditorialStatus } from "@/components/EditorialStatus";
 import { MomentCard } from "@/components/MomentCard";
 import { PageHeader } from "@/components/PageHeader";
 import { SectionTitle } from "@/components/SectionTitle";
 import { buildCelebrationDetailOverview } from "@/features/celebrations/celebration-detail-overview";
+import { buildLiturgicalDayDetail } from "@/features/celebrations/liturgical-day-detail";
 import { fetchRemoteCelebrationDetail } from "@/features/celebrations/remote-celebration-detail";
 import { supabaseConfig } from "@/services/supabase/client";
 import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
@@ -18,14 +23,16 @@ export default function CelebrationDetailScreen() {
     () => findCelebrationBySlug(params.id ?? "") ?? findCelebrationBySlug("santissimo-nome-de-jesus"),
     [params.id],
   );
+  const fallbackDay = useMemo(
+    () => Array.from({ length: 12 }, (_, index) => getLiturgicalMonthDays2026(index + 1)).flat().find((item) => item.monthDay === params.id),
+    [params.id],
+  );
   const [remoteCelebration, setRemoteCelebration] = useState<typeof localCelebration | null>(null);
   const [sourceMode, setSourceMode] = useState<"local" | "remote">("local");
   const [subtitle, setSubtitle] = useState("Roteiro organizado para acompanhar cada momento da celebracao.");
   const celebration = remoteCelebration ?? localCelebration;
-  const momentRows = useMemo(
-    () => (celebration ? buildCelebrationMomentRows(celebration) : []),
-    [celebration],
-  );
+  const detailDay = fallbackDay;
+  const momentRows = useMemo(() => (celebration ? buildCelebrationMomentRows(celebration) : []), [celebration]);
   const missingMaterials = momentRows.filter((item) => item.song.assets.length === 0).length;
   const overview = buildCelebrationDetailOverview({
     missingMaterials,
@@ -48,13 +55,38 @@ export default function CelebrationDetailScreen() {
 
       setRemoteCelebration(result.celebration);
       setSourceMode(result.celebration ? "remote" : "local");
-      setSubtitle(result.celebration ? "Roteiro preparado para conduzir a musica da celebracao." : "Roteiro inicial disponivel para consulta e preparacao.");
+      setSubtitle(
+        result.celebration
+          ? "Roteiro preparado para conduzir a musica da celebracao."
+          : "Roteiro inicial disponivel para consulta e preparacao.",
+      );
     });
 
     return () => {
       active = false;
     };
   }, [params.id]);
+
+  if (!celebration && detailDay) {
+    const dayDetail = buildLiturgicalDayDetail(detailDay);
+
+    return (
+      <ScrollView contentContainerStyle={styles.container}>
+        <Stack.Screen options={{ headerShown: true, title: "Celebracao" }} />
+        <PageHeader eyebrow={dayDetail.eyebrow} subtitle={dayDetail.helperText} title={dayDetail.title} />
+
+        <View style={[styles.summary, styles.summaryLocal]}>
+          <Text style={styles.summaryTitle}>Roteiro em preparacao</Text>
+          <Text style={styles.summaryText}>{dayDetail.helperText}</Text>
+          <Link asChild href="/calendario">
+            <Pressable style={styles.button}>
+              <Text style={styles.buttonText}>{dayDetail.ctaLabel}</Text>
+            </Pressable>
+          </Link>
+        </View>
+      </ScrollView>
+    );
+  }
 
   if (!celebration) {
     return (
@@ -94,6 +126,22 @@ export default function CelebrationDetailScreen() {
 }
 
 const styles = StyleSheet.create({
+  button: {
+    alignSelf: "flex-start",
+    backgroundColor: colors.accent,
+    borderColor: colors.accent,
+    borderRadius: radii.pill,
+    borderWidth: 1,
+    marginTop: spacing.sm,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.sm,
+  },
+  buttonText: {
+    color: colors.background,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
+  },
   container: {
     backgroundColor: colors.background,
     gap: spacing.lg,
