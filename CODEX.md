@@ -3003,3 +3003,50 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 62 - Revisar UX de comunidade autenticada.
+
+Status: concluida em 2026-04-25.
+
+Objetivo esperado:
+
+- deixar a tela Comunidade mais acionavel;
+- orientar claramente quando comentario remoto, preview local ou bloqueio estiverem ativos;
+- direcionar usuario anonimo para login;
+- manter feed funcional com fallback local.
+
+Resultado:
+
+- Criado `src/features/comments/community-access.ts`.
+- Criado `src/features/comments/community-access.test.ts`.
+- Tab `Comunidade` passou a resumir o estado da comunidade com copy e CTA especificos.
+- Placeholder do campo muda conforme estado.
+- Usuario anonimo ve CTA para `Entrar`.
+- Estado vazio ganhou mensagem explicita.
+- Script de testes raiz atualizado.
+
+Decisoes tecnicas e trade-offs:
+
+- A regra de UX foi isolada em helper testado para evitar ifs espalhados na tela.
+- O card tecnico remoto foi mantido, porque ainda ajuda na validacao do Supabase durante desenvolvimento.
+- O fluxo continua aceitando preview local quando nao ha sessao remota.
+- Alternativa rejeitada: remover o preview local agora. Ele segue util enquanto a comunidade remota ainda esta em consolidacao.
+
+Hurdles & Fixes:
+
+- Nenhum bloqueio tecnico encontrado.
+
+Checklist DoD:
+
+- [x] TDD aplicado.
+- [x] UI integrada.
+- [x] Testes passam.
+- [x] Typecheck passa.
+- [x] Lint passa.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: improve community access ux`
+
+## Proxima Etapa Planejada
+
+Etapa 63 - Revisar UX do calendario remoto.

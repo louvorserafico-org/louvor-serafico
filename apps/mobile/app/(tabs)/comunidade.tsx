@@ -1,3 +1,4 @@
+import { Link } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 
@@ -5,6 +6,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { RemoteCommentsCard } from "@/components/RemoteCommentsCard";
 import { useSessionPreview } from "@/features/auth/SessionProvider";
 import { useSupabaseSession } from "@/features/auth/SupabaseSessionProvider";
+import { buildCommunityAccess } from "@/features/comments/community-access";
 import { resolveCommentFeedSource } from "@/features/comments/comment-feed-source";
 import { useCommentsPreview } from "@/features/comments/CommentsProvider";
 import { postRemoteComment } from "@/features/comments/remote-comment-submit";
@@ -17,6 +19,7 @@ export default function CommunityScreen() {
   const { session: supabaseSession } = useSupabaseSession();
   const { comments, addCommunityComment } = useCommentsPreview();
   const canComment = session.status === "signed_in" || supabaseSession.status === "authenticated";
+  const hasRemoteSession = supabaseSession.status === "authenticated";
   const [draft, setDraft] = useState("");
   const [submitMessage, setSubmitMessage] = useState("Nenhum envio remoto nesta sessao.");
   const [remoteState, setRemoteState] = useState<Awaited<ReturnType<typeof fetchRemoteComments>>>({
@@ -26,6 +29,7 @@ export default function CommunityScreen() {
   });
   const canSubmit = canComment && draft.trim().length > 0;
   const feedSource = useMemo(() => resolveCommentFeedSource(remoteState, comments), [comments, remoteState]);
+  const communityAccess = buildCommunityAccess({ canComment, hasRemoteSession });
 
   useEffect(() => {
     let isMounted = true;
@@ -60,17 +64,27 @@ export default function CommunityScreen() {
         subtitle="Base inicial para comentarios publicos e experiencias de repertorio."
       />
 
-      <View style={styles.panel}>
-        <Text style={styles.panelTitle}>{canComment ? "Comentarios liberados" : "Comentarios bloqueados"}</Text>
-        <Text style={styles.panelText}>
-          {supabaseSession.status === "authenticated"
-            ? "Sessao Supabase ativa. Comentario remoto pode ser publicado."
-            : canComment
-              ? "Sessao local ativa. Comentario local liberado para validacao de UX."
-              : "Ative sessao teste em Perfil para liberar UX condicionada."}
-        </Text>
+      <View
+        style={[
+          styles.panel,
+          communityAccess.status === "remote"
+            ? styles.panelRemote
+            : communityAccess.status === "local"
+              ? styles.panelLocal
+              : styles.panelBlocked,
+        ]}
+      >
+        <Text style={styles.panelTitle}>{communityAccess.title}</Text>
+        <Text style={styles.panelText}>{communityAccess.helperText}</Text>
         <Text style={styles.panelText}>{feedSource.message}</Text>
         <Text style={styles.panelText}>{submitMessage}</Text>
+        {!canComment ? (
+          <Link asChild href="/entrar">
+            <Pressable style={[styles.button, styles.buttonAccent]}>
+              <Text style={styles.buttonText}>{communityAccess.primaryLabel}</Text>
+            </Pressable>
+          </Link>
+        ) : null}
       </View>
 
       <RemoteCommentsCard />
@@ -81,63 +95,74 @@ export default function CommunityScreen() {
           editable={canComment}
           multiline
           onChangeText={setDraft}
-          placeholder="Compartilhe experiencia musical deste repertorio."
+          placeholder={communityAccess.inputPlaceholder}
           placeholderTextColor={colors.textMuted}
           style={[styles.input, !canComment ? styles.inputDisabled : undefined]}
           value={draft}
         />
-        <Pressable
-          disabled={!canSubmit}
-          onPress={async () => {
-            if (supabaseSession.status === "authenticated" && supabaseSession.userId && draft.trim()) {
-              const result = await postRemoteComment(
-                {
-                  body: draft,
-                  profileId: supabaseSession.userId,
-                },
-                fetch,
-                supabaseConfig.url,
-                supabaseConfig.publishableKey ?? supabaseConfig.anonKey,
-                supabaseSession.accessToken,
-              );
+        {canComment ? (
+          <Pressable
+            disabled={!canSubmit}
+            onPress={async () => {
+              if (supabaseSession.status === "authenticated" && supabaseSession.userId && draft.trim()) {
+                const result = await postRemoteComment(
+                  {
+                    body: draft,
+                    profileId: supabaseSession.userId,
+                  },
+                  fetch,
+                  supabaseConfig.url,
+                  supabaseConfig.publishableKey ?? supabaseConfig.anonKey,
+                  supabaseSession.accessToken,
+                );
 
-              setSubmitMessage(result.message);
+                setSubmitMessage(result.message);
 
-              if (result.ok) {
-                setDraft("");
-                await refreshRemoteComments();
+                if (result.ok) {
+                  setDraft("");
+                  await refreshRemoteComments();
+                }
+
+                return;
               }
 
-              return;
-            }
-
-            if (session.status === "signed_in" && draft.trim()) {
-              addCommunityComment({
-                authorName: session.displayName,
-                body: draft,
-              });
-              setSubmitMessage("Comentario salvo apenas no preview local.");
-              setDraft("");
-            }
-          }}
-          style={[styles.button, !canSubmit ? styles.buttonDisabled : undefined]}
-        >
-          <Text style={[styles.buttonText, !canSubmit ? styles.buttonTextDisabled : undefined]}>
-            {supabaseSession.status === "authenticated"
-              ? "Publicar comentario remoto"
-              : canComment
-                ? "Publicar comentario"
-                : "Sessao necessaria"}
-          </Text>
-        </Pressable>
+              if (session.status === "signed_in" && draft.trim()) {
+                addCommunityComment({
+                  authorName: session.displayName,
+                  body: draft,
+                });
+                setSubmitMessage("Comentario salvo apenas no preview local.");
+                setDraft("");
+              }
+            }}
+            style={[styles.button, !canSubmit ? styles.buttonDisabled : undefined]}
+          >
+            <Text style={[styles.buttonText, !canSubmit ? styles.buttonTextDisabled : undefined]}>
+              {communityAccess.primaryLabel}
+            </Text>
+          </Pressable>
+        ) : (
+          <Link asChild href="/entrar">
+            <Pressable style={[styles.button, styles.buttonAccent]}>
+              <Text style={styles.buttonText}>{communityAccess.primaryLabel}</Text>
+            </Pressable>
+          </Link>
+        )}
       </View>
 
-      {feedSource.comments.map((comment) => (
-        <View key={comment.id} style={styles.comment}>
-          <Text style={styles.commentAuthor}>{comment.authorName}</Text>
-          <Text style={styles.commentText}>{comment.body}</Text>
+      {feedSource.comments.length > 0 ? (
+        feedSource.comments.map((comment) => (
+          <View key={comment.id} style={styles.comment}>
+            <Text style={styles.commentAuthor}>{comment.authorName}</Text>
+            <Text style={styles.commentText}>{comment.body}</Text>
+          </View>
+        ))
+      ) : (
+        <View style={styles.comment}>
+          <Text style={styles.commentAuthor}>Partilha inicial</Text>
+          <Text style={styles.commentText}>Ainda sem comentarios publicados.</Text>
         </View>
-      ))}
+      )}
     </ScrollView>
   );
 }
@@ -156,6 +181,10 @@ const styles = StyleSheet.create({
   buttonDisabled: {
     backgroundColor: colors.surface,
     borderColor: colors.border,
+  },
+  buttonAccent: {
+    backgroundColor: colors.accent,
+    borderColor: colors.accent,
   },
   buttonText: {
     color: colors.background,
@@ -211,12 +240,22 @@ const styles = StyleSheet.create({
     color: colors.textMuted,
   },
   panel: {
-    backgroundColor: colors.oliveSoft,
-    borderColor: colors.olive,
     borderRadius: 8,
     borderWidth: 1,
     gap: spacing.xs,
     padding: spacing.md,
+  },
+  panelBlocked: {
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+  },
+  panelLocal: {
+    backgroundColor: colors.goldSoft,
+    borderColor: colors.gold,
+  },
+  panelRemote: {
+    backgroundColor: colors.oliveSoft,
+    borderColor: colors.olive,
   },
   panelText: {
     color: colors.textSecondary,
