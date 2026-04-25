@@ -3271,3 +3271,46 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 68 - Revisar UX da tela de entrada.
+
+Status: concluida em 2026-04-25.
+
+Objetivo esperado:
+
+- deixar tela de entrada menos seca;
+- resumir claramente diferenca entre entrar e cadastrar;
+- manter fluxo simples para testes reais no Supabase Auth.
+
+Resultado:
+
+- Criado `src/features/auth/auth-screen-overview.ts`.
+- Criado `src/features/auth/auth-screen-overview.test.ts`.
+- Tela `entrar` ganhou resumo visual por modo.
+- Script de testes raiz atualizado.
+
+Decisoes tecnicas e trade-offs:
+
+- A regra de copy ficou isolada e testada fora da UI.
+- O resumo muda junto com o toggle entre entrar e cadastrar.
+- Mantive formulario unico por modo, sem dividir em telas separadas.
+- Alternativa rejeitada: criar wizard de cadastro. Excesso para fase atual.
+
+Hurdles & Fixes:
+
+- Nenhum bloqueio tecnico novo.
+
+Checklist DoD:
+
+- [x] TDD aplicado.
+- [x] UI integrada.
+- [x] Testes passam.
+- [x] Typecheck passa.
+- [x] Lint passa.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: improve auth screen summary`
+
+## Proxima Etapa Planejada
+
+Etapa 69 - Revisar UX da redefinicao de senha.

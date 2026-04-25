@@ -3,6 +3,7 @@ import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-
 
 import { PageHeader } from "@/components/PageHeader";
 import { getAuthRedirectUrl } from "@/features/auth/auth-deep-link";
+import { buildAuthScreenOverview } from "@/features/auth/auth-screen-overview";
 import {
   registerWithPassword,
   requestPasswordReset,
@@ -32,6 +33,7 @@ export default function SignInScreen() {
   const [registration, setRegistration] = useState<RegistrationForm>(emptyRegistration);
   const [result, setResult] = useState<{ message: string; status: "error" | "success" } | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const overview = buildAuthScreenOverview({ mode });
 
   const updateRegistration = (field: keyof RegistrationForm, value: string) => {
     setRegistration((current) => ({
@@ -51,6 +53,11 @@ export default function SignInScreen() {
       <View style={styles.switchRow}>
         <ModeButton active={mode === "login"} label="Entrar" onPress={() => setMode("login")} />
         <ModeButton active={mode === "register"} label="Cadastrar" onPress={() => setMode("register")} />
+      </View>
+
+      <View style={[styles.summaryCard, mode === "login" ? styles.summaryLogin : styles.summaryRegister]}>
+        <Text style={styles.summaryTitle}>{overview.title}</Text>
+        <Text style={styles.summaryText}>{overview.helperText}</Text>
       </View>
 
       {mode === "login" ? (
@@ -329,6 +336,30 @@ const styles = StyleSheet.create({
   success: {
     backgroundColor: colors.oliveSoft,
     borderColor: colors.olive,
+  },
+  summaryCard: {
+    borderRadius: 8,
+    borderWidth: 1,
+    gap: spacing.xs,
+    padding: spacing.md,
+  },
+  summaryLogin: {
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+  },
+  summaryRegister: {
+    backgroundColor: colors.goldSoft,
+    borderColor: colors.gold,
+  },
+  summaryText: {
+    color: colors.textSecondary,
+    fontSize: typography.caption,
+    lineHeight: 18,
+  },
+  summaryTitle: {
+    color: colors.textPrimary,
+    fontSize: typography.body,
+    fontWeight: "800",
   },
   switchRow: {
     flexDirection: "row",
