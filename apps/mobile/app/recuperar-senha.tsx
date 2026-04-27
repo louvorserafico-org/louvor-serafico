@@ -24,16 +24,21 @@ export default function PasswordRecoveryScreen() {
       />
 
       <View style={styles.summaryCard}>
+        <Text style={styles.summaryEyebrow}>Recuperacao</Text>
         <Text style={styles.summaryTitle}>{overview.title}</Text>
         <Text style={styles.summaryText}>{overview.helperText}</Text>
       </View>
 
       <View style={styles.formCard}>
+        <Text style={styles.formEyebrow}>Nova senha</Text>
         <Text style={styles.cardTitle}>Nova senha</Text>
+        <Text style={styles.cardText}>
+          Escolha uma senha nova para concluir o retorno a sua conta com seguranca e continuidade.
+        </Text>
         <PasswordInput
           autoComplete="password-new"
           onChangeText={setPassword}
-          placeholder="Nova senha"
+          placeholder="Escolha uma nova senha"
           secureTextEntry
           value={password}
         />
@@ -73,6 +78,7 @@ export default function PasswordRecoveryScreen() {
       ) : null}
 
       <View style={styles.card}>
+        <Text style={styles.formEyebrow}>Antes de concluir</Text>
         <Text style={styles.cardTitle}>Link necessario</Text>
         <Text style={styles.cardText}>
           Abra esta tela a partir do email de recuperacao para concluir a troca da senha sem interrupcoes.
@@ -128,8 +134,8 @@ const styles = StyleSheet.create({
   cardText: {
     color: colors.textSecondary,
     fontFamily: fontFamilies.body,
-    fontSize: typography.caption,
-    lineHeight: 18,
+    fontSize: typography.body,
+    lineHeight: 24,
   },
   cardTitle: {
     color: colors.textPrimary,
@@ -156,6 +162,13 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
     padding: spacing.lg,
   },
+  formEyebrow: {
+    color: colors.accent,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
+    textTransform: "uppercase",
+  },
   input: {
     backgroundColor: colors.surfaceMuted,
     borderColor: colors.border,
@@ -163,7 +176,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     color: colors.textPrimary,
     fontFamily: fontFamilies.body,
-    fontSize: typography.caption,
+    fontSize: typography.body,
     padding: spacing.md,
   },
   resultCard: {
@@ -175,7 +188,8 @@ const styles = StyleSheet.create({
   resultText: {
     color: colors.textPrimary,
     fontFamily: fontFamilies.body,
-    fontSize: typography.caption,
+    fontSize: typography.body,
+    lineHeight: 22,
   },
   secondaryAction: {
     alignSelf: "flex-start",
@@ -198,6 +212,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     gap: spacing.xs,
     padding: spacing.lg,
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.06,
+    shadowRadius: 16,
+  },
+  summaryEyebrow: {
+    color: colors.accent,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
+    textTransform: "uppercase",
   },
   summaryText: {
     color: colors.textSecondary,

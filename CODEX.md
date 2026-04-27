@@ -4169,3 +4169,33 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 87 - Refinar visual e copy da tela de recuperacao de senha.
+
+## Etapa 87 - Recuperacao de senha
+
+Resumo do que foi feito:
+
+- Refinada a copy da tela `recuperar-senha` para um tom mais sereno e direto.
+- O resumo inicial ganhou hierarchy melhor com eyebrow e texto de apoio mais claro.
+- O formulario e o bloco final passaram a orientar melhor o retorno a conta sem alterar a logica.
+
+Arquivos alterados:
+
+- `apps/mobile/app/recuperar-senha.tsx`
+- `apps/mobile/src/features/auth/password-recovery-overview.ts`
+- `apps/mobile/src/features/auth/password-recovery-overview.test.ts`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: refine password recovery hierarchy and copy`
+
+## Proxima Etapa Planejada
+
+Etapa 88 - Refinar visual e copy do detalhe da musica.
