@@ -82,7 +82,7 @@ export default function CommunityScreen() {
         <Text style={styles.panelTitle}>{communityAccess.title}</Text>
         <Text style={styles.panelText}>{communityAccess.helperText}</Text>
         <Text style={styles.panelText}>
-          {canComment ? submitMessage : "Entre para acompanhar novas vozes da comunidade e registrar sua experiencia."}
+          {canComment ? submitMessage : "Entre para ler novas partilhas com calma e registrar a sua quando desejar."}
         </Text>
         {!canComment ? (
           <Link asChild href="/entrar">
@@ -166,9 +166,9 @@ export default function CommunityScreen() {
       ) : (
         <View style={styles.comment}>
           <Text style={styles.commentEyebrow}>Comunidade</Text>
-          <Text style={styles.commentAuthor}>Ainda sem partilhas</Text>
+          <Text style={styles.commentAuthor}>A primeira partilha ainda esta por chegar</Text>
           <Text style={styles.commentText}>
-            Quando a primeira experiencia for registrada, ela aparecera aqui para inspirar outros musicos.
+            Quando uma experiencia for publicada, este espaco passara a reunir vozes do ministerio.
           </Text>
         </View>
       )}

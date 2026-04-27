@@ -97,8 +97,10 @@ export default function RepertoireScreen() {
           songs.map((song) => <SongCard key={song.id} song={song} />)
         ) : (
           <View style={styles.emptyCard}>
-            <Text style={styles.summaryTitle}>Acervo ainda em formacao</Text>
-            <Text style={styles.summaryText}>Novos cantos aparecerao aqui conforme o repertorio crescer.</Text>
+            <Text style={styles.summaryTitle}>Acervo em crescimento</Text>
+            <Text style={styles.summaryText}>
+              Os proximos cantos publicados aparecerao aqui para estudo, escolha e preparacao.
+            </Text>
           </View>
         )}
       </View>

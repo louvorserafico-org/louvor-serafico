@@ -26,7 +26,7 @@ describe("main tab copy", () => {
     );
     assert.equal(
       buildCommunityTabSubtitle(false),
-      "Leia partilhas da comunidade e entre na conta para comentar depois.",
+      "Leia partilhas da comunidade e entre na conta para deixar a sua quando desejar.",
     );
   });
 
@@ -37,7 +37,7 @@ describe("main tab copy", () => {
     );
     assert.equal(
       buildProfileTabSubtitle(false),
-      "Entre na conta para liberar favoritos, comentarios e assinatura premium.",
+      "Entre na conta para reunir favoritos, partilhas e acesso premium no mesmo lugar.",
     );
   });
 });

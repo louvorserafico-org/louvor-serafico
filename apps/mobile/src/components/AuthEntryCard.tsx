@@ -32,8 +32,9 @@ export function AuthEntryCard() {
   if (state.status === "loading") {
     return (
       <View style={[styles.card, styles.loading]}>
-        <Text style={styles.title}>Preparando fluxo de entrada</Text>
-        <Text style={styles.text}>Organizando acesso para sua conta.</Text>
+        <Text style={styles.eyebrow}>Conta</Text>
+        <Text style={styles.title}>Preparando sua entrada</Text>
+        <Text style={styles.text}>Separando o caminho para entrar ou criar seu perfil.</Text>
       </View>
     );
   }
@@ -48,6 +49,7 @@ export function AuthEntryCard() {
         readiness.status === "ready" ? styles.ready : readiness.status === "limited" ? styles.limited : styles.blocked,
       ]}
     >
+      <Text style={styles.eyebrow}>Conta</Text>
       <Text style={styles.title}>{readiness.title}</Text>
       <Text style={styles.text}>{readiness.helperText}</Text>
       <Pressable
@@ -106,6 +108,13 @@ const styles = StyleSheet.create({
   loading: {
     backgroundColor: colors.surface,
     borderColor: colors.border,
+  },
+  eyebrow: {
+    color: colors.accent,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
+    textTransform: "uppercase",
   },
   ready: {
     backgroundColor: colors.oliveSoft,

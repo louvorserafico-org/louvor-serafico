@@ -4354,3 +4354,37 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 93 - Revisao final das tabs principais e estados vazios remanescentes.
+
+## Etapa 93 - Revisao final das tabs principais
+
+Resumo do que foi feito:
+
+- Refinada a linguagem remanescente de estados vazios em `Repertorio` e `Comunidade`.
+- O bloco de entrada exibido no `Perfil` deixou de usar linguagem tecnica e passou a orientar a conta com tom editorial.
+- Ajustados subtitulos anonimos de `Comunidade` e `Perfil` para fechar o ciclo de copy das tabs principais.
+
+Arquivos alterados:
+
+- `apps/mobile/src/features/auth/auth-readiness.ts`
+- `apps/mobile/src/features/auth/auth-readiness.test.ts`
+- `apps/mobile/src/components/AuthEntryCard.tsx`
+- `apps/mobile/src/features/tabs/main-tab-copy.ts`
+- `apps/mobile/src/features/tabs/main-tab-copy.test.ts`
+- `apps/mobile/app/(tabs)/repertorio.tsx`
+- `apps/mobile/app/(tabs)/comunidade.tsx`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: finalize main tab empty state copy`
+
+## Proxima Etapa Planejada
+
+Etapa 94 - Consolidar fechamento do ciclo atual de UI/UX.

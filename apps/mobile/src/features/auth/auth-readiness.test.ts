@@ -14,10 +14,10 @@ describe("auth readiness", () => {
     });
 
     assert.deepEqual(readiness, {
-      ctaLabel: "Abrir fluxo de entrada",
-      helperText: "Cadastro por email liberado para primeira iteracao.",
+      ctaLabel: "Entrar ou criar conta",
+      helperText: "Abra sua conta para guardar favoritos, acompanhar partilhas e reunir seus materiais.",
       status: "ready",
-      title: "Autenticacao pronta para UX inicial",
+      title: "Sua entrada esta pronta",
     });
   });
 
@@ -31,10 +31,10 @@ describe("auth readiness", () => {
     });
 
     assert.deepEqual(readiness, {
-      ctaLabel: "Fluxo aguardando ajuste",
-      helperText: "Supabase responde, mas cadastro esta bloqueado no projeto.",
+      ctaLabel: "Voltar mais tarde",
+      helperText: "O acesso por email ja esta em preparacao e sera liberado assim que esta etapa terminar.",
       status: "limited",
-      title: "Autenticacao parcialmente pronta",
+      title: "Entrada em ajuste",
     });
   });
 
@@ -45,10 +45,10 @@ describe("auth readiness", () => {
     });
 
     assert.deepEqual(readiness, {
-      ctaLabel: "Revisar integracao",
-      helperText: "Falha remota Supabase: erro desconhecido",
+      ctaLabel: "Entrada indisponivel",
+      helperText: "O caminho de entrada desta conta volta a aparecer assim que a conexao for retomada.",
       status: "blocked",
-      title: "Autenticacao ainda nao pronta",
+      title: "Entrada temporariamente indisponivel",
     });
   });
 });
