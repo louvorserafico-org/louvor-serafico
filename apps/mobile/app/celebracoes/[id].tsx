@@ -24,7 +24,10 @@ export default function CelebrationDetailScreen() {
     [params.id],
   );
   const fallbackDay = useMemo(
-    () => Array.from({ length: 12 }, (_, index) => getLiturgicalMonthDays2026(index + 1)).flat().find((item) => item.monthDay === params.id),
+    () =>
+      Array.from({ length: 12 }, (_, index) => getLiturgicalMonthDays2026(index + 1))
+        .flat()
+        .find((item) => item.monthDay === params.id),
     [params.id],
   );
   const [remoteCelebration, setRemoteCelebration] = useState<typeof localCelebration | null>(null);
@@ -32,7 +35,10 @@ export default function CelebrationDetailScreen() {
   const [subtitle, setSubtitle] = useState("Roteiro organizado para acompanhar cada momento da celebracao.");
   const celebration = remoteCelebration ?? localCelebration;
   const detailDay = fallbackDay;
-  const momentRows = useMemo(() => (celebration ? buildCelebrationMomentRows(celebration) : []), [celebration]);
+  const momentRows = useMemo(
+    () => (celebration ? buildCelebrationMomentRows(celebration) : []),
+    [celebration],
+  );
   const missingMaterials = momentRows.filter((item) => item.song.assets.length === 0).length;
   const overview = buildCelebrationDetailOverview({
     missingMaterials,
@@ -76,7 +82,7 @@ export default function CelebrationDetailScreen() {
         <PageHeader eyebrow={dayDetail.eyebrow} subtitle={dayDetail.helperText} title={dayDetail.title} />
 
         <View style={[styles.summary, styles.summaryLocal]}>
-          <Text style={styles.summaryEyebrow}>Calendário 2026</Text>
+          <Text style={styles.summaryEyebrow}>Calendario 2026</Text>
           <Text style={styles.summaryTitle}>{dayDetail.cardTitle}</Text>
           <Text style={styles.summaryText}>{dayDetail.helperText}</Text>
           <Text style={styles.summaryNote}>{dayDetail.note}</Text>
@@ -105,6 +111,7 @@ export default function CelebrationDetailScreen() {
       <PageHeader eyebrow={celebration.dateLabel} subtitle={subtitle} title={celebration.title} />
 
       <View style={[styles.summary, sourceMode === "remote" ? styles.summaryRemote : styles.summaryLocal]}>
+        <Text style={styles.summaryEyebrow}>Roteiro da missa</Text>
         <Text style={styles.summaryTitle}>Roteiro da celebracao</Text>
         <Text style={styles.summaryText}>{overview.helperText}</Text>
       </View>
@@ -174,6 +181,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surfaceMuted,
     borderColor: colors.borderStrong,
   },
+  summaryNote: {
+    color: colors.textMuted,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.caption,
+    lineHeight: 20,
+  },
   summaryRemote: {
     backgroundColor: colors.surface,
     borderColor: colors.borderStrong,
@@ -183,12 +196,6 @@ const styles = StyleSheet.create({
     fontFamily: fontFamilies.body,
     fontSize: typography.body,
     lineHeight: 24,
-  },
-  summaryNote: {
-    color: colors.textMuted,
-    fontFamily: fontFamilies.body,
-    fontSize: typography.caption,
-    lineHeight: 20,
   },
   summaryTitle: {
     color: colors.textPrimary,

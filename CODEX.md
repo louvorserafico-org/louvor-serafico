@@ -4229,3 +4229,35 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 89 - Refinar visual e copy do detalhe da celebracao.
+
+## Etapa 89 - Detalhe da celebracao
+
+Resumo do que foi feito:
+
+- Refinada a copy do detalhe da celebracao para um tom menos tecnico.
+- O resumo principal ganhou eyebrow e texto mais editorial.
+- Os estados de dia liturgico sem repertorio e dia comum foram normalizados em ASCII e ficaram mais consistentes.
+
+Arquivos alterados:
+
+- `apps/mobile/app/celebracoes/[id].tsx`
+- `apps/mobile/src/features/celebrations/celebration-detail-overview.ts`
+- `apps/mobile/src/features/celebrations/celebration-detail-overview.test.ts`
+- `apps/mobile/src/features/celebrations/liturgical-day-detail.ts`
+- `apps/mobile/src/features/celebrations/liturgical-day-detail.test.ts`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: refine celebration detail hierarchy and copy`
+
+## Proxima Etapa Planejada
+
+Etapa 90 - Revisar consistencia final entre Home, Calendario e detalhes.
