@@ -59,8 +59,8 @@ describe("profile overview", () => {
     });
 
     assert.deepEqual(result, {
-      accountLine: "Entre para guardar favoritos, acompanhar partilhas e acessar materiais completos.",
-      detailLine: "Use seu email e senha para manter seu ministerio em ordem.",
+      accountLine: "Entre para guardar favoritos, acompanhar partilhas e reunir seus materiais em um so lugar.",
+      detailLine: "Use seu email e sua senha para manter seu ministerio em ordem e seguir de perto o acervo.",
       premiumLine: "Premium inativo",
       status: "anonymous",
       title: "Sua conta ainda nao entrou",

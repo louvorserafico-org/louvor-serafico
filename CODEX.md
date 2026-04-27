@@ -4323,3 +4323,34 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 92 - Revisar consistencia final entre Comunidade, Perfil e autenticacao.
+
+## Etapa 92 - Consistencia entre Comunidade, Perfil e autenticacao
+
+Resumo do que foi feito:
+
+- Alinhada a linguagem da Comunidade com Perfil e autenticacao.
+- Ajustada a copy de entrada e participacao para reduzir variacoes de tom entre conta, partilha e acervo.
+- Refinadas as mensagens anonimas de Perfil para conversar melhor com a experiencia de entrada no app.
+
+Arquivos alterados:
+
+- `apps/mobile/src/features/comments/community-access.ts`
+- `apps/mobile/src/features/comments/community-access.test.ts`
+- `apps/mobile/src/features/auth/profile-overview.ts`
+- `apps/mobile/src/features/auth/profile-overview.test.ts`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: align community and profile editorial copy`
+
+## Proxima Etapa Planejada
+
+Etapa 93 - Revisao final das tabs principais e estados vazios remanescentes.

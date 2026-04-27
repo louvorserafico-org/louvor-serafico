@@ -11,7 +11,7 @@ describe("community access", () => {
         hasRemoteSession: true,
       }),
       {
-        helperText: "Compartilhe como o repertorio serviu a celebracao e ajude outros ministerios.",
+        helperText: "Compartilhe como o repertorio serviu a celebracao e fortaleceu outros ministerios.",
         inputPlaceholder: "Conte como este canto ajudou a assembleia, o coro ou o ensaio.",
         primaryLabel: "Publicar partilha",
         status: "remote",
@@ -27,7 +27,7 @@ describe("community access", () => {
         hasRemoteSession: false,
       }),
       {
-        helperText: "Sua partilha fica guardada neste aparelho ate que a comunidade completa esteja disponivel.",
+        helperText: "Sua partilha fica guardada neste aparelho ate que a comunidade completa esteja pronta para voce.",
         inputPlaceholder: "Conte como foi o ensaio, a escolha dos cantos ou a celebracao.",
         primaryLabel: "Guardar partilha",
         status: "local",
@@ -43,7 +43,7 @@ describe("community access", () => {
         hasRemoteSession: false,
       }),
       {
-        helperText: "Entre na sua conta para acompanhar partilhas, guardar experiencias e contribuir com outros musicos.",
+        helperText: "Entre na sua conta para acompanhar partilhas, guardar experiencias e caminhar com outros musicos.",
         inputPlaceholder: "Entre para escrever sua partilha.",
         primaryLabel: "Entrar para participar",
         status: "blocked",
