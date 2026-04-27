@@ -10,13 +10,13 @@ export type AuthScreenOverview = {
 export function buildAuthScreenOverview(input: AuthScreenOverviewInput): AuthScreenOverview {
   if (input.mode === "register") {
     return {
-      helperText: "Crie conta com dados basicos para liberar favoritos, comentarios e assinatura depois.",
-      title: "Cadastro inicial",
+      helperText: "Reuna seus dados principais para guardar favoritos, acompanhar partilhas e preparar sua assinatura com serenidade.",
+      title: "Nova conta",
     };
   }
 
   return {
-    helperText: "Entre com email e senha para recuperar favoritos, comentarios e acesso premium desta conta.",
-    title: "Acesso da conta",
+    helperText: "Entre com email e senha para retomar seus favoritos, suas partilhas e os materiais liberados nesta conta.",
+    title: "Retome sua conta",
   };
 }

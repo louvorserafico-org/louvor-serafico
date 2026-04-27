@@ -4139,3 +4139,33 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 86 - Refinar visual e copy da tela de autenticacao.
+
+## Etapa 86 - Tela de autenticacao
+
+Resumo do que foi feito:
+
+- Refinada a copy da tela `Entrar` para um tom mais humano e menos formularizado.
+- O resumo inicial ganhou hierarquia editorial com eyebrow, titulo e texto de apoio mais forte.
+- Os blocos de login, cadastro e cuidado com a conta passaram a orientar melhor cada etapa sem mudar o fluxo.
+
+Arquivos alterados:
+
+- `apps/mobile/app/entrar.tsx`
+- `apps/mobile/src/features/auth/auth-screen-overview.ts`
+- `apps/mobile/src/features/auth/auth-screen-overview.test.ts`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: refine auth screen hierarchy and copy`
+
+## Proxima Etapa Planejada
+
+Etapa 87 - Refinar visual e copy da tela de recuperacao de senha.

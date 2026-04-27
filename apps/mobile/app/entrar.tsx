@@ -47,7 +47,7 @@ export default function SignInScreen() {
       <PageHeader
         eyebrow="Conta"
         title={mode === "login" ? "Entrar" : "Criar conta"}
-        subtitle="Aproxime-se do seu acervo, da sua partilha e do repertorio completo."
+        subtitle="Guarde seu caminho no ministerio e mantenha o acervo sempre ao alcance."
       />
 
       <View style={styles.switchRow}>
@@ -56,13 +56,18 @@ export default function SignInScreen() {
       </View>
 
       <View style={[styles.summaryCard, mode === "login" ? styles.summaryLogin : styles.summaryRegister]}>
+        <Text style={styles.summaryEyebrow}>{mode === "login" ? "Acesso" : "Cadastro"}</Text>
         <Text style={styles.summaryTitle}>{overview.title}</Text>
         <Text style={styles.summaryText}>{overview.helperText}</Text>
       </View>
 
       {mode === "login" ? (
         <View style={styles.formCard}>
+          <Text style={styles.formEyebrow}>Ja possui conta</Text>
           <Text style={styles.cardTitle}>Entrar</Text>
+          <Text style={styles.cardText}>
+            Informe seu email e sua senha para seguir com seus materiais, favoritos e partilhas.
+          </Text>
           <AuthInput
             autoComplete="email"
             keyboardType="email-address"
@@ -107,7 +112,11 @@ export default function SignInScreen() {
         </View>
       ) : (
         <View style={styles.formCard}>
+          <Text style={styles.formEyebrow}>Dados principais</Text>
           <Text style={styles.cardTitle}>Nova conta</Text>
+          <Text style={styles.cardText}>
+            Comece com os dados essenciais. Os campos de paroquia e pastoral podem ser preenchidos com calma.
+          </Text>
           <AuthInput
             autoComplete="name"
             onChangeText={(value) => updateRegistration("fullName", value)}
@@ -178,9 +187,10 @@ export default function SignInScreen() {
       ) : null}
 
       <View style={styles.card}>
+        <Text style={styles.formEyebrow}>Cuidado com a conta</Text>
         <Text style={styles.cardTitle}>Seus dados</Text>
         <Text style={styles.cardText}>
-          Nome, email, telefone, estado e cidade ajudam a cuidar melhor da sua experiencia. Paroquia e pastoral podem ser adicionadas livremente.
+          Nome, email, telefone, estado e cidade ajudam a manter sua conta organizada. Paroquia e pastoral podem ser adicionadas livremente.
         </Text>
       </View>
     </ScrollView>
@@ -294,6 +304,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.06,
     shadowRadius: 16,
   },
+  formEyebrow: {
+    color: colors.accent,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
+    textTransform: "uppercase",
+  },
   inlineFields: {
     flexDirection: "row",
     gap: spacing.sm,
@@ -306,7 +323,7 @@ const styles = StyleSheet.create({
     color: colors.textPrimary,
     flex: 1,
     fontFamily: fontFamilies.body,
-    fontSize: typography.caption,
+    fontSize: typography.body,
     padding: spacing.md,
   },
   modeButton: {
@@ -338,7 +355,15 @@ const styles = StyleSheet.create({
   resultText: {
     color: colors.textPrimary,
     fontFamily: fontFamilies.body,
+    fontSize: typography.body,
+    lineHeight: 22,
+  },
+  summaryEyebrow: {
+    color: colors.accent,
+    fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
+    fontWeight: "800",
+    textTransform: "uppercase",
   },
   secondaryAction: {
     alignSelf: "flex-start",
