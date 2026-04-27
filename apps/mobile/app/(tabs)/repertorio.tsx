@@ -68,6 +68,7 @@ export default function RepertoireScreen() {
       <PageHeader eyebrow={overview.eyebrow} title={overview.title} subtitle={subtitle} />
 
       <View style={[styles.summary, sourceMode === "remote" ? styles.summaryRemote : styles.summaryLocal]}>
+        <Text style={styles.summaryEyebrow}>Acervo musical</Text>
         <View style={styles.summaryTopRow}>
           <View style={styles.metricBadge}>
             <Text style={styles.metricBadgeText}>{songs.length} cantos</Text>
@@ -77,7 +78,11 @@ export default function RepertoireScreen() {
           </View>
         </View>
         <Text style={styles.summaryTitle}>{overview.title}</Text>
-        <Text style={styles.summaryText}>{sourceMode === "remote" ? remoteFeedback.detail : `${localSongs.length} cantos reunidos para estudo e preparacao.`}</Text>
+        <Text style={styles.summaryText}>
+          {sourceMode === "remote"
+            ? remoteFeedback.detail
+            : `${localSongs.length} cantos reunidos para estudo, escolha e preparacao.`}
+        </Text>
       </View>
 
       <View style={styles.sectionHeader}>
@@ -155,6 +160,13 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.06,
     shadowRadius: 16,
+  },
+  summaryEyebrow: {
+    color: colors.gold,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
+    textTransform: "uppercase",
   },
   summaryLocal: {
     backgroundColor: colors.surfaceMuted,

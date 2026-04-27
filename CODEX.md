@@ -4293,3 +4293,33 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 91 - Revisar consistencia final entre Repertorio, musica e Perfil.
+
+## Etapa 91 - Consistencia entre Repertorio, musica e Perfil
+
+Resumo do que foi feito:
+
+- Alinhada a linguagem do Repertorio com o detalhe da musica e a tela de Perfil.
+- O resumo principal do Repertorio passou a usar a mesma hierarquia editorial aplicada nas outras telas.
+- Ajustada a copy do catalogo para reforcar estudo, escolha e preparacao, reduzindo variacoes de tom.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/repertorio.tsx`
+- `apps/mobile/src/features/songs/repertoire-overview.ts`
+- `apps/mobile/src/features/songs/repertoire-overview.test.ts`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: align repertoire editorial copy`
+
+## Proxima Etapa Planejada
+
+Etapa 92 - Revisar consistencia final entre Comunidade, Perfil e autenticacao.
