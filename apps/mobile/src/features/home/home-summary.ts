@@ -20,9 +20,9 @@ export type HomeSummary = {
 export function buildHomeSummary(input: HomeSummaryInput): HomeSummary {
   if (input.day.kind === "liturgical_day_without_repertoire") {
     return {
-      actionLabel: "Ver calendario",
+      actionLabel: "Ver dias preparados",
       helperText: `${input.day.title} ja aparece no calendario liturgico, mas o repertorio deste dia ainda esta em preparacao.`,
-      premiumText: "Consulte os dias marcados para encontrar os roteiros ja publicados.",
+      premiumText: "Os dias marcados no calendario indicam celebracoes que ja receberam roteiro.",
       title: "Hoje a liturgia recorda",
     };
   }
@@ -32,7 +32,7 @@ export function buildHomeSummary(input: HomeSummaryInput): HomeSummary {
       actionLabel: "Abrir calendario",
       helperText:
         "Nem todos os dias do ano recebem roteiro musical publicado. Consulte o calendario para encontrar os dias ja preparados.",
-      premiumText: "Os dias marcados indicam celebracoes com repertorio disponivel.",
+      premiumText: "Os dias marcados no calendario indicam celebracoes com repertorio disponivel.",
       title: "Hoje sem roteiro publicado",
     };
   }
@@ -45,7 +45,7 @@ export function buildHomeSummary(input: HomeSummaryInput): HomeSummary {
   if (input.session.status === "authenticated") {
     return {
       actionLabel: "Abrir roteiro de hoje",
-      helperText: `${input.celebration.recommendations.length} cantos organizados para a missa.`,
+      helperText: `${input.celebration.recommendations.length} cantos organizados para conduzir a missa de hoje.`,
       premiumText,
       title: "Roteiro pronto para hoje",
     };
@@ -53,7 +53,7 @@ export function buildHomeSummary(input: HomeSummaryInput): HomeSummary {
 
   return {
     actionLabel: "Entrar para liberar materiais",
-    helperText: `${input.celebration.recommendations.length} cantos sugeridos visiveis.`,
+    helperText: `${input.celebration.recommendations.length} cantos sugeridos ja estao visiveis neste roteiro.`,
     premiumText,
     title: "Celebre com ordem e clareza",
   };

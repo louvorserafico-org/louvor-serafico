@@ -1,10 +1,4 @@
-import {
-  getInitialCelebrationCatalog,
-  getLiturgicalDayForDate,
-  getLiturgicalMarkedDays2026,
-  getLiturgicalMonthDays2026,
-  getLiturgicalMonthLabel,
-} from "@louvor-serafico/shared";
+import { getInitialCelebrationCatalog, getLiturgicalDayForDate } from "@louvor-serafico/shared";
 import { router } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
@@ -29,8 +23,12 @@ export default function CalendarScreen() {
   const [sourceMode, setSourceMode] = useState<"local" | "remote">("local");
   const [remoteCount, setRemoteCount] = useState(0);
   const [remoteStatus, setRemoteStatus] = useState<"error" | "not_configured" | "ready">("not_configured");
-  const [subtitle, setSubtitle] = useState("Percorra o ano liturgico e encontre cada celebracao com serenidade e clareza.");
-  const [remoteMessage, setRemoteMessage] = useState("Configurar Supabase antes da leitura remota de celebracoes.");
+  const [subtitle, setSubtitle] = useState(
+    "Percorra o ano liturgico e encontre cada celebracao com serenidade e clareza.",
+  );
+  const [remoteMessage, setRemoteMessage] = useState(
+    "Configurar Supabase antes da leitura remota de celebracoes.",
+  );
 
   useEffect(() => {
     let active = true;
@@ -40,15 +38,21 @@ export default function CalendarScreen() {
       supabaseConfig.url,
       supabaseConfig.publishableKey ?? supabaseConfig.anonKey,
     ).then((remote) => {
-      if (active) {
-        const source = resolveCelebrationCatalogSource(remote, localCelebrations);
-        setCelebrations(source.celebrations);
-        setSourceMode(source.mode);
-        setRemoteCount(remote.celebrations.length);
-        setRemoteStatus(remote.status);
-        setRemoteMessage(remote.message);
-        setSubtitle(source.mode === "remote" ? "Calendario liturgico atualizado para sua consulta." : "Calendario inicial disponivel mesmo sem conexao.");
+      if (!active) {
+        return;
       }
+
+      const source = resolveCelebrationCatalogSource(remote, localCelebrations);
+      setCelebrations(source.celebrations);
+      setSourceMode(source.mode);
+      setRemoteCount(remote.celebrations.length);
+      setRemoteStatus(remote.status);
+      setRemoteMessage(remote.message);
+      setSubtitle(
+        source.mode === "remote"
+          ? "Calendario liturgico atualizado para sua consulta."
+          : "Calendario inicial disponivel mesmo sem conexao.",
+      );
     });
 
     return () => {
@@ -84,15 +88,14 @@ export default function CalendarScreen() {
       <PageHeader eyebrow={overview.eyebrow} title={overview.title} subtitle={subtitle} />
 
       <View style={[styles.summary, sourceMode === "remote" ? styles.summaryRemote : styles.summaryLocal]}>
+        <Text style={styles.summaryEyebrow}>Calendario liturgico</Text>
         <Text style={styles.summaryTitle}>{overview.title}</Text>
         <Text style={styles.summaryText}>
-          {sourceMode === "remote"
-            ? remoteFeedback.detail
-            : `${monthView.markedDays.length} data${monthView.markedDays.length > 1 ? "s" : ""} liturgica${monthView.markedDays.length > 1 ? "s" : ""} marcada${monthView.markedDays.length > 1 ? "s" : ""} em ${monthView.monthLabel}.`}
+          {sourceMode === "remote" ? remoteFeedback.detail : overview.helperText}
         </Text>
       </View>
 
-      <SectionTitle title={`Calendário de ${monthView.monthLabel}`} />
+      <SectionTitle title={`Calendario de ${monthView.monthLabel}`} />
 
       <View style={styles.monthCard}>
         <View style={styles.monthHeader}>
@@ -102,7 +105,9 @@ export default function CalendarScreen() {
             onPress={() => setSelectedMonth((current) => Math.max(1, current - 1))}
             style={[styles.monthNavButton, !canGoPrev ? styles.monthNavButtonDisabled : undefined]}
           >
-            <Text style={[styles.monthNavText, !canGoPrev ? styles.monthNavTextDisabled : undefined]}>Anterior</Text>
+            <Text style={[styles.monthNavText, !canGoPrev ? styles.monthNavTextDisabled : undefined]}>
+              Anterior
+            </Text>
           </Pressable>
           <Text style={styles.monthTitle}>{monthView.monthLabel}</Text>
           <Pressable
@@ -111,7 +116,9 @@ export default function CalendarScreen() {
             onPress={() => setSelectedMonth((current) => Math.min(12, current + 1))}
             style={[styles.monthNavButton, !canGoNext ? styles.monthNavButtonDisabled : undefined]}
           >
-            <Text style={[styles.monthNavText, !canGoNext ? styles.monthNavTextDisabled : undefined]}>Próximo</Text>
+            <Text style={[styles.monthNavText, !canGoNext ? styles.monthNavTextDisabled : undefined]}>
+              Proximo
+            </Text>
           </Pressable>
         </View>
 
@@ -159,11 +166,11 @@ export default function CalendarScreen() {
         <View style={styles.legend}>
           <View style={styles.legendItem}>
             <View style={[styles.legendDot, styles.dayCellRepertoire]} />
-            <Text style={styles.legendText}>Com repertório</Text>
+            <Text style={styles.legendText}>Com repertorio</Text>
           </View>
           <View style={styles.legendItem}>
             <View style={[styles.legendDot, styles.dayCellLiturgical]} />
-            <Text style={styles.legendText}>Data litúrgica</Text>
+            <Text style={styles.legendText}>Data liturgica</Text>
           </View>
           <View style={styles.legendItem}>
             <View style={[styles.legendDot, styles.dayCellToday]} />
@@ -188,15 +195,17 @@ export default function CalendarScreen() {
               <Text style={styles.markedTitle}>{day.title}</Text>
               <Text style={styles.markedText}>
                 {day.kind === "has_repertoire"
-                  ? "Roteiro musical disponível para consulta."
-                  : "Data litúrgica registrada. Repertório ainda não publicado."}
+                  ? "Roteiro musical disponivel para consulta."
+                  : "Data liturgica registrada. Repertorio ainda nao publicado."}
               </Text>
             </Pressable>
           ))
         ) : (
           <View style={styles.emptyCard}>
-            <Text style={styles.summaryTitle}>Sem marcações neste mês</Text>
-            <Text style={styles.summaryText}>Siga pelos meses do calendário de 2026 para localizar as próximas datas preparadas.</Text>
+            <Text style={styles.summaryTitle}>Sem marcacoes neste mes</Text>
+            <Text style={styles.summaryText}>
+              Siga pelos meses do calendario de 2026 para localizar as proximas datas preparadas.
+            </Text>
           </View>
         )}
       </View>
@@ -205,11 +214,15 @@ export default function CalendarScreen() {
 
       <View style={styles.list}>
         {monthView.celebrations.length > 0 ? (
-          monthView.celebrations.map((celebration) => <CelebrationCard celebration={celebration} key={celebration.id} />)
+          monthView.celebrations.map((celebration) => (
+            <CelebrationCard celebration={celebration} key={celebration.id} />
+          ))
         ) : (
           <View style={styles.emptyCard}>
-            <Text style={styles.summaryTitle}>Ainda sem roteiros neste mês</Text>
-            <Text style={styles.summaryText}>Acompanhe as datas marcadas acima ou avance pelos próximos meses de 2026.</Text>
+            <Text style={styles.summaryTitle}>Ainda sem roteiros neste mes</Text>
+            <Text style={styles.summaryText}>
+              Acompanhe as datas marcadas acima ou avance pelos proximos meses de 2026.
+            </Text>
           </View>
         )}
       </View>
@@ -241,12 +254,12 @@ const styles = StyleSheet.create({
     borderColor: "transparent",
     opacity: 0,
   },
-  dayCellPressable: {
-    overflow: "hidden",
-  },
   dayCellLiturgical: {
     backgroundColor: colors.surfaceMuted,
     borderColor: colors.gold,
+  },
+  dayCellPressable: {
+    overflow: "hidden",
   },
   dayCellRepertoire: {
     backgroundColor: colors.goldSoft,
@@ -342,6 +355,14 @@ const styles = StyleSheet.create({
     fontSize: typography.body,
     fontWeight: "700",
   },
+  monthCard: {
+    backgroundColor: colors.surface,
+    borderColor: colors.borderStrong,
+    borderRadius: radii.xl,
+    borderWidth: 1,
+    gap: spacing.md,
+    padding: spacing.lg,
+  },
   monthHeader: {
     alignItems: "center",
     flexDirection: "row",
@@ -366,14 +387,6 @@ const styles = StyleSheet.create({
   monthNavTextDisabled: {
     color: colors.textMuted,
   },
-  monthCard: {
-    backgroundColor: colors.surface,
-    borderColor: colors.borderStrong,
-    borderRadius: radii.xl,
-    borderWidth: 1,
-    gap: spacing.md,
-    padding: spacing.lg,
-  },
   monthTitle: {
     color: colors.textPrimary,
     fontFamily: fontFamilies.display,
@@ -391,6 +404,13 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.06,
     shadowRadius: 16,
+  },
+  summaryEyebrow: {
+    color: colors.gold,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
+    textTransform: "uppercase",
   },
   summaryLocal: {
     backgroundColor: colors.surfaceMuted,

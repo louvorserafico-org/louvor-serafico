@@ -14,14 +14,14 @@ export function buildCalendarOverview(input: CalendarOverviewInput): CalendarOve
   if (input.sourceMode === "remote") {
     return {
       eyebrow: `${input.remoteCount} celebracoes`,
-      helperText: "Calendario remoto ativo para consulta liturgica.",
-      title: "Celebracoes publicadas",
+      helperText: "Consulte as celebracoes ja publicadas e percorra o ano liturgico com mais clareza.",
+      title: "Calendario de celebracoes",
     };
   }
 
   return {
     eyebrow: `${input.localCount} celebracoes`,
-    helperText: "Catalogo local ativo enquanto calendario remoto evolui.",
-    title: "Calendario inicial",
+    helperText: "O calendario inicial segue disponivel para consulta enquanto novos roteiros sao publicados.",
+    title: "Calendario de celebracoes",
   };
 }

@@ -4261,3 +4261,35 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 90 - Revisar consistencia final entre Home, Calendario e detalhes.
+
+## Etapa 90 - Consistencia entre Home, Calendario e detalhes
+
+Resumo do que foi feito:
+
+- Alinhada a copy da Home com o Calendario para usar a mesma linguagem sobre dias preparados, roteiros e celebracoes.
+- O resumo principal do Calendario passou a seguir a mesma hierarquia editorial dos detalhes.
+- Ajustados textos finais para reduzir variacao de tom entre Home, Calendario e estados sem roteiro.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/calendario.tsx`
+- `apps/mobile/src/features/home/home-summary.ts`
+- `apps/mobile/src/features/home/home-summary.test.ts`
+- `apps/mobile/src/features/celebrations/calendar-overview.ts`
+- `apps/mobile/src/features/celebrations/calendar-overview.test.ts`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: align home and calendar editorial copy`
+
+## Proxima Etapa Planejada
+
+Etapa 91 - Revisar consistencia final entre Repertorio, musica e Perfil.

@@ -13,8 +13,8 @@ describe("calendar overview", () => {
       }),
       {
         eyebrow: "4 celebracoes",
-        helperText: "Calendario remoto ativo para consulta liturgica.",
-        title: "Celebracoes publicadas",
+        helperText: "Consulte as celebracoes ja publicadas e percorra o ano liturgico com mais clareza.",
+        title: "Calendario de celebracoes",
       },
     );
   });
@@ -28,8 +28,8 @@ describe("calendar overview", () => {
       }),
       {
         eyebrow: "1 celebracoes",
-        helperText: "Catalogo local ativo enquanto calendario remoto evolui.",
-        title: "Calendario inicial",
+        helperText: "O calendario inicial segue disponivel para consulta enquanto novos roteiros sao publicados.",
+        title: "Calendario de celebracoes",
       },
     );
   });

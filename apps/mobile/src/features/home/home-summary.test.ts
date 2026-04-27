@@ -45,7 +45,7 @@ describe("home summary", () => {
 
     assert.deepEqual(result, {
       actionLabel: "Abrir roteiro de hoje",
-      helperText: "6 cantos organizados para a missa.",
+      helperText: "6 cantos organizados para conduzir a missa de hoje.",
       premiumText: "Materiais premium liberados.",
       title: "Roteiro pronto para hoje",
     });
@@ -61,7 +61,7 @@ describe("home summary", () => {
 
     assert.deepEqual(result, {
       actionLabel: "Entrar para liberar materiais",
-      helperText: "6 cantos sugeridos visiveis.",
+      helperText: "6 cantos sugeridos ja estao visiveis neste roteiro.",
       premiumText: "Materiais premium exigem assinatura ativa.",
       title: "Celebre com ordem e clareza",
     });
@@ -78,7 +78,7 @@ describe("home summary", () => {
     assert.deepEqual(result, {
       actionLabel: "Abrir calendario",
       helperText: "Nem todos os dias do ano recebem roteiro musical publicado. Consulte o calendario para encontrar os dias ja preparados.",
-      premiumText: "Os dias marcados indicam celebracoes com repertorio disponivel.",
+      premiumText: "Os dias marcados no calendario indicam celebracoes com repertorio disponivel.",
       title: "Hoje sem roteiro publicado",
     });
   });
@@ -92,9 +92,9 @@ describe("home summary", () => {
     });
 
     assert.deepEqual(result, {
-      actionLabel: "Ver calendario",
+      actionLabel: "Ver dias preparados",
       helperText: "Natal do Senhor ja aparece no calendario liturgico, mas o repertorio deste dia ainda esta em preparacao.",
-      premiumText: "Consulte os dias marcados para encontrar os roteiros ja publicados.",
+      premiumText: "Os dias marcados no calendario indicam celebracoes que ja receberam roteiro.",
       title: "Hoje a liturgia recorda",
     });
   });
