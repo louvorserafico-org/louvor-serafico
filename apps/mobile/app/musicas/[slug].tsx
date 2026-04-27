@@ -81,6 +81,7 @@ export default function SongDetailScreen() {
       <PageHeader eyebrow="Canto sacro" title={song.title} subtitle={subtitle} />
 
       <View style={[styles.summary, sourceMode === "remote" ? styles.summaryRemote : styles.summaryLocal]}>
+        <Text style={styles.summaryEyebrow}>Detalhe do canto</Text>
         <Text style={styles.summaryTitle}>Materiais do canto</Text>
         <Text style={styles.summaryText}>{overview.helperText}</Text>
       </View>
@@ -88,6 +89,7 @@ export default function SongDetailScreen() {
       <SectionTitle title="Materiais" />
 
       <View style={[styles.favoriteCard, canFavorite ? styles.favoriteReady : styles.favoriteBlocked]}>
+        <Text style={styles.favoriteEyebrow}>{canFavorite ? "Favoritos" : "Conta"}</Text>
         <Text style={styles.assetTitle}>{canFavorite ? "Guardar entre favoritos" : "Entre para guardar este canto"}</Text>
         <Text style={styles.assetMeta}>
           {canFavorite
@@ -123,6 +125,7 @@ export default function SongDetailScreen() {
 
             return (
               <View key={asset.id} style={styles.asset}>
+                <Text style={styles.assetEyebrow}>Material</Text>
                 <Text style={styles.assetTitle}>{asset.title}</Text>
                 <Text style={styles.assetMeta}>{access.label}</Text>
                 <Text style={styles.assetPath}>
@@ -165,8 +168,9 @@ export default function SongDetailScreen() {
           })
         ) : (
           <View style={styles.asset}>
+            <Text style={styles.assetEyebrow}>Material</Text>
             <Text style={styles.assetTitle}>Material pendente</Text>
-            <Text style={styles.assetMeta}>Aguardando curadoria editorial.</Text>
+            <Text style={styles.assetMeta}>Em preparacao para este canto.</Text>
           </View>
         )}
       </View>
@@ -182,6 +186,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     gap: spacing.xs,
     padding: spacing.lg,
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.06,
+    shadowRadius: 16,
   },
   assetButton: {
     alignSelf: "flex-start",
@@ -206,6 +214,13 @@ const styles = StyleSheet.create({
   assetButtonTextSecondary: {
     color: colors.accent,
   },
+  assetEyebrow: {
+    color: colors.gold,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
+    textTransform: "uppercase",
+  },
   assetMeta: {
     color: colors.accent,
     fontFamily: fontFamilies.ui,
@@ -216,6 +231,7 @@ const styles = StyleSheet.create({
     color: colors.textMuted,
     fontFamily: fontFamilies.body,
     fontSize: typography.caption,
+    lineHeight: 20,
   },
   assetTitle: {
     color: colors.textPrimary,
@@ -262,6 +278,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     gap: spacing.xs,
     padding: spacing.lg,
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.06,
+    shadowRadius: 16,
+  },
+  favoriteEyebrow: {
+    color: colors.accent,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
+    textTransform: "uppercase",
   },
   favoriteReady: {
     backgroundColor: colors.oliveSoft,
@@ -275,6 +302,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     gap: spacing.xs,
     padding: spacing.lg,
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.06,
+    shadowRadius: 16,
+  },
+  summaryEyebrow: {
+    color: colors.accent,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
+    textTransform: "uppercase",
   },
   summaryLocal: {
     backgroundColor: colors.surfaceMuted,

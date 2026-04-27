@@ -12,8 +12,8 @@ describe("song detail overview", () => {
         sourceMode: "remote",
       }),
       {
-        helperText: "3 materiais lidos do catalogo remoto. Favoritos ativos.",
-        title: "Musica remota ativa",
+        helperText: "3 materiais reunidos para este canto. Favoritos ativos.",
+        title: "Canto pronto para servir",
       },
     );
   });
@@ -26,8 +26,8 @@ describe("song detail overview", () => {
         sourceMode: "local",
       }),
       {
-        helperText: "1 materiais disponiveis no catalogo local. Favoritos bloqueados.",
-        title: "Catalogo local ativo",
+        helperText: "1 materiais ja podem ser consultados neste canto. Favoritos indisponiveis por enquanto.",
+        title: "Canto em consulta",
       },
     );
   });

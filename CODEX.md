@@ -4199,3 +4199,33 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 88 - Refinar visual e copy do detalhe da musica.
+
+## Etapa 88 - Detalhe da musica
+
+Resumo do que foi feito:
+
+- Refinada a copy do detalhe da musica para um tom menos tecnico e mais editorial.
+- O resumo principal ganhou eyebrow e mensagem mais adequada ao uso real do canto.
+- Blocos de favoritos e materiais receberam hierarquia visual mais clara sem mudar o comportamento.
+
+Arquivos alterados:
+
+- `apps/mobile/app/musicas/[slug].tsx`
+- `apps/mobile/src/features/songs/song-detail-overview.ts`
+- `apps/mobile/src/features/songs/song-detail-overview.test.ts`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: refine song detail hierarchy and copy`
+
+## Proxima Etapa Planejada
+
+Etapa 89 - Refinar visual e copy do detalhe da celebracao.
