@@ -12,13 +12,13 @@ export type SongDetailOverview = {
 export function buildSongDetailOverview(input: SongDetailOverviewInput): SongDetailOverview {
   if (input.sourceMode === "remote") {
     return {
-      helperText: `${input.assetCount} materiais reunidos para este canto. Favoritos ${input.favoriteEnabled ? "ativos" : "indisponiveis por enquanto"}.`,
-      title: "Canto pronto para servir",
+      helperText: `${input.assetCount} materiais reunidos para este canto. Favoritos ${input.favoriteEnabled ? "ativos" : "aguardando entrada na conta"}.`,
+      title: "Canto preparado",
     };
   }
 
   return {
-    helperText: `${input.assetCount} materiais ja podem ser consultados neste canto. Favoritos ${input.favoriteEnabled ? "ativos" : "indisponiveis por enquanto"}.`,
+    helperText: `${input.assetCount} materiais ja podem ser consultados neste canto. Favoritos ${input.favoriteEnabled ? "ativos" : "aguardando entrada na conta"}.`,
     title: "Canto em consulta",
   };
 }

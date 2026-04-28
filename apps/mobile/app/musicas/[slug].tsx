@@ -3,8 +3,8 @@ import { Link, Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
+import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { PageHeader } from "@/components/PageHeader";
-import { SectionTitle } from "@/components/SectionTitle";
 import { requestAssetSignedUrl } from "@/features/assets/edge-asset-url";
 import { useSessionPreview } from "@/features/auth/SessionProvider";
 import { useSupabaseSession } from "@/features/auth/SupabaseSessionProvider";
@@ -82,11 +82,15 @@ export default function SongDetailScreen() {
 
       <View style={[styles.summary, sourceMode === "remote" ? styles.summaryRemote : styles.summaryLocal]}>
         <Text style={styles.summaryEyebrow}>Detalhe do canto</Text>
-        <Text style={styles.summaryTitle}>Materiais do canto</Text>
+        <Text style={styles.summaryTitle}>{overview.title}</Text>
         <Text style={styles.summaryText}>{overview.helperText}</Text>
       </View>
 
-      <SectionTitle title="Materiais" />
+      <EditorialSectionHeader
+        eyebrow="Consulta"
+        subtitle="Abra os materiais disponiveis e organize melhor o estudo e a execucao deste canto."
+        title="Materiais"
+      />
 
       <View style={[styles.favoriteCard, canFavorite ? styles.favoriteReady : styles.favoriteBlocked]}>
         <Text style={styles.favoriteEyebrow}>{canFavorite ? "Favoritos" : "Conta"}</Text>
@@ -237,7 +241,6 @@ const styles = StyleSheet.create({
     color: colors.textPrimary,
     fontFamily: fontFamilies.display,
     fontSize: typography.heading,
-    fontStyle: "italic",
     fontWeight: "700",
   },
   container: {
@@ -332,7 +335,6 @@ const styles = StyleSheet.create({
     color: colors.textPrimary,
     fontFamily: fontFamilies.display,
     fontSize: typography.heading,
-    fontStyle: "italic",
     fontWeight: "700",
   },
 });

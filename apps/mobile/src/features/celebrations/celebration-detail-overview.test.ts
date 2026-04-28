@@ -12,8 +12,8 @@ describe("celebration detail overview", () => {
         sourceMode: "remote",
       }),
       {
-        helperText: "6 momentos lidos do calendario remoto. 1 sem material.",
-        title: "Celebracao remota ativa",
+        helperText: "6 momentos reunidos neste roteiro. 1 ainda sem material.",
+        title: "Roteiro da celebracao",
       },
     );
   });
@@ -26,8 +26,8 @@ describe("celebration detail overview", () => {
         sourceMode: "local",
       }),
       {
-        helperText: "6 momentos disponiveis no roteiro local. 2 sem material.",
-        title: "Roteiro local ativo",
+        helperText: "6 momentos reunidos neste roteiro. 2 ainda sem material.",
+        title: "Roteiro da celebracao",
       },
     );
   });

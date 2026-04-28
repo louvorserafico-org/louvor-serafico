@@ -7,10 +7,10 @@ import { Link, Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
+import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { EditorialStatus } from "@/components/EditorialStatus";
 import { MomentCard } from "@/components/MomentCard";
 import { PageHeader } from "@/components/PageHeader";
-import { SectionTitle } from "@/components/SectionTitle";
 import { buildCelebrationDetailOverview } from "@/features/celebrations/celebration-detail-overview";
 import { buildLiturgicalDayDetail } from "@/features/celebrations/liturgical-day-detail";
 import { fetchRemoteCelebrationDetail } from "@/features/celebrations/remote-celebration-detail";
@@ -112,13 +112,17 @@ export default function CelebrationDetailScreen() {
 
       <View style={[styles.summary, sourceMode === "remote" ? styles.summaryRemote : styles.summaryLocal]}>
         <Text style={styles.summaryEyebrow}>Roteiro da missa</Text>
-        <Text style={styles.summaryTitle}>Roteiro da celebracao</Text>
+        <Text style={styles.summaryTitle}>{overview.title}</Text>
         <Text style={styles.summaryText}>{overview.helperText}</Text>
       </View>
 
       <EditorialStatus missingCount={missingMaterials} />
 
-      <SectionTitle title="Momentos da missa" />
+      <EditorialSectionHeader
+        eyebrow="Ordem da missa"
+        subtitle="Cada momento segue reunido para consulta rapida e preparo do ministerio."
+        title="Momentos da missa"
+      />
 
       <View style={styles.list}>
         {momentRows.map((item) => (
@@ -201,7 +205,6 @@ const styles = StyleSheet.create({
     color: colors.textPrimary,
     fontFamily: fontFamilies.display,
     fontSize: typography.heading,
-    fontStyle: "italic",
     fontWeight: "700",
   },
 });

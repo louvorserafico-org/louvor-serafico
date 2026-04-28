@@ -4762,3 +4762,42 @@ Sugestao de commit:
 - Etapa 105 - Refinar detalhes de Musica e Celebracao com cabecalhos editoriais e blocos mais contidos.
 - Etapa 106 - Revisao transversal de componentes compartilhados, tabs, espacamentos e copy final.
 - Etapa 107 - Validacao final visual e tecnica do ciclo completo de refatoracao.
+
+## Etapa 105 - Detalhes de Musica e Celebracao no mesmo padrao editorial da Home
+
+Resumo do que foi feito:
+
+- Os detalhes de Musica e Celebracao passaram a usar cabecalhos editoriais de secao.
+- Os resumos principais ficaram menos tecnicos e com foco maior em consulta e preparo.
+- `MomentCard` e `EditorialStatus` foram suavizados para reduzir peso visual e alinhar melhor com o restante do app.
+- Os estados de dia liturgico sem roteiro e dia comum foram reescritos para uma leitura mais limpa.
+
+Arquivos alterados:
+
+- `apps/mobile/app/musicas/[slug].tsx`
+- `apps/mobile/app/celebracoes/[id].tsx`
+- `apps/mobile/src/components/EditorialStatus.tsx`
+- `apps/mobile/src/components/MomentCard.tsx`
+- `apps/mobile/src/features/songs/song-detail-overview.ts`
+- `apps/mobile/src/features/songs/song-detail-overview.test.ts`
+- `apps/mobile/src/features/celebrations/celebration-detail-overview.ts`
+- `apps/mobile/src/features/celebrations/celebration-detail-overview.test.ts`
+- `apps/mobile/src/features/celebrations/liturgical-day-detail.ts`
+- `apps/mobile/src/features/celebrations/liturgical-day-detail.test.ts`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: apply editorial home structure to detail screens`
+
+## Proximas Etapas Planejadas
+
+- Etapa 106 - Revisao transversal de componentes compartilhados, tabs, espacamentos e copy final.
+- Etapa 107 - Validacao final visual e tecnica do ciclo completo de refatoracao.

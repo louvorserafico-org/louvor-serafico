@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 
-import { colors, spacing, typography } from "@/theme/tokens";
+import { colors, fontFamilies, spacing, typography } from "@/theme/tokens";
 
 type EditorialStatusProps = {
   missingCount: number;
@@ -11,6 +11,7 @@ export function EditorialStatus({ missingCount }: EditorialStatusProps) {
 
   return (
     <View style={[styles.card, complete ? styles.complete : styles.pending]}>
+      <Text style={styles.eyebrow}>{complete ? "Completo" : "Revisao"}</Text>
       <Text style={styles.title}>{complete ? "Conteudo completo" : "Revisao pendente"}</Text>
       <Text style={styles.text}>
         {complete
@@ -36,14 +37,23 @@ const styles = StyleSheet.create({
     backgroundColor: colors.goldSoft,
     borderColor: colors.gold,
   },
+  eyebrow: {
+    color: colors.gold,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
+    textTransform: "uppercase",
+  },
   text: {
     color: colors.textSecondary,
+    fontFamily: fontFamilies.body,
     fontSize: typography.body,
     lineHeight: 23,
   },
   title: {
     color: colors.textPrimary,
+    fontFamily: fontFamilies.display,
     fontSize: typography.body,
-    fontWeight: "800",
+    fontWeight: "700",
   },
 });

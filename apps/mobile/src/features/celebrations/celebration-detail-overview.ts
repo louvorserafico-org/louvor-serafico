@@ -14,13 +14,13 @@ export function buildCelebrationDetailOverview(
 ): CelebrationDetailOverview {
   if (input.sourceMode === "remote") {
     return {
-      helperText: `${input.momentCount} momentos lidos do calendario remoto. ${input.missingMaterials} sem material.`,
-      title: "Celebracao remota ativa",
+      helperText: `${input.momentCount} momentos reunidos neste roteiro. ${input.missingMaterials} ainda sem material.`,
+      title: "Roteiro da celebracao",
     };
   }
 
   return {
-    helperText: `${input.momentCount} momentos disponiveis no roteiro local. ${input.missingMaterials} sem material.`,
-    title: "Roteiro local ativo",
+    helperText: `${input.momentCount} momentos reunidos neste roteiro. ${input.missingMaterials} ainda sem material.`,
+    title: "Roteiro da celebracao",
   };
 }

@@ -13,7 +13,7 @@ describe("song detail overview", () => {
       }),
       {
         helperText: "3 materiais reunidos para este canto. Favoritos ativos.",
-        title: "Canto pronto para servir",
+        title: "Canto preparado",
       },
     );
   });
@@ -26,7 +26,7 @@ describe("song detail overview", () => {
         sourceMode: "local",
       }),
       {
-        helperText: "1 materiais ja podem ser consultados neste canto. Favoritos indisponiveis por enquanto.",
+        helperText: "1 materiais ja podem ser consultados neste canto. Favoritos aguardando entrada na conta.",
         title: "Canto em consulta",
       },
     );
