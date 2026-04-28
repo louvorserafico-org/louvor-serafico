@@ -14,29 +14,29 @@ export type CommunityAccess = {
 export function buildCommunityAccess(input: CommunityAccessInput): CommunityAccess {
   if (input.hasRemoteSession) {
     return {
-      helperText: "Compartilhe como o repertorio serviu a celebracao e fortaleceu outros ministerios.",
+      helperText: "Compartilhe o que ajudou o canto, a assembleia e o servico do ministerio.",
       inputPlaceholder: "Conte como este canto ajudou a assembleia, o coro ou o ensaio.",
       primaryLabel: "Publicar partilha",
       status: "remote",
-      title: "Partilhe com a comunidade",
+      title: "Partilha entre ministerios",
     };
   }
 
   if (input.canComment) {
     return {
-      helperText: "Sua partilha fica guardada neste aparelho ate que a comunidade completa esteja pronta para voce.",
+      helperText: "Sua partilha pode ser guardada neste aparelho para consulta e memoria do ministerio.",
       inputPlaceholder: "Conte como foi o ensaio, a escolha dos cantos ou a celebracao.",
       primaryLabel: "Guardar partilha",
       status: "local",
-      title: "Espaco de partilha",
+      title: "Partilha do ministerio",
     };
   }
 
   return {
-    helperText: "Entre na sua conta para acompanhar partilhas, guardar experiencias e caminhar com outros musicos.",
+    helperText: "Entre na sua conta para acompanhar partilhas e guardar experiencias do ministerio.",
     inputPlaceholder: "Entre para escrever sua partilha.",
     primaryLabel: "Entrar para participar",
     status: "blocked",
-    title: "Partilhe sua experiencia",
+    title: "Partilha e escuta",
   };
 }

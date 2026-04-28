@@ -6,8 +6,8 @@ export function buildTodayTabSubtitle(isAuthenticated: boolean): string {
 
 export function buildCommunityTabSubtitle(canComment: boolean): string {
   return canComment
-    ? "Espaco para partilhas, comentarios e experiencias musicais da comunidade."
-    : "Leia partilhas da comunidade e entre na conta para deixar a sua quando desejar.";
+    ? "Leia experiencias do ministerio e deixe a sua quando desejar."
+    : "Entre na conta para acompanhar partilhas e registrar a sua com serenidade.";
 }
 
 export function buildProfileTabSubtitle(isAuthenticated: boolean): string {

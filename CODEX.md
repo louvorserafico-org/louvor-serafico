@@ -4651,3 +4651,40 @@ Sugestao de commit:
 - Etapa 105 - Refinar detalhes de Musica e Celebracao com cabecalhos editoriais e blocos mais contidos.
 - Etapa 106 - Revisao transversal de componentes compartilhados, tabs, espacamentos e copy final.
 - Etapa 107 - Validacao final visual e tecnica do ciclo completo de refatoracao.
+
+## Etapa 102 - Comunidade no mesmo padrao editorial da Home
+
+Resumo do que foi feito:
+
+- A Comunidade passou a usar o mesmo ritmo editorial da Home e das abas ja ajustadas.
+- O bloco principal ficou mais direto, com menos repeticao de texto e foco mais claro em participacao.
+- O formulario ganhou cabecalho editorial e a lista de partilhas ficou mais leve, em bloco unico de leitura.
+- A copy de acesso e do subtitulo da tab foi refinada para um tom mais sobrio e menos tecnico.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/comunidade.tsx`
+- `apps/mobile/src/features/comments/community-access.ts`
+- `apps/mobile/src/features/comments/community-access.test.ts`
+- `apps/mobile/src/features/tabs/main-tab-copy.ts`
+- `apps/mobile/src/features/tabs/main-tab-copy.test.ts`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: apply editorial home structure to community`
+
+## Proximas Etapas Planejadas
+
+- Etapa 103 - Refinar Perfil e assinatura com hierarquia mais sobria e menos blocos concorrentes.
+- Etapa 104 - Refinar Entrar e Recuperar Senha com a mesma linguagem visual e densidade reduzida.
+- Etapa 105 - Refinar detalhes de Musica e Celebracao com cabecalhos editoriais e blocos mais contidos.
+- Etapa 106 - Revisao transversal de componentes compartilhados, tabs, espacamentos e copy final.
+- Etapa 107 - Validacao final visual e tecnica do ciclo completo de refatoracao.

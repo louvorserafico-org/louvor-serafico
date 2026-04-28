@@ -22,11 +22,11 @@ describe("main tab copy", () => {
   it("builds community subtitle", () => {
     assert.equal(
       buildCommunityTabSubtitle(true),
-      "Espaco para partilhas, comentarios e experiencias musicais da comunidade.",
+      "Leia experiencias do ministerio e deixe a sua quando desejar.",
     );
     assert.equal(
       buildCommunityTabSubtitle(false),
-      "Leia partilhas da comunidade e entre na conta para deixar a sua quando desejar.",
+      "Entre na conta para acompanhar partilhas e registrar a sua com serenidade.",
     );
   });
 

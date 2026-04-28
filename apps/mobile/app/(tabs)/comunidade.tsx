@@ -2,6 +2,7 @@ import { Link } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 
+import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { PageHeader } from "@/components/PageHeader";
 import { useSessionPreview } from "@/features/auth/SessionProvider";
 import { useSupabaseSession } from "@/features/auth/SupabaseSessionProvider";
@@ -81,9 +82,6 @@ export default function CommunityScreen() {
         </View>
         <Text style={styles.panelTitle}>{communityAccess.title}</Text>
         <Text style={styles.panelText}>{communityAccess.helperText}</Text>
-        <Text style={styles.panelText}>
-          {canComment ? submitMessage : "Entre para ler novas partilhas com calma e registrar a sua quando desejar."}
-        </Text>
         {!canComment ? (
           <Link asChild href="/entrar">
             <Pressable style={[styles.button, styles.buttonAccent]}>
@@ -94,8 +92,11 @@ export default function CommunityScreen() {
       </View>
 
       <View style={styles.formCard}>
-        <Text style={styles.formEyebrow}>Escrever</Text>
-        <Text style={styles.panelTitle}>Nova partilha</Text>
+        <EditorialSectionHeader
+          eyebrow="Escrever"
+          subtitle={canComment ? submitMessage : "Entre para registrar sua experiencia quando desejar."}
+          title="Nova partilha"
+        />
         <TextInput
           editable={canComment}
           multiline
@@ -155,21 +156,34 @@ export default function CommunityScreen() {
         )}
       </View>
 
+      <EditorialSectionHeader
+        eyebrow="Leitura"
+        subtitle="Vozes do ministerio reunidas para memoria, formacao e servico."
+        title="Partilhas recentes"
+      />
+
       {feedSource.comments.length > 0 ? (
-        feedSource.comments.map((comment) => (
-          <View key={comment.id} style={styles.comment}>
-            <Text style={styles.commentEyebrow}>Partilha</Text>
-            <Text style={styles.commentAuthor}>{comment.authorName}</Text>
-            <Text style={styles.commentText}>{comment.body}</Text>
-          </View>
-        ))
+        <View style={styles.commentList}>
+          {feedSource.comments.map((comment, index) => (
+            <View
+              key={comment.id}
+              style={[styles.comment, index !== feedSource.comments.length - 1 ? styles.commentBorder : undefined]}
+            >
+              <Text style={styles.commentEyebrow}>Partilha</Text>
+              <Text style={styles.commentAuthor}>{comment.authorName}</Text>
+              <Text style={styles.commentText}>{comment.body}</Text>
+            </View>
+          ))}
+        </View>
       ) : (
-        <View style={styles.comment}>
-          <Text style={styles.commentEyebrow}>Comunidade</Text>
-          <Text style={styles.commentAuthor}>A primeira partilha ainda esta por chegar</Text>
-          <Text style={styles.commentText}>
-            Quando uma experiencia for publicada, este espaco passara a reunir vozes do ministerio.
-          </Text>
+        <View style={styles.commentList}>
+          <View style={styles.comment}>
+            <Text style={styles.commentEyebrow}>Comunidade</Text>
+            <Text style={styles.commentAuthor}>A primeira partilha ainda esta por chegar</Text>
+            <Text style={styles.commentText}>
+              Quando uma experiencia for publicada, este espaco passara a reunir vozes do ministerio.
+            </Text>
+          </View>
         </View>
       )}
     </ScrollView>
@@ -205,16 +219,8 @@ const styles = StyleSheet.create({
     color: colors.textMuted,
   },
   comment: {
-    backgroundColor: colors.surface,
-    borderColor: colors.border,
-    borderRadius: radii.xl,
-    borderWidth: 1,
     gap: spacing.xs,
-    padding: spacing.lg,
-    shadowColor: colors.ink,
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.06,
-    shadowRadius: 16,
+    paddingVertical: spacing.md,
   },
   commentEyebrow: {
     color: colors.gold,
@@ -236,6 +242,20 @@ const styles = StyleSheet.create({
     fontSize: typography.body,
     lineHeight: 24,
   },
+  commentBorder: {
+    borderBottomColor: colors.border,
+    borderBottomWidth: 1,
+  },
+  commentList: {
+    backgroundColor: colors.surface,
+    borderRadius: radii.xl,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.sm,
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.05,
+    shadowRadius: 16,
+  },
   container: {
     backgroundColor: colors.background,
     gap: spacing.lg,
@@ -249,13 +269,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     gap: spacing.xs,
     padding: spacing.lg,
-  },
-  formEyebrow: {
-    color: colors.gold,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "800",
-    textTransform: "uppercase",
   },
   input: {
     backgroundColor: colors.surfaceMuted,
@@ -307,7 +320,6 @@ const styles = StyleSheet.create({
     color: colors.textPrimary,
     fontFamily: fontFamilies.display,
     fontSize: typography.heading,
-    fontStyle: "italic",
     fontWeight: "700",
   },
   metricBadge: {
