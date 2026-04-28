@@ -3,21 +3,23 @@ import {
   getInitialCelebrationCatalog,
   getLiturgicalDayForDate,
 } from "@louvor-serafico/shared";
-import { Link } from "expo-router";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { HomePreparedDayItem } from "@/components/HomePreparedDayItem";
 import { HomeQuickActionCard } from "@/components/HomeQuickActionCard";
 import { OrnamentalDivider } from "@/components/OrnamentalDivider";
+import { useSupabaseProfile } from "@/features/auth/SupabaseProfileProvider";
 import { useSupabaseSession } from "@/features/auth/SupabaseSessionProvider";
 import { buildHomePreparedDays } from "@/features/home/home-prepared-days";
 import { buildHomeSummary } from "@/features/home/home-summary";
+import { buildHomeWelcome } from "@/features/home/home-welcome";
 import { useSubscriptionPreview } from "@/features/subscription/SubscriptionPreviewProvider";
 import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
 
 export default function TodayScreen() {
   const { session } = useSupabaseSession();
+  const { profile } = useSupabaseProfile();
   const { state } = useSubscriptionPreview();
   const celebrations = getInitialCelebrationCatalog();
   const today = getLiturgicalDayForDate(new Date());
@@ -29,48 +31,37 @@ export default function TodayScreen() {
     session,
     subscription: state,
   });
-  const primaryHref =
-    todayCelebration && session.status === "authenticated"
-      ? `/celebracoes/${todayCelebration.slug}`
-      : todayCelebration
-        ? "/entrar"
-        : "/calendario";
+  const welcome = buildHomeWelcome({
+    profile,
+    session,
+  });
   const supportLabel =
     today.kind === "ordinary_day" ? "Dia comum" : todayCelebration ? "Celebracao do dia" : "Memoria liturgica";
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerDate}>{today.dateLabel}</Text>
+        <View style={styles.headerTopRow}>
+          <Text style={styles.headerSection}>Inicio</Text>
+          <View style={styles.avatarCircle}>
+            <Text style={styles.avatarText}>{welcome.initials}</Text>
+          </View>
+        </View>
         <Text style={styles.headerTitle}>Louvor Serafico</Text>
         <Text style={styles.headerSubtitle}>Que o canto conduza a oracao.</Text>
+        <View style={styles.headerDateBadge}>
+          <Text style={styles.headerDateText}>{today.dateLabel}</Text>
+        </View>
       </View>
 
       <OrnamentalDivider />
 
       <View style={styles.todayCard}>
-        <View style={styles.todayTopRow}>
-          <Text style={styles.todayEyebrow}>Hoje</Text>
-          <Text style={styles.todayDate}>{today.dateLabel}</Text>
-        </View>
-
+        <Text style={styles.todayEyebrow}>Hoje</Text>
         <Text style={styles.todaySupportLabel}>{supportLabel}</Text>
         <Text style={styles.todayTitle}>{summary.title}</Text>
         <Text style={styles.todayText}>{summary.helperText}</Text>
         {summary.premiumText ? <Text style={styles.todayNote}>{summary.premiumText}</Text> : null}
-
-        <View style={styles.actionRow}>
-          <Link asChild href={primaryHref}>
-            <Pressable accessibilityRole="button" style={[styles.actionButton, styles.primaryButton]}>
-              <Text style={styles.primaryButtonText}>{summary.actionLabel}</Text>
-            </Pressable>
-          </Link>
-          <Link asChild href="/repertorio">
-            <Pressable accessibilityRole="button" style={[styles.actionButton, styles.secondaryButton]}>
-              <Text style={styles.secondaryButtonText}>Explorar repertorio</Text>
-            </Pressable>
-          </Link>
-        </View>
       </View>
 
       <View style={styles.quickActionsSection}>
@@ -106,17 +97,21 @@ export default function TodayScreen() {
 }
 
 const styles = StyleSheet.create({
-  actionButton: {
+  avatarCircle: {
+    alignItems: "center",
+    backgroundColor: colors.surface,
+    borderColor: colors.borderStrong,
     borderRadius: radii.pill,
-    minHeight: 48,
-    paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.md,
+    borderWidth: 1,
+    height: 38,
+    justifyContent: "center",
+    width: 38,
   },
-  actionRow: {
-    columnGap: spacing.sm,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    rowGap: spacing.sm,
+  avatarText: {
+    color: colors.accentStrong,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
   },
   container: {
     backgroundColor: colors.background,
@@ -137,7 +132,7 @@ const styles = StyleSheet.create({
   header: {
     gap: spacing.xs,
   },
-  headerDate: {
+  headerSection: {
     color: colors.gold,
     fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
@@ -157,19 +152,32 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     lineHeight: 48,
   },
+  headerTopRow: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  headerDateBadge: {
+    alignSelf: "flex-start",
+    backgroundColor: colors.surface,
+    borderColor: colors.borderStrong,
+    borderRadius: radii.pill,
+    borderWidth: 1,
+    marginTop: spacing.sm,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+  },
+  headerDateText: {
+    color: colors.accentStrong,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
+    textTransform: "uppercase",
+  },
   preparedList: {
     backgroundColor: colors.surface,
     borderRadius: radii.xl,
     paddingHorizontal: spacing.md,
-  },
-  primaryButton: {
-    backgroundColor: colors.accent,
-  },
-  primaryButtonText: {
-    color: colors.background,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.body,
-    fontWeight: "800",
   },
   quickActions: {
     columnGap: spacing.xs,
@@ -185,15 +193,6 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     textTransform: "uppercase",
   },
-  secondaryButton: {
-    backgroundColor: colors.surface,
-  },
-  secondaryButtonText: {
-    color: colors.accent,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.body,
-    fontWeight: "700",
-  },
   todayCard: {
     backgroundColor: colors.surface,
     borderRadius: radii.xl,
@@ -203,12 +202,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 10 },
     shadowOpacity: 0.08,
     shadowRadius: 18,
-  },
-  todayDate: {
-    color: colors.accent,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "800",
   },
   todayEyebrow: {
     color: colors.gold,
@@ -242,10 +235,5 @@ const styles = StyleSheet.create({
     fontSize: 34,
     fontWeight: "700",
     lineHeight: 40,
-  },
-  todayTopRow: {
-    alignItems: "center",
-    flexDirection: "row",
-    justifyContent: "space-between",
   },
 });

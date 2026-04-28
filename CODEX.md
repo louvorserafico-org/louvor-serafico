@@ -4906,3 +4906,82 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 - Validacao manual do fluxo completo celebracao -> musica -> abertura de material premium no device.
+
+## Etapa 109 - Home com saudacao editorial e menos acoes concorrentes
+
+Resumo do que foi feito:
+
+- O topo da Home deixou de exibir a data isolada e passou a usar uma composicao editorial com `Inicio`, iniciais da conta e saudacao personalizada.
+- A saudacao agora usa o perfil real quando disponivel e cai para o email da sessao quando o perfil ainda nao estiver pronto.
+- O card principal de `Hoje` perdeu as acoes `Ver dias preparados` e `Explorar repertorio`, reduzindo concorrencia visual.
+- A secao inferior de consulta e roteiros disponiveis foi removida da Home.
+- Os acessos rapidos permaneceram como ponto principal de navegacao abaixo do estado do dia.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/index.tsx`
+- `apps/mobile/src/features/home/home-welcome.ts`
+- `apps/mobile/src/features/home/home-welcome.test.ts`
+- `package.json`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: simplify home and add personalized welcome`
+
+## Etapa 110 - Restauracao da secao inferior da Home
+
+Resumo do que foi feito:
+
+- A secao inferior de consulta e roteiros disponiveis foi restaurada na Home.
+- O topo editorial com saudacao personalizada foi mantido.
+- O card principal de `Hoje` permaneceu sem as acoes removidas na etapa anterior.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/index.tsx`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`fix: restore home prepared days section`
+
+## Etapa 111 - Data destacada no topo da Home sem saudacao longa
+
+Resumo do que foi feito:
+
+- Removida a frase de saudacao longa do topo da Home.
+- A data voltou a aparecer de forma destacada, agora em um selo proprio logo abaixo do subtitulo.
+- As iniciais do usuario no canto superior direito foram mantidas.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/index.tsx`
+- `apps/mobile/src/features/home/home-welcome.ts`
+- `apps/mobile/src/features/home/home-welcome.test.ts`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`refactor: highlight home date and remove greeting line`
