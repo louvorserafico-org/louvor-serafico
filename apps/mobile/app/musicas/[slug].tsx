@@ -11,6 +11,7 @@ import { useSupabaseSession } from "@/features/auth/SupabaseSessionProvider";
 import { useFavorites } from "@/features/favorites/FavoritesProvider";
 import { fetchRemoteSongDetail } from "@/features/songs/remote-song-detail";
 import { buildSongDetailOverview } from "@/features/songs/song-detail-overview";
+import { buildSongMaterialSections } from "@/features/songs/song-materials";
 import { resolveSongAssetAction } from "@/features/songs/song-asset-action";
 import { resolveAssetAccess } from "@/features/subscription/premium-access";
 import { useSubscriptionPreview } from "@/features/subscription/SubscriptionPreviewProvider";
@@ -74,6 +75,7 @@ export default function SongDetailScreen() {
     favoriteEnabled: canFavorite,
     sourceMode,
   });
+  const materialSections = buildSongMaterialSections(song.assets);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -88,7 +90,7 @@ export default function SongDetailScreen() {
 
       <EditorialSectionHeader
         eyebrow="Consulta"
-        subtitle="Abra os materiais disponiveis e organize melhor o estudo e a execucao deste canto."
+        subtitle="Cada frente de estudo fica reunida em seu proprio espaco para leitura, cifra, audio e video."
         title="Materiais"
       />
 
@@ -118,65 +120,70 @@ export default function SongDetailScreen() {
       </View>
 
       <View style={styles.list}>
-        {song.assets.length > 0 ? (
-          song.assets.map((asset) => {
-            const access = resolveAssetAccess(asset, { hasActiveSubscription, isAuthenticated });
-            const action = resolveSongAssetAction({
-              canAccess: access.canAccess,
-              hasActiveSubscription,
-              isAuthenticated,
-            });
-
-            return (
-              <View key={asset.id} style={styles.asset}>
-                <Text style={styles.assetEyebrow}>Material</Text>
-                <Text style={styles.assetTitle}>{asset.title}</Text>
-                <Text style={styles.assetMeta}>{access.label}</Text>
-                <Text style={styles.assetPath}>
-                  {access.canAccess ? "Disponivel para abrir agora." : access.message}
-                </Text>
-                {assetMessages[asset.id] ? <Text style={styles.assetPath}>{assetMessages[asset.id]}</Text> : null}
-                {action.kind === "open" ? (
-                  <Pressable
-                    onPress={() => {
-                      void requestAssetSignedUrl(
-                        asset.id,
-                        {
-                          accessToken: supabaseSession.accessToken,
-                          functionsUrl: supabaseConfig.functionsUrl,
-                        },
-                      ).then((result) => {
-                        setAssetMessages((current) => ({
-                          ...current,
-                          [asset.id]: result.message,
-                        }));
-
-                        if (result.url) {
-                          void Linking.openURL(result.url);
-                        }
-                      });
-                    }}
-                    style={styles.assetButton}
-                  >
-                    <Text style={styles.assetButtonText}>{action.label}</Text>
-                  </Pressable>
-                ) : (
-                  <Link asChild href={action.href}>
-                    <Pressable style={[styles.assetButton, styles.assetButtonSecondary]}>
-                      <Text style={[styles.assetButtonText, styles.assetButtonTextSecondary]}>{action.label}</Text>
-                    </Pressable>
-                  </Link>
-                )}
-              </View>
-            );
-          })
-        ) : (
-          <View style={styles.asset}>
+        {materialSections.map((section) => (
+          <View key={section.key} style={styles.asset}>
             <Text style={styles.assetEyebrow}>Material</Text>
-            <Text style={styles.assetTitle}>Material pendente</Text>
-            <Text style={styles.assetMeta}>Em preparacao para este canto.</Text>
+            <Text style={styles.assetTitle}>{section.title}</Text>
+            <Text style={styles.assetPath}>{section.helperText}</Text>
+            {section.assets.length > 0 ? (
+              <View style={styles.sectionList}>
+                {section.assets.map((asset) => {
+                  const access = resolveAssetAccess(asset, { hasActiveSubscription, isAuthenticated });
+                  const action = resolveSongAssetAction({
+                    canAccess: access.canAccess,
+                    hasActiveSubscription,
+                    isAuthenticated,
+                  });
+
+                  return (
+                    <View key={asset.id} style={styles.sectionItem}>
+                      <Text style={styles.assetMeta}>{asset.title}</Text>
+                      <Text style={styles.assetPath}>
+                        {access.canAccess ? "Disponivel para abrir agora." : access.message}
+                      </Text>
+                      {assetMessages[asset.id] ? <Text style={styles.assetPath}>{assetMessages[asset.id]}</Text> : null}
+                      {action.kind === "open" ? (
+                        <Pressable
+                          onPress={() => {
+                            void requestAssetSignedUrl(
+                              asset.id,
+                              {
+                                accessToken: supabaseSession.accessToken,
+                                functionsUrl: supabaseConfig.functionsUrl,
+                              },
+                            ).then((result) => {
+                              setAssetMessages((current) => ({
+                                ...current,
+                                [asset.id]: result.message,
+                              }));
+
+                              if (result.url) {
+                                void Linking.openURL(result.url);
+                              }
+                            });
+                          }}
+                          style={styles.assetButton}
+                        >
+                          <Text style={styles.assetButtonText}>{action.label}</Text>
+                        </Pressable>
+                      ) : (
+                        <Link asChild href={action.href}>
+                          <Pressable style={[styles.assetButton, styles.assetButtonSecondary]}>
+                            <Text style={[styles.assetButtonText, styles.assetButtonTextSecondary]}>{action.label}</Text>
+                          </Pressable>
+                        </Link>
+                      )}
+                    </View>
+                  );
+                })}
+              </View>
+            ) : (
+              <View style={styles.sectionEmpty}>
+                <Text style={styles.sectionEmptyText}>{section.emptyText}</Text>
+              </View>
+            )}
           </View>
-        )}
+        ))}
       </View>
     </ScrollView>
   );
@@ -299,6 +306,30 @@ const styles = StyleSheet.create({
   },
   list: {
     gap: spacing.md,
+  },
+  sectionEmpty: {
+    backgroundColor: colors.surfaceMuted,
+    borderColor: colors.border,
+    borderRadius: radii.lg,
+    borderWidth: 1,
+    marginTop: spacing.sm,
+    padding: spacing.md,
+  },
+  sectionEmptyText: {
+    color: colors.textMuted,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.caption,
+    lineHeight: 20,
+  },
+  sectionItem: {
+    borderTopColor: colors.border,
+    borderTopWidth: 1,
+    gap: spacing.xs,
+    paddingTop: spacing.md,
+  },
+  sectionList: {
+    gap: spacing.md,
+    marginTop: spacing.sm,
   },
   summary: {
     borderRadius: radii.xl,

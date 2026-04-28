@@ -4867,3 +4867,42 @@ Sugestao de commit:
 - Home, Calendario, Repertorio, Comunidade, Perfil, Entrar, Recuperar Senha, Musica e Celebracao alinhados ao mesmo padrao editorial.
 - Componentes compartilhados e bottom tab refinados.
 - Nenhuma pendencia tecnica aberta neste ciclo.
+
+## Etapa 108 - Fluxo de celebracao para musica com materiais preparados por tipo
+
+Resumo do que foi feito:
+
+- O detalhe da celebracao passou a tratar cada canto como ponto de entrada para a tela completa da musica.
+- Cada momento da missa agora exibe sinais curtos dos materiais ja disponiveis, com destaque imediato para partitura quando houver.
+- Ao tocar em um canto no roteiro da celebracao, a navegacao segue para a tela da musica correspondente.
+- A tela da musica foi reorganizada para separar os materiais por frente de consulta: partitura, letra e cifra, audio e video.
+- Mesmo sem todos os materiais publicados hoje, a estrutura futura ficou pronta sem quebrar o catalogo atual.
+- O dominio compartilhado passou a aceitar `video` como tipo valido de material, preparando a evolucao futura do acervo.
+
+Arquivos alterados:
+
+- `packages/shared/src/celebration.ts`
+- `apps/mobile/app/celebracoes/[id].tsx`
+- `apps/mobile/app/musicas/[slug].tsx`
+- `apps/mobile/src/components/MomentCard.tsx`
+- `apps/mobile/src/features/songs/song-detail-overview.ts`
+- `apps/mobile/src/features/songs/song-detail-overview.test.ts`
+- `apps/mobile/src/features/songs/song-materials.ts`
+- `apps/mobile/src/features/songs/song-materials.test.ts`
+- `package.json`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: connect celebration moments to song details`
+
+## Proxima Etapa Planejada
+
+- Validacao manual do fluxo completo celebracao -> musica -> abertura de material premium no device.

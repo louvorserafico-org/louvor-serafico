@@ -6,7 +6,7 @@ import {
   // @ts-ignore Node runs TypeScript sources directly in this dev setup.
 } from "./mass-template.ts";
 
-export type SongAssetType = "lyrics" | "chord_sheet" | "score_pdf" | "audio";
+export type SongAssetType = "lyrics" | "chord_sheet" | "score_pdf" | "audio" | "video";
 export type RecommendationPriority = "required" | "recommended" | "optional";
 
 export type SongAsset = {

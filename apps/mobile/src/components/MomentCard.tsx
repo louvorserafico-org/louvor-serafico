@@ -5,12 +5,13 @@ import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens
 
 type MomentCardProps = {
   assetCount: number;
+  materialBadges?: string[];
   moment: MassMoment;
   onPress?: () => void;
   songTitle: string;
 };
 
-export function MomentCard({ assetCount, moment, onPress, songTitle }: MomentCardProps) {
+export function MomentCard({ assetCount, materialBadges = [], moment, onPress, songTitle }: MomentCardProps) {
   const Root = onPress ? Pressable : View;
 
   return (
@@ -22,12 +23,42 @@ export function MomentCard({ assetCount, moment, onPress, songTitle }: MomentCar
         <Text style={styles.assets}>
           {assetCount > 0 ? `${assetCount} material${assetCount > 1 ? "s" : ""} disponivel${assetCount > 1 ? "is" : ""}` : "Material em preparacao"}
         </Text>
+        {materialBadges.length > 0 ? (
+          <View style={styles.badges}>
+            {materialBadges.map((badge) => (
+              <View key={badge} style={styles.badge}>
+                <Text style={styles.badgeText}>{badge}</Text>
+              </View>
+            ))}
+          </View>
+        ) : null}
+        {onPress ? <Text style={styles.link}>Abrir canto completo</Text> : null}
       </View>
     </Root>
   );
 }
 
 const styles = StyleSheet.create({
+  badge: {
+    backgroundColor: colors.surfaceMuted,
+    borderColor: colors.border,
+    borderRadius: radii.pill,
+    borderWidth: 1,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+  },
+  badgeText: {
+    color: colors.textSecondary,
+    fontFamily: fontFamilies.ui,
+    fontSize: 12,
+    fontWeight: "700",
+  },
+  badges: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: spacing.xs,
+    marginTop: spacing.xs,
+  },
   card: {
     alignItems: "flex-start",
     backgroundColor: colors.surface,
@@ -50,6 +81,13 @@ const styles = StyleSheet.create({
     fontSize: typography.caption,
     fontWeight: "800",
     textTransform: "uppercase",
+  },
+  link: {
+    color: colors.accent,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "700",
+    marginTop: spacing.xs,
   },
   assets: {
     color: colors.textMuted,

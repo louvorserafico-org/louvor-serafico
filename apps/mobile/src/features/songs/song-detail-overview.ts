@@ -10,15 +10,17 @@ export type SongDetailOverview = {
 };
 
 export function buildSongDetailOverview(input: SongDetailOverviewInput): SongDetailOverview {
+  const materialsLabel = `${input.assetCount} ${input.assetCount === 1 ? "material reunido" : "materiais reunidos"}`;
+
   if (input.sourceMode === "remote") {
     return {
-      helperText: `${input.assetCount} materiais reunidos para este canto. Favoritos ${input.favoriteEnabled ? "ativos" : "aguardando entrada na conta"}.`,
+      helperText: `${materialsLabel} para este canto. Favoritos ${input.favoriteEnabled ? "ativos" : "aguardando entrada na conta"}.`,
       title: "Canto preparado",
     };
   }
 
   return {
-    helperText: `${input.assetCount} materiais ja podem ser consultados neste canto. Favoritos ${input.favoriteEnabled ? "ativos" : "aguardando entrada na conta"}.`,
+    helperText: `${input.assetCount} ${input.assetCount === 1 ? "material ja pode ser consultado" : "materiais ja podem ser consultados"} neste canto. Favoritos ${input.favoriteEnabled ? "ativos" : "aguardando entrada na conta"}.`,
     title: "Canto em consulta",
   };
 }

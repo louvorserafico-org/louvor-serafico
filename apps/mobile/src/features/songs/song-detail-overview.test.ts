@@ -26,7 +26,7 @@ describe("song detail overview", () => {
         sourceMode: "local",
       }),
       {
-        helperText: "1 materiais ja podem ser consultados neste canto. Favoritos aguardando entrada na conta.",
+        helperText: "1 material ja pode ser consultado neste canto. Favoritos aguardando entrada na conta.",
         title: "Canto em consulta",
       },
     );

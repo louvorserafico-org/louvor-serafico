@@ -3,7 +3,7 @@ import {
   findCelebrationBySlug,
   getLiturgicalMonthDays2026,
 } from "@louvor-serafico/shared";
-import { Link, Stack, useLocalSearchParams } from "expo-router";
+import { Link, Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
@@ -14,11 +14,13 @@ import { PageHeader } from "@/components/PageHeader";
 import { buildCelebrationDetailOverview } from "@/features/celebrations/celebration-detail-overview";
 import { buildLiturgicalDayDetail } from "@/features/celebrations/liturgical-day-detail";
 import { fetchRemoteCelebrationDetail } from "@/features/celebrations/remote-celebration-detail";
+import { buildSongMaterialBadges } from "@/features/songs/song-materials";
 import { supabaseConfig } from "@/services/supabase/client";
 import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
 
 export default function CelebrationDetailScreen() {
   const params = useLocalSearchParams<{ id: string }>();
+  const router = useRouter();
   const localCelebration = useMemo(
     () => findCelebrationBySlug(params.id ?? "") ?? findCelebrationBySlug("santissimo-nome-de-jesus"),
     [params.id],
@@ -120,7 +122,7 @@ export default function CelebrationDetailScreen() {
 
       <EditorialSectionHeader
         eyebrow="Ordem da missa"
-        subtitle="Cada momento segue reunido para consulta rapida e preparo do ministerio."
+        subtitle="Toque em um canto para abrir seus materiais e seguir o preparo de cada momento."
         title="Momentos da missa"
       />
 
@@ -129,7 +131,11 @@ export default function CelebrationDetailScreen() {
           <MomentCard
             assetCount={item.song.assets.length}
             key={item.recommendation.id}
+            materialBadges={buildSongMaterialBadges(item.song.assets)}
             moment={item.moment}
+            onPress={() => {
+              router.push(`/musicas/${item.song.slug}`);
+            }}
             songTitle={item.song.title}
           />
         ))}
