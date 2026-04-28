@@ -4801,3 +4801,37 @@ Sugestao de commit:
 
 - Etapa 106 - Revisao transversal de componentes compartilhados, tabs, espacamentos e copy final.
 - Etapa 107 - Validacao final visual e tecnica do ciclo completo de refatoracao.
+
+## Etapa 106 - Revisao transversal dos componentes compartilhados e acabamento final
+
+Resumo do que foi feito:
+
+- `PageHeader` foi ajustado para uma hierarquia mais serena, com subtitulo menos pesado e melhor respiro.
+- `SectionTitle` e os ultimos usos residuais de italico estrutural foram removidos para disciplinar a tipografia.
+- A bottom tab foi refinada com ajuste de altura, espacamento e legibilidade dos labels.
+- Tokens tipograficos e alguns pontos finais de copy e apresentacao foram alinhados ao padrao editorial consolidado.
+
+Arquivos alterados:
+
+- `apps/mobile/src/components/PageHeader.tsx`
+- `apps/mobile/src/components/SectionTitle.tsx`
+- `apps/mobile/app/(tabs)/_layout.tsx`
+- `apps/mobile/app/(tabs)/calendario.tsx`
+- `apps/mobile/app/(tabs)/comunidade.tsx`
+- `apps/mobile/src/theme/tokens.ts`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: finalize shared editorial ui polish`
+
+## Proximas Etapas Planejadas
+
+- Etapa 107 - Validacao final visual e tecnica do ciclo completo de refatoracao.

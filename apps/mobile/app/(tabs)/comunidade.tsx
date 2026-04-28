@@ -233,7 +233,6 @@ const styles = StyleSheet.create({
     color: colors.textPrimary,
     fontFamily: fontFamilies.display,
     fontSize: typography.caption,
-    fontStyle: "italic",
     fontWeight: "700",
   },
   commentText: {

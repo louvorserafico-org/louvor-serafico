@@ -28,13 +28,13 @@ export default function TabsLayout() {
         tabBarStyle: {
           backgroundColor: colors.tabBackground,
           borderTopColor: colors.border,
-          height: 72,
-          paddingBottom: 10,
-          paddingTop: 10,
+          height: 76,
+          paddingBottom: 12,
+          paddingTop: 8,
         },
         tabBarItemStyle: {
           borderRadius: radii.lg,
-          marginHorizontal: 2,
+          marginHorizontal: 4,
         },
         tabBarIcon: ({ color, size }) => (
           <Ionicons color={color} name={tabs[route.name] ?? "ellipse-outline"} size={size} />

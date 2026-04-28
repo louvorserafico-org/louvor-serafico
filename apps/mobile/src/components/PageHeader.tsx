@@ -21,7 +21,7 @@ export function PageHeader({ eyebrow, title, subtitle }: PageHeaderProps) {
 const styles = StyleSheet.create({
   container: {
     gap: spacing.sm,
-    paddingBottom: spacing.md,
+    paddingBottom: spacing.lg,
     borderBottomColor: colors.border,
     borderBottomWidth: 1,
   },
@@ -35,15 +35,14 @@ const styles = StyleSheet.create({
   subtitle: {
     color: colors.textSecondary,
     fontFamily: fontFamilies.body,
-    fontSize: typography.lead,
-    lineHeight: 28,
+    fontSize: typography.body,
+    lineHeight: 24,
   },
   title: {
     color: colors.textPrimary,
     fontFamily: fontFamilies.display,
     fontSize: typography.title,
-    fontStyle: "italic",
     fontWeight: "700",
-    lineHeight: 48,
+    lineHeight: 46,
   },
 });
