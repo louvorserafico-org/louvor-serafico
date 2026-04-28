@@ -4,8 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { CelebrationCard } from "@/components/CelebrationCard";
+import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { PageHeader } from "@/components/PageHeader";
-import { SectionTitle } from "@/components/SectionTitle";
 import { buildCalendarDayRoute } from "@/features/celebrations/calendar-day-route";
 import { buildCalendarMonthView } from "@/features/celebrations/calendar-month-view";
 import { buildCalendarOverview } from "@/features/celebrations/calendar-overview";
@@ -95,7 +95,11 @@ export default function CalendarScreen() {
         </Text>
       </View>
 
-      <SectionTitle title={`Calendario de ${monthView.monthLabel}`} />
+      <EditorialSectionHeader
+        eyebrow="Navegacao"
+        subtitle="Percorra o ano de 2026 e toque em cada data para abrir o detalhe correspondente."
+        title={`Calendario de ${monthView.monthLabel}`}
+      />
 
       <View style={styles.monthCard}>
         <View style={styles.monthHeader}>
@@ -179,7 +183,11 @@ export default function CalendarScreen() {
         </View>
       </View>
 
-      <SectionTitle title={`Datas marcadas em ${monthView.monthLabel}`} />
+      <EditorialSectionHeader
+        eyebrow="Datas"
+        subtitle="Dias liturgicos e roteiros ja sinalizados neste mes."
+        title={`Datas marcadas em ${monthView.monthLabel}`}
+      />
 
       <View style={styles.markedList}>
         {monthView.markedDays.length > 0 ? (
@@ -189,7 +197,13 @@ export default function CalendarScreen() {
               accessibilityRole="button"
               key={day.monthDay}
               onPress={() => router.push(buildCalendarDayRoute(day))}
-              style={({ pressed }) => [styles.markedCard, pressed ? styles.cardPressed : undefined]}
+              style={({ pressed }) => [
+                styles.markedItem,
+                pressed ? styles.cardPressed : undefined,
+                day.monthDay !== monthView.markedDays[monthView.markedDays.length - 1]?.monthDay
+                  ? styles.markedItemBorder
+                  : undefined,
+              ]}
             >
               <Text style={styles.markedEyebrow}>{day.dateLabel}</Text>
               <Text style={styles.markedTitle}>{day.title}</Text>
@@ -210,7 +224,11 @@ export default function CalendarScreen() {
         )}
       </View>
 
-      <SectionTitle title={`Roteiros de ${monthView.monthLabel}`} />
+      <EditorialSectionHeader
+        eyebrow="Consulta"
+        subtitle="Os roteiros publicados seguem disponiveis para abrir, revisar e preparar."
+        title={`Roteiros de ${monthView.monthLabel}`}
+      />
 
       <View style={styles.list}>
         {monthView.celebrations.length > 0 ? (
@@ -325,13 +343,15 @@ const styles = StyleSheet.create({
   list: {
     gap: spacing.md,
   },
-  markedCard: {
-    backgroundColor: colors.surface,
-    borderColor: colors.border,
-    borderRadius: radii.lg,
-    borderWidth: 1,
+  markedItem: {
     gap: spacing.xs,
-    padding: spacing.md,
+    paddingBottom: spacing.md,
+    paddingTop: spacing.xs,
+  },
+  markedItemBorder: {
+    borderBottomColor: colors.border,
+    borderBottomWidth: 1,
+    marginBottom: spacing.sm,
   },
   markedEyebrow: {
     color: colors.gold,
@@ -341,7 +361,10 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
   },
   markedList: {
-    gap: spacing.md,
+    backgroundColor: colors.surface,
+    borderRadius: radii.xl,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
   },
   markedText: {
     color: colors.textSecondary,
@@ -351,7 +374,7 @@ const styles = StyleSheet.create({
   },
   markedTitle: {
     color: colors.textPrimary,
-    fontFamily: fontFamilies.body,
+    fontFamily: fontFamilies.display,
     fontSize: typography.body,
     fontWeight: "700",
   },
@@ -430,7 +453,6 @@ const styles = StyleSheet.create({
     color: colors.textPrimary,
     fontFamily: fontFamilies.display,
     fontSize: typography.heading,
-    fontStyle: "italic",
     fontWeight: "700",
   },
   weekLabel: {

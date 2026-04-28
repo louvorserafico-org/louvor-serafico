@@ -4426,3 +4426,191 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 95 - Validacao visual da Home em device e ajustes finos.
+
+## Etapa 95 - Ajuste fino de caixas da Home
+
+Resumo do que foi feito:
+
+- Corrigida a quebra excessiva dos atalhos rapidos na Home.
+- A grade dos atalhos passou a respeitar melhor a largura mobile, com o terceiro item ocupando a linha inteira.
+- O bloco de consulta deixou de comprimir o titulo principal ao lado do link e voltou a respirar verticalmente.
+- Ajustados tamanho de titulo, altura minima e largura dos atalhos para manter margens internas mais harmonicas.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/index.tsx`
+- `apps/mobile/src/components/HomeQuickActionCard.tsx`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`fix: polish home card spacing on mobile`
+
+## Proxima Etapa Planejada
+
+Etapa 96 - Validacao visual final da Home em device.
+
+## Etapa 96 - Correcao da faixa de atalhos da Home
+
+Resumo do que foi feito:
+
+- A faixa `Calendario`, `Repertorio` e `Partilha` voltou para tres colunas equilibradas.
+- Cada atalho recuperou borda, largura uniforme e altura minima comum.
+- O texto interno foi reduzido e redistribuido para preservar respiro sem quebrar o ritmo visual da primeira dobra.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/index.tsx`
+- `apps/mobile/src/components/HomeQuickActionCard.tsx`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`fix: rebalance home quick actions`
+
+## Proxima Etapa Planejada
+
+Etapa 97 - Validacao visual final da Home em device.
+
+## Etapa 97 - Refino de atalhos e CTA da Home
+
+Resumo do que foi feito:
+
+- O bloco intermediario deixou de usar mini-cards explicativos e passou a operar como faixa de acessos rapidos.
+- Cada atalho ficou reduzido a marca curta e titulo, com leitura imediata e menos pressao horizontal.
+- O CTA do calendario saiu do corpo solto da secao e foi integrado ao cabecalho de `Roteiros disponiveis`.
+- A secao de roteiros ficou mais editorial, enquanto os atalhos ficaram mais utilitarios, reforcando a diferenca entre navegacao e conteudo.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/index.tsx`
+- `apps/mobile/src/components/HomeQuickActionCard.tsx`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: refine home quick actions and calendar cta`
+
+## Proxima Etapa Planejada
+
+Etapa 98 - Validacao visual final da Home em device.
+
+## Etapa 98 - Simplificacao dos atalhos e do card principal
+
+Resumo do que foi feito:
+
+- Removidas as letras decorativas dos atalhos rapidos.
+- Os atalhos ficaram reduzidos a titulo e microtexto curto.
+- O card principal deixou de repetir a mesma ideia no texto e no CTA quando nao ha roteiro preparado.
+- A Home ficou mais limpa sem alterar rotas nem comportamento.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/index.tsx`
+- `apps/mobile/src/components/HomeQuickActionCard.tsx`
+- `apps/mobile/src/features/home/home-summary.ts`
+- `apps/mobile/src/features/home/home-summary.test.ts`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`refactor: simplify home quick actions and empty today state`
+
+## Proxima Etapa Planejada
+
+Etapa 99 - Validacao visual final da Home em device.
+
+## Etapa 99 - Ajuste de quebra nos atalhos da Home
+
+Resumo do que foi feito:
+
+- Ajustada a tipografia dos atalhos rapidos para evitar quebra de linha em `Calendario` e `Repertorio`.
+- Reduzidos padding horizontal e espacamento entre os tres atalhos.
+- Os textos passaram a respeitar uma linha unica com ajuste fino de tamanho.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/index.tsx`
+- `apps/mobile/src/components/HomeQuickActionCard.tsx`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`fix: prevent quick action text wrapping`
+
+## Proxima Etapa Planejada
+
+Etapa 100 - Validacao visual final da Home em device.
+
+## Etapa 100 - Padroes globais da Home e aplicacao inicial no Calendario
+
+Resumo do que foi feito:
+
+- Definido o plano global de refatoracao por etapas para aplicar a linguagem da Home ao restante do app.
+- Criado `EditorialSectionHeader` como cabecalho editorial compartilhado para secoes.
+- A Home passou a usar esse cabecalho na area de roteiros.
+- O Calendario foi iniciado nesse novo padrao com secoes mais editoriais e menos blocadas.
+- A lista de datas marcadas ficou mais leve, com leitura de lista em vez de mini-cards concorrentes.
+
+Arquivos alterados:
+
+- `apps/mobile/src/components/EditorialSectionHeader.tsx`
+- `apps/mobile/app/(tabs)/index.tsx`
+- `apps/mobile/app/(tabs)/calendario.tsx`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: extract editorial section headers and start calendar refactor`
+
+## Proximas Etapas Planejadas
+
+- Etapa 101 - Refinar Repertorio com a mesma estrutura editorial e navegacao mais enxuta.
+- Etapa 102 - Refinar Comunidade com foco em participacao, leitura e estados vazios mais leves.
+- Etapa 103 - Refinar Perfil e assinatura com hierarquia mais sobria e menos blocos concorrentes.
+- Etapa 104 - Refinar Entrar e Recuperar Senha com a mesma linguagem visual e densidade reduzida.
+- Etapa 105 - Refinar detalhes de Musica e Celebracao com cabecalhos editoriais e blocos mais contidos.
+- Etapa 106 - Revisao transversal de componentes compartilhados, tabs, espacamentos e copy final.
+- Etapa 107 - Validacao final visual e tecnica do ciclo completo de refatoracao.

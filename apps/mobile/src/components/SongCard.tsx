@@ -32,7 +32,10 @@ export function SongCard({ song }: SongCardProps) {
               : "Material em preparacao para publicacao."}
           </Text>
         </View>
-        <Text style={styles.action}>Ver canto</Text>
+        <View style={styles.actionRow}>
+          <View />
+          <Text style={styles.action}>Ver canto</Text>
+        </View>
       </Pressable>
     </Link>
   );
@@ -46,21 +49,16 @@ const styles = StyleSheet.create({
     fontWeight: "800",
   },
   card: {
-    alignItems: "center",
     backgroundColor: colors.surface,
-    borderColor: colors.border,
     borderRadius: radii.lg,
-    borderWidth: 1,
-    flexDirection: "row",
-    gap: spacing.md,
+    gap: spacing.sm,
     padding: spacing.md,
     shadowColor: colors.ink,
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.08,
-    shadowRadius: 18,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.05,
+    shadowRadius: 14,
   },
   content: {
-    flex: 1,
     gap: spacing.xs,
   },
   eyebrow: {
@@ -80,10 +78,14 @@ const styles = StyleSheet.create({
     opacity: 0.82,
   },
   row: {
+    alignItems: "flex-start",
+    gap: spacing.sm,
+  },
+  actionRow: {
     alignItems: "center",
     flexDirection: "row",
-    gap: spacing.sm,
     justifyContent: "space-between",
+    paddingTop: spacing.xs,
   },
   favorite: {
     color: colors.olive,
@@ -93,8 +95,8 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.textPrimary,
-    fontFamily: fontFamilies.body,
-    fontSize: typography.body,
-    fontWeight: "800",
+    fontFamily: fontFamilies.display,
+    fontSize: typography.lead,
+    fontWeight: "700",
   },
 });

@@ -22,7 +22,7 @@ export function buildHomeSummary(input: HomeSummaryInput): HomeSummary {
     return {
       actionLabel: "Ver dias preparados",
       helperText: "Ainda nao ha sugestoes musicais para este dia.",
-      premiumText: input.day.title,
+      premiumText: "",
       title: "Sem roteiro preparado",
     };
   }
@@ -31,7 +31,7 @@ export function buildHomeSummary(input: HomeSummaryInput): HomeSummary {
     return {
       actionLabel: "Ver dias preparados",
       helperText: "Ainda nao ha sugestoes musicais para este dia.",
-      premiumText: "Veja no calendario os dias ja preparados.",
+      premiumText: "",
       title: "Sem roteiro preparado",
     };
   }

@@ -78,7 +78,7 @@ describe("home summary", () => {
     assert.deepEqual(result, {
       actionLabel: "Ver dias preparados",
       helperText: "Ainda nao ha sugestoes musicais para este dia.",
-      premiumText: "Veja no calendario os dias ja preparados.",
+      premiumText: "",
       title: "Sem roteiro preparado",
     });
   });
@@ -94,7 +94,7 @@ describe("home summary", () => {
     assert.deepEqual(result, {
       actionLabel: "Ver dias preparados",
       helperText: "Ainda nao ha sugestoes musicais para este dia.",
-      premiumText: "Natal do Senhor",
+      premiumText: "",
       title: "Sem roteiro preparado",
     });
   });

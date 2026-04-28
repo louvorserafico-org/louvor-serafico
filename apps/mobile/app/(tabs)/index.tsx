@@ -6,6 +6,7 @@ import {
 import { Link } from "expo-router";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
+import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { HomePreparedDayItem } from "@/components/HomePreparedDayItem";
 import { HomeQuickActionCard } from "@/components/HomeQuickActionCard";
 import { OrnamentalDivider } from "@/components/OrnamentalDivider";
@@ -34,7 +35,6 @@ export default function TodayScreen() {
       : todayCelebration
         ? "/entrar"
         : "/calendario";
-  const secondaryHref = todayCelebration ? "/repertorio" : "/repertorio";
   const supportLabel =
     today.kind === "ordinary_day" ? "Dia comum" : todayCelebration ? "Celebracao do dia" : "Memoria liturgica";
 
@@ -57,7 +57,7 @@ export default function TodayScreen() {
         <Text style={styles.todaySupportLabel}>{supportLabel}</Text>
         <Text style={styles.todayTitle}>{summary.title}</Text>
         <Text style={styles.todayText}>{summary.helperText}</Text>
-        <Text style={styles.todayNote}>{summary.premiumText}</Text>
+        {summary.premiumText ? <Text style={styles.todayNote}>{summary.premiumText}</Text> : null}
 
         <View style={styles.actionRow}>
           <Link asChild href={primaryHref}>
@@ -65,7 +65,7 @@ export default function TodayScreen() {
               <Text style={styles.primaryButtonText}>{summary.actionLabel}</Text>
             </Pressable>
           </Link>
-          <Link asChild href={secondaryHref}>
+          <Link asChild href="/repertorio">
             <Pressable accessibilityRole="button" style={[styles.actionButton, styles.secondaryButton]}>
               <Text style={styles.secondaryButtonText}>Explorar repertorio</Text>
             </Pressable>
@@ -73,24 +73,22 @@ export default function TodayScreen() {
         </View>
       </View>
 
-      <View style={styles.quickActions}>
-        <HomeQuickActionCard href="/calendario" subtitle="Celebracoes e memorias" title="Calendario" />
-        <HomeQuickActionCard href="/repertorio" subtitle="Cantos da missa" title="Repertorio" />
-        <HomeQuickActionCard href="/comunidade" subtitle="Comunidade" title="Partilha" />
+      <View style={styles.quickActionsSection}>
+        <Text style={styles.quickActionsTitle}>Acessos rapidos</Text>
+        <View style={styles.quickActions}>
+          <HomeQuickActionCard href="/calendario" subtitle="Celebracoes" title="Calendario" />
+          <HomeQuickActionCard href="/repertorio" subtitle="Cantos" title="Repertorio" />
+          <HomeQuickActionCard href="/comunidade" subtitle="Comunidade" title="Partilha" />
+        </View>
       </View>
 
-      <View style={styles.sectionHeader}>
-        <View style={styles.sectionCopy}>
-          <Text style={styles.sectionEyebrow}>Consulta</Text>
-          <Text style={styles.sectionTitle}>{preparedDays.title}</Text>
-          <Text style={styles.sectionText}>{preparedDays.helperText}</Text>
-        </View>
-        <Link asChild href="/calendario">
-          <Pressable accessibilityRole="button" style={styles.sectionLink}>
-            <Text style={styles.sectionLinkText}>Calendario completo</Text>
-          </Pressable>
-        </Link>
-      </View>
+      <EditorialSectionHeader
+        actionHref="/calendario"
+        actionLabel="Ver calendario"
+        eyebrow="Consulta"
+        subtitle={preparedDays.helperText}
+        title={preparedDays.title}
+      />
 
       <View style={styles.preparedList}>
         {preparedDays.items.map((celebration, index) => (
@@ -123,9 +121,9 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.background,
     gap: spacing.lg,
+    paddingBottom: spacing.xxl,
     paddingHorizontal: spacing.lg,
     paddingTop: spacing.xl,
-    paddingBottom: spacing.xxl,
   },
   footerNote: {
     color: colors.textMuted,
@@ -174,9 +172,18 @@ const styles = StyleSheet.create({
     fontWeight: "800",
   },
   quickActions: {
-    columnGap: spacing.sm,
+    columnGap: spacing.xs,
     flexDirection: "row",
-    rowGap: spacing.sm,
+  },
+  quickActionsSection: {
+    gap: spacing.sm,
+  },
+  quickActionsTitle: {
+    color: colors.textMuted,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "700",
+    textTransform: "uppercase",
   },
   secondaryButton: {
     backgroundColor: colors.surface,
@@ -186,45 +193,6 @@ const styles = StyleSheet.create({
     fontFamily: fontFamilies.ui,
     fontSize: typography.body,
     fontWeight: "700",
-  },
-  sectionCopy: {
-    flex: 1,
-    gap: spacing.xs,
-    paddingRight: spacing.md,
-  },
-  sectionEyebrow: {
-    color: colors.gold,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "800",
-    textTransform: "uppercase",
-  },
-  sectionHeader: {
-    alignItems: "flex-end",
-    flexDirection: "row",
-    gap: spacing.md,
-  },
-  sectionLink: {
-    paddingVertical: spacing.xs,
-  },
-  sectionLinkText: {
-    color: colors.accent,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "800",
-  },
-  sectionText: {
-    color: colors.textSecondary,
-    fontFamily: fontFamilies.body,
-    fontSize: typography.body,
-    lineHeight: 24,
-  },
-  sectionTitle: {
-    color: colors.textPrimary,
-    fontFamily: fontFamilies.display,
-    fontSize: typography.heading,
-    fontWeight: "700",
-    lineHeight: 30,
   },
   todayCard: {
     backgroundColor: colors.surface,
