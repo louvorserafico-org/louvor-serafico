@@ -21,40 +21,39 @@ export function buildHomeSummary(input: HomeSummaryInput): HomeSummary {
   if (input.day.kind === "liturgical_day_without_repertoire") {
     return {
       actionLabel: "Ver dias preparados",
-      helperText: `${input.day.title} ja aparece no calendario liturgico, mas o repertorio deste dia ainda esta em preparacao.`,
-      premiumText: "Os dias marcados no calendario indicam celebracoes que ja receberam roteiro.",
-      title: "Hoje a liturgia recorda",
+      helperText: "Ainda nao ha sugestoes musicais para este dia.",
+      premiumText: input.day.title,
+      title: "Sem roteiro preparado",
     };
   }
 
   if (input.day.kind !== "has_repertoire" || !input.celebration) {
     return {
-      actionLabel: "Abrir calendario",
-      helperText:
-        "Nem todos os dias do ano recebem roteiro musical publicado. Consulte o calendario para encontrar os dias ja preparados.",
-      premiumText: "Os dias marcados no calendario indicam celebracoes com repertorio disponivel.",
-      title: "Hoje sem roteiro publicado",
+      actionLabel: "Ver dias preparados",
+      helperText: "Ainda nao ha sugestoes musicais para este dia.",
+      premiumText: "Veja no calendario os dias ja preparados.",
+      title: "Sem roteiro preparado",
     };
   }
 
   const premiumText =
     input.subscription.status === "active"
-      ? "Materiais premium liberados."
-      : "Materiais premium exigem assinatura ativa.";
+      ? "Materiais completos disponiveis."
+      : "Materiais completos com assinatura ativa.";
 
   if (input.session.status === "authenticated") {
     return {
-      actionLabel: "Abrir roteiro de hoje",
-      helperText: `${input.celebration.recommendations.length} cantos organizados para conduzir a missa de hoje.`,
+      actionLabel: "Ver roteiro",
+      helperText: `${input.celebration.recommendations.length} cantos sugeridos para a celebracao de hoje.`,
       premiumText,
-      title: "Roteiro pronto para hoje",
+      title: input.celebration.title,
     };
   }
 
   return {
-    actionLabel: "Entrar para liberar materiais",
-    helperText: `${input.celebration.recommendations.length} cantos sugeridos ja estao visiveis neste roteiro.`,
+    actionLabel: "Entrar para ver materiais",
+    helperText: `${input.celebration.recommendations.length} cantos sugeridos ja podem ser consultados hoje.`,
     premiumText,
-    title: "Celebre com ordem e clareza",
+    title: input.celebration.title,
   };
 }

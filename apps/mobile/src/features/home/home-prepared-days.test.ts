@@ -13,7 +13,7 @@ describe("home prepared days", () => {
       getLiturgicalDayForDate(new Date("2026-01-01T12:00:00.000Z")),
     );
 
-    assert.equal(result.title, "Próximos dias preparados");
+    assert.equal(result.title, "Roteiros disponiveis");
     assert.equal(result.items[0]?.slug, "santissimo-nome-de-jesus");
   });
 
@@ -23,7 +23,7 @@ describe("home prepared days", () => {
       getLiturgicalDayForDate(new Date("2026-04-25T12:00:00.000Z")),
     );
 
-    assert.equal(result.title, "Dias já publicados");
+    assert.equal(result.title, "Roteiros disponiveis");
     assert.equal(result.items[0]?.slug, "santissimo-nome-de-jesus");
   });
 });

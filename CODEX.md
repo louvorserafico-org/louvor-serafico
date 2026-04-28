@@ -4388,3 +4388,41 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 94 - Consolidar fechamento do ciclo atual de UI/UX.
+
+## Etapa 94 - Refatoracao da Home
+
+Resumo do que foi feito:
+
+- A Home deixou de funcionar como um conjunto de cards explicativos e passou a priorizar composicao editorial, silencio visual e acao diaria.
+- O cabecalho foi reduzido para marca, data e frase curta.
+- O estado principal do dia foi concentrado em um unico card com duas acoes, sem transformar a ausencia de roteiro em bloco pesado.
+- O calendario mensal completo saiu da Home e deu lugar a uma lista enxuta de roteiros disponiveis.
+- Foram criados componentes pequenos para divisor ornamental, atalhos rapidos e itens da lista de roteiros.
+- A copy da Home foi reduzida e reescrita para um tom mais curto, funcional e liturgico.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/index.tsx`
+- `apps/mobile/src/components/HomePreparedDayItem.tsx`
+- `apps/mobile/src/components/HomeQuickActionCard.tsx`
+- `apps/mobile/src/components/OrnamentalDivider.tsx`
+- `apps/mobile/src/features/home/home-summary.ts`
+- `apps/mobile/src/features/home/home-summary.test.ts`
+- `apps/mobile/src/features/home/home-prepared-days.ts`
+- `apps/mobile/src/features/home/home-prepared-days.test.ts`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: redesign home as a liturgical daily panel`
+
+## Proxima Etapa Planejada
+
+Etapa 95 - Validacao visual da Home em device e ajustes finos.

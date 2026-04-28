@@ -17,15 +17,15 @@ export function buildHomePreparedDays(
 
   if (upcoming.length > 0) {
     return {
-      helperText: "Os próximos roteiros já publicados aparecem aqui para facilitar a preparação do ministério.",
+      helperText: "Dias ja preparados para consulta.",
       items: upcoming.slice(0, 3),
-      title: "Próximos dias preparados",
+      title: "Roteiros disponiveis",
     };
   }
 
   return {
-    helperText: "Estes são os roteiros já publicados no app enquanto novos dias litúrgicos são preparados.",
+    helperText: "Os roteiros ja publicados seguem disponiveis para consulta.",
     items: sorted.slice(0, 3),
-    title: "Dias já publicados",
+    title: "Roteiros disponiveis",
   };
 }

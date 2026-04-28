@@ -44,10 +44,10 @@ describe("home summary", () => {
     });
 
     assert.deepEqual(result, {
-      actionLabel: "Abrir roteiro de hoje",
-      helperText: "6 cantos organizados para conduzir a missa de hoje.",
-      premiumText: "Materiais premium liberados.",
-      title: "Roteiro pronto para hoje",
+      actionLabel: "Ver roteiro",
+      helperText: "6 cantos sugeridos para a celebracao de hoje.",
+      premiumText: "Materiais completos disponiveis.",
+      title: "Missa do Santissimo Nome de Jesus",
     });
   });
 
@@ -60,10 +60,10 @@ describe("home summary", () => {
     });
 
     assert.deepEqual(result, {
-      actionLabel: "Entrar para liberar materiais",
-      helperText: "6 cantos sugeridos ja estao visiveis neste roteiro.",
-      premiumText: "Materiais premium exigem assinatura ativa.",
-      title: "Celebre com ordem e clareza",
+      actionLabel: "Entrar para ver materiais",
+      helperText: "6 cantos sugeridos ja podem ser consultados hoje.",
+      premiumText: "Materiais completos com assinatura ativa.",
+      title: "Missa do Santissimo Nome de Jesus",
     });
   });
 
@@ -76,10 +76,10 @@ describe("home summary", () => {
     });
 
     assert.deepEqual(result, {
-      actionLabel: "Abrir calendario",
-      helperText: "Nem todos os dias do ano recebem roteiro musical publicado. Consulte o calendario para encontrar os dias ja preparados.",
-      premiumText: "Os dias marcados no calendario indicam celebracoes com repertorio disponivel.",
-      title: "Hoje sem roteiro publicado",
+      actionLabel: "Ver dias preparados",
+      helperText: "Ainda nao ha sugestoes musicais para este dia.",
+      premiumText: "Veja no calendario os dias ja preparados.",
+      title: "Sem roteiro preparado",
     });
   });
 
@@ -93,9 +93,9 @@ describe("home summary", () => {
 
     assert.deepEqual(result, {
       actionLabel: "Ver dias preparados",
-      helperText: "Natal do Senhor ja aparece no calendario liturgico, mas o repertorio deste dia ainda esta em preparacao.",
-      premiumText: "Os dias marcados no calendario indicam celebracoes que ja receberam roteiro.",
-      title: "Hoje a liturgia recorda",
+      helperText: "Ainda nao ha sugestoes musicais para este dia.",
+      premiumText: "Natal do Senhor",
+      title: "Sem roteiro preparado",
     });
   });
 });
