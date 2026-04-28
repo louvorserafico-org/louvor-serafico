@@ -2,6 +2,7 @@ import { router } from "expo-router";
 import { useState, type ComponentProps } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 
+import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { PageHeader } from "@/components/PageHeader";
 import { buildPasswordRecoveryOverview } from "@/features/auth/password-recovery-overview";
 import { updatePasswordFromRecovery } from "@/features/auth/password-reset";
@@ -20,21 +21,19 @@ export default function PasswordRecoveryScreen() {
       <PageHeader
         eyebrow="Conta"
         title="Redefinir senha"
-        subtitle="Renove seu acesso com serenidade e volte ao app com tudo em ordem."
+        subtitle="Defina uma nova senha e retome sua conta com tudo em ordem."
       />
 
       <View style={styles.summaryCard}>
-        <Text style={styles.summaryEyebrow}>Recuperacao</Text>
-        <Text style={styles.summaryTitle}>{overview.title}</Text>
-        <Text style={styles.summaryText}>{overview.helperText}</Text>
+        <EditorialSectionHeader eyebrow="Recuperacao" subtitle={overview.helperText} title={overview.title} />
       </View>
 
       <View style={styles.formCard}>
-        <Text style={styles.formEyebrow}>Nova senha</Text>
-        <Text style={styles.cardTitle}>Nova senha</Text>
-        <Text style={styles.cardText}>
-          Escolha uma senha nova para concluir o retorno a sua conta com seguranca e continuidade.
-        </Text>
+        <EditorialSectionHeader
+          eyebrow="Nova senha"
+          subtitle="Escolha uma senha nova para concluir o retorno a sua conta com seguranca e continuidade."
+          title="Nova senha"
+        />
         <PasswordInput
           autoComplete="password-new"
           onChangeText={setPassword}
@@ -78,11 +77,11 @@ export default function PasswordRecoveryScreen() {
       ) : null}
 
       <View style={styles.card}>
-        <Text style={styles.formEyebrow}>Antes de concluir</Text>
-        <Text style={styles.cardTitle}>Link necessario</Text>
-        <Text style={styles.cardText}>
-          Abra esta tela a partir do email de recuperacao para concluir a troca da senha sem interrupcoes.
-        </Text>
+        <EditorialSectionHeader
+          eyebrow="Antes de concluir"
+          subtitle="Abra esta tela a partir do email de recuperacao para concluir a troca da senha sem interrupcoes."
+          title="Link necessario"
+        />
       </View>
     </ScrollView>
   );
@@ -131,19 +130,6 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
     padding: spacing.lg,
   },
-  cardText: {
-    color: colors.textSecondary,
-    fontFamily: fontFamilies.body,
-    fontSize: typography.body,
-    lineHeight: 24,
-  },
-  cardTitle: {
-    color: colors.textPrimary,
-    fontFamily: fontFamilies.display,
-    fontSize: typography.body,
-    fontStyle: "italic",
-    fontWeight: "700",
-  },
   container: {
     backgroundColor: colors.background,
     gap: spacing.lg,
@@ -161,13 +147,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     gap: spacing.sm,
     padding: spacing.lg,
-  },
-  formEyebrow: {
-    color: colors.accent,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "800",
-    textTransform: "uppercase",
   },
   input: {
     backgroundColor: colors.surfaceMuted,
@@ -216,25 +195,5 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.06,
     shadowRadius: 16,
-  },
-  summaryEyebrow: {
-    color: colors.accent,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "800",
-    textTransform: "uppercase",
-  },
-  summaryText: {
-    color: colors.textSecondary,
-    fontFamily: fontFamilies.body,
-    fontSize: typography.body,
-    lineHeight: 24,
-  },
-  summaryTitle: {
-    color: colors.textPrimary,
-    fontFamily: fontFamilies.display,
-    fontSize: typography.heading,
-    fontStyle: "italic",
-    fontWeight: "700",
   },
 });

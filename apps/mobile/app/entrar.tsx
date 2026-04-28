@@ -1,6 +1,7 @@
 import { useState, type ComponentProps } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 
+import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { PageHeader } from "@/components/PageHeader";
 import { getAuthRedirectUrl } from "@/features/auth/auth-deep-link";
 import { buildAuthScreenOverview } from "@/features/auth/auth-screen-overview";
@@ -47,7 +48,7 @@ export default function SignInScreen() {
       <PageHeader
         eyebrow="Conta"
         title={mode === "login" ? "Entrar" : "Criar conta"}
-        subtitle="Guarde seu caminho no ministerio e mantenha o acervo sempre ao alcance."
+        subtitle="Acesse sua conta e mantenha favoritos, partilhas e materiais no mesmo lugar."
       />
 
       <View style={styles.switchRow}>
@@ -56,18 +57,20 @@ export default function SignInScreen() {
       </View>
 
       <View style={[styles.summaryCard, mode === "login" ? styles.summaryLogin : styles.summaryRegister]}>
-        <Text style={styles.summaryEyebrow}>{mode === "login" ? "Acesso" : "Cadastro"}</Text>
-        <Text style={styles.summaryTitle}>{overview.title}</Text>
-        <Text style={styles.summaryText}>{overview.helperText}</Text>
+        <EditorialSectionHeader
+          eyebrow={mode === "login" ? "Acesso" : "Cadastro"}
+          subtitle={overview.helperText}
+          title={overview.title}
+        />
       </View>
 
       {mode === "login" ? (
         <View style={styles.formCard}>
-          <Text style={styles.formEyebrow}>Ja possui conta</Text>
-          <Text style={styles.cardTitle}>Entrar</Text>
-          <Text style={styles.cardText}>
-            Informe seu email e sua senha para seguir com seus materiais, favoritos e partilhas.
-          </Text>
+          <EditorialSectionHeader
+            eyebrow="Ja possui conta"
+            subtitle="Informe seu email e sua senha para seguir com seus materiais, favoritos e partilhas."
+            title="Entrar"
+          />
           <AuthInput
             autoComplete="email"
             keyboardType="email-address"
@@ -112,11 +115,11 @@ export default function SignInScreen() {
         </View>
       ) : (
         <View style={styles.formCard}>
-          <Text style={styles.formEyebrow}>Dados principais</Text>
-          <Text style={styles.cardTitle}>Nova conta</Text>
-          <Text style={styles.cardText}>
-            Comece com os dados essenciais. Os campos de paroquia e pastoral podem ser preenchidos com calma.
-          </Text>
+          <EditorialSectionHeader
+            eyebrow="Dados principais"
+            subtitle="Comece com os dados essenciais. Paroquia e pastoral podem ser preenchidas com calma."
+            title="Nova conta"
+          />
           <AuthInput
             autoComplete="name"
             onChangeText={(value) => updateRegistration("fullName", value)}
@@ -187,11 +190,11 @@ export default function SignInScreen() {
       ) : null}
 
       <View style={styles.card}>
-        <Text style={styles.formEyebrow}>Cuidado com a conta</Text>
-        <Text style={styles.cardTitle}>Seus dados</Text>
-        <Text style={styles.cardText}>
-          Nome, email, telefone, estado e cidade ajudam a manter sua conta organizada. Paroquia e pastoral podem ser adicionadas livremente.
-        </Text>
+        <EditorialSectionHeader
+          eyebrow="Cuidado com a conta"
+          subtitle="Nome, email, telefone, estado e cidade ajudam a manter sua conta organizada."
+          title="Seus dados"
+        />
       </View>
     </ScrollView>
   );
@@ -269,19 +272,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.06,
     shadowRadius: 16,
   },
-  cardText: {
-    color: colors.textSecondary,
-    fontFamily: fontFamilies.body,
-    fontSize: typography.caption,
-    lineHeight: 18,
-  },
-  cardTitle: {
-    color: colors.textPrimary,
-    fontFamily: fontFamilies.display,
-    fontSize: typography.body,
-    fontStyle: "italic",
-    fontWeight: "700",
-  },
   container: {
     backgroundColor: colors.background,
     gap: spacing.lg,
@@ -303,13 +293,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.06,
     shadowRadius: 16,
-  },
-  formEyebrow: {
-    color: colors.accent,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "800",
-    textTransform: "uppercase",
   },
   inlineFields: {
     flexDirection: "row",
@@ -358,13 +341,6 @@ const styles = StyleSheet.create({
     fontSize: typography.body,
     lineHeight: 22,
   },
-  summaryEyebrow: {
-    color: colors.accent,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "800",
-    textTransform: "uppercase",
-  },
   secondaryAction: {
     alignSelf: "flex-start",
     paddingVertical: spacing.xs,
@@ -396,19 +372,6 @@ const styles = StyleSheet.create({
   summaryRegister: {
     backgroundColor: colors.surface,
     borderColor: colors.borderStrong,
-  },
-  summaryText: {
-    color: colors.textSecondary,
-    fontFamily: fontFamilies.body,
-    fontSize: typography.body,
-    lineHeight: 24,
-  },
-  summaryTitle: {
-    color: colors.textPrimary,
-    fontFamily: fontFamilies.display,
-    fontSize: typography.heading,
-    fontStyle: "italic",
-    fontWeight: "700",
   },
   switchRow: {
     flexDirection: "row",

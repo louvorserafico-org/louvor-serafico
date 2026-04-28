@@ -4726,3 +4726,39 @@ Sugestao de commit:
 - Etapa 105 - Refinar detalhes de Musica e Celebracao com cabecalhos editoriais e blocos mais contidos.
 - Etapa 106 - Revisao transversal de componentes compartilhados, tabs, espacamentos e copy final.
 - Etapa 107 - Validacao final visual e tecnica do ciclo completo de refatoracao.
+
+## Etapa 104 - Entrar e Recuperar Senha no mesmo padrao editorial da Home
+
+Resumo do que foi feito:
+
+- As telas de autenticacao passaram a usar a mesma estrutura editorial de secoes aplicada na Home.
+- Os blocos de resumo e formularios ficaram mais limpos, com menos variacao tipografica e menos repeticao visual.
+- A copy de entrada, cadastro e recuperacao foi encurtada e alinhada ao restante do app.
+- Os blocos auxiliares finais foram mantidos, mas com papel mais discreto.
+
+Arquivos alterados:
+
+- `apps/mobile/app/entrar.tsx`
+- `apps/mobile/app/recuperar-senha.tsx`
+- `apps/mobile/src/features/auth/auth-screen-overview.ts`
+- `apps/mobile/src/features/auth/auth-screen-overview.test.ts`
+- `apps/mobile/src/features/auth/password-recovery-overview.ts`
+- `apps/mobile/src/features/auth/password-recovery-overview.test.ts`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: apply editorial home structure to auth screens`
+
+## Proximas Etapas Planejadas
+
+- Etapa 105 - Refinar detalhes de Musica e Celebracao com cabecalhos editoriais e blocos mais contidos.
+- Etapa 106 - Revisao transversal de componentes compartilhados, tabs, espacamentos e copy final.
+- Etapa 107 - Validacao final visual e tecnica do ciclo completo de refatoracao.

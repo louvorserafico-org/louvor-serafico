@@ -5,7 +5,7 @@ export type PasswordRecoveryOverview = {
 
 export function buildPasswordRecoveryOverview(): PasswordRecoveryOverview {
   return {
-    helperText: "Abra o link enviado ao seu email, defina uma nova senha e retome sua conta com tranquilidade.",
-    title: "Renove seu acesso",
+    helperText: "Abra o link enviado ao seu email, defina uma nova senha e retome sua conta com serenidade.",
+    title: "Redefinir acesso",
   };
 }
