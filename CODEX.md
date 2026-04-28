@@ -4688,3 +4688,41 @@ Sugestao de commit:
 - Etapa 105 - Refinar detalhes de Musica e Celebracao com cabecalhos editoriais e blocos mais contidos.
 - Etapa 106 - Revisao transversal de componentes compartilhados, tabs, espacamentos e copy final.
 - Etapa 107 - Validacao final visual e tecnica do ciclo completo de refatoracao.
+
+## Etapa 103 - Perfil e assinatura no mesmo padrao editorial da Home
+
+Resumo do que foi feito:
+
+- O Perfil passou a usar cabecalhos editoriais para separar conta e assinatura.
+- Os cards principais ficaram mais sobrios, com menos dramatizacao tipografica e melhor leitura.
+- O titulo do perfil pronto deixou de competir com a tela inteira e passou a privilegiar o nome da pessoa.
+- Os cards de entrada e assinatura foram alinhados ao mesmo tom visual e editorial.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/perfil.tsx`
+- `apps/mobile/src/components/ProfileOverviewCard.tsx`
+- `apps/mobile/src/components/SubscriptionOverviewCard.tsx`
+- `apps/mobile/src/components/AuthEntryCard.tsx`
+- `apps/mobile/src/components/PaywallPreviewCard.tsx`
+- `apps/mobile/src/features/auth/profile-overview.ts`
+- `apps/mobile/src/features/auth/profile-overview.test.ts`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: apply editorial home structure to profile`
+
+## Proximas Etapas Planejadas
+
+- Etapa 104 - Refinar Entrar e Recuperar Senha com a mesma linguagem visual e densidade reduzida.
+- Etapa 105 - Refinar detalhes de Musica e Celebracao com cabecalhos editoriais e blocos mais contidos.
+- Etapa 106 - Revisao transversal de componentes compartilhados, tabs, espacamentos e copy final.
+- Etapa 107 - Validacao final visual e tecnica do ciclo completo de refatoracao.

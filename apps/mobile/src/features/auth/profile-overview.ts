@@ -24,7 +24,7 @@ export function buildProfileOverview(input: ProfileOverviewInput): ProfileOvervi
       detailLine: "Organizando seus dados para esta tela.",
       premiumLine,
       status: "loading",
-      title: "Preparando seu perfil",
+      title: "Preparando sua conta",
     };
   }
 
@@ -57,6 +57,6 @@ export function buildProfileOverview(input: ProfileOverviewInput): ProfileOvervi
     detailLine: ministry || "Dados pastorais nao informados.",
     premiumLine,
     status: "ready",
-    title: `Paz e bem, ${displayName}`,
+    title: displayName,
   };
 }

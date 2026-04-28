@@ -33,7 +33,9 @@ export function ProfileOverviewCard() {
         <Text style={styles.lead}>{overview.accountLine}</Text>
         <Text style={styles.text}>{overview.detailLine}</Text>
       </View>
-      <Text style={styles.badge}>{overview.premiumLine}</Text>
+      <View style={styles.metaRow}>
+        <Text style={styles.badge}>{overview.premiumLine}</Text>
+      </View>
       {showEntryAction ? (
         <Link asChild href="/entrar">
           <Pressable accessibilityRole="button" style={styles.button}>
@@ -102,8 +104,11 @@ const styles = StyleSheet.create({
   lead: {
     color: colors.textPrimary,
     fontFamily: fontFamilies.body,
-    fontSize: typography.lead,
-    lineHeight: 28,
+    fontSize: typography.body,
+    lineHeight: 24,
+  },
+  metaRow: {
+    flexDirection: "row",
   },
   loading: {
     backgroundColor: colors.surface,
@@ -127,7 +132,6 @@ const styles = StyleSheet.create({
     color: colors.textPrimary,
     fontFamily: fontFamilies.display,
     fontSize: typography.heading,
-    fontStyle: "italic",
     fontWeight: "700",
   },
 });

@@ -47,7 +47,7 @@ describe("profile overview", () => {
       detailLine: "Coral paroquial",
       premiumLine: "Premium ativo",
       status: "ready",
-      title: "Paz e bem, Frei Luis",
+      title: "Frei Luis",
     });
   });
 

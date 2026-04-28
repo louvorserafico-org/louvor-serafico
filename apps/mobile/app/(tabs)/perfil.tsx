@@ -1,5 +1,6 @@
 import { ScrollView, StyleSheet } from "react-native";
 
+import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { PageHeader } from "@/components/PageHeader";
 import { AuthEntryCard } from "@/components/AuthEntryCard";
 import { AuthStabilityCard } from "@/components/AuthStabilityCard";
@@ -28,7 +29,18 @@ export default function ProfileScreen() {
         title="Conta e assinatura"
         subtitle={buildProfileTabSubtitle(session.status === "authenticated")}
       />
+      <EditorialSectionHeader
+        eyebrow="Conta"
+        subtitle="Dados da conta, identificacao pastoral e estado atual do acesso."
+        title="Visao da conta"
+      />
       <ProfileOverviewCard />
+
+      <EditorialSectionHeader
+        eyebrow="Premium"
+        subtitle="Acesso aos materiais completos e estado atual da assinatura."
+        title="Assinatura e acesso"
+      />
       <SubscriptionOverviewCard />
       {session.status === "authenticated" ? null : <AuthEntryCard />}
       <PaywallPreviewCard />
