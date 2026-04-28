@@ -4614,3 +4614,40 @@ Sugestao de commit:
 - Etapa 105 - Refinar detalhes de Musica e Celebracao com cabecalhos editoriais e blocos mais contidos.
 - Etapa 106 - Revisao transversal de componentes compartilhados, tabs, espacamentos e copy final.
 - Etapa 107 - Validacao final visual e tecnica do ciclo completo de refatoracao.
+
+## Etapa 101 - Repertorio no mesmo padrao editorial da Home
+
+Resumo do que foi feito:
+
+- O Repertorio passou a usar o mesmo cabecalho editorial compartilhado iniciado na Home e no Calendario.
+- O resumo principal ficou menos catalogo tecnico e mais orientado a consulta, estudo e preparacao.
+- A secao principal passou a se apresentar como lista de cantos disponiveis, com hierarquia mais clara.
+- `SongCard` ficou menos blocado e mais editorial, com menos peso visual e leitura mais limpa.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/repertorio.tsx`
+- `apps/mobile/src/components/SongCard.tsx`
+- `apps/mobile/src/features/songs/repertoire-overview.ts`
+- `apps/mobile/src/features/songs/repertoire-overview.test.ts`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: apply editorial home structure to repertoire`
+
+## Proximas Etapas Planejadas
+
+- Etapa 102 - Refinar Comunidade com foco em participacao, leitura e estados vazios mais leves.
+- Etapa 103 - Refinar Perfil e assinatura com hierarquia mais sobria e menos blocos concorrentes.
+- Etapa 104 - Refinar Entrar e Recuperar Senha com a mesma linguagem visual e densidade reduzida.
+- Etapa 105 - Refinar detalhes de Musica e Celebracao com cabecalhos editoriais e blocos mais contidos.
+- Etapa 106 - Revisao transversal de componentes compartilhados, tabs, espacamentos e copy final.
+- Etapa 107 - Validacao final visual e tecnica do ciclo completo de refatoracao.

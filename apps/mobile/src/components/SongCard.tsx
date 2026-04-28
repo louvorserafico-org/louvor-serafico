@@ -32,10 +32,7 @@ export function SongCard({ song }: SongCardProps) {
               : "Material em preparacao para publicacao."}
           </Text>
         </View>
-        <View style={styles.actionRow}>
-          <View />
-          <Text style={styles.action}>Ver canto</Text>
-        </View>
+        <Text style={styles.action}>Ver canto</Text>
       </Pressable>
     </Link>
   );
@@ -43,6 +40,7 @@ export function SongCard({ song }: SongCardProps) {
 
 const styles = StyleSheet.create({
   action: {
+    alignSelf: "flex-end",
     color: colors.accent,
     fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
@@ -80,12 +78,6 @@ const styles = StyleSheet.create({
   row: {
     alignItems: "flex-start",
     gap: spacing.sm,
-  },
-  actionRow: {
-    alignItems: "center",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingTop: spacing.xs,
   },
   favorite: {
     color: colors.olive,

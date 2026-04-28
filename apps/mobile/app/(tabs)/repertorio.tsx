@@ -2,8 +2,8 @@ import { getInitialSongCatalog } from "@louvor-serafico/shared";
 import { useEffect, useMemo, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 
+import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { PageHeader } from "@/components/PageHeader";
-import { SectionTitle } from "@/components/SectionTitle";
 import { useFavorites } from "@/features/favorites/FavoritesProvider";
 import { buildRemoteFeedback } from "@/features/remote/remote-feedback";
 import { buildRepertoireOverview } from "@/features/songs/repertoire-overview";
@@ -85,12 +85,11 @@ export default function RepertoireScreen() {
         </Text>
       </View>
 
-      <View style={styles.sectionHeader}>
-        <SectionTitle title="Catalogo musical" />
-        <Text style={styles.sectionText}>
-          Percorra o acervo com calma e abra cada canto para ver os materiais disponiveis.
-        </Text>
-      </View>
+      <EditorialSectionHeader
+        eyebrow="Consulta"
+        subtitle="Abra cada canto para consultar materiais, guardar favoritos e preparar melhor cada celebracao."
+        title="Cantos disponiveis"
+      />
 
       <View style={styles.list}>
         {songs.length > 0 ? (
@@ -144,15 +143,6 @@ const styles = StyleSheet.create({
     fontSize: typography.caption,
     fontWeight: "800",
   },
-  sectionHeader: {
-    gap: spacing.xs,
-  },
-  sectionText: {
-    color: colors.textSecondary,
-    fontFamily: fontFamilies.body,
-    fontSize: typography.body,
-    lineHeight: 24,
-  },
   summary: {
     borderRadius: radii.xl,
     borderWidth: 1,
@@ -192,7 +182,6 @@ const styles = StyleSheet.create({
     color: colors.textPrimary,
     fontFamily: fontFamilies.display,
     fontSize: typography.heading,
-    fontStyle: "italic",
     fontWeight: "700",
   },
 });
