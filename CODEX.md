@@ -5149,3 +5149,32 @@ Checklist DoD:
 Sugestao de commit:
 
 `feat: add post-auth redirects and email confirmation screen`
+
+## Etapa 118 - Busca no repertorio e simplificacao do acervo musical
+
+Resumo do que foi feito:
+
+- Adicionada busca no repertorio com ativacao a partir de 3 caracteres.
+- A busca ignora maiusculas, minusculas e acentos.
+- A caixa de `Acervo musical` foi simplificada, sem badges internas concorrentes.
+- A listagem de cantos ficou mais discreta, com itens mais editoriais e menos encaixotados.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/repertorio.tsx`
+- `apps/mobile/src/components/SongCard.tsx`
+- `apps/mobile/src/features/songs/song-search.ts`
+- `apps/mobile/src/features/songs/song-search.test.ts`
+- `package.json`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: add repertoire search and simplify catalog layout`

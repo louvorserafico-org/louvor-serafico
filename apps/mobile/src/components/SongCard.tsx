@@ -47,14 +47,10 @@ const styles = StyleSheet.create({
     fontWeight: "800",
   },
   card: {
-    backgroundColor: colors.surface,
-    borderRadius: radii.lg,
     gap: spacing.sm,
-    padding: spacing.md,
-    shadowColor: colors.ink,
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.05,
-    shadowRadius: 14,
+    paddingBottom: spacing.md,
+    borderBottomColor: colors.border,
+    borderBottomWidth: 1,
   },
   content: {
     gap: spacing.xs,
