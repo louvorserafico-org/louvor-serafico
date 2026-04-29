@@ -5495,3 +5495,27 @@ Checklist DoD:
 Sugestao de commit:
 
 `feat: allow community posts to reference nearby repertoires`
+
+## Etapa 131 - Limpeza do topo de roteiro na tela de Celebracao
+
+Resumo do que foi feito:
+
+- Removida a box `Roteiro da Missa`.
+- Removido o status `Completo`.
+- A tela passou a abrir direto no conteudo liturgico principal, preservando o cabecalho e a lista dos momentos da missa.
+
+Arquivos alterados:
+
+- `apps/mobile/app/celebracoes/[id].tsx`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`refactor: remove redundant celebration summary blocks`

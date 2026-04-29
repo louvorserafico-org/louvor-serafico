@@ -8,10 +8,8 @@ import { useEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
-import { EditorialStatus } from "@/components/EditorialStatus";
 import { MomentCard } from "@/components/MomentCard";
 import { PageHeader } from "@/components/PageHeader";
-import { buildCelebrationDetailOverview } from "@/features/celebrations/celebration-detail-overview";
 import { buildLiturgicalDayDetail } from "@/features/celebrations/liturgical-day-detail";
 import { fetchRemoteCelebrationDetail } from "@/features/celebrations/remote-celebration-detail";
 import { buildSongMaterialBadges } from "@/features/songs/song-materials";
@@ -41,12 +39,6 @@ export default function CelebrationDetailScreen() {
     () => (celebration ? buildCelebrationMomentRows(celebration) : []),
     [celebration],
   );
-  const missingMaterials = momentRows.filter((item) => item.song.assets.length === 0).length;
-  const overview = buildCelebrationDetailOverview({
-    missingMaterials,
-    momentCount: momentRows.length,
-    sourceMode,
-  });
 
   useEffect(() => {
     let active = true;
@@ -83,7 +75,7 @@ export default function CelebrationDetailScreen() {
         <Stack.Screen options={{ headerShown: true, title: "Celebracao" }} />
         <PageHeader eyebrow={dayDetail.eyebrow} subtitle={dayDetail.helperText} title={dayDetail.title} />
 
-        <View style={[styles.summary, styles.summaryLocal]}>
+        <View style={styles.summary}>
           <Text style={styles.summaryEyebrow}>Calendario 2026</Text>
           <Text style={styles.summaryTitle}>{dayDetail.cardTitle}</Text>
           <Text style={styles.summaryText}>{dayDetail.helperText}</Text>
@@ -111,14 +103,6 @@ export default function CelebrationDetailScreen() {
     <ScrollView contentContainerStyle={styles.container}>
       <Stack.Screen options={{ headerShown: true, title: "Celebracao" }} />
       <PageHeader eyebrow={celebration.dateLabel} subtitle={subtitle} title={celebration.title} />
-
-      <View style={[styles.summary, sourceMode === "remote" ? styles.summaryRemote : styles.summaryLocal]}>
-        <Text style={styles.summaryEyebrow}>Roteiro da missa</Text>
-        <Text style={styles.summaryTitle}>{overview.title}</Text>
-        <Text style={styles.summaryText}>{overview.helperText}</Text>
-      </View>
-
-      <EditorialStatus missingCount={missingMaterials} />
 
       <EditorialSectionHeader
         eyebrow="Ordem da missa"
@@ -171,14 +155,12 @@ const styles = StyleSheet.create({
     gap: spacing.md,
   },
   summary: {
+    backgroundColor: colors.surfaceMuted,
+    borderColor: colors.borderStrong,
     borderRadius: radii.xl,
     borderWidth: 1,
     gap: spacing.sm,
     padding: spacing.lg,
-    shadowColor: colors.ink,
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.06,
-    shadowRadius: 16,
   },
   summaryEyebrow: {
     color: colors.gold,
@@ -187,19 +169,11 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     textTransform: "uppercase",
   },
-  summaryLocal: {
-    backgroundColor: colors.surfaceMuted,
-    borderColor: colors.borderStrong,
-  },
   summaryNote: {
     color: colors.textMuted,
     fontFamily: fontFamilies.body,
     fontSize: typography.caption,
     lineHeight: 20,
-  },
-  summaryRemote: {
-    backgroundColor: colors.surface,
-    borderColor: colors.borderStrong,
   },
   summaryText: {
     color: colors.textSecondary,
