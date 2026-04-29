@@ -5119,3 +5119,33 @@ Checklist DoD:
 Sugestao de commit:
 
 `refactor: remove redundant auth hero labels`
+
+## Etapa 117 - Redirecionamento apos login e confirmacao apos cadastro
+
+Resumo do que foi feito:
+
+- O login agora volta para a tela anterior quando existe historico de navegacao.
+- Quando nao existe historico valido, o login redireciona para a Home.
+- O cadastro agora leva para uma tela propria de confirmacao de email.
+- A tela de confirmacao orienta o usuario e devolve para o login.
+
+Arquivos alterados:
+
+- `apps/mobile/app/entrar.tsx`
+- `apps/mobile/app/criar-conta.tsx`
+- `apps/mobile/app/confirmar-email.tsx`
+- `apps/mobile/src/features/auth/auth-navigation.ts`
+- `apps/mobile/src/features/auth/auth-navigation.test.ts`
+- `package.json`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: add post-auth redirects and email confirmation screen`

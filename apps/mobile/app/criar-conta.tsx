@@ -1,4 +1,4 @@
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { useState, type ComponentProps } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 
@@ -98,6 +98,16 @@ export default function CreateAccountScreen() {
           onPress={async () => {
             setSubmitting(true);
             const nextResult = await registerWithPassword(supabase, registration);
+            if (nextResult.status === "success") {
+              setResult(null);
+              setSubmitting(false);
+              router.replace({
+                params: { email: registration.email.trim().toLowerCase() },
+                pathname: "/confirmar-email",
+              });
+              return;
+            }
+
             setResult(nextResult);
             setSubmitting(false);
           }}

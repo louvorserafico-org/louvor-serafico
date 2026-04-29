@@ -1,9 +1,10 @@
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { useState, type ComponentProps } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { OrnamentalDivider } from "@/components/OrnamentalDivider";
+import { resolvePostLoginDestination } from "@/features/auth/auth-navigation";
 import { buildAuthScreenOverview } from "@/features/auth/auth-screen-overview";
 import { getAuthRedirectUrl } from "@/features/auth/auth-deep-link";
 import { requestPasswordReset, signInWithPassword } from "@/features/auth/credentials-auth";
@@ -46,6 +47,20 @@ export default function SignInScreen() {
           onPress={async () => {
             setSubmitting(true);
             const nextResult = await signInWithPassword(supabase, email, password);
+            if (nextResult.status === "success") {
+              const destination = resolvePostLoginDestination(router.canGoBack());
+              setResult(null);
+              setSubmitting(false);
+
+              if (destination.kind === "back") {
+                router.back();
+                return;
+              }
+
+              router.replace(destination.href);
+              return;
+            }
+
             setResult(nextResult);
             setSubmitting(false);
           }}
