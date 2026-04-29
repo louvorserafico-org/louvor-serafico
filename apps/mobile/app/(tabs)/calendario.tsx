@@ -11,9 +11,10 @@ import { buildCalendarMonthView } from "@/features/celebrations/calendar-month-v
 import { buildCalendarOverview } from "@/features/celebrations/calendar-overview";
 import { resolveCelebrationCatalogSource } from "@/features/celebrations/celebration-catalog-source";
 import { fetchRemoteCelebrations } from "@/features/celebrations/remote-celebrations";
-import { buildRemoteFeedback } from "@/features/remote/remote-feedback";
 import { supabaseConfig } from "@/services/supabase/client";
 import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
+
+const DAY_CELL_WIDTH = "13.4%";
 
 export default function CalendarScreen() {
   const localCelebrations = useMemo(() => getInitialCelebrationCatalog(), []);
@@ -65,13 +66,6 @@ export default function CalendarScreen() {
     remoteCount,
     sourceMode,
   });
-  const remoteFeedback = buildRemoteFeedback({
-    emptyLabel: "Nenhuma celebracao remota encontrada.",
-    itemCount: remoteCount,
-    readyLabel: "celebracoes remotas prontas",
-    status: remoteStatus,
-    statusMessage: remoteMessage,
-  });
   const monthView = useMemo(
     () => buildCalendarMonthView(selectedMonth, celebrations),
     [celebrations, selectedMonth],
@@ -80,6 +74,10 @@ export default function CalendarScreen() {
     { length: monthView.leadingEmptyCellCount },
     (_, index) => `empty-${monthView.monthNumber}-${index}`,
   );
+  const trailingEmptyCells = Array.from(
+    { length: Math.max(0, 42 - leadingEmptyCells.length - monthView.monthDays.length) },
+    (_, index) => `tail-${monthView.monthNumber}-${index}`,
+  );
   const canGoPrev = selectedMonth > 1;
   const canGoNext = selectedMonth < 12;
 
@@ -87,44 +85,38 @@ export default function CalendarScreen() {
     <ScrollView contentContainerStyle={styles.container}>
       <PageHeader eyebrow={overview.eyebrow} title={overview.title} subtitle={subtitle} />
 
-      <View style={[styles.summary, sourceMode === "remote" ? styles.summaryRemote : styles.summaryLocal]}>
-        <Text style={styles.summaryEyebrow}>Calendario liturgico</Text>
-        <Text style={styles.summaryTitle}>{overview.title}</Text>
-        <Text style={styles.summaryText}>
-          {sourceMode === "remote" ? remoteFeedback.detail : overview.helperText}
-        </Text>
-      </View>
-
       <EditorialSectionHeader
         eyebrow="Navegacao"
-        subtitle="Percorra o ano de 2026 e toque em cada data para abrir o detalhe correspondente."
-        title={`Calendario de ${monthView.monthLabel}`}
+        title={`Calendario de ${capitalizeLabel(monthView.monthLabel)}`}
       />
 
       <View style={styles.monthCard}>
         <View style={styles.monthHeader}>
           <Pressable
+            accessibilityLabel="Mes anterior"
             accessibilityRole="button"
             disabled={!canGoPrev}
             onPress={() => setSelectedMonth((current) => Math.max(1, current - 1))}
             style={[styles.monthNavButton, !canGoPrev ? styles.monthNavButtonDisabled : undefined]}
           >
             <Text style={[styles.monthNavText, !canGoPrev ? styles.monthNavTextDisabled : undefined]}>
-              Anterior
+              ‹
             </Text>
           </Pressable>
-          <Text style={styles.monthTitle}>{monthView.monthLabel}</Text>
+          <Text style={styles.monthTitle}>{capitalizeLabel(monthView.monthLabel)}</Text>
           <Pressable
+            accessibilityLabel="Proximo mes"
             accessibilityRole="button"
             disabled={!canGoNext}
             onPress={() => setSelectedMonth((current) => Math.min(12, current + 1))}
             style={[styles.monthNavButton, !canGoNext ? styles.monthNavButtonDisabled : undefined]}
           >
             <Text style={[styles.monthNavText, !canGoNext ? styles.monthNavTextDisabled : undefined]}>
-              Proximo
+              ›
             </Text>
           </Pressable>
         </View>
+        <Text style={styles.monthEyebrow}>Ano liturgico 2026</Text>
 
         <View style={styles.weekRow}>
           {["D", "S", "T", "Q", "Q", "S", "S"].map((item, index) => (
@@ -148,6 +140,7 @@ export default function CalendarScreen() {
               style={[
                 styles.dayCell,
                 styles.dayCellPressable,
+                isSunday(day.isoDate) ? styles.dayCellSunday : undefined,
                 day.kind === "has_repertoire" ? styles.dayCellRepertoire : undefined,
                 day.kind === "liturgical_day_without_repertoire" ? styles.dayCellLiturgical : undefined,
                 day.monthDay === today.monthDay ? styles.dayCellToday : undefined,
@@ -156,6 +149,7 @@ export default function CalendarScreen() {
               <Text
                 style={[
                   styles.dayNumber,
+                  isSunday(day.isoDate) ? styles.dayNumberSunday : undefined,
                   day.kind === "has_repertoire" ? styles.dayNumberRepertoire : undefined,
                   day.kind === "liturgical_day_without_repertoire" ? styles.dayNumberLiturgical : undefined,
                   day.monthDay === today.monthDay ? styles.dayNumberToday : undefined,
@@ -164,6 +158,10 @@ export default function CalendarScreen() {
                 {day.dayNumber}
               </Text>
             </Pressable>
+          ))}
+
+          {trailingEmptyCells.map((item) => (
+            <View key={item} style={[styles.dayCell, styles.dayCellEmpty]} />
           ))}
         </View>
 
@@ -266,26 +264,30 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: 40,
     justifyContent: "center",
-    width: "13.2%",
+    width: DAY_CELL_WIDTH,
   },
   dayCellEmpty: {
     borderColor: "transparent",
     opacity: 0,
   },
   dayCellLiturgical: {
-    backgroundColor: colors.surfaceMuted,
+    backgroundColor: colors.surface,
     borderColor: colors.gold,
   },
   dayCellPressable: {
     overflow: "hidden",
   },
   dayCellRepertoire: {
-    backgroundColor: colors.goldSoft,
-    borderColor: colors.gold,
+    backgroundColor: colors.oliveSoft,
+    borderColor: colors.olive,
+  },
+  dayCellSunday: {
+    backgroundColor: colors.surfaceMuted,
+    borderColor: colors.borderStrong,
   },
   dayCellToday: {
-    backgroundColor: colors.accent,
-    borderColor: colors.accent,
+    borderColor: colors.textPrimary,
+    borderWidth: 2,
   },
   dayNumber: {
     color: colors.textSecondary,
@@ -299,8 +301,12 @@ const styles = StyleSheet.create({
   dayNumberRepertoire: {
     color: colors.accent,
   },
+  dayNumberSunday: {
+    color: colors.textPrimary,
+    fontWeight: "800",
+  },
   dayNumberToday: {
-    color: colors.background,
+    color: colors.textPrimary,
   },
   emptyCard: {
     backgroundColor: colors.surface,
@@ -315,9 +321,9 @@ const styles = StyleSheet.create({
     shadowRadius: 16,
   },
   grid: {
-    columnGap: spacing.xs,
     flexDirection: "row",
     flexWrap: "wrap",
+    justifyContent: "space-between",
     rowGap: spacing.xs,
   },
   legend: {
@@ -386,26 +392,35 @@ const styles = StyleSheet.create({
     gap: spacing.md,
     padding: spacing.lg,
   },
+  monthEyebrow: {
+    alignSelf: "center",
+    color: colors.gold,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
+    letterSpacing: 0.4,
+    textTransform: "uppercase",
+  },
   monthHeader: {
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
   },
   monthNavButton: {
-    borderColor: colors.border,
-    borderRadius: radii.pill,
-    borderWidth: 1,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
+    alignItems: "center",
+    flexBasis: 36,
+    justifyContent: "center",
+    minHeight: 36,
+    minWidth: 36,
   },
   monthNavButtonDisabled: {
-    borderColor: colors.surfaceMuted,
+    opacity: 0.35,
   },
   monthNavText: {
     color: colors.accent,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "800",
+    fontFamily: fontFamilies.display,
+    fontSize: 28,
+    lineHeight: 28,
   },
   monthNavTextDisabled: {
     color: colors.textMuted,
@@ -413,34 +428,10 @@ const styles = StyleSheet.create({
   monthTitle: {
     color: colors.textPrimary,
     fontFamily: fontFamilies.display,
-    fontSize: typography.heading,
+    fontSize: typography.title,
     fontWeight: "700",
+    textAlign: "center",
     textTransform: "capitalize",
-  },
-  summary: {
-    borderRadius: radii.xl,
-    borderWidth: 1,
-    gap: spacing.xs,
-    padding: spacing.lg,
-    shadowColor: colors.ink,
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.06,
-    shadowRadius: 16,
-  },
-  summaryEyebrow: {
-    color: colors.gold,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "800",
-    textTransform: "uppercase",
-  },
-  summaryLocal: {
-    backgroundColor: colors.surfaceMuted,
-    borderColor: colors.borderStrong,
-  },
-  summaryRemote: {
-    backgroundColor: colors.surface,
-    borderColor: colors.borderStrong,
   },
   summaryText: {
     color: colors.textSecondary,
@@ -460,11 +451,18 @@ const styles = StyleSheet.create({
     fontSize: typography.caption,
     fontWeight: "700",
     textAlign: "center",
-    width: "13.2%",
+    width: DAY_CELL_WIDTH,
   },
   weekRow: {
-    columnGap: spacing.xs,
     flexDirection: "row",
     justifyContent: "space-between",
   },
 });
+
+function isSunday(isoDate: string): boolean {
+  return new Date(`${isoDate}T00:00:00.000Z`).getUTCDay() === 0;
+}
+
+function capitalizeLabel(value: string): string {
+  return value.charAt(0).toUpperCase() + value.slice(1);
+}

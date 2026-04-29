@@ -5229,3 +5229,104 @@ Checklist DoD:
 Sugestao de commit:
 
 `refactor: simplify repertoire search and pin favorite icon`
+
+## Etapa 121 - Remocao da box redundante do calendario
+
+Resumo do que foi feito:
+
+- A box inicial de `Calendario liturgico` foi removida da aba de calendario.
+- A tela passou a abrir direto na navegacao mensal, sem repeticao de informacao ja presente no cabecalho.
+- O restante do fluxo do calendario foi mantido.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/calendario.tsx`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`refactor: remove redundant calendar summary box`
+
+## Etapa 122 - Navegacao mensal mais viva no calendario
+
+Resumo do que foi feito:
+
+- O subtitulo da secao `Navegacao` foi removido.
+- O titulo `Calendario de ...` ganhou mais presenca visual.
+- A caixa do calendario passou a destacar melhor o nome do mes.
+- Os botoes `Anterior` e `Proximo` foram trocados por setas simples.
+- Domingos ganharam destaque proprio no grid, sem legenda adicional.
+- Dias com repertorio e datas liturgicas passaram a ter sinais visuais mais distintos.
+- O dia de hoje ficou marcado apenas por contorno mais forte.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/calendario.tsx`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: enrich calendar monthly navigation styling`
+
+## Etapa 123 - Correcao da grade mensal do calendario
+
+Resumo do que foi feito:
+
+- A grade semanal e mensal do calendario foi corrigida para voltar a respeitar as 7 colunas.
+- Os dias voltaram a ocupar posicoes estaveis, sem desalinhamento entre labels e celulas.
+- O ajuste foi feito no calculo visual da largura das colunas e no espacamento horizontal da grade.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/calendario.tsx`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`fix: restore stable seven-column calendar grid`
+
+## Etapa 124 - Grade fixa 7x6 e cabecalho mensal alinhado
+
+Resumo do que foi feito:
+
+- O calendario passou a ocupar sempre uma grade fixa de 7 colunas por 6 linhas.
+- Celulas vazias finais foram adicionadas para impedir encaixe flexivel na ultima semana.
+- As setas de navegacao passaram a ficar na mesma linha do nome do mes.
+- O selo `Ano liturgico 2026` foi mantido abaixo do nome do mes, sem quebrar o alinhamento principal.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/calendario.tsx`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`fix: lock calendar to a fixed 7x6 grid`
