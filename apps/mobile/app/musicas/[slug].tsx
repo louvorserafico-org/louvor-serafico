@@ -1,5 +1,5 @@
 import { findSongBySlug } from "@louvor-serafico/shared";
-import { Link, Stack, useLocalSearchParams } from "expo-router";
+import { Link, Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
@@ -18,6 +18,7 @@ import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens
 
 export default function SongDetailScreen() {
   const params = useLocalSearchParams<{ slug: string }>();
+  const router = useRouter();
   const localSong = findSongBySlug(params.slug ?? "");
   const [remoteSong, setRemoteSong] = useState<typeof localSong | null>(null);
   const [assetMessages, setAssetMessages] = useState<Record<string, string>>({});
@@ -103,6 +104,20 @@ export default function SongDetailScreen() {
                       {action.kind === "open" ? (
                         <Pressable
                           onPress={() => {
+                            if (asset.type === "score_pdf" || asset.type === "lyrics" || asset.type === "chord_sheet") {
+                              router.push({
+                                pathname: "/visualizador-pdf",
+                                params: {
+                                  assetId: asset.id,
+                                  premium: asset.premium ? "1" : "0",
+                                  storagePath: asset.path,
+                                  title: song.title,
+                                  type: section.title,
+                                },
+                              });
+                              return;
+                            }
+
                             void requestAssetSignedUrl(
                               asset.id,
                               {

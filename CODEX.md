@@ -5572,3 +5572,71 @@ Checklist DoD:
 Sugestao de commit:
 
 `refactor: specialize song material actions by type`
+
+## Etapa 134 - Visualizador interno de PDFs para partitura e letra/cifra
+
+Resumo do que foi feito:
+
+- O fluxo de `Abrir partitura` e `Abrir letra e cifra` deixou de mandar o usuario direto para o navegador.
+- Foi criada a rota interna `apps/mobile/app/visualizador-pdf.tsx`.
+- A tela nova usa `react-native-pdf` como renderer nativo principal, com zoom e scroll.
+- O fluxo preserva `Abrir externamente` apenas como fallback quando a renderizacao interna falha ou quando o runtime nao suporta o modulo nativo.
+- A resolucao da URL do documento foi isolada em `pdf-viewer-source`, aceitando:
+  - `fileUrl` direta;
+  - URL publica de Storage;
+  - signed URL via Edge Function para materiais premium.
+- A tela de musica agora envia partitura e letra/cifra para o visualizador interno.
+
+Biblioteca escolhida:
+
+- `react-native-pdf@6.7.7`
+- `react-native-blob-util`
+- `@config-plugins/react-native-pdf@12.0.0`
+- `@config-plugins/react-native-blob-util@12.0.0`
+
+Limitacoes tecnicas:
+
+- Esta integracao exige development build ou build EAS com prebuild/config plugins.
+- Nao funciona no Expo Go como fluxo interno, porque `react-native-pdf` depende de codigo nativo fora do bundle do Expo Go.
+- Em Expo Go, a tela mostra erro amigavel e libera apenas o fallback `Abrir externamente`.
+
+Arquivos alterados:
+
+- `apps/mobile/app/visualizador-pdf.tsx`
+- `apps/mobile/app/musicas/[slug].tsx`
+- `apps/mobile/src/features/assets/pdf-viewer-source.ts`
+- `apps/mobile/src/features/assets/pdf-viewer-source.test.ts`
+- `apps/mobile/app.config.js`
+- `apps/mobile/package.json`
+- `package.json`
+- `pnpm-lock.yaml`
+
+Como testar:
+
+- iOS:
+  - gerar development build com EAS/local build equivalente;
+  - abrir uma musica com PDF;
+  - tocar em `Abrir partitura` ou `Abrir letra e cifra`;
+  - validar carregamento interno, zoom e scroll.
+- Android:
+  - gerar development build com EAS/prebuild;
+  - repetir o mesmo fluxo.
+- Expo Go:
+  - abrir o mesmo fluxo;
+  - validar mensagem de limitacao e fallback externo.
+
+Checklist DoD:
+
+- [x] Fluxo interno criado para PDFs.
+- [x] Fallback externo mantido apenas no erro.
+- [x] Compatibilidade preparada para URL publica e signed URL.
+- [x] Testes adicionados para resolucao de URL.
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: add in-app pdf viewer for song materials`

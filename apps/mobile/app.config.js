@@ -24,6 +24,13 @@ extra.EXPO_PUBLIC_SUPABASE_ASSET_BUCKET = extra.EXPO_PUBLIC_SUPABASE_ASSET_BUCKE
 
 module.exports = {
   ...appJson.expo,
+  plugins: [
+    ...new Set([
+      ...(appJson.expo.plugins || []),
+      "@config-plugins/react-native-blob-util",
+      "@config-plugins/react-native-pdf",
+    ]),
+  ],
   extra: {
     ...(appJson.expo.extra || {}),
     ...extra,
