@@ -4985,3 +4985,137 @@ Checklist DoD:
 Sugestao de commit:
 
 `refactor: highlight home date and remove greeting line`
+
+## Etapa 112 - Botao de logout no Perfil
+
+Resumo do que foi feito:
+
+- Adicionado botao de logout na tela `Perfil`, no bloco de conta, apenas para sessoes autenticadas.
+- O botao reaproveita o fluxo existente de `signOutFromSupabase`.
+- A tela passou a exibir retorno curto de estado durante e apos a saida.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/perfil.tsx`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: add sign out action to profile`
+
+## Etapa 113 - Separacao entre Conta, Entrar e Criar conta
+
+Resumo do que foi feito:
+
+- A aba `Perfil` passou a funcionar como hub de conta, com estado claramente separado entre usuario autenticado e deslogado.
+- O formulario embutido deixou de existir na tela principal de conta.
+- A tela `entrar` passou a cuidar apenas do login.
+- Foi criada a tela `criar-conta`, dedicada ao cadastro.
+- Foram adicionadas telas leves para `Politica de privacidade`, `Termos de uso` e `Seus dados`.
+- O estado autenticado do Perfil ganhou acessos uteis para repertorio, partilhas e privacidade.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/perfil.tsx`
+- `apps/mobile/app/entrar.tsx`
+- `apps/mobile/app/criar-conta.tsx`
+- `apps/mobile/app/politica-privacidade.tsx`
+- `apps/mobile/app/termos-de-uso.tsx`
+- `apps/mobile/app/seus-dados.tsx`
+- `apps/mobile/src/components/AuthEntryCard.tsx`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: separate account hub from auth flows`
+
+## Etapa 114 - Simplificacao visual de Entrar e Criar conta
+
+Resumo do que foi feito:
+
+- A tela `entrar` foi reduzida ao essencial, mantendo apenas o bloco de boas-vindas, os campos, o CTA principal, a recuperacao de senha e o link de cadastro.
+- Foram removidos o cabecalho redundante, o bloco de acesso repetido e o bloco de primeiro acesso da tela de login.
+- A tela `criar-conta` teve removidos o cabecalho redundante e o bloco inicial repetido de cadastro.
+- As secoes principais de `Entrar` e `Criar conta` deixaram de ficar presas em caixas visuais desnecessarias e passaram a seguir uma composicao mais limpa.
+
+Arquivos alterados:
+
+- `apps/mobile/app/entrar.tsx`
+- `apps/mobile/app/criar-conta.tsx`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`refactor: simplify auth screen hierarchy`
+
+## Etapa 115 - Refinamento visual de Entrar e Criar conta
+
+Resumo do que foi feito:
+
+- As telas `entrar` e `criar-conta` ganharam composicao mais viva, mantendo a linguagem sacra e minimalista do app.
+- Foi adicionado um topo editorial leve com selo, divisoria ornamental e melhor ritmo vertical.
+- Os formularios principais passaram a ficar em um unico painel mais nobre e coeso.
+- O fluxo permaneceu limpo, sem reintroduzir redundancia textual ou visual.
+
+Arquivos alterados:
+
+- `apps/mobile/app/entrar.tsx`
+- `apps/mobile/app/criar-conta.tsx`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: polish auth screens with editorial sacred styling`
+
+## Etapa 116 - Limpeza final do topo de Entrar e Criar conta
+
+Resumo do que foi feito:
+
+- Removidos os selos iniciais de `Conta` e `Cadastro` no topo das telas.
+- Removidas as legendas redundantes logo abaixo dos titulos principais.
+- Mantida a frase de apoio principal, sem duplicidade visual.
+
+Arquivos alterados:
+
+- `apps/mobile/app/entrar.tsx`
+- `apps/mobile/app/criar-conta.tsx`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`refactor: remove redundant auth hero labels`

@@ -4,62 +4,116 @@ import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-
 
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { OrnamentalDivider } from "@/components/OrnamentalDivider";
-import { buildAuthScreenOverview } from "@/features/auth/auth-screen-overview";
-import { getAuthRedirectUrl } from "@/features/auth/auth-deep-link";
-import { requestPasswordReset, signInWithPassword } from "@/features/auth/credentials-auth";
+import { registerWithPassword, type RegistrationForm } from "@/features/auth/credentials-auth";
 import { supabase } from "@/services/supabase/client";
 import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
 
-export default function SignInScreen() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const emptyRegistration: RegistrationForm = {
+  city: "",
+  email: "",
+  fullName: "",
+  ministry: "",
+  parish: "",
+  password: "",
+  phone: "",
+  state: "",
+};
+
+export default function CreateAccountScreen() {
+  const [registration, setRegistration] = useState<RegistrationForm>(emptyRegistration);
   const [result, setResult] = useState<{ message: string; status: "error" | "success" } | null>(null);
   const [submitting, setSubmitting] = useState(false);
-  const overview = buildAuthScreenOverview({ mode: "login" });
+
+  const updateRegistration = (field: keyof RegistrationForm, value: string) => {
+    setRegistration((current) => ({
+      ...current,
+      [field]: value,
+    }));
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
       <View style={styles.heroSection}>
-        <EditorialSectionHeader eyebrow="Seja bem-vindo" title="Entrar" />
-        <Text style={styles.helperText}>{overview.helperText}</Text>
+        <EditorialSectionHeader eyebrow="Dados principais" title="Nova conta" />
+        <Text style={styles.helperText}>
+          Reuna seus dados principais para guardar favoritos, acompanhar partilhas e manter seu ministerio em ordem.
+        </Text>
         <OrnamentalDivider />
       </View>
 
       <View style={styles.formPanel}>
         <AuthInput
-          autoComplete="email"
-          keyboardType="email-address"
-          onChangeText={setEmail}
-          placeholder="Seu email"
-          value={email}
+          autoComplete="name"
+          onChangeText={(value) => updateRegistration("fullName", value)}
+          placeholder="Nome completo"
+          value={registration.fullName}
         />
         <AuthInput
-          autoComplete="password"
-          onChangeText={setPassword}
-          placeholder="Sua senha"
+          autoComplete="email"
+          keyboardType="email-address"
+          onChangeText={(value) => updateRegistration("email", value)}
+          placeholder="Seu email"
+          value={registration.email}
+        />
+        <AuthInput
+          autoComplete="password-new"
+          onChangeText={(value) => updateRegistration("password", value)}
+          placeholder="Crie uma senha com 8 ou mais caracteres"
           secureTextEntry
-          value={password}
+          value={registration.password}
+        />
+        <AuthInput
+          autoComplete="tel"
+          keyboardType="phone-pad"
+          onChangeText={(value) => updateRegistration("phone", value)}
+          placeholder="Telefone"
+          value={registration.phone}
+        />
+        <View style={styles.inlineFields}>
+          <AuthInput
+            autoCapitalize="characters"
+            onChangeText={(value) => updateRegistration("state", value)}
+            placeholder="Estado"
+            value={registration.state}
+          />
+          <AuthInput
+            onChangeText={(value) => updateRegistration("city", value)}
+            placeholder="Cidade"
+            value={registration.city}
+          />
+        </View>
+        <AuthInput
+          onChangeText={(value) => updateRegistration("parish", value)}
+          placeholder="Paroquia (opcional)"
+          value={registration.parish}
+        />
+        <AuthInput
+          onChangeText={(value) => updateRegistration("ministry", value)}
+          placeholder="Pastoral ou banda (opcional)"
+          value={registration.ministry}
         />
         <SubmitButton
           disabled={submitting}
-          label={submitting ? "Entrando..." : "Entrar"}
+          label={submitting ? "Criando..." : "Criar conta"}
           onPress={async () => {
             setSubmitting(true);
-            const nextResult = await signInWithPassword(supabase, email, password);
+            const nextResult = await registerWithPassword(supabase, registration);
             setResult(nextResult);
             setSubmitting(false);
           }}
         />
-        <Link asChild href="/recuperar-senha">
-          <Pressable accessibilityRole="button" style={styles.secondaryAction}>
-            <Text style={styles.secondaryActionText}>Esqueci minha senha</Text>
-          </Pressable>
-        </Link>
+        <Text style={styles.legalText}>
+          Ao seguir, voce declara ciencia de nossas condicoes de uso, politica de privacidade e cuidado com seus dados.
+        </Text>
         <View style={styles.inlineLinks}>
-          <Text style={styles.inlineText}>Ainda nao possui conta?</Text>
-          <Link asChild href="/criar-conta">
+          <Link asChild href="/politica-privacidade">
             <Pressable accessibilityRole="button" style={styles.inlineButton}>
-              <Text style={styles.inlineButtonText}>Criar conta</Text>
+              <Text style={styles.inlineButtonText}>Politica de privacidade</Text>
+            </Pressable>
+          </Link>
+          <Link asChild href="/termos-de-uso">
+            <Pressable accessibilityRole="button" style={styles.inlineButton}>
+              <Text style={styles.inlineButtonText}>Termos de uso</Text>
             </Pressable>
           </Link>
         </View>
@@ -70,6 +124,19 @@ export default function SignInScreen() {
           <Text style={styles.resultText}>{result.message}</Text>
         </View>
       ) : null}
+
+      <View style={styles.returnSection}>
+        <EditorialSectionHeader
+          eyebrow="Ja possui conta"
+          subtitle="Se voce ja criou seu acesso anteriormente, entre com a mesma conta para seguir."
+          title="Voltar para login"
+        />
+        <Link asChild href="/entrar">
+          <Pressable accessibilityRole="button" style={styles.linkButton}>
+            <Text style={styles.linkButtonText}>Entrar</Text>
+          </Pressable>
+        </Link>
+      </View>
     </ScrollView>
   );
 }
@@ -149,7 +216,6 @@ const styles = StyleSheet.create({
     fontFamily: fontFamilies.body,
     fontSize: typography.body,
     lineHeight: 24,
-    marginTop: spacing.xs,
   },
   heroSection: {
     gap: spacing.md,
@@ -164,18 +230,14 @@ const styles = StyleSheet.create({
     fontSize: typography.caption,
     fontWeight: "800",
   },
+  inlineFields: {
+    flexDirection: "row",
+    gap: spacing.sm,
+  },
   inlineLinks: {
-    alignItems: "center",
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: spacing.xs,
-    marginTop: spacing.sm,
-  },
-  inlineText: {
-    color: colors.textSecondary,
-    fontFamily: fontFamilies.body,
-    fontSize: typography.caption,
-    lineHeight: 20,
+    gap: spacing.sm,
   },
   input: {
     backgroundColor: colors.surfaceMuted,
@@ -183,9 +245,27 @@ const styles = StyleSheet.create({
     borderRadius: radii.lg,
     borderWidth: 1,
     color: colors.textPrimary,
+    flex: 1,
     fontFamily: fontFamilies.body,
     fontSize: typography.body,
     padding: spacing.md,
+  },
+  legalText: {
+    color: colors.textMuted,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.caption,
+    lineHeight: 20,
+    marginTop: spacing.xs,
+  },
+  linkButton: {
+    alignSelf: "flex-start",
+    paddingVertical: spacing.xs,
+  },
+  linkButtonText: {
+    color: colors.accent,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
   },
   resultCard: {
     borderRadius: radii.xl,
@@ -198,15 +278,8 @@ const styles = StyleSheet.create({
     fontSize: typography.body,
     lineHeight: 22,
   },
-  secondaryAction: {
-    alignSelf: "flex-start",
-    paddingVertical: spacing.xs,
-  },
-  secondaryActionText: {
-    color: colors.accent,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "800",
+  returnSection: {
+    gap: spacing.sm,
   },
   success: {
     backgroundColor: colors.oliveSoft,
