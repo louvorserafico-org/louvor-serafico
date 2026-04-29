@@ -18,6 +18,10 @@ function normalizeName(value: string) {
 }
 
 function resolveDisplayName(profile: SupabaseProfileState, session: SupabaseSessionState) {
+  if (session.status !== "authenticated") {
+    return "Visitante";
+  }
+
   if (profile.status === "ready" && profile.displayName) {
     return profile.displayName;
   }

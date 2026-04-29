@@ -40,6 +40,14 @@ const authenticatedSession: SupabaseSessionState = {
   userId: "user-1",
 };
 
+const anonymousSession: SupabaseSessionState = {
+  accessToken: null,
+  email: null,
+  provider: null,
+  status: "anonymous",
+  userId: null,
+};
+
 describe("home welcome", () => {
   it("builds greeting from ready profile", () => {
     assert.deepEqual(
@@ -61,6 +69,18 @@ describe("home welcome", () => {
       }),
       {
         initials: "L",
+      },
+    );
+  });
+
+  it("uses visitor initial when session is anonymous", () => {
+    assert.deepEqual(
+      buildHomeWelcome({
+        profile: anonymousProfile,
+        session: anonymousSession,
+      }),
+      {
+        initials: "V",
       },
     );
   });

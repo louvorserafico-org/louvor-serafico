@@ -5400,3 +5400,29 @@ Checklist DoD:
 Sugestao de commit:
 
 `style: soften empty monthly repertoire state`
+
+## Etapa 128 - Avatar da Home como visitante ou iniciais da conta
+
+Resumo do que foi feito:
+
+- O circulo do topo da Home passou a mostrar `V` quando nao ha usuario autenticado.
+- Quando ha sessao autenticada, o comportamento de iniciais foi mantido.
+- O toque no circulo agora abre a tela de `Perfil`.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/index.tsx`
+- `apps/mobile/src/features/home/home-welcome.ts`
+- `apps/mobile/src/features/home/home-welcome.test.ts`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: make home avatar open profile and support visitor state`

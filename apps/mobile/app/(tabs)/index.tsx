@@ -3,7 +3,8 @@ import {
   getInitialCelebrationCatalog,
   getLiturgicalDayForDate,
 } from "@louvor-serafico/shared";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { router } from "expo-router";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { HomePreparedDayItem } from "@/components/HomePreparedDayItem";
@@ -43,9 +44,14 @@ export default function TodayScreen() {
       <View style={styles.header}>
         <View style={styles.headerTopRow}>
           <Text style={styles.headerSection}>Inicio</Text>
-          <View style={styles.avatarCircle}>
+          <Pressable
+            accessibilityLabel="Abrir perfil"
+            accessibilityRole="button"
+            onPress={() => router.push("/perfil")}
+            style={({ pressed }) => [styles.avatarCircle, pressed ? styles.avatarPressed : undefined]}
+          >
             <Text style={styles.avatarText}>{welcome.initials}</Text>
-          </View>
+          </Pressable>
         </View>
         <Text style={styles.headerTitle}>Louvor Serafico</Text>
         <Text style={styles.headerSubtitle}>Que o canto conduza a oracao.</Text>
@@ -112,6 +118,9 @@ const styles = StyleSheet.create({
     fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "800",
+  },
+  avatarPressed: {
+    opacity: 0.82,
   },
   container: {
     backgroundColor: colors.background,
