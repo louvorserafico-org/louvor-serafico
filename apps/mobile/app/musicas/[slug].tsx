@@ -8,9 +8,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { requestAssetSignedUrl } from "@/features/assets/edge-asset-url";
 import { useSessionPreview } from "@/features/auth/SessionProvider";
 import { useSupabaseSession } from "@/features/auth/SupabaseSessionProvider";
-import { useFavorites } from "@/features/favorites/FavoritesProvider";
 import { fetchRemoteSongDetail } from "@/features/songs/remote-song-detail";
-import { buildSongDetailOverview } from "@/features/songs/song-detail-overview";
 import { buildSongMaterialSections } from "@/features/songs/song-materials";
 import { resolveSongAssetAction } from "@/features/songs/song-asset-action";
 import { resolveAssetAccess } from "@/features/subscription/premium-access";
@@ -28,10 +26,8 @@ export default function SongDetailScreen() {
   const song = remoteSong ?? localSong;
   const { session } = useSessionPreview();
   const { session: supabaseSession } = useSupabaseSession();
-  const { isFavoriteSong, toggleSongFavorite } = useFavorites();
   const { hasActiveSubscription } = useSubscriptionPreview();
-  const canFavorite = session.status === "signed_in" || supabaseSession.status === "authenticated";
-  const isAuthenticated = canFavorite;
+  const isAuthenticated = session.status === "signed_in" || supabaseSession.status === "authenticated";
 
   useEffect(() => {
     let active = true;
@@ -69,12 +65,6 @@ export default function SongDetailScreen() {
     );
   }
 
-  const isFavorite = isFavoriteSong(song.id);
-  const overview = buildSongDetailOverview({
-    assetCount: song.assets.length,
-    favoriteEnabled: canFavorite,
-    sourceMode,
-  });
   const materialSections = buildSongMaterialSections(song.assets);
 
   return (
@@ -82,42 +72,11 @@ export default function SongDetailScreen() {
       <Stack.Screen options={{ headerShown: true, title: "Musica" }} />
       <PageHeader eyebrow="Canto sacro" title={song.title} subtitle={subtitle} />
 
-      <View style={[styles.summary, sourceMode === "remote" ? styles.summaryRemote : styles.summaryLocal]}>
-        <Text style={styles.summaryEyebrow}>Detalhe do canto</Text>
-        <Text style={styles.summaryTitle}>{overview.title}</Text>
-        <Text style={styles.summaryText}>{overview.helperText}</Text>
-      </View>
-
       <EditorialSectionHeader
         eyebrow="Consulta"
         subtitle="Cada frente de estudo fica reunida em seu proprio espaco para leitura, cifra, audio e video."
         title="Materiais"
       />
-
-      <View style={[styles.favoriteCard, canFavorite ? styles.favoriteReady : styles.favoriteBlocked]}>
-        <Text style={styles.favoriteEyebrow}>{canFavorite ? "Favoritos" : "Conta"}</Text>
-        <Text style={styles.assetTitle}>{canFavorite ? "Guardar entre favoritos" : "Entre para guardar este canto"}</Text>
-        <Text style={styles.assetMeta}>
-          {canFavorite
-            ? "Mantenha este canto por perto para voltar a ele sempre que precisar."
-            : "Com sua conta ativa, seus cantos preferidos ficam sempre mais proximos."}
-        </Text>
-        <Link asChild href={canFavorite ? `/musicas/${song.slug}` : "/entrar"}>
-          <Pressable
-            disabled={!canFavorite}
-            onPress={() => {
-              if (canFavorite) {
-                void toggleSongFavorite(song.id);
-              }
-            }}
-            style={[styles.favoriteButton, !canFavorite ? styles.favoriteButtonSecondary : undefined]}
-          >
-            <Text style={[styles.favoriteButtonText, !canFavorite ? styles.favoriteButtonTextSecondary : undefined]}>
-              {canFavorite ? (isFavorite ? "Remover dos favoritos" : "Guardar favorito") : "Entrar na conta"}
-            </Text>
-          </Pressable>
-        </Link>
-      </View>
 
       <View style={styles.list}>
         {materialSections.map((section) => (
@@ -256,54 +215,6 @@ const styles = StyleSheet.create({
     padding: spacing.xl,
     paddingBottom: spacing.xxl,
   },
-  favoriteBlocked: {
-    backgroundColor: colors.surface,
-    borderColor: colors.border,
-  },
-  favoriteButton: {
-    alignSelf: "flex-start",
-    backgroundColor: colors.olive,
-    borderColor: colors.olive,
-    borderRadius: radii.pill,
-    borderWidth: 1,
-    marginTop: spacing.sm,
-    paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.sm,
-  },
-  favoriteButtonSecondary: {
-    backgroundColor: colors.surface,
-    borderColor: colors.accent,
-  },
-  favoriteButtonText: {
-    color: colors.background,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "700",
-  },
-  favoriteButtonTextSecondary: {
-    color: colors.accent,
-  },
-  favoriteCard: {
-    borderRadius: radii.xl,
-    borderWidth: 1,
-    gap: spacing.xs,
-    padding: spacing.lg,
-    shadowColor: colors.ink,
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.06,
-    shadowRadius: 16,
-  },
-  favoriteEyebrow: {
-    color: colors.accent,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "800",
-    textTransform: "uppercase",
-  },
-  favoriteReady: {
-    backgroundColor: colors.oliveSoft,
-    borderColor: colors.olive,
-  },
   list: {
     gap: spacing.md,
   },
@@ -330,42 +241,5 @@ const styles = StyleSheet.create({
   sectionList: {
     gap: spacing.md,
     marginTop: spacing.sm,
-  },
-  summary: {
-    borderRadius: radii.xl,
-    borderWidth: 1,
-    gap: spacing.xs,
-    padding: spacing.lg,
-    shadowColor: colors.ink,
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.06,
-    shadowRadius: 16,
-  },
-  summaryEyebrow: {
-    color: colors.accent,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "800",
-    textTransform: "uppercase",
-  },
-  summaryLocal: {
-    backgroundColor: colors.surfaceMuted,
-    borderColor: colors.borderStrong,
-  },
-  summaryRemote: {
-    backgroundColor: colors.surface,
-    borderColor: colors.borderStrong,
-  },
-  summaryText: {
-    color: colors.textSecondary,
-    fontFamily: fontFamilies.body,
-    fontSize: typography.body,
-    lineHeight: 24,
-  },
-  summaryTitle: {
-    color: colors.textPrimary,
-    fontFamily: fontFamilies.display,
-    fontSize: typography.heading,
-    fontWeight: "700",
   },
 });

@@ -5519,3 +5519,27 @@ Checklist DoD:
 Sugestao de commit:
 
 `refactor: remove redundant celebration summary blocks`
+
+## Etapa 132 - Limpeza das boxes redundantes na tela de Musica
+
+Resumo do que foi feito:
+
+- Removida a box `Detalhe do Canto`.
+- Removida a box `Guardar entre favoritos`.
+- A tela de musica passou a abrir direto no bloco principal e na lista de materiais.
+
+Arquivos alterados:
+
+- `apps/mobile/app/musicas/[slug].tsx`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`refactor: remove redundant song detail boxes`
