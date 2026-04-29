@@ -100,3 +100,16 @@ export async function resolvePdfViewerSource(
     url: publicUrl,
   };
 }
+
+export function buildPdfCacheFileName(assetId: string, storagePath: string, documentLabel: string) {
+  const base = assetId.trim() || storagePath.trim() || documentLabel.trim() || "documento";
+
+  return `${base}`
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-zA-Z0-9._-]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "")
+    .toLowerCase()
+    .concat(".pdf");
+}

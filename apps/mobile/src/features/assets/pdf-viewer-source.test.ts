@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
-import { buildPublicStorageAssetUrl, resolvePdfViewerSource } from "./pdf-viewer-source.ts";
+import { buildPdfCacheFileName, buildPublicStorageAssetUrl, resolvePdfViewerSource } from "./pdf-viewer-source.ts";
 
 describe("pdf viewer source", () => {
   it("builds a public storage url encoding path segments", () => {
@@ -76,5 +76,12 @@ describe("pdf viewer source", () => {
       status: "ready",
       url: "https://signed.example/document.pdf",
     });
+  });
+
+  it("builds a stable local cache file name", () => {
+    assert.equal(
+      buildPdfCacheFileName("asset-fazei-score", "Partituras/Fazei em nome do Senhor.pdf", "Partitura"),
+      "asset-fazei-score.pdf",
+    );
   });
 });

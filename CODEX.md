@@ -5640,3 +5640,38 @@ Checklist DoD:
 Sugestao de commit:
 
 `feat: add in-app pdf viewer for song materials`
+
+## Etapa 135 - Correcao do carregamento interno de PDF no Android
+
+Resumo do que foi feito:
+
+- O build Android com development client passou, confirmando que a limitacao restante era de runtime e nao de compilacao.
+- O erro real vinha do fluxo interno do `react-native-pdf` ao baixar URLs remotas no Android, falhando no arquivo temporario `.pdf.tmp` com `ENOENT`.
+- O visualizador interno passou a fazer pre-download do PDF com `react-native-blob-util` para um arquivo local estavel em cache.
+- Depois do download local, o `react-native-pdf` recebe apenas `file://...`, evitando o fluxo interno quebrado de copia temporaria.
+- Foi adicionada regra de nome de cache local para o documento.
+- O `package.json` raiz foi restaurado no workspace apos ter sido removido durante os testes locais.
+
+Arquivos alterados:
+
+- `apps/mobile/app/visualizador-pdf.tsx`
+- `apps/mobile/src/features/assets/pdf-viewer-source.ts`
+- `apps/mobile/src/features/assets/pdf-viewer-source.test.ts`
+- `package.json`
+
+Observacoes tecnicas:
+
+- Os warnings de `deprecated API` vistos no Gradle nao bloqueiam o fluxo atual.
+- Para viabilizar o build local Android nesse path do Windows, o projeto esta com `newArchEnabled: false` em `apps/mobile/app.json`.
+
+Checklist DoD:
+
+- [x] Erro de runtime analisado com causa real identificada.
+- [x] Fluxo interno no Android trocado para arquivo local antes da renderizacao.
+- [x] Testes atualizados.
+- [x] Typecheck passou.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`fix: preload pdf files locally before Android rendering`

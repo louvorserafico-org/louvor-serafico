@@ -2,9 +2,10 @@ import Constants, { ExecutionEnvironment } from "expo-constants";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useCallback, useEffect, useMemo, useState, type ComponentType } from "react";
 import { ActivityIndicator, Linking, Pressable, StyleSheet, Text, View } from "react-native";
+import ReactNativeBlobUtil from "react-native-blob-util";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { resolvePdfViewerSource } from "@/features/assets/pdf-viewer-source";
+import { buildPdfCacheFileName, resolvePdfViewerSource } from "@/features/assets/pdf-viewer-source";
 import { useSupabaseSession } from "@/features/auth/SupabaseSessionProvider";
 import { supabaseConfig } from "@/services/supabase/client";
 import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
@@ -42,6 +43,34 @@ export default function PdfViewerScreen() {
   const screenTitle = params.title?.trim() || "Documento";
   const documentLabel = params.type?.trim() || "PDF";
   const canRenderInternally = Boolean(PdfComponent);
+  const assetId = params.assetId?.trim() || "";
+  const storagePath = params.storagePath?.trim() || "";
+
+  const prepareLocalPdfUri = useCallback(
+    async (remoteUrl: string) => {
+      if (!/^https?:\/\//i.test(remoteUrl)) {
+        return remoteUrl;
+      }
+
+      const filename = buildPdfCacheFileName(assetId, storagePath, documentLabel);
+      const targetPath = `${ReactNativeBlobUtil.fs.dirs.CacheDir}/${filename}`;
+
+      try {
+        await ReactNativeBlobUtil.fs.unlink(targetPath);
+      } catch {
+        // noop
+      }
+
+      const response = await ReactNativeBlobUtil.config({
+        fileCache: true,
+        path: targetPath,
+        trusty: true,
+      }).fetch("GET", remoteUrl);
+
+      return `file://${response.path()}`;
+    },
+    [assetId, documentLabel, storagePath],
+  );
 
   const loadDocument = useCallback(async () => {
     setLoadingPdf(true);
@@ -49,12 +78,12 @@ export default function PdfViewerScreen() {
 
     const result = await resolvePdfViewerSource({
       accessToken: session.accessToken,
-      assetId: params.assetId?.trim() || "",
+      assetId,
       bucket: supabaseConfig.assetBucket,
       fileUrl: params.fileUrl,
       functionsUrl: supabaseConfig.functionsUrl,
       premium: params.premium === "1",
-      storagePath: params.storagePath?.trim() || "",
+      storagePath,
       supabaseUrl: supabaseConfig.url,
     });
 
@@ -76,11 +105,32 @@ export default function PdfViewerScreen() {
       return;
     }
 
-    setState({
-      status: "ready",
-      url: result.url,
-    });
-  }, [canRenderInternally, params.assetId, params.fileUrl, params.premium, params.storagePath, session.accessToken]);
+    try {
+      const localUri = await prepareLocalPdfUri(result.url);
+      setState({
+        status: "ready",
+        url: localUri,
+      });
+      return;
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Falha ao preparar o documento para leitura.";
+      setState({
+        message,
+        status: "error",
+        url: result.url,
+      });
+      return;
+    }
+
+  }, [
+    assetId,
+    canRenderInternally,
+    params.fileUrl,
+    params.premium,
+    prepareLocalPdfUri,
+    session.accessToken,
+    storagePath,
+  ]);
 
   useEffect(() => {
     void loadDocument();
@@ -114,7 +164,7 @@ export default function PdfViewerScreen() {
               onLoadComplete={() => {
                 setLoadingPdf(false);
               }}
-              source={{ cache: true, uri: state.url }}
+              source={{ cache: false, uri: state.url }}
               style={styles.viewer}
             />
 
