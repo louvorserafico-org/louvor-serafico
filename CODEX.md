@@ -5426,3 +5426,32 @@ Checklist DoD:
 Sugestao de commit:
 
 `feat: make home avatar open profile and support visitor state`
+
+## Etapa 129 - Home com roteiros proximos e acesso para mais celebracoes
+
+Resumo do que foi feito:
+
+- O botao solto `Ver calendario` foi removido da secao de consulta da Home.
+- A Home passou a priorizar o roteiro do proprio dia quando existir e, em seguida, os roteiros mais proximos da data atual.
+- A lista passou a limitar a exibicao a 5 roteiros.
+- Quando houver mais itens, a Home exibe `Ver mais roteiros`.
+- Foi criada a tela `Celebracoes`, com a lista completa de roteiros publicados.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/index.tsx`
+- `apps/mobile/app/celebracoes/index.tsx`
+- `apps/mobile/src/features/home/home-prepared-days.ts`
+- `apps/mobile/src/features/home/home-prepared-days.test.ts`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: prioritize nearby home repertoires and add celebrations list`

@@ -3,7 +3,7 @@ import {
   getInitialCelebrationCatalog,
   getLiturgicalDayForDate,
 } from "@louvor-serafico/shared";
-import { router } from "expo-router";
+import { Link, router } from "expo-router";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
@@ -80,8 +80,6 @@ export default function TodayScreen() {
       </View>
 
       <EditorialSectionHeader
-        actionHref="/calendario"
-        actionLabel="Ver calendario"
         eyebrow="Consulta"
         subtitle={preparedDays.helperText}
         title={preparedDays.title}
@@ -96,6 +94,13 @@ export default function TodayScreen() {
           />
         ))}
       </View>
+      {preparedDays.hasMore ? (
+        <Link asChild href="/celebracoes">
+          <Pressable accessibilityRole="button" style={styles.moreButton}>
+            <Text style={styles.moreButtonText}>Ver mais roteiros</Text>
+          </Pressable>
+        </Link>
+      ) : null}
 
       <Text style={styles.footerNote}>Para cada tempo da Igreja, um repertorio a servico da oracao.</Text>
     </ScrollView>
@@ -182,6 +187,16 @@ const styles = StyleSheet.create({
     fontSize: typography.caption,
     fontWeight: "800",
     textTransform: "uppercase",
+  },
+  moreButton: {
+    alignSelf: "flex-start",
+    paddingTop: spacing.xs,
+  },
+  moreButtonText: {
+    color: colors.accent,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
   },
   preparedList: {
     backgroundColor: colors.surface,

@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
+import type { Celebration } from "@louvor-serafico/shared";
 import { getInitialCelebrationCatalog } from "../../../../../packages/shared/src/celebration.ts";
 import { getLiturgicalDayForDate } from "../../../../../packages/shared/src/liturgical-calendar.ts";
 
@@ -15,6 +16,7 @@ describe("home prepared days", () => {
 
     assert.equal(result.title, "Roteiros disponiveis");
     assert.equal(result.items[0]?.slug, "santissimo-nome-de-jesus");
+    assert.equal(result.hasMore, false);
   });
 
   it("falls back to published days when the year has no future prepared items", () => {
@@ -25,5 +27,41 @@ describe("home prepared days", () => {
 
     assert.equal(result.title, "Roteiros disponiveis");
     assert.equal(result.items[0]?.slug, "santissimo-nome-de-jesus");
+    assert.equal(result.hasMore, false);
+  });
+
+  it("keeps the closest available routes and limits the list to five items", () => {
+    const celebrations = buildCelebrations([
+      "01-03",
+      "01-08",
+      "01-15",
+      "01-20",
+      "01-25",
+      "02-02",
+      "02-10",
+    ]);
+
+    const result = buildHomePreparedDays(
+      celebrations,
+      getLiturgicalDayForDate(new Date("2026-01-18T12:00:00.000Z")),
+    );
+
+    assert.deepEqual(
+      result.items.map((item) => item.dateMonthDay),
+      ["01-20", "01-15", "01-25", "01-08", "02-02"],
+    );
+    assert.equal(result.hasMore, true);
   });
 });
+
+function buildCelebrations(monthDays: string[]): Celebration[] {
+  return monthDays.map((monthDay, index) => ({
+    dateLabel: monthDay,
+    dateMonthDay: monthDay,
+    id: `celebration-${index + 1}`,
+    recommendations: [],
+    slug: `celebration-${index + 1}`,
+    songs: [],
+    title: `Celebracao ${index + 1}`,
+  }));
+}
