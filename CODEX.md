@@ -5455,3 +5455,43 @@ Checklist DoD:
 Sugestao de commit:
 
 `feat: prioritize nearby home repertoires and add celebrations list`
+
+## Etapa 130 - Partilha com repertorio vinculado e composer simplificado
+
+Resumo do que foi feito:
+
+- A box inicial `Partilha e escuta` foi removida da tela `Comunidade`.
+- A composicao principal passou a priorizar diretamente o formulario de partilha.
+- O usuario agora pode publicar uma partilha livre ou vincular a partilha a um repertorio/celebracao proxima da data atual.
+- As opcoes de repertorio sao montadas a partir das celebracoes disponiveis, priorizando as mais proximas do dia corrente.
+- As partilhas passaram a exibir a celebracao vinculada quando houver.
+- O fluxo local e remoto foi mantido, incluindo persistencia local e envio remoto com `celebration_id`.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/comunidade.tsx`
+- `apps/mobile/src/features/comments/comment-store.ts`
+- `apps/mobile/src/features/comments/comment-store.test.ts`
+- `apps/mobile/src/features/comments/CommentsProvider.tsx`
+- `apps/mobile/src/features/comments/community-access.ts`
+- `apps/mobile/src/features/comments/community-access.test.ts`
+- `apps/mobile/src/features/comments/community-repertoire.ts`
+- `apps/mobile/src/features/comments/community-repertoire.test.ts`
+- `apps/mobile/src/features/comments/remote-comments.ts`
+- `apps/mobile/src/features/comments/remote-comments.test.ts`
+- `apps/mobile/src/features/comments/comment-feed-source.test.ts`
+- `apps/mobile/src/features/comments/remote-comment-submit.test.ts`
+- `apps/mobile/src/features/preview/storage-parsers.ts`
+- `package.json`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`feat: allow community posts to reference nearby repertoires`

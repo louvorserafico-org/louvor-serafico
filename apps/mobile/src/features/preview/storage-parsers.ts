@@ -58,6 +58,8 @@ function isLocalComment(value: unknown): value is LocalComment {
     typeof candidate.authorName === "string" &&
     typeof candidate.body === "string" &&
     typeof candidate.id === "string" &&
+    (typeof candidate.celebrationDateLabel === "string" || typeof candidate.celebrationDateLabel === "undefined") &&
+    (typeof candidate.celebrationTitle === "string" || typeof candidate.celebrationTitle === "undefined") &&
     candidate.scope === "community"
   );
 }

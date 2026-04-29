@@ -11,6 +11,10 @@ describe("remote comments", () => {
           JSON.stringify([
             {
               body: "Texto remoto",
+              celebrations: {
+                date_label: "03 de janeiro",
+                title: "Missa do Santissimo Nome de Jesus",
+              },
               id: "comment-1",
               profiles: {
                 display_name: "Coral",
@@ -28,6 +32,8 @@ describe("remote comments", () => {
         {
           authorName: "Coral",
           body: "Texto remoto",
+          celebrationDateLabel: "03 de janeiro",
+          celebrationTitle: "Missa do Santissimo Nome de Jesus",
           id: "comment-1",
           scope: "community",
         },

@@ -12,6 +12,7 @@ describe("comment store", () => {
 
     assert.equal(comment.authorName, "Frei Luis");
     assert.equal(comment.body, "Cantamos com violao e assembleia respondeu muito bem.");
+    assert.equal(comment.celebrationTitle, undefined);
     assert.equal(comment.scope, "community");
     assert.ok(comment.id.startsWith("comment-"));
   });

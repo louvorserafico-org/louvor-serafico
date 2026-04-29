@@ -22,6 +22,7 @@ describe("remote comment submit", () => {
     );
 
     assert.equal(capturedBody.includes('"body":"Comentario remoto"'), true);
+    assert.equal(capturedBody.includes('"celebration_id":null'), true);
     assert.deepEqual(result, {
       message: "Comentario remoto publicado.",
       ok: true,

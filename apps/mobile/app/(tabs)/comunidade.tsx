@@ -1,13 +1,17 @@
 import { Link } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { getInitialCelebrationCatalog } from "@louvor-serafico/shared";
 
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { PageHeader } from "@/components/PageHeader";
 import { useSessionPreview } from "@/features/auth/SessionProvider";
 import { useSupabaseSession } from "@/features/auth/SupabaseSessionProvider";
+import { resolveCelebrationCatalogSource } from "@/features/celebrations/celebration-catalog-source";
+import { fetchRemoteCelebrations } from "@/features/celebrations/remote-celebrations";
 import { buildCommunityAccess } from "@/features/comments/community-access";
 import { resolveCommentFeedSource } from "@/features/comments/comment-feed-source";
+import { buildCommunityRepertoireOptions } from "@/features/comments/community-repertoire";
 import { useCommentsPreview } from "@/features/comments/CommentsProvider";
 import { postRemoteComment } from "@/features/comments/remote-comment-submit";
 import { fetchRemoteComments } from "@/features/comments/remote-comments";
@@ -28,24 +32,48 @@ export default function CommunityScreen() {
     message: "Carregando comentarios remotos.",
     status: "ready",
   });
+  const [remoteCelebrationsState, setRemoteCelebrationsState] = useState<
+    Awaited<ReturnType<typeof fetchRemoteCelebrations>>
+  >({
+    celebrations: [],
+    message: "Carregando celebracoes remotas.",
+    status: "ready",
+  });
+  const [selectedCelebrationId, setSelectedCelebrationId] = useState<string | null>(null);
   const canSubmit = canComment && draft.trim().length > 0;
   const feedSource = useMemo(() => resolveCommentFeedSource(remoteState, comments), [comments, remoteState]);
   const communityAccess = buildCommunityAccess({ canComment, hasRemoteSession });
+  const celebrationSource = useMemo(
+    () => resolveCelebrationCatalogSource(remoteCelebrationsState, getInitialCelebrationCatalog()),
+    [remoteCelebrationsState],
+  );
+  const repertoireOptions = useMemo(
+    () => buildCommunityRepertoireOptions(celebrationSource.celebrations, new Date()),
+    [celebrationSource.celebrations],
+  );
+  const selectedCelebration = useMemo(
+    () => repertoireOptions.find((item) => item.id === selectedCelebrationId) ?? null,
+    [repertoireOptions, selectedCelebrationId],
+  );
 
   useEffect(() => {
     let isMounted = true;
 
-    async function loadRemoteComments() {
-      const remote = await fetchRemoteComments(fetch, supabaseConfig.url, supabaseConfig.publishableKey ?? supabaseConfig.anonKey);
+    async function loadCommunityData() {
+      const [remoteComments, remoteCelebrations] = await Promise.all([
+        fetchRemoteComments(fetch, supabaseConfig.url, supabaseConfig.publishableKey ?? supabaseConfig.anonKey),
+        fetchRemoteCelebrations(fetch, supabaseConfig.url, supabaseConfig.publishableKey ?? supabaseConfig.anonKey),
+      ]);
 
       if (!isMounted) {
         return;
       }
 
-      setRemoteState(remote);
+      setRemoteState(remoteComments);
+      setRemoteCelebrationsState(remoteCelebrations);
     }
 
-    void loadRemoteComments();
+    void loadCommunityData();
 
     return () => {
       isMounted = false;
@@ -65,38 +93,62 @@ export default function CommunityScreen() {
         subtitle={buildCommunityTabSubtitle(canComment)}
       />
 
-      <View
-        style={[
-          styles.panel,
-          communityAccess.status === "remote"
-            ? styles.panelRemote
-            : communityAccess.status === "local"
-              ? styles.panelLocal
-              : styles.panelBlocked,
-        ]}
-      >
-        <View style={styles.panelTopRow}>
-          <View style={styles.metricBadge}>
-            <Text style={styles.metricBadgeText}>{feedSource.comments.length} partilhas</Text>
-          </View>
-        </View>
-        <Text style={styles.panelTitle}>{communityAccess.title}</Text>
-        <Text style={styles.panelText}>{communityAccess.helperText}</Text>
-        {!canComment ? (
-          <Link asChild href="/entrar">
-            <Pressable style={[styles.button, styles.buttonAccent]}>
-              <Text style={styles.buttonText}>{communityAccess.primaryLabel}</Text>
-            </Pressable>
-          </Link>
-        ) : null}
-      </View>
-
       <View style={styles.formCard}>
         <EditorialSectionHeader
           eyebrow="Escrever"
-          subtitle={canComment ? submitMessage : "Entre para registrar sua experiencia quando desejar."}
+          subtitle={canComment ? submitMessage : communityAccess.helperText}
           title="Nova partilha"
         />
+        {canComment ? (
+          <View style={styles.repertoireSection}>
+            <Text style={styles.repertoireLabel}>Vincular ao repertorio</Text>
+            <View style={styles.repertoireOptions}>
+              <Pressable
+                onPress={() => setSelectedCelebrationId(null)}
+                style={[
+                  styles.repertoireOption,
+                  selectedCelebrationId === null ? styles.repertoireOptionActive : undefined,
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.repertoireOptionTitle,
+                    selectedCelebrationId === null ? styles.repertoireOptionTitleActive : undefined,
+                  ]}
+                >
+                  Partilha livre
+                </Text>
+              </Pressable>
+              {repertoireOptions.map((option) => (
+                <Pressable
+                  key={option.id}
+                  onPress={() => setSelectedCelebrationId(option.id)}
+                  style={[
+                    styles.repertoireOption,
+                    selectedCelebrationId === option.id ? styles.repertoireOptionActive : undefined,
+                  ]}
+                >
+                  <Text
+                    style={[
+                      styles.repertoireOptionEyebrow,
+                      selectedCelebrationId === option.id ? styles.repertoireOptionEyebrowActive : undefined,
+                    ]}
+                  >
+                    {option.dateLabel}
+                  </Text>
+                  <Text
+                    style={[
+                      styles.repertoireOptionTitle,
+                      selectedCelebrationId === option.id ? styles.repertoireOptionTitleActive : undefined,
+                    ]}
+                  >
+                    {option.title}
+                  </Text>
+                </Pressable>
+              ))}
+            </View>
+          </View>
+        ) : null}
         <TextInput
           editable={canComment}
           multiline
@@ -114,6 +166,7 @@ export default function CommunityScreen() {
                 const result = await postRemoteComment(
                   {
                     body: draft,
+                    celebrationId: selectedCelebration?.id ?? null,
                     profileId: supabaseSession.userId,
                   },
                   fetch,
@@ -126,6 +179,7 @@ export default function CommunityScreen() {
 
                 if (result.ok) {
                   setDraft("");
+                  setSelectedCelebrationId(null);
                   await refreshRemoteComments();
                 }
 
@@ -136,9 +190,12 @@ export default function CommunityScreen() {
                 addCommunityComment({
                   authorName: session.displayName,
                   body: draft,
+                  celebrationDateLabel: selectedCelebration?.dateLabel,
+                  celebrationTitle: selectedCelebration?.title,
                 });
                 setSubmitMessage("Partilha guardada neste aparelho.");
                 setDraft("");
+                setSelectedCelebrationId(null);
               }
             }}
             style={[styles.button, !canSubmit ? styles.buttonDisabled : undefined]}
@@ -169,7 +226,15 @@ export default function CommunityScreen() {
               key={comment.id}
               style={[styles.comment, index !== feedSource.comments.length - 1 ? styles.commentBorder : undefined]}
             >
-              <Text style={styles.commentEyebrow}>Partilha</Text>
+              <Text style={styles.commentEyebrow}>
+                {comment.celebrationTitle ? "Repertorio celebrado" : "Partilha"}
+              </Text>
+              {comment.celebrationTitle ? (
+                <Text style={styles.commentLinkedCelebration}>
+                  {comment.celebrationDateLabel ? `${comment.celebrationDateLabel} · ` : ""}
+                  {comment.celebrationTitle}
+                </Text>
+              ) : null}
               <Text style={styles.commentAuthor}>{comment.authorName}</Text>
               <Text style={styles.commentText}>{comment.body}</Text>
             </View>
@@ -284,55 +349,59 @@ const styles = StyleSheet.create({
   inputDisabled: {
     color: colors.textMuted,
   },
-  panel: {
-    borderRadius: radii.xl,
-    borderWidth: 1,
-    gap: spacing.sm,
-    padding: spacing.lg,
-    shadowColor: colors.ink,
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.06,
-    shadowRadius: 16,
-  },
-  panelBlocked: {
-    backgroundColor: colors.surface,
-    borderColor: colors.border,
-  },
-  panelLocal: {
-    backgroundColor: colors.surfaceMuted,
-    borderColor: colors.borderStrong,
-  },
-  panelRemote: {
-    backgroundColor: colors.surface,
-    borderColor: colors.borderStrong,
-  },
-  panelText: {
-    color: colors.textSecondary,
-    fontFamily: fontFamilies.body,
-    fontSize: typography.body,
-    lineHeight: 24,
-  },
-  panelTopRow: {
-    flexDirection: "row",
-  },
-  panelTitle: {
-    color: colors.textPrimary,
-    fontFamily: fontFamilies.display,
-    fontSize: typography.heading,
-    fontWeight: "700",
-  },
-  metricBadge: {
-    backgroundColor: colors.goldSoft,
-    borderColor: colors.border,
-    borderRadius: radii.pill,
-    borderWidth: 1,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
-  },
-  metricBadgeText: {
+  commentLinkedCelebration: {
     color: colors.accent,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.caption,
+    lineHeight: 20,
+  },
+  repertoireLabel: {
+    color: colors.gold,
     fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "800",
+    textTransform: "uppercase",
+  },
+  repertoireOption: {
+    backgroundColor: colors.surfaceMuted,
+    borderColor: colors.border,
+    borderRadius: radii.lg,
+    borderWidth: 1,
+    gap: spacing.xs,
+    minWidth: 148,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.md,
+  },
+  repertoireOptionActive: {
+    backgroundColor: colors.goldSoft,
+    borderColor: colors.borderStrong,
+  },
+  repertoireOptionEyebrow: {
+    color: colors.textMuted,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.tab,
+    fontWeight: "700",
+    textTransform: "uppercase",
+  },
+  repertoireOptionEyebrowActive: {
+    color: colors.gold,
+  },
+  repertoireOptionTitle: {
+    color: colors.textPrimary,
+    fontFamily: fontFamilies.display,
+    fontSize: typography.caption,
+    fontWeight: "700",
+  },
+  repertoireOptionTitleActive: {
+    color: colors.accent,
+  },
+  repertoireOptions: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: spacing.sm,
+  },
+  repertoireSection: {
+    gap: spacing.sm,
+    marginBottom: spacing.xs,
   },
 });

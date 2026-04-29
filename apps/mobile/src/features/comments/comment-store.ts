@@ -1,6 +1,8 @@
 export type LocalComment = {
   authorName: string;
   body: string;
+  celebrationDateLabel?: string;
+  celebrationTitle?: string;
   id: string;
   scope: "community";
 };
@@ -8,6 +10,8 @@ export type LocalComment = {
 type CreateLocalCommentInput = {
   authorName: string;
   body: string;
+  celebrationDateLabel?: string;
+  celebrationTitle?: string;
 };
 
 export function createLocalComment(input: CreateLocalCommentInput): LocalComment {
@@ -25,6 +29,8 @@ export function createLocalComment(input: CreateLocalCommentInput): LocalComment
   return {
     authorName,
     body,
+    celebrationDateLabel: input.celebrationDateLabel?.trim() || undefined,
+    celebrationTitle: input.celebrationTitle?.trim() || undefined,
     id: `comment-${Date.now()}`,
     scope: "community",
   };

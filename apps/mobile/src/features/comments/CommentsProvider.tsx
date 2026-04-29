@@ -5,7 +5,12 @@ import { loadPreviewComments, savePreviewComments } from "@/features/preview/sto
 
 type CommentsContextValue = {
   comments: LocalComment[];
-  addCommunityComment: (input: { authorName: string; body: string }) => void;
+  addCommunityComment: (input: {
+    authorName: string;
+    body: string;
+    celebrationDateLabel?: string;
+    celebrationTitle?: string;
+  }) => void;
 };
 
 const initialComments: LocalComment[] = [

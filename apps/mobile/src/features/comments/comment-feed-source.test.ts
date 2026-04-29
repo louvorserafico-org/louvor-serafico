@@ -22,6 +22,7 @@ describe("comment feed source", () => {
           {
             authorName: "Remote User",
             body: "Comentario remoto",
+            celebrationTitle: "Missa do Santissimo Nome de Jesus",
             id: "comment-remote",
             scope: "community",
           },
@@ -37,6 +38,7 @@ describe("comment feed source", () => {
         {
           authorName: "Remote User",
           body: "Comentario remoto",
+          celebrationTitle: "Missa do Santissimo Nome de Jesus",
           id: "comment-remote",
           scope: "community",
         },

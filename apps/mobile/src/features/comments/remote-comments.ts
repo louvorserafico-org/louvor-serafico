@@ -4,6 +4,10 @@ type FetchLike = typeof fetch;
 
 type RemoteCommentRow = {
   body: string;
+  celebrations?: {
+    date_label?: string | null;
+    title?: string | null;
+  } | null;
   id: string;
   profiles?: {
     display_name?: string | null;
@@ -29,12 +33,15 @@ export async function fetchRemoteComments(
     };
   }
 
-  const response = await fetchImpl(`${url}/rest/v1/comments?select=id,body,profiles(display_name)&limit=20`, {
+  const response = await fetchImpl(
+    `${url}/rest/v1/comments?select=id,body,profiles(display_name),celebrations(title,date_label)&limit=20`,
+    {
     headers: {
       apikey: publicKey,
       Authorization: `Bearer ${publicKey}`,
     },
-  });
+    },
+  );
 
   if (!response.ok) {
     const errorBody = (await response.json()) as { message?: string };
@@ -60,6 +67,8 @@ export async function fetchRemoteComments(
     comments: rows.map((row) => ({
       authorName: row.profiles?.display_name ?? "Usuario",
       body: row.body,
+      celebrationDateLabel: row.celebrations?.date_label ?? undefined,
+      celebrationTitle: row.celebrations?.title ?? undefined,
       id: row.id,
       scope: "community",
     })),
