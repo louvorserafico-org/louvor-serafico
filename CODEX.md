@@ -5543,3 +5543,32 @@ Checklist DoD:
 Sugestao de commit:
 
 `refactor: remove redundant song detail boxes`
+
+## Etapa 133 - Acoes por tipo de material na tela de Musica
+
+Resumo do que foi feito:
+
+- Removido o titulo redundante `Material` de cada box.
+- Cada botao passou a refletir o tipo do conteudo:
+  - `Abrir partitura`
+  - `Abrir letra e cifra`
+  - `Ouvir audio`
+  - `Ver video`
+
+Arquivos alterados:
+
+- `apps/mobile/app/musicas/[slug].tsx`
+- `apps/mobile/src/features/songs/song-materials.ts`
+- `apps/mobile/src/features/songs/song-materials.test.ts`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`refactor: specialize song material actions by type`

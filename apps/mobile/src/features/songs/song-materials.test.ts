@@ -54,12 +54,16 @@ describe("song materials", () => {
 
     assert.equal(sections.length, 4);
     assert.equal(sections[0].title, "Partitura");
+    assert.equal(sections[0].ctaLabel, "Abrir partitura");
     assert.equal(sections[0].assets.length, 1);
     assert.equal(sections[1].title, "Letra e cifra");
+    assert.equal(sections[1].ctaLabel, "Abrir letra e cifra");
     assert.equal(sections[1].assets.length, 2);
     assert.equal(sections[2].title, "Audio");
+    assert.equal(sections[2].ctaLabel, "Ouvir audio");
     assert.equal(sections[2].assets.length, 0);
     assert.equal(sections[3].title, "Video");
+    assert.equal(sections[3].ctaLabel, "Ver video");
     assert.equal(sections[3].assets.length, 0);
   });
 });

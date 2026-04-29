@@ -4,6 +4,7 @@ export type SongMaterialSectionKey = "score" | "lyrics_and_chords" | "audio" | "
 
 export type SongMaterialSection = {
   assets: SongAsset[];
+  ctaLabel: string;
   emptyText: string;
   helperText: string;
   key: SongMaterialSectionKey;
@@ -45,6 +46,7 @@ export function buildSongMaterialSections(assets: SongAsset[]): SongMaterialSect
   return [
     {
       assets: scoreAssets,
+      ctaLabel: "Abrir partitura",
       emptyText: "A partitura sera reunida aqui quando estiver pronta.",
       helperText: scoreAssets.length > 0 ? "Leitura musical pronta para consulta." : "Espaco reservado para a partitura deste canto.",
       key: "score",
@@ -52,6 +54,7 @@ export function buildSongMaterialSections(assets: SongAsset[]): SongMaterialSect
     },
     {
       assets: lyricsAndChordAssets,
+      ctaLabel: "Abrir letra e cifra",
       emptyText: "A letra com a cifra sera reunida aqui.",
       helperText:
         lyricsAndChordAssets.length > 0
@@ -62,6 +65,7 @@ export function buildSongMaterialSections(assets: SongAsset[]): SongMaterialSect
     },
     {
       assets: audioAssets,
+      ctaLabel: "Ouvir audio",
       emptyText: "O audio de apoio sera reunido aqui.",
       helperText: audioAssets.length > 0 ? "Audios prontos para apoiar o preparo." : "Espaco reservado para audio deste canto.",
       key: "audio",
@@ -69,6 +73,7 @@ export function buildSongMaterialSections(assets: SongAsset[]): SongMaterialSect
     },
     {
       assets: videoAssets,
+      ctaLabel: "Ver video",
       emptyText: "O video de apoio sera reunido aqui.",
       helperText: videoAssets.length > 0 ? "Videos prontos para apoiar o servico." : "Espaco reservado para video deste canto.",
       key: "video",

@@ -81,7 +81,6 @@ export default function SongDetailScreen() {
       <View style={styles.list}>
         {materialSections.map((section) => (
           <View key={section.key} style={styles.asset}>
-            <Text style={styles.assetEyebrow}>Material</Text>
             <Text style={styles.assetTitle}>{section.title}</Text>
             <Text style={styles.assetPath}>{section.helperText}</Text>
             {section.assets.length > 0 ? (
@@ -123,7 +122,7 @@ export default function SongDetailScreen() {
                           }}
                           style={styles.assetButton}
                         >
-                          <Text style={styles.assetButtonText}>{action.label}</Text>
+                          <Text style={styles.assetButtonText}>{section.ctaLabel}</Text>
                         </Pressable>
                       ) : (
                         <Link asChild href={action.href}>
