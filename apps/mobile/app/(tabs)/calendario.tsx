@@ -3,7 +3,6 @@ import { router } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
-import { CelebrationCard } from "@/components/CelebrationCard";
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { PageHeader } from "@/components/PageHeader";
 import { buildCalendarDayRoute } from "@/features/celebrations/calendar-day-route";
@@ -230,13 +229,35 @@ export default function CalendarScreen() {
 
       <View style={styles.list}>
         {monthView.celebrations.length > 0 ? (
-          monthView.celebrations.map((celebration) => (
-            <CelebrationCard celebration={celebration} key={celebration.id} />
-          ))
+          <View style={styles.markedList}>
+            {monthView.celebrations.map((celebration) => (
+              <Pressable
+                accessibilityLabel={`${celebration.title} em ${celebration.dateLabel}`}
+                accessibilityRole="button"
+                key={celebration.id}
+                onPress={() => router.push(`/celebracoes/${celebration.slug}`)}
+                style={({ pressed }) => [
+                  styles.markedItem,
+                  pressed ? styles.cardPressed : undefined,
+                  celebration.id !== monthView.celebrations[monthView.celebrations.length - 1]?.id
+                    ? styles.markedItemBorder
+                    : undefined,
+                ]}
+              >
+                <Text style={styles.markedEyebrow}>{celebration.dateLabel}</Text>
+                <Text style={styles.markedTitle}>{celebration.title}</Text>
+                <Text style={styles.markedText}>
+                  {celebration.recommendations.length} canto
+                  {celebration.recommendations.length === 1 ? "" : "s"} sugerido
+                  {celebration.recommendations.length === 1 ? "" : "s"}.
+                </Text>
+              </Pressable>
+            ))}
+          </View>
         ) : (
           <View style={styles.emptyCard}>
-            <Text style={styles.summaryTitle}>Ainda sem roteiros neste mes</Text>
-            <Text style={styles.summaryText}>
+            <Text style={styles.emptyTitle}>Ainda sem roteiros neste mes</Text>
+            <Text style={styles.emptyText}>
               Acompanhe as datas marcadas acima ou avance pelos proximos meses de 2026.
             </Text>
           </View>
@@ -319,6 +340,18 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.06,
     shadowRadius: 16,
+  },
+  emptyText: {
+    color: colors.textSecondary,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.caption,
+    lineHeight: 20,
+  },
+  emptyTitle: {
+    color: colors.textPrimary,
+    fontFamily: fontFamilies.display,
+    fontSize: typography.lead,
+    fontWeight: "700",
   },
   grid: {
     flexDirection: "row",

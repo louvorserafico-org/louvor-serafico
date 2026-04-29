@@ -5330,3 +5330,73 @@ Checklist DoD:
 Sugestao de commit:
 
 `fix: lock calendar to a fixed 7x6 grid`
+
+## Etapa 125 - Roteiros do mes no mesmo layout das datas marcadas
+
+Resumo do que foi feito:
+
+- A lista de `Roteiros de mes` deixou de usar card separado.
+- Cada roteiro agora usa o mesmo layout visual das `Datas marcadas`.
+- O comportamento de abertura da celebracao foi mantido.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/calendario.tsx`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`refactor: align monthly repertoires with marked dates layout`
+
+## Etapa 126 - Roteiros do mes dentro da mesma box visual
+
+Resumo do que foi feito:
+
+- A lista de roteiros do mes passou a ficar dentro da mesma box visual usada em `Datas marcadas`.
+- O layout interno dos itens foi mantido igual, mas agora com o mesmo enquadramento visual do bloco acima.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/calendario.tsx`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`fix: wrap monthly repertoires in the marked-list container`
+
+## Etapa 127 - Estado vazio mais discreto em roteiros do mes
+
+Resumo do que foi feito:
+
+- O estado vazio de `Roteiros do mes` ganhou tipografia menor e mais discreta.
+- Titulo e texto do bloco sem roteiro foram alinhados ao padrao mais minimalista do app.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/calendario.tsx`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`style: soften empty monthly repertoire state`
