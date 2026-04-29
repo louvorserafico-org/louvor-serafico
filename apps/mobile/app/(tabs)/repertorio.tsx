@@ -1,25 +1,25 @@
 import { getInitialSongCatalog } from "@louvor-serafico/shared";
 import { useEffect, useMemo, useState } from "react";
-import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 
+import { SongCard } from "@/components/SongCard";
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { PageHeader } from "@/components/PageHeader";
-import { OrnamentalDivider } from "@/components/OrnamentalDivider";
 import { useFavorites } from "@/features/favorites/FavoritesProvider";
 import { buildRemoteFeedback } from "@/features/remote/remote-feedback";
 import { buildRepertoireOverview } from "@/features/songs/repertoire-overview";
-import { resolveSongCatalogSource } from "@/features/songs/song-catalog-source";
-import { filterSongsBySearch, normalizeSongSearchTerm } from "@/features/songs/song-search";
 import { fetchRemoteSongs } from "@/features/songs/remote-songs";
+import { filterSongsBySearch, normalizeSongSearchTerm } from "@/features/songs/song-search";
+import { resolveSongCatalogSource } from "@/features/songs/song-catalog-source";
 import { supabaseConfig } from "@/services/supabase/client";
-import { SongCard } from "@/components/SongCard";
-import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
+import { colors, radii, spacing, typography, fontFamilies } from "@/theme/tokens";
 
 export default function RepertoireScreen() {
   const localSongs = useMemo(() => getInitialSongCatalog(), []);
   const { favoriteSongIds } = useFavorites();
   const [songs, setSongs] = useState(localSongs);
   const [query, setQuery] = useState("");
+  const [visibleCount, setVisibleCount] = useState(10);
   const [sourceMode, setSourceMode] = useState<"local" | "remote">("local");
   const [remoteCount, setRemoteCount] = useState(localSongs.length);
   const [remoteStatus, setRemoteStatus] = useState<"error" | "not_configured" | "ready">("not_configured");
@@ -59,6 +59,7 @@ export default function RepertoireScreen() {
   });
   const filteredSongs = useMemo(() => filterSongsBySearch(songs, query), [query, songs]);
   const normalizedQuery = normalizeSongSearchTerm(query);
+  const visibleSongs = useMemo(() => filteredSongs.slice(0, visibleCount), [filteredSongs, visibleCount]);
   const remoteFeedback = buildRemoteFeedback({
     emptyLabel: "Nenhuma musica remota encontrada.",
     itemCount: remoteCount,
@@ -69,56 +70,51 @@ export default function RepertoireScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <PageHeader eyebrow={overview.eyebrow} title={overview.title} subtitle={subtitle} />
+      <PageHeader eyebrow={overview.eyebrow} title="Repertorio" subtitle={subtitle} />
 
-      <View style={[styles.summary, sourceMode === "remote" ? styles.summaryRemote : styles.summaryLocal]}>
-        <Text style={styles.summaryEyebrow}>Acervo musical</Text>
-        <Text style={styles.summaryTitle}>{overview.title}</Text>
-        <Text style={styles.summaryText}>
-          {sourceMode === "remote"
-            ? remoteFeedback.detail
-            : `${localSongs.length} cantos reunidos para estudo, escolha e preparacao.`}
+      <View style={styles.searchBlock}>
+        <Text style={styles.searchLabel}>Pesquisar musica</Text>
+        <TextInput
+          onChangeText={(value) => {
+            setQuery(value);
+            setVisibleCount(10);
+          }}
+          placeholder="Digite o nome do canto"
+          placeholderTextColor={colors.textMuted}
+          style={styles.searchInput}
+          value={query}
+        />
+        <Text style={styles.searchHint}>
+          {normalizedQuery.length >= 3
+            ? `${filteredSongs.length} resultado${filteredSongs.length === 1 ? "" : "s"} encontrado${filteredSongs.length === 1 ? "" : "s"}.`
+            : "A busca comeca a partir de 3 caracteres."}
         </Text>
-        <Text style={styles.summaryMeta}>
-          {songs.length} cantos disponiveis. {favoriteSongIds.length} guardados para consulta.
-        </Text>
-        <OrnamentalDivider />
-        <View style={styles.searchBlock}>
-          <Text style={styles.searchLabel}>Pesquisar musica</Text>
-          <TextInput
-            onChangeText={setQuery}
-            placeholder="Digite o nome do canto"
-            placeholderTextColor={colors.textMuted}
-            style={styles.searchInput}
-            value={query}
-          />
-          <Text style={styles.searchHint}>
-            {normalizedQuery.length >= 3
-              ? `${filteredSongs.length} resultado${filteredSongs.length === 1 ? "" : "s"} encontrado${filteredSongs.length === 1 ? "" : "s"}.`
-              : "A busca comeca a partir de 3 caracteres."}
-          </Text>
-        </View>
       </View>
 
       <EditorialSectionHeader
-        eyebrow="Consulta"
-        subtitle="Abra cada canto para consultar materiais, guardar favoritos e preparar melhor cada celebracao."
-        title="Cantos disponiveis"
+        eyebrow="Lista"
+        subtitle={`${songs.length} musica${songs.length === 1 ? "" : "s"} disponive${songs.length === 1 ? "l" : "is"}.`}
+        title="Musicas"
       />
 
       <View style={styles.list}>
-        {filteredSongs.length > 0 ? (
-          filteredSongs.map((song) => <SongCard key={song.id} song={song} />)
+        {visibleSongs.length > 0 ? (
+          visibleSongs.map((song) => <SongCard key={song.id} song={song} />)
         ) : (
           <View style={styles.emptyState}>
-            <Text style={styles.summaryTitle}>Acervo em crescimento</Text>
-            <Text style={styles.summaryText}>
+            <Text style={styles.emptyTitle}>Acervo em crescimento</Text>
+            <Text style={styles.emptyText}>
               {normalizedQuery.length >= 3
                 ? "Nenhum canto corresponde a esta busca."
                 : "Os proximos cantos publicados aparecerao aqui para estudo, escolha e preparacao."}
             </Text>
           </View>
         )}
+        {filteredSongs.length > visibleCount ? (
+          <Pressable accessibilityRole="button" onPress={() => setVisibleCount((current) => current + 10)} style={styles.showMoreButton}>
+            <Text style={styles.showMoreText}>Mostrar mais</Text>
+          </Pressable>
+        ) : null}
       </View>
     </ScrollView>
   );
@@ -133,6 +129,18 @@ const styles = StyleSheet.create({
   },
   emptyState: {
     gap: spacing.xs,
+  },
+  emptyText: {
+    color: colors.textSecondary,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.body,
+    lineHeight: 24,
+  },
+  emptyTitle: {
+    color: colors.textPrimary,
+    fontFamily: fontFamilies.display,
+    fontSize: typography.heading,
+    fontWeight: "700",
   },
   list: {
     gap: spacing.md,
@@ -163,47 +171,14 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     textTransform: "uppercase",
   },
-  summary: {
-    borderRadius: radii.xl,
-    borderWidth: 1,
-    gap: spacing.sm,
-    padding: spacing.lg,
-    shadowColor: colors.ink,
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.06,
-    shadowRadius: 16,
+  showMoreButton: {
+    alignSelf: "flex-start",
+    paddingTop: spacing.sm,
   },
-  summaryEyebrow: {
-    color: colors.gold,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "800",
-    textTransform: "uppercase",
-  },
-  summaryLocal: {
-    backgroundColor: colors.surfaceMuted,
-    borderColor: colors.borderStrong,
-  },
-  summaryRemote: {
-    backgroundColor: colors.surface,
-    borderColor: colors.borderStrong,
-  },
-  summaryText: {
-    color: colors.textSecondary,
-    fontFamily: fontFamilies.body,
-    fontSize: typography.body,
-    lineHeight: 24,
-  },
-  summaryMeta: {
+  showMoreText: {
     color: colors.accent,
     fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
-    fontWeight: "700",
-  },
-  summaryTitle: {
-    color: colors.textPrimary,
-    fontFamily: fontFamilies.display,
-    fontSize: typography.heading,
-    fontWeight: "700",
+    fontWeight: "800",
   },
 });

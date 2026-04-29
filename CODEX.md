@@ -5178,3 +5178,54 @@ Checklist DoD:
 Sugestao de commit:
 
 `feat: add repertoire search and simplify catalog layout`
+
+## Etapa 119 - Favorito em icone unico na playlist do repertorio
+
+Resumo do que foi feito:
+
+- O comando textual `Guardar` deixou de aparecer nos itens da playlist do repertorio.
+- O favorito passou a usar apenas um icone unico, mais discreto e coerente com o restante da tela.
+- O comportamento de favoritar e desfavoritar foi mantido sem alterar o fluxo de abertura da musica.
+
+Arquivos alterados:
+
+- `apps/mobile/src/components/SongCard.tsx`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`refactor: use icon-only favorite action in repertoire list`
+
+## Etapa 120 - Busca solta e favorito na frente da lista do repertorio
+
+Resumo do que foi feito:
+
+- A caixa de `Acervo musical` foi removida da tela de repertorio.
+- A busca por musica passou a aparecer sozinha, fora de box, com a mesma linguagem visual da tela.
+- A informacao de quantidade de musicas disponiveis foi movida para baixo do titulo `Musicas`.
+- Os numeros dos itens foram removidos.
+- O icone de favorito passou a ocupar a frente de cada musica, em posicao fixa e estavel.
+
+Arquivos alterados:
+
+- `apps/mobile/app/(tabs)/repertorio.tsx`
+- `apps/mobile/src/components/SongCard.tsx`
+
+Checklist DoD:
+
+- [x] Testes passaram localmente.
+- [x] Typecheck passou.
+- [x] Lint passou.
+- [x] `git diff --check` sem erro funcional.
+- [x] Documentacao viva atualizada.
+
+Sugestao de commit:
+
+`refactor: simplify repertoire search and pin favorite icon`
