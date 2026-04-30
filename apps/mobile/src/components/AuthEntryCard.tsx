@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
     borderColor: colors.accent,
   },
   buttonText: {
+    color: colors.surface,
     fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "700",

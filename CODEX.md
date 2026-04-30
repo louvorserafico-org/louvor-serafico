@@ -5718,3 +5718,24 @@ Checklist DoD:
 Sugestao de commit:
 
 `fix: hide pdf loading overlay when document is rendered`
+
+## Etapa 138 - Padronizacao da cor do CTA Entrar na area de conta
+
+Resumo do que foi feito:
+
+- O CTA primario `Entrar` da tela de conta estava herdando a cor padrao do texto.
+- O componente de entrada de autenticacao passou a definir explicitamente texto claro no botao primario.
+- Foi feita a verificacao dos demais CTAs `Entrar` das telas de autenticacao, que ja estavam consistentes.
+
+Arquivos alterados:
+
+- `apps/mobile/src/components/AuthEntryCard.tsx`
+
+Checklist DoD:
+
+- [x] CTA primario da conta padronizado.
+- [x] Varredura dos demais CTAs `Entrar` concluida.
+
+Sugestao de commit:
+
+`fix: standardize sign-in button text color`
