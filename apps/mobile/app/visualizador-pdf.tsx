@@ -64,7 +64,6 @@ export default function PdfViewerScreen() {
       const response = await ReactNativeBlobUtil.config({
         fileCache: true,
         path: targetPath,
-        trusty: true,
       }).fetch("GET", remoteUrl);
 
       return `file://${response.path()}`;
@@ -162,6 +161,14 @@ export default function PdfViewerScreen() {
                 });
               }}
               onLoadComplete={() => {
+                setLoadingPdf(false);
+              }}
+              onLoadProgress={(progress: number) => {
+                if (progress >= 1) {
+                  setLoadingPdf(false);
+                }
+              }}
+              onPageChanged={() => {
                 setLoadingPdf(false);
               }}
               source={{ cache: false, uri: state.url }}

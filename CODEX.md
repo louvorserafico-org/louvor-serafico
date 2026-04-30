@@ -5675,3 +5675,46 @@ Checklist DoD:
 Sugestao de commit:
 
 `fix: preload pdf files locally before Android rendering`
+
+## Etapa 136 - Correcao do trust manager no download local do PDF
+
+Resumo do que foi feito:
+
+- O erro `Use of own trust manager but none defined` foi rastreado ao uso de `trusty: true` no `react-native-blob-util`.
+- O download local do PDF voltou a usar a configuracao padrao de TLS do Android.
+- O fluxo interno continua igual: baixar para cache local e abrir via `file://...`.
+
+Arquivos alterados:
+
+- `apps/mobile/app/visualizador-pdf.tsx`
+
+Checklist DoD:
+
+- [x] Causa do erro de runtime identificada.
+- [x] Configuracao insegura/remota removida.
+- [x] Fluxo interno de PDF preservado.
+
+Sugestao de commit:
+
+`fix: remove custom trust handling from pdf preload`
+
+## Etapa 137 - Correcao do overlay persistente no visualizador de PDF
+
+Resumo do que foi feito:
+
+- O PDF estava visivel, mas o overlay de carregamento seguia por cima da tela.
+- O visualizador passou a encerrar o estado de loading tambem ao receber progresso completo e mudanca de pagina.
+- Isso evita depender apenas de um unico callback nativo para retirar o overlay.
+
+Arquivos alterados:
+
+- `apps/mobile/app/visualizador-pdf.tsx`
+
+Checklist DoD:
+
+- [x] Overlay de loading revisado com base no comportamento real da tela.
+- [x] Fluxo interno de PDF preservado.
+
+Sugestao de commit:
+
+`fix: hide pdf loading overlay when document is rendered`
