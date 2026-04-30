@@ -5763,3 +5763,26 @@ Checklist DoD:
 Sugestao de commit:
 
 `feat: replace ihs divider mark with tau symbol`
+
+## Etapa 140 - Atualizacao do icone do app
+
+Resumo do que foi feito:
+
+- O arquivo `ls-icon.png` passou a ser o novo icone visual do app.
+- O asset foi aplicado aos alvos usados por Expo para icone principal, adaptive icon e favicon.
+
+Arquivos alterados:
+
+- `apps/mobile/assets/icon.png`
+- `apps/mobile/assets/adaptive-icon.png`
+- `apps/mobile/assets/favicon.png`
+
+Checklist DoD:
+
+- [x] Icone principal atualizado.
+- [x] Adaptive icon atualizado.
+- [x] Favicon atualizado.
+
+Sugestao de commit:
+
+`feat: update app icon assets`
