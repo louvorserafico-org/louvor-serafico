@@ -5739,3 +5739,27 @@ Checklist DoD:
 Sugestao de commit:
 
 `fix: standardize sign-in button text color`
+
+## Etapa 139 - Substituicao do ornamento IHS pelo tau franciscano
+
+Resumo do que foi feito:
+
+- O divisor ornamental deixou de usar o texto `IHS`.
+- O novo elemento central passou a usar o arquivo `tau-element.png`.
+- O asset foi incorporado aos assets do app para manter compatibilidade com o bundle nativo.
+- O tamanho e o alinhamento do ornamento foram ajustados para preservar a leitura e a harmonia com as linhas laterais.
+
+Arquivos alterados:
+
+- `apps/mobile/assets/tau-element.png`
+- `apps/mobile/src/components/OrnamentalDivider.tsx`
+
+Checklist DoD:
+
+- [x] Novo ornamento aplicado nos pontos que reutilizam `OrnamentalDivider`.
+- [x] Asset integrado ao app.
+- [x] Layout do divisor mantido.
+
+Sugestao de commit:
+
+`feat: replace ihs divider mark with tau symbol`
