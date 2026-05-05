@@ -5786,3 +5786,70 @@ Checklist DoD:
 Sugestao de commit:
 
 `feat: update app icon assets`
+
+## Etapa 141 - Compatibilidade do visualizador com Expo Go
+
+Resumo do que foi feito:
+
+- O crash no Expo Go vinha do import direto de `react-native-blob-util` no topo da rota.
+- O carregamento do modulo nativo passou a ser lazy, apenas no fluxo interno de PDF.
+- Assim, o Expo Go consegue carregar a rota e exibir a mensagem de limitacao com fallback externo, sem quebrar o app.
+
+Arquivos alterados:
+
+- `apps/mobile/app/visualizador-pdf.tsx`
+
+Checklist DoD:
+
+- [x] Rota voltou a ser carregavel no Expo Go.
+- [x] Fluxo nativo continua preservado para development build / build final.
+
+Sugestao de commit:
+
+`fix: lazy-load native pdf downloader outside Expo Go`
+
+## Etapa 142 - Ajuste do tau ornamental no iOS
+
+Resumo do que foi feito:
+
+- O tau ornamental passou a usar URI resolvida pelo `expo-asset`, com `defaultSource` local.
+- O container do ornamento foi reforcado para evitar sumico visual no iOS.
+- O tamanho visual do tau foi levemente ampliado.
+
+Arquivos alterados:
+
+- `apps/mobile/src/components/OrnamentalDivider.tsx`
+
+Checklist DoD:
+
+- [x] Renderizacao do asset reforcada para iOS.
+- [x] Layout do divisor preservado.
+
+Sugestao de commit:
+
+`fix: stabilize tau divider rendering on ios`
+
+## Etapa 143 - Tratamento de falha de rede no login e cadastro
+
+Resumo do que foi feito:
+
+- O fluxo de autenticacao estava tratando apenas respostas com `error`, mas nao excecoes de rede.
+- Quando o Supabase disparava erro de transporte, a tela ficava presa em `Entrando...` ou `Criando...`.
+- O dominio de autenticacao passou a capturar excecoes e devolver mensagem amigavel de falha de rede.
+- Foram adicionados testes para login, cadastro e recuperacao de senha nesse cenario.
+
+Arquivos alterados:
+
+- `apps/mobile/src/features/auth/credentials-auth.ts`
+- `apps/mobile/src/features/auth/credentials-auth.test.ts`
+
+Checklist DoD:
+
+- [x] Falha de rede no login tratada.
+- [x] Falha de rede no cadastro tratada.
+- [x] Falha de rede na recuperacao tratada.
+- [x] Testes adicionados para os tres fluxos.
+
+Sugestao de commit:
+
+`fix: handle Supabase network failures in auth flows`

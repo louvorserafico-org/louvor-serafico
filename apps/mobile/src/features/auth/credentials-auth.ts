@@ -82,25 +82,32 @@ export async function registerWithPassword(
     };
   }
 
-  const { error } = await client.auth.signUp({
-    email,
-    password: form.password,
-    options: {
-      data: buildRegistrationMetadata(form),
-    },
-  });
+  try {
+    const { error } = await client.auth.signUp({
+      email,
+      password: form.password,
+      options: {
+        data: buildRegistrationMetadata(form),
+      },
+    });
 
-  if (error) {
+    if (error) {
+      return {
+        message: error.message,
+        status: "error",
+      };
+    }
+
     return {
-      message: error.message,
+      message: "Cadastro criado. Se necessario, confirme o email antes de entrar.",
+      status: "success",
+    };
+  } catch (error) {
+    return {
+      message: mapUnexpectedAuthError(error, "Nao foi possivel concluir o cadastro agora."),
       status: "error",
     };
   }
-
-  return {
-    message: "Cadastro criado. Se necessario, confirme o email antes de entrar.",
-    status: "success",
-  };
 }
 
 export async function signInWithPassword(
@@ -131,22 +138,29 @@ export async function signInWithPassword(
     };
   }
 
-  const { error } = await client.auth.signInWithPassword({
-    email,
-    password,
-  });
+  try {
+    const { error } = await client.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-  if (error) {
+    if (error) {
+      return {
+        message: error.message,
+        status: "error",
+      };
+    }
+
     return {
-      message: error.message,
+      message: "Login realizado.",
+      status: "success",
+    };
+  } catch (error) {
+    return {
+      message: mapUnexpectedAuthError(error, "Nao foi possivel entrar agora."),
       status: "error",
     };
   }
-
-  return {
-    message: "Login realizado.",
-    status: "success",
-  };
 }
 
 export async function requestPasswordReset(
@@ -170,26 +184,33 @@ export async function requestPasswordReset(
     };
   }
 
-  const { error } = await client.auth.resetPasswordForEmail(
-    email,
-    redirectTo
-      ? {
-          redirectTo,
-        }
-      : undefined,
-  );
+  try {
+    const { error } = await client.auth.resetPasswordForEmail(
+      email,
+      redirectTo
+        ? {
+            redirectTo,
+          }
+        : undefined,
+    );
 
-  if (error) {
+    if (error) {
+      return {
+        message: error.message,
+        status: "error",
+      };
+    }
+
     return {
-      message: error.message,
+      message: "Email de recuperacao enviado.",
+      status: "success",
+    };
+  } catch (error) {
+    return {
+      message: mapUnexpectedAuthError(error, "Nao foi possivel enviar o email de recuperacao agora."),
       status: "error",
     };
   }
-
-  return {
-    message: "Email de recuperacao enviado.",
-    status: "success",
-  };
 }
 
 function validateRegistration(form: RegistrationForm, email: string): string | null {
@@ -227,4 +248,22 @@ function isValidEmail(email: string): boolean {
 function optionalText(value: string): string | null {
   const nextValue = value.trim();
   return nextValue ? nextValue : null;
+}
+
+function mapUnexpectedAuthError(error: unknown, fallback: string): string {
+  if (error instanceof Error) {
+    const message = error.message.trim();
+
+    if (!message) {
+      return fallback;
+    }
+
+    if (/network request failed/i.test(message)) {
+      return "Falha de rede ao falar com o Supabase. Verifique a conexao e tente novamente.";
+    }
+
+    return message;
+  }
+
+  return fallback;
 }

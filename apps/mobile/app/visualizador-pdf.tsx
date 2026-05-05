@@ -2,7 +2,6 @@ import Constants, { ExecutionEnvironment } from "expo-constants";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useCallback, useEffect, useMemo, useState, type ComponentType } from "react";
 import { ActivityIndicator, Linking, Pressable, StyleSheet, Text, View } from "react-native";
-import ReactNativeBlobUtil from "react-native-blob-util";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { buildPdfCacheFileName, resolvePdfViewerSource } from "@/features/assets/pdf-viewer-source";
@@ -51,6 +50,16 @@ export default function PdfViewerScreen() {
       if (!/^https?:\/\//i.test(remoteUrl)) {
         return remoteUrl;
       }
+
+      const ReactNativeBlobUtil = require("react-native-blob-util").default as {
+        config: (options: { fileCache: boolean; path: string }) => {
+          fetch: (method: string, url: string) => Promise<{ path: () => string }>;
+        };
+        fs: {
+          dirs: { CacheDir: string };
+          unlink: (path: string) => Promise<void>;
+        };
+      };
 
       const filename = buildPdfCacheFileName(assetId, storagePath, documentLabel);
       const targetPath = `${ReactNativeBlobUtil.fs.dirs.CacheDir}/${filename}`;

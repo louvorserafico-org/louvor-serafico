@@ -130,6 +130,27 @@ describe("credentials auth", () => {
     });
   });
 
+  it("maps network failure during login", async () => {
+    const result = await signInWithPassword(
+      {
+        auth: {
+          resetPasswordForEmail: async () => ({ data: {}, error: null }),
+          signInWithPassword: async () => {
+            throw new Error("Network request failed");
+          },
+          signUp: async () => ({ data: {}, error: null }),
+        },
+      },
+      "frei@example.com",
+      "senha1234",
+    );
+
+    assert.deepEqual(result, {
+      message: "Falha de rede ao falar com o Supabase. Verifique a conexao e tente novamente.",
+      status: "error",
+    });
+  });
+
   it("normalizes helpers", () => {
     assert.equal(normalizeAuthEmail("  Frei@Example.com "), "frei@example.com");
     assert.equal(normalizePhone("(24) 99999-0000"), "24999990000");
@@ -189,6 +210,46 @@ describe("credentials auth", () => {
 
     assert.deepEqual(result, {
       message: "Digite um email valido para recuperar a senha.",
+      status: "error",
+    });
+  });
+
+  it("maps network failure during password reset", async () => {
+    const result = await requestPasswordReset(
+      {
+        auth: {
+          resetPasswordForEmail: async () => {
+            throw new Error("Network request failed");
+          },
+          signInWithPassword: async () => ({ data: {}, error: null }),
+          signUp: async () => ({ data: {}, error: null }),
+        },
+      },
+      "frei@example.com",
+    );
+
+    assert.deepEqual(result, {
+      message: "Falha de rede ao falar com o Supabase. Verifique a conexao e tente novamente.",
+      status: "error",
+    });
+  });
+
+  it("maps network failure during registration", async () => {
+    const result = await registerWithPassword(
+      {
+        auth: {
+          resetPasswordForEmail: async () => ({ data: {}, error: null }),
+          signInWithPassword: async () => ({ data: {}, error: null }),
+          signUp: async () => {
+            throw new Error("Network request failed");
+          },
+        },
+      },
+      validForm,
+    );
+
+    assert.deepEqual(result, {
+      message: "Falha de rede ao falar com o Supabase. Verifique a conexao e tente novamente.",
       status: "error",
     });
   });
