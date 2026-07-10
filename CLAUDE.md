@@ -6117,3 +6117,54 @@ Checklist DoD:
 Sugestao de commit:
 
 `chore: add agent skills and pre-commit quality gate`
+
+## Etapa 147 - Modelo de dominio do Santoral Franciscano
+
+Resumo do que foi feito:
+
+- Criado `packages/shared/src/santoral.ts` com o dominio do Santoral, modelado em 3 eixos fieis ao `santoral-completo.pdf` (p. 37-44):
+  1. qualificadores liturgicos (`martir`, `virgem`, `doutor`, `pastor`, ...), multiplos por santo;
+  2. Ordem franciscana (`first`/`second`/`third`/`secular`);
+  3. observancia por jurisdicao (`FF`, `OFM`, `OFMConv`, `OFMCap`, `TOR`, `TOFr`, `OFS`, `Ordem II`, `Ordem III`) + rank (`solenidade`/`festa`/`memoria`/`memoria_facultativa`).
+- Tipos: `SaintDay`, `SaintObservance`, `SaintQualifier`, `FranciscanOrder`, `LiturgicalRank`, `FranciscanJurisdiction`, `SaintHistoryAccess`.
+- Funcoes puras: `getSaintDayCatalog`, `findSaintDaysByMonthDay`, `filterSaintDaysByQualifier`, `saintDayHasRepertoire`, `resolveSaintHistoryAccess`.
+- Seed inicial de exemplo (3 santos reais do indice de janeiro): Santissimo Nome de Jesus (01-03, ligado ao roteiro existente), Sao Berardo e companheiros (01-16), Santa Eustaquia Calafato (01-19).
+- Exportado em `packages/shared/src/index.ts` e ligado ao pipeline de testes.
+
+Testes adicionados (`packages/shared/src/santoral.test.ts`):
+
+- Happy: santo por data com qualifiers, ordem e observancias (Berardo em 01-16).
+- Edge: data sem santo franciscano retorna `[]`.
+- Relacao com roteiro: 01-03 aponta `celebrationSlug`.
+- Filtro por qualificador liturgico.
+- Ordenacao do catalogo por month-day.
+- Premium: bloqueio sem assinatura, liberacao com assinatura, conteudo livre, e `no_history`.
+
+Decisoes tecnicas e trade-offs (defaults reversiveis; usuario nao decidiu na hora):
+
+- Taxonomia em 3 eixos separados, em vez de categoria unica. Motivo: modelo de dominio e caro de reverter; fiel ao PDF; permite evoluir filtros. O filtro do `to-change.md` (Martir/Virgem/Doutor/Pastor) usa o eixo 1.
+- Premium: nome/data/classificacao publicos; `shortHistory` premium via flag `premium`. Ajustavel por registro.
+- Escopo: apenas o modelo. `shortHistory` fica `null` ate a curadoria (nada fabricado). Indice anual completo e pagina do santo em etapas seguintes.
+- Eixo genero ("Santos homens"/"Santas mulheres" do to-change.md) ficou fora deste modelo por nao ser confiavel na fonte; sera normalizado depois.
+
+Validacoes executadas:
+
+- `rtk pnpm test` (santoral 9/9 + suite completa)
+- `rtk pnpm typecheck`
+- `rtk pnpm lint`
+
+Checklist DoD:
+
+- [x] TDD aplicado (Red -> Green).
+- [x] Happy + edge + erro cobertos.
+- [x] Dominio exportado e testado no pipeline.
+- [x] Sem dado fabricado no seed.
+- [x] Doc viva atualizada.
+
+Sugestao de commit:
+
+`feat(shared): add franciscan santoral domain model`
+
+## Proxima Etapa Planejada
+
+Etapa 148 - Extrair o indice anual completo do Santoral (p. 37-44) para o catalogo.
