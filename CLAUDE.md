@@ -6420,6 +6420,50 @@ Sugestao de commit:
 
 `feat(mobile): show family and jurisdiction in profile`
 
+## Etapa 154 - Hub de devocoes franciscanas
+
+Resumo do que foi feito:
+
+- Criado `features/devotions/devotions.ts`: fonte unica das devocoes (Devocional, Novena de Sao Francisco, Transito de Sao Francisco) com `slug`, titulo, descricao, `status` e helpers (`getDevotionItems`, `findDevotionBySlug`, `buildDevotionRoute`).
+- Hub `app/devocoes/index.tsx`: lista as tres devocoes com navegacao.
+- Pagina dinamica `app/devocoes/[slug].tsx`: abre cada devocao com estado "em preparação".
+- Entrada na Home: card "Devoções franciscanas" -> `/devocoes` (reusa os estilos do card do santo).
+
+Testes adicionados (`devotions.test.ts`):
+
+- Lista as tres devocoes na ordem esperada.
+- Todas permanecem `preparing` ate curadoria.
+- Lookup por slug (hit e miss) e construcao de rota.
+
+Decisoes tecnicas e trade-offs:
+
+- Sem texto liturgico fabricado: as tres devocoes ficam `preparing` ate a curadoria fornecer o conteudo (mesma disciplina do santoral).
+- Uma pagina dinamica `[slug]` em vez de tres arquivos, mantendo a fonte de dados unica e testavel.
+- Ponto de entrada na Home (hub proprio), resolvendo o "tab/submenu/hub" do to-change.md pela via de hub dedicado.
+
+Pendencia editorial:
+
+- Conteudo real de Devocional, Novena e Transito de Sao Francisco (aguarda curadoria; nao inventar).
+
+Validacoes executadas:
+
+- `rtk pnpm test` (devotions 5/5 + suite completa)
+- `rtk pnpm typecheck`
+- `rtk pnpm lint`
+
+Checklist DoD:
+
+- [x] TDD na fonte de dados do hub.
+- [x] Hub, pagina dinamica e entrada na Home.
+- [x] Sem conteudo liturgico fabricado.
+- [x] Typecheck e lint limpos.
+- [ ] Revisao visual em device (pendente do usuario).
+- [x] Doc viva atualizada.
+
+Sugestao de commit:
+
+`feat(mobile): add franciscan devotions hub`
+
 ## Proxima Etapa Planejada
 
-Etapa 154 - Paginas Devocional, Novena de Sao Francisco e Transito de Sao Francisco (novas rotas e hub de navegacao).
+Fim do plano do to-change.md (Etapas 144-154 cobertas). Proximos candidatos: curadoria de conteudo (shortHistory do santoral, textos das devocoes), completar dezembro do santoral, base CNBB, ou aplicar migration de familia/jurisdicao no remoto.

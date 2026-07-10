@@ -91,6 +91,15 @@ export default function TodayScreen() {
         </View>
       )}
 
+      <Link asChild href="/devocoes">
+        <Pressable style={styles.saintCard}>
+          <Text style={styles.saintEyebrow}>Oração</Text>
+          <Text style={styles.saintTitle}>Devoções franciscanas</Text>
+          <Text style={styles.saintMeta}>Devocional, novena e trânsito de São Francisco.</Text>
+          <Text style={styles.saintAction}>Abrir devoções</Text>
+        </Pressable>
+      </Link>
+
       <View style={styles.quickActionsSection}>
         <Text style={styles.quickActionsTitle}>Acessos rapidos</Text>
         <View style={styles.quickActions}>
