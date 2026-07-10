@@ -6165,6 +6165,51 @@ Sugestao de commit:
 
 `feat(shared): add franciscan santoral domain model`
 
+## Etapa 148 - Indice anual do Santoral extraido do PDF
+
+Resumo do que foi feito:
+
+- Extraido o indice anual completo do `Calendario Serafico` (santoral-completo.pdf, p. 37-44) para dados estruturados: `packages/shared/src/santoral-index-2026.ts` com 126 entradas.
+- `santoral.ts` passou a consumir `franciscanSantoral2026` como catalogo (seed de exemplo removido).
+- Modelo evoluido: `FranciscanJurisdiction` virou `string` (a fonte tem congregacoes alem das ordens: OSC, Cl.Cp., FMM, FMCIM, OIC, ...), com `commonFranciscanJurisdictions` para referencia. Adicionado qualificador `diacono`.
+- Testes de integridade adicionados: contagem (126), formato de month-day, spot-checks (Clara 08-11 OSC solenidade; Sao Francisco 10-04 diacono+fundador FF solenidade). Spot-checks da Etapa 147 corrigidos para os nomes acentuados reais (Santissimo -> Santissimo com acento, Eustaquia -> Eustoquia).
+
+Processo de extracao:
+
+- Texto das paginas 37-44 exportado em UTF-8 e parseado por script (scratchpad, nao versionado).
+- Parser separa: month/day, nome, ordem (I/II/III/secular), qualificadores liturgicos (keyword scan) e observancias (`Para <jurisdicoes>: <rank>`), expandindo listas de jurisdicao.
+- Saida inspecionada manualmente antes de confiar (confianca liturgica e prioridade #1).
+
+Decisoes tecnicas e trade-offs:
+
+- `order` continua unico (ordem primaria; a fonte tem raros "Ordem I e III" cujo detalhe fica implicito nas observancias).
+- `shortHistory` permanece `null` (nada fabricado); o texto historico entra em etapa de curadoria.
+- Eixo genero ("Santos homens/mulheres") continua fora do modelo.
+
+Lacunas / riscos abertos (para revisao editorial):
+
+- DEZEMBRO truncado na fonte: o indice termina em 02/dez (p. 45 inicia "Proprio da Familia Franciscana"). Faltam datas de dezembro alem de 02.
+- Campos liturgicos derivam de parse de PDF fuzzy; precisam da revisao do curador antes de publicar.
+- Datas moveis (ex.: solenidades) nao entram aqui; este indice e do santoral fixo por dia-mes.
+
+Validacoes executadas:
+
+- `rtk pnpm test` (santoral 13/13 + suite completa)
+- `rtk pnpm typecheck`
+- `rtk pnpm lint`
+
+Checklist DoD:
+
+- [x] Indice anual extraido (126 entradas).
+- [x] Modelo consome o indice; seed de exemplo removido.
+- [x] Testes de integridade + spot-checks (Red -> Green).
+- [x] Sem dado fabricado; lacunas sinalizadas.
+- [x] Doc viva atualizada.
+
+Sugestao de commit:
+
+`feat(shared): extract full franciscan santoral annual index`
+
 ## Proxima Etapa Planejada
 
-Etapa 148 - Extrair o indice anual completo do Santoral (p. 37-44) para o catalogo.
+Etapa 149 - Refatorar o calendario principal para eixo franciscano (santo do dia coexistindo com repertorio e preceito).

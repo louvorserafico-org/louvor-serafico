@@ -24,14 +24,14 @@ describe("santoral franciscano domain", () => {
   });
 
   it("returns empty for a date without franciscan saint", () => {
-    assert.deepEqual(findSaintDaysByMonthDay("07-04"), []);
+    assert.deepEqual(findSaintDaysByMonthDay("02-14"), []);
   });
 
   it("links a saint day to a repertoire celebration when it exists", () => {
     const days = findSaintDaysByMonthDay("01-03");
     const day = days[0];
 
-    assert.equal(day?.name, "Santissimo Nome de Jesus");
+    assert.equal(day?.name, "Santíssimo Nome de Jesus");
     assert.equal(day?.celebrationSlug, "santissimo-nome-de-jesus");
   });
 
@@ -39,7 +39,7 @@ describe("santoral franciscano domain", () => {
     const catalog = getSaintDayCatalog();
     const virgins = filterSaintDaysByQualifier(catalog, "virgem");
 
-    assert.ok(virgins.some((day) => day.name.includes("Eustaquia")));
+    assert.ok(virgins.some((day) => day.name.includes("Eustóquia")));
     assert.ok(!virgins.some((day) => day.name.includes("Berardo")));
   });
 
@@ -49,6 +49,35 @@ describe("santoral franciscano domain", () => {
     const sorted = [...monthDays].sort((a, b) => a.localeCompare(b));
 
     assert.deepEqual(monthDays, sorted);
+  });
+
+  describe("annual index 2026", () => {
+    const catalog = getSaintDayCatalog();
+
+    it("covers the full extracted index", () => {
+      assert.equal(catalog.length, 126);
+    });
+
+    it("has valid month-day for every entry", () => {
+      for (const day of catalog) {
+        assert.match(day.monthDay, /^(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/);
+      }
+    });
+
+    it("keeps Santa Clara de Assis with OSC solemnity", () => {
+      const clara = findSaintDaysByMonthDay("08-11").find((day) => day.name.includes("CLARA DE ASSIS"));
+      assert.ok(clara);
+      assert.equal(clara?.qualifiers.includes("virgem"), true);
+      assert.ok(clara?.observances.some((o) => o.jurisdiction === "OSC" && o.rank === "solenidade"));
+    });
+
+    it("keeps Sao Francisco as deacon and founder", () => {
+      const francisco = findSaintDaysByMonthDay("10-04")[0];
+      assert.ok(francisco?.name.includes("FRANCISCO DE ASSIS"));
+      assert.equal(francisco?.qualifiers.includes("diacono"), true);
+      assert.equal(francisco?.qualifiers.includes("fundador"), true);
+      assert.ok(francisco?.observances.some((o) => o.jurisdiction === "FF" && o.rank === "solenidade"));
+    });
   });
 
   describe("premium history access", () => {

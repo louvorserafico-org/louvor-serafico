@@ -8,8 +8,10 @@
 // Regra premium (default reversivel): nome, data e classificacao sao publicos; o
 // primeiro bloco historico (`shortHistory`) e premium quando `premium` for true.
 //
-// Escopo desta etapa: modelo + funcoes puras + seed inicial de exemplo. O indice anual
-// completo e o texto historico de cada dia entram em etapas seguintes.
+// O indice anual completo vive em `santoral-index-2026.ts` (gerado do PDF). O texto
+// historico de cada dia (`shortHistory`) entra em etapa seguinte.
+
+import { franciscanSantoral2026 } from "./santoral-index-2026.ts";
 
 export type FranciscanOrder = "first" | "second" | "third" | "secular";
 
@@ -23,20 +25,29 @@ export type SaintQualifier =
   | "religioso"
   | "eremita"
   | "secular"
-  | "fundador";
+  | "fundador"
+  | "diacono";
 
 export type LiturgicalRank = "solenidade" | "festa" | "memoria" | "memoria_facultativa";
 
-export type FranciscanJurisdiction =
-  | "FF"
-  | "OFM"
-  | "OFMConv"
-  | "OFMCap"
-  | "TOR"
-  | "TOFr"
-  | "OFS"
-  | "Ordem II"
-  | "Ordem III";
+// Jurisdicao franciscana da observancia. Aberto (string) porque a fonte inclui
+// congregacoes alem das ordens (OSC, Cl.Cp., FMM, FMCIM, OIC, ...).
+export type FranciscanJurisdiction = string;
+
+// Valores comuns observados no Calendario Serafico, para referencia/UI.
+export const commonFranciscanJurisdictions = [
+  "FF",
+  "OFM",
+  "OFMConv",
+  "OFMCap",
+  "TOR",
+  "TOFr",
+  "OFS",
+  "OSC",
+  "Cl.Cp.",
+  "Ordem II",
+  "Ordem III",
+] as const;
 
 export type SaintObservance = {
   jurisdiction: FranciscanJurisdiction;
@@ -62,44 +73,7 @@ export type SaintHistoryAccess = {
   reason: SaintHistoryAccessReason;
 };
 
-const saintDayCatalog: SaintDay[] = [
-  {
-    id: "saint-santissimo-nome-de-jesus",
-    monthDay: "01-03",
-    name: "Santissimo Nome de Jesus",
-    qualifiers: [],
-    order: null,
-    observances: [{ jurisdiction: "FF", rank: "memoria" }],
-    shortHistory: null,
-    premium: true,
-    celebrationSlug: "santissimo-nome-de-jesus",
-  },
-  {
-    id: "saint-berardo-e-companheiros",
-    monthDay: "01-16",
-    name: "Sao Berardo e seus companheiros, protomartires",
-    qualifiers: ["martir"],
-    order: "first",
-    observances: [
-      { jurisdiction: "OFM", rank: "festa" },
-      { jurisdiction: "FF", rank: "memoria" },
-    ],
-    shortHistory: null,
-    premium: true,
-    celebrationSlug: null,
-  },
-  {
-    id: "saint-eustaquia-calafato",
-    monthDay: "01-19",
-    name: "Santa Eustaquia Calafato, virgem",
-    qualifiers: ["virgem"],
-    order: "second",
-    observances: [{ jurisdiction: "Ordem II", rank: "memoria_facultativa" }],
-    shortHistory: null,
-    premium: true,
-    celebrationSlug: null,
-  },
-];
+const saintDayCatalog: SaintDay[] = franciscanSantoral2026;
 
 export function getSaintDayCatalog(): SaintDay[] {
   return [...saintDayCatalog].sort((first, second) => first.monthDay.localeCompare(second.monthDay));
