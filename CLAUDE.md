@@ -6255,6 +6255,49 @@ Sugestao de commit:
 
 `feat(shared): make franciscan santoral the primary calendar axis`
 
+## Etapa 150 - UI franciscana do calendario e base da pagina do santo
+
+Resumo do que foi feito:
+
+- Roteamento por tipo de dia: `buildCalendarDayRoute` agora envia dia `franciscan_saint` para `/santos/<monthDay>`; repertorio segue para `/celebracoes/<slug>` e preceito/comum para `/celebracoes/<monthDay>`.
+- Criada a pagina base do santo `app/santos/[monthDay].tsx`: lista os santos do dia com classificacao (qualificadores + Ordem), observancias por jurisdicao/rank e bloco de historia com gate premium.
+- Criado helper puro `features/santoral/saint-detail.ts`: `buildSaintClassification`, `buildSaintObservancesLabel`, `buildSaintHistoryState` (labels em pt-BR e estados available/locked/preparing).
+- Calendario (`calendario.tsx`): celulas e numeros de dias `franciscan_saint` ganharam estilo proprio (borda/numero em vinho), nova legenda "Santo franciscano" e texto proprio na lista de datas marcadas.
+
+Testes adicionados:
+
+- `calendar-day-route.test.ts`: dia franciscano -> `/santos/01-04`.
+- `saint-detail.test.ts`: classificacao, observancias em pt-BR e os tres estados de historia (preparing/locked/available, livre e premium).
+
+Decisoes tecnicas e trade-offs:
+
+- Formatacao/labels isolados em helper puro testado, fora da UI.
+- Historia do santo hoje sempre cai em "preparing" (shortHistory null); o gate premium (locked) ja esta implementado e testado por fixture para quando a curadoria adicionar texto.
+- `franciscan_saint` estilizado em vinho (accent) para diferenciar de repertorio (oliva) e preceito (ouro).
+
+Validacao pendente (manual):
+
+- Revisao visual no Expo Go (device): cores das celulas, legenda, navegacao dia franciscano -> pagina do santo. Nao ha simulador neste ambiente.
+
+Validacoes executadas:
+
+- `rtk pnpm test` (route 4/4, saint-detail 7/7 + suite completa)
+- `rtk pnpm typecheck`
+- `rtk pnpm lint`
+
+Checklist DoD:
+
+- [x] TDD aplicado a roteamento e formatacao.
+- [x] Pagina do santo criada com gate premium.
+- [x] Calendario estiliza e roteia dias franciscanos.
+- [x] Typecheck e lint limpos.
+- [ ] Revisao visual em device (pendente do usuario).
+- [x] Doc viva atualizada.
+
+Sugestao de commit:
+
+`feat(mobile): franciscan calendar ui and saint day page`
+
 ## Proxima Etapa Planejada
 
-Etapa 150 - UI do calendario para o eixo franciscano: estilizar dias `franciscan_saint`, roteamento por tipo de dia e base da pagina do santo.
+Etapa 151 - Santo do dia na Home (fallback editorial quando nao houver santo franciscano).

@@ -140,6 +140,7 @@ export default function CalendarScreen() {
                 styles.dayCell,
                 styles.dayCellPressable,
                 isSunday(day.isoDate) ? styles.dayCellSunday : undefined,
+                day.kind === "franciscan_saint" ? styles.dayCellFranciscan : undefined,
                 day.kind === "has_repertoire" ? styles.dayCellRepertoire : undefined,
                 day.kind === "liturgical_day_without_repertoire" ? styles.dayCellLiturgical : undefined,
                 day.monthDay === today.monthDay ? styles.dayCellToday : undefined,
@@ -149,6 +150,7 @@ export default function CalendarScreen() {
                 style={[
                   styles.dayNumber,
                   isSunday(day.isoDate) ? styles.dayNumberSunday : undefined,
+                  day.kind === "franciscan_saint" ? styles.dayNumberFranciscan : undefined,
                   day.kind === "has_repertoire" ? styles.dayNumberRepertoire : undefined,
                   day.kind === "liturgical_day_without_repertoire" ? styles.dayNumberLiturgical : undefined,
                   day.monthDay === today.monthDay ? styles.dayNumberToday : undefined,
@@ -168,6 +170,10 @@ export default function CalendarScreen() {
           <View style={styles.legendItem}>
             <View style={[styles.legendDot, styles.dayCellRepertoire]} />
             <Text style={styles.legendText}>Com repertorio</Text>
+          </View>
+          <View style={styles.legendItem}>
+            <View style={[styles.legendDot, styles.dayCellFranciscan]} />
+            <Text style={styles.legendText}>Santo franciscano</Text>
           </View>
           <View style={styles.legendItem}>
             <View style={[styles.legendDot, styles.dayCellLiturgical]} />
@@ -207,7 +213,9 @@ export default function CalendarScreen() {
               <Text style={styles.markedText}>
                 {day.kind === "has_repertoire"
                   ? "Roteiro musical disponivel para consulta."
-                  : "Data liturgica registrada. Repertorio ainda nao publicado."}
+                  : day.kind === "franciscan_saint"
+                    ? "Santo franciscano do dia."
+                    : "Data liturgica registrada. Repertorio ainda nao publicado."}
               </Text>
             </Pressable>
           ))
@@ -291,6 +299,10 @@ const styles = StyleSheet.create({
     borderColor: "transparent",
     opacity: 0,
   },
+  dayCellFranciscan: {
+    backgroundColor: colors.surface,
+    borderColor: colors.accent,
+  },
   dayCellLiturgical: {
     backgroundColor: colors.surface,
     borderColor: colors.gold,
@@ -315,6 +327,10 @@ const styles = StyleSheet.create({
     fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "700",
+  },
+  dayNumberFranciscan: {
+    color: colors.accentStrong,
+    fontWeight: "800",
   },
   dayNumberLiturgical: {
     color: colors.gold,

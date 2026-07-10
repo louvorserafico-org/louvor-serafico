@@ -29,4 +29,12 @@ describe("calendar day route", () => {
 
     assert.equal(result, "/celebracoes/04-25");
   });
+
+  it("routes franciscan saint day to the saint page", () => {
+    const result = buildCalendarDayRoute(
+      getLiturgicalDayForDate(new Date("2026-01-04T12:00:00.000Z")),
+    );
+
+    assert.equal(result, "/santos/01-04");
+  });
 });
