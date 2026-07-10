@@ -6382,6 +6382,44 @@ Sugestao de commit:
 
 `feat(mobile): revamp registration with family and jurisdiction`
 
+## Etapa 153 - Familia e jurisdicao no Perfil
+
+Resumo do que foi feito:
+
+- `SupabaseProfileState` ganhou `family` e `jurisdiction`; `fetchSupabaseProfile` e `buildSupabaseProfileState` passam a ler/zerar esses campos do `user_metadata`.
+- `profile-overview.ts`: fallback do detalhe passou de `parish` para `jurisdiction` (parish fica como legado).
+- `SupabaseProfileCard` (debug) exibe Familia e Jurisdicao.
+- Fixtures atualizados nos testes de `supabase-profile`, `home-welcome` e `profile-overview`.
+
+Testes:
+
+- `supabase-profile.test.ts`: mapeia `family`/`jurisdiction` no perfil ready; estados nulos incluem os novos campos.
+- Suite completa verde apos ajuste dos fixtures.
+
+Decisoes tecnicas e trade-offs:
+
+- `parish` mantido no estado para compatibilidade com usuarios antigos; novos cadastros usam `jurisdiction`.
+- `family` ainda nao aparece no card visivel ao usuario (`ProfileOverviewCard`) para nao mexer na saida testada de `buildProfileOverview`; exibicao ao usuario pode entrar depois.
+- Escopo fechado no Perfil. Paginas Devocional/Novena/Transito de Sao Francisco movidas para a Etapa 154.
+
+Validacoes executadas:
+
+- `rtk pnpm test`
+- `rtk pnpm typecheck`
+- `rtk pnpm lint`
+
+Checklist DoD:
+
+- [x] Estado do perfil le familia/jurisdicao.
+- [x] Fixtures e overview ajustados.
+- [x] Debug card exibe os novos campos.
+- [x] Typecheck e lint limpos.
+- [x] Doc viva atualizada.
+
+Sugestao de commit:
+
+`feat(mobile): show family and jurisdiction in profile`
+
 ## Proxima Etapa Planejada
 
-Etapa 153 - Exibir familia e jurisdicao no Perfil (supabase-profile + overview + card) e paginas Devocional/Novena/Transito de Sao Francisco.
+Etapa 154 - Paginas Devocional, Novena de Sao Francisco e Transito de Sao Francisco (novas rotas e hub de navegacao).

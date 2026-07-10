@@ -50,7 +50,7 @@ export function buildProfileOverview(input: ProfileOverviewInput): ProfileOvervi
 
   const displayName = input.profile.displayName ?? input.profile.email ?? "Musico";
   const cityState = [input.profile.city, input.profile.state].filter(Boolean).join(" - ");
-  const ministry = input.profile.ministry ?? input.profile.parish ?? cityState;
+  const ministry = input.profile.ministry ?? input.profile.jurisdiction ?? cityState;
 
   return {
     accountLine: input.profile.email ?? "Email nao informado.",

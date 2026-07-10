@@ -10,7 +10,9 @@ type SupabaseUserClient = {
           id: string;
           user_metadata?: {
             city?: string;
+            family?: string;
             full_name?: string;
+            jurisdiction?: string;
             ministry?: string;
             parish?: string;
             phone?: string;
@@ -27,6 +29,8 @@ export type SupabaseProfileState = {
   city: string | null;
   displayName: string | null;
   email: string | null;
+  family: string | null;
+  jurisdiction: string | null;
   ministry: string | null;
   parish: string | null;
   phone: string | null;
@@ -43,6 +47,8 @@ export function buildSupabaseProfileState(
     city: null,
     displayName: null,
     email: null,
+    family: null,
+    jurisdiction: null,
     ministry: null,
     parish: null,
     phone: null,
@@ -74,6 +80,8 @@ export async function fetchSupabaseProfile(
     city: data.user.user_metadata?.city ?? null,
     displayName: data.user.user_metadata?.full_name ?? data.user.email ?? null,
     email: data.user.email ?? null,
+    family: data.user.user_metadata?.family ?? null,
+    jurisdiction: data.user.user_metadata?.jurisdiction ?? null,
     ministry: data.user.user_metadata?.ministry ?? null,
     parish: data.user.user_metadata?.parish ?? null,
     phone: data.user.user_metadata?.phone ?? null,

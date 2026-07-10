@@ -25,6 +25,8 @@ const readyProfile: SupabaseProfileState = {
   city: "Sao Paulo",
   displayName: "Frei Luis",
   email: "louvor@example.com",
+  family: "OFMConv",
+  jurisdiction: "Provincia",
   ministry: "Coral paroquial",
   parish: "Sao Francisco",
   phone: "11999999999",

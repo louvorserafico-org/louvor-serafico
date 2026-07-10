@@ -29,6 +29,8 @@ export function SupabaseProfileCard() {
       <Text style={styles.text}>Telefone: {profile.phone ?? "nao disponivel"}</Text>
       <Text style={styles.text}>Estado: {profile.state ?? "nao disponivel"}</Text>
       <Text style={styles.text}>Cidade: {profile.city ?? "nao disponivel"}</Text>
+      <Text style={styles.text}>Familia: {profile.family ?? "nao disponivel"}</Text>
+      <Text style={styles.text}>Jurisdicao: {profile.jurisdiction ?? "nao disponivel"}</Text>
       <Text style={styles.text}>Paroquia: {profile.parish ?? "nao disponivel"}</Text>
       <Text style={styles.text}>Pastoral/Banda: {profile.ministry ?? "nao disponivel"}</Text>
       <Text style={styles.text}>Provider: {profile.provider ?? "nao disponivel"}</Text>
