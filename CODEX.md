@@ -5853,3 +5853,39 @@ Checklist DoD:
 Sugestao de commit:
 
 `fix: handle Supabase network failures in auth flows`
+
+## Etapa 144 - Estruturacao inicial do escopo Santoral
+
+Resumo do que foi feito:
+
+- Foi analisado o arquivo `santoral-completo.pdf` apenas no recorte necessario para planejar o dominio.
+- Paginas 37 a 44 confirmam o indice anual completo do calendario serafico.
+- Pagina 46 confirmou o formato do primeiro dia detalhado utilizavel como modelo de exibicao.
+- Ficou definido, para a proxima fase, que o app usara apenas o primeiro bloco narrativo/historico de cada data.
+- O arquivo `to-change.md` foi reescrito com:
+  - escopo consolidado;
+  - regras de negocio;
+  - impacto tecnico;
+  - etapas sugeridas;
+  - riscos abertos.
+
+Arquivos alterados:
+
+- `to-change.md`
+
+Observacoes importantes:
+
+- Nada do Santoral foi implementado ainda.
+- A leitura do PDF nesta etapa foi apenas de reconhecimento estrutural.
+- O conteudo liturgico posterior ao primeiro bloco historico ficou explicitamente fora do escopo inicial.
+
+Checklist DoD:
+
+- [x] Recorte do PDF identificado.
+- [x] Modelo inicial de extracao identificado.
+- [x] Escopo reescrito com mais precisao.
+- [x] Impacto no codigo mapeado.
+
+Sugestao de commit:
+
+`docs: structure santoral scope and execution plan`
