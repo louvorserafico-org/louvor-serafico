@@ -6298,6 +6298,46 @@ Sugestao de commit:
 
 `feat(mobile): franciscan calendar ui and saint day page`
 
+## Etapa 151 - Santo do dia na Home
+
+Resumo do que foi feito:
+
+- Criado helper puro `features/home/home-saint.ts` (`buildHomeSaint`): a partir do `LiturgicalDay`, retorna eyebrow, titulo (nome do santo), classificacao, link `/santos/<monthDay>` e `moreCount` quando ha mais de um santo. Sem santo franciscano, cai em fallback editorial (status `none`, sem link).
+- A Home (`index.tsx`) passou a exibir o card "Santo do dia" logo abaixo do bloco de hoje, navegavel para a pagina do santo quando existir.
+
+Testes adicionados (`home-saint.test.ts`):
+
+- Dia com santo (07-10, Santa Veronica Giuliani) -> status `saint`, link `/santos/07-10`, classificacao preenchida.
+- Dia sem santo (02-14) -> status `none`, sem link, fallback editorial.
+
+Decisoes tecnicas e trade-offs:
+
+- Reuso de `buildSaintClassification` (etapa 150) via import relativo, mantendo a formatacao liturgica em um so lugar.
+- Import relativo (nao alias `@/`) no helper e no teste para rodar sob `tsx`.
+- Card do santo fica abaixo do estado do dia para nao competir com a acao principal (preparar a missa).
+
+Validacao pendente (manual):
+
+- Revisao visual do card na Home em device (Expo Go).
+
+Validacoes executadas:
+
+- `rtk pnpm test` (home-saint 2/2 + suite completa)
+- `rtk pnpm typecheck`
+- `rtk pnpm lint`
+
+Checklist DoD:
+
+- [x] TDD aplicado (santo presente e fallback).
+- [x] Home exibe santo do dia navegavel.
+- [x] Typecheck e lint limpos.
+- [ ] Revisao visual em device (pendente do usuario).
+- [x] Doc viva atualizada.
+
+Sugestao de commit:
+
+`feat(mobile): add saint of the day to home`
+
 ## Proxima Etapa Planejada
 
-Etapa 151 - Santo do dia na Home (fallback editorial quando nao houver santo franciscano).
+Etapa 152 - Refatorar cadastro: senha visivel, campo Familia (OFMConv/OFM/...), trocar Paroquia por Jurisdicao, normalizadores.
