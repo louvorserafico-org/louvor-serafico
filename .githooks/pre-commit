@@ -1,0 +1,18 @@
+#!/bin/sh
+# Barra commit se test, typecheck ou lint falharem.
+set -e
+
+ROOT="$(git rev-parse --show-toplevel)"
+export COREPACK_HOME="$ROOT/.corepack"
+cd "$ROOT"
+
+echo "[pre-commit] rtk pnpm test"
+corepack pnpm test
+
+echo "[pre-commit] rtk pnpm typecheck"
+corepack pnpm typecheck
+
+echo "[pre-commit] rtk pnpm lint"
+corepack pnpm lint
+
+echo "[pre-commit] ok"

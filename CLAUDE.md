@@ -6084,3 +6084,36 @@ Checklist DoD:
 Sugestao de commit:
 
 `chore: add rtk token-optimized command tooling`
+
+## Etapa 146 - Preparacao do ambiente de trabalho (skills + quality gate)
+
+Resumo do que foi feito:
+
+- Instaladas 34 agent-skills em `.claude/skills/` para tornar o agente especialista no stack do projeto.
+  - Expo (19): expo-router, expo-native-ui, expo-ui, expo-data-fetching, expo-tailwind-setup, expo-dom, expo-web-to-native, expo-module, expo-brownfield, expo-dev-client, expo-examples, expo-app-clip, expo-upgrade, eas-app-stores, eas-hosting, eas-workflows, eas-observe, eas-update-insights, eas-simulator.
+  - React Native (Callstack): react-native-best-practices, react-native-testing, agent-device, dogfood, github, github-actions.
+  - Supabase: supabase, supabase-postgres-best-practices.
+  - Caveman (7): caveman, cavecrew, caveman-commit, caveman-compress, caveman-help, caveman-review, caveman-stats.
+- Criado quality gate mecanico: hook `.githooks/pre-commit` roda `test`, `typecheck` e `lint`; barra o commit se qualquer um falhar.
+- `core.hooksPath` apontado para `.githooks` (config local deste clone).
+
+Decisoes tecnicas e trade-offs:
+
+- Skills versionadas no repositorio para a equipe compartilhar o mesmo conjunto.
+- Skills puladas por irrelevancia/duplicidade: vercel-react-native-skills (duplica best-practices), react-navigation (usamos Expo Router), brownfield/upgrading da Callstack (ha equivalente Expo), create-react-native-library (nao e lib), react-native-tv-best-practices (nao e TV).
+- Hook versionavel em `.githooks/` em vez de `.git/hooks/`; `core.hooksPath` e local por clone e nao propaga no push (cada clone roda `git config core.hooksPath .githooks` uma vez).
+- Skills sao sob demanda (nao always-on). O enforcement de TDD/DOD/commit vive no CLAUDE.md + no pre-commit hook.
+- `.claude/settings.local.json` permanece gitignored.
+- Reversibilidade: alta.
+
+Checklist DoD:
+
+- [x] Skills instaladas e validadas (34 SKILL.md).
+- [x] Pre-commit hook criado e testado (test + typecheck + lint verdes).
+- [x] `core.hooksPath` configurado.
+- [x] `to-change.md` e `settings.local.json` fora do commit.
+- [x] Doc viva atualizada.
+
+Sugestao de commit:
+
+`chore: add agent skills and pre-commit quality gate`
