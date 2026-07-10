@@ -5889,3 +5889,37 @@ Checklist DoD:
 Sugestao de commit:
 
 `docs: structure santoral scope and execution plan`
+
+## Etapa 145 - Instalacao do RTK (Rust Token Killer)
+
+Resumo do que foi feito:
+
+- Instalado o RTK localmente neste repositorio via `rtk init` (escopo do projeto, sem hook global).
+- RTK e um proxy de CLI que filtra e comprime a saida de comandos (git, pnpm, testes) para reduzir consumo de tokens nas sessoes com agente.
+- O binario ja estava disponivel no ambiente (`rtk 0.43.0`, em `~/.local/bin/rtk`) e foi validado como o RTK correto (Rust Token Killer) via `rtk gain`, e nao o homonimo Rust Type Kit.
+- A instalacao criou `CLAUDE.md` (instrucoes RTK v2) e `.rtk/filters.toml` (template de filtros do projeto).
+
+Arquivos criados:
+
+- `CLAUDE.md`
+- `.rtk/filters.toml`
+
+Decisoes tecnicas e trade-offs:
+
+- Escopo local ("nesse repositorio"), nao global. O projeto usava apenas `CODEX.md` como doc vivo e nao tinha `CLAUDE.md`, entao nada foi sobrescrito.
+- Sem hook global instalado: a reescrita nao e automatica; os comandos precisam ser prefixados com `rtk`. Isso mantem o efeito restrito a este repositorio.
+- Alternativa rejeitada: `rtk init -g` (hook global com reescrita transparente em todos os projetos). Rejeitada por fugir do escopo "nesse repositorio".
+- `to-change.md` permanece fora do controle de versao, conforme decisao previa do usuario.
+- Reversibilidade: alta. Basta remover `CLAUDE.md` e `.rtk/` para desfazer.
+
+Checklist DoD:
+
+- [x] Binario RTK verificado e validado como Rust Token Killer.
+- [x] RTK inicializado no escopo do projeto.
+- [x] `CLAUDE.md` e `.rtk/filters.toml` criados sem sobrescrever doc vivo.
+- [x] Decisao e trade-offs registrados.
+- [x] `to-change.md` preservado fora do commit.
+
+Sugestao de commit:
+
+`chore: add rtk token-optimized command tooling`
