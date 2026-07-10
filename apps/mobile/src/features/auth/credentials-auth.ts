@@ -17,12 +17,36 @@ type AuthResponse = {
   error: { message: string } | null;
 };
 
+export const FAMILY_OPTIONS = [
+  "OFMConv",
+  "OFM",
+  "OFMCap",
+  "TOR",
+  "OSC",
+  "OFS",
+  "Leigo",
+  "Outros",
+] as const;
+
+export type Family = (typeof FAMILY_OPTIONS)[number];
+
+export const JURISDICTION_OPTIONS = [
+  "Provincia",
+  "Mosteiro",
+  "Convento",
+  "Fraternidade",
+  "Paroquia",
+] as const;
+
+export type Jurisdiction = (typeof JURISDICTION_OPTIONS)[number];
+
 export type RegistrationForm = {
   city: string;
   email: string;
+  family: string;
   fullName: string;
+  jurisdiction: string;
   ministry: string;
-  parish: string;
   password: string;
   phone: string;
   state: string;
@@ -30,9 +54,10 @@ export type RegistrationForm = {
 
 type RegistrationMetadata = {
   city: string;
+  family: string;
   full_name: string;
+  jurisdiction: string | null;
   ministry: string | null;
-  parish: string | null;
   phone: string;
   state: string;
 };
@@ -53,9 +78,10 @@ export function normalizePhone(phone: string): string {
 export function buildRegistrationMetadata(form: RegistrationForm): RegistrationMetadata {
   return {
     city: form.city.trim(),
+    family: form.family.trim(),
     full_name: form.fullName.trim(),
+    jurisdiction: optionalText(form.jurisdiction),
     ministry: optionalText(form.ministry),
-    parish: optionalText(form.parish),
     phone: normalizePhone(form.phone),
     state: form.state.trim().toUpperCase(),
   };
@@ -236,6 +262,10 @@ function validateRegistration(form: RegistrationForm, email: string): string | n
 
   if (!form.city.trim()) {
     return "Informe sua cidade.";
+  }
+
+  if (!form.family.trim()) {
+    return "Informe sua familia franciscana.";
   }
 
   return null;

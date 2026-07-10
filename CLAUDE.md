@@ -6338,6 +6338,50 @@ Sugestao de commit:
 
 `feat(mobile): add saint of the day to home`
 
+## Etapa 152 - Refatorar cadastro (familia, jurisdicao, senha visivel)
+
+Resumo do que foi feito:
+
+- `credentials-auth.ts`: `RegistrationForm` ganhou `family`, trocou `parish` por `jurisdiction`. Novas constantes `FAMILY_OPTIONS` (OFMConv/OFM/OFMCap/TOR/OSC/OFS/Leigo/Outros) e `JURISDICTION_OPTIONS` (Provincia/Mosteiro/Convento/Fraternidade/Paroquia). `buildRegistrationMetadata` passa `family` (obrigatorio) e `jurisdiction` (opcional); validacao exige familia.
+- `criar-conta.tsx`: senha com toggle Mostrar/Ocultar; selects em chips para Familia (obrigatorio) e Jurisdicao (opcional, desmarcavel); removido o input de Paroquia.
+- Migration `20260710120000_add_family_jurisdiction_profiles.sql`: colunas `family` e `jurisdiction` em `profiles` e `handle_new_user` atualizado para gravar ambos (parish mantido para linhas legadas).
+
+Testes atualizados (`credentials-auth.test.ts`):
+
+- Metadata do cadastro agora inclui `family`/`jurisdiction` (sem `parish`).
+- Novo teste: cadastro sem familia e bloqueado antes do Supabase.
+
+Decisoes tecnicas e trade-offs:
+
+- Jurisdicao como select fechado (nao campo livre), default reversivel; ponto do to-change.md resolvido pela via mais simples.
+- Familia obrigatoria (identidade central do app), com "Leigo"/"Outros" como escape.
+- Escopo contido no cadastro: exibir familia/jurisdicao no Perfil (mexe em `supabase-profile` e 4 fixtures) ficou para a Etapa 153.
+
+Pendencias operacionais:
+
+- Aplicar a migration no Supabase remoto (mesmo fluxo das etapas anteriores).
+- `supabase-profile.ts` ainda le `parish`; novos cadastros gravam `jurisdiction` -> exibicao alinhada na Etapa 153.
+
+Validacoes executadas:
+
+- `rtk pnpm test` (credentials-auth 11/11 + suite completa)
+- `rtk pnpm typecheck`
+- `rtk pnpm lint`
+
+Checklist DoD:
+
+- [x] TDD aplicado (metadata + familia obrigatoria).
+- [x] Form com senha visivel, Familia e Jurisdicao.
+- [x] Migration criada.
+- [x] Typecheck e lint limpos.
+- [ ] Migration aplicada no remoto (pendente do usuario).
+- [ ] Revisao visual do form em device (pendente do usuario).
+- [x] Doc viva atualizada.
+
+Sugestao de commit:
+
+`feat(mobile): revamp registration with family and jurisdiction`
+
 ## Proxima Etapa Planejada
 
-Etapa 152 - Refatorar cadastro: senha visivel, campo Familia (OFMConv/OFM/...), trocar Paroquia por Jurisdicao, normalizadores.
+Etapa 153 - Exibir familia e jurisdicao no Perfil (supabase-profile + overview + card) e paginas Devocional/Novena/Transito de Sao Francisco.

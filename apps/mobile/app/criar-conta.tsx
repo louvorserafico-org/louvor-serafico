@@ -4,16 +4,22 @@ import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-
 
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { OrnamentalDivider } from "@/components/OrnamentalDivider";
-import { registerWithPassword, type RegistrationForm } from "@/features/auth/credentials-auth";
+import {
+  FAMILY_OPTIONS,
+  JURISDICTION_OPTIONS,
+  registerWithPassword,
+  type RegistrationForm,
+} from "@/features/auth/credentials-auth";
 import { supabase } from "@/services/supabase/client";
 import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
 
 const emptyRegistration: RegistrationForm = {
   city: "",
   email: "",
+  family: "",
   fullName: "",
+  jurisdiction: "",
   ministry: "",
-  parish: "",
   password: "",
   phone: "",
   state: "",
@@ -23,6 +29,7 @@ export default function CreateAccountScreen() {
   const [registration, setRegistration] = useState<RegistrationForm>(emptyRegistration);
   const [result, setResult] = useState<{ message: string; status: "error" | "success" } | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const updateRegistration = (field: keyof RegistrationForm, value: string) => {
     setRegistration((current) => ({
@@ -55,13 +62,24 @@ export default function CreateAccountScreen() {
           placeholder="Seu email"
           value={registration.email}
         />
-        <AuthInput
-          autoComplete="password-new"
-          onChangeText={(value) => updateRegistration("password", value)}
-          placeholder="Crie uma senha com 8 ou mais caracteres"
-          secureTextEntry
-          value={registration.password}
-        />
+        <View style={styles.passwordRow}>
+          <View style={styles.passwordField}>
+            <AuthInput
+              autoComplete="password-new"
+              onChangeText={(value) => updateRegistration("password", value)}
+              placeholder="Crie uma senha com 8 ou mais caracteres"
+              secureTextEntry={!showPassword}
+              value={registration.password}
+            />
+          </View>
+          <Pressable
+            accessibilityRole="button"
+            onPress={() => setShowPassword((current) => !current)}
+            style={styles.passwordToggle}
+          >
+            <Text style={styles.passwordToggleText}>{showPassword ? "Ocultar" : "Mostrar"}</Text>
+          </Pressable>
+        </View>
         <AuthInput
           autoComplete="tel"
           keyboardType="phone-pad"
@@ -82,10 +100,19 @@ export default function CreateAccountScreen() {
             value={registration.city}
           />
         </View>
-        <AuthInput
-          onChangeText={(value) => updateRegistration("parish", value)}
-          placeholder="Paroquia (opcional)"
-          value={registration.parish}
+        <ChipSelect
+          label="Família franciscana"
+          onSelect={(value) => updateRegistration("family", value)}
+          options={FAMILY_OPTIONS}
+          value={registration.family}
+        />
+        <ChipSelect
+          label="Jurisdição (opcional)"
+          onSelect={(value) =>
+            updateRegistration("jurisdiction", value === registration.jurisdiction ? "" : value)
+          }
+          options={JURISDICTION_OPTIONS}
+          value={registration.jurisdiction}
         />
         <AuthInput
           onChangeText={(value) => updateRegistration("ministry", value)}
@@ -175,6 +202,40 @@ function AuthInput(props: ComponentProps<typeof TextInput>) {
   );
 }
 
+function ChipSelect({
+  label,
+  onSelect,
+  options,
+  value,
+}: {
+  label: string;
+  onSelect: (value: string) => void;
+  options: readonly string[];
+  value: string;
+}) {
+  return (
+    <View style={styles.selectBlock}>
+      <Text style={styles.selectLabel}>{label}</Text>
+      <View style={styles.chips}>
+        {options.map((option) => {
+          const active = value === option;
+
+          return (
+            <Pressable
+              accessibilityRole="button"
+              key={option}
+              onPress={() => onSelect(option)}
+              style={[styles.chip, active ? styles.chipActive : undefined]}
+            >
+              <Text style={[styles.chipText, active ? styles.chipTextActive : undefined]}>{option}</Text>
+            </Pressable>
+          );
+        })}
+      </View>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   button: {
     alignSelf: "flex-start",
@@ -259,6 +320,60 @@ const styles = StyleSheet.create({
     fontFamily: fontFamilies.body,
     fontSize: typography.body,
     padding: spacing.md,
+  },
+  chip: {
+    backgroundColor: colors.surfaceMuted,
+    borderColor: colors.border,
+    borderRadius: radii.pill,
+    borderWidth: 1,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+  },
+  chipActive: {
+    backgroundColor: colors.goldSoft,
+    borderColor: colors.borderStrong,
+  },
+  chipText: {
+    color: colors.textSecondary,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "700",
+  },
+  chipTextActive: {
+    color: colors.accentStrong,
+  },
+  chips: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: spacing.sm,
+  },
+  passwordField: {
+    flex: 1,
+  },
+  passwordRow: {
+    alignItems: "center",
+    flexDirection: "row",
+    gap: spacing.sm,
+  },
+  passwordToggle: {
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.sm,
+  },
+  passwordToggleText: {
+    color: colors.accent,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
+  },
+  selectBlock: {
+    gap: spacing.sm,
+  },
+  selectLabel: {
+    color: colors.gold,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
+    textTransform: "uppercase",
   },
   legalText: {
     color: colors.textMuted,

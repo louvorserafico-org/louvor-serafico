@@ -14,9 +14,10 @@ import {
 const validForm: RegistrationForm = {
   city: "Petropolis",
   email: "  Frei@Example.com  ",
+  family: "OFMConv",
   fullName: "Frei Luis",
+  jurisdiction: "Provincia",
   ministry: "Banda Sao Francisco",
-  parish: "Paroquia Sao Pedro",
   password: "senha1234",
   phone: "(24) 99999-0000",
   state: "rj",
@@ -46,9 +47,10 @@ describe("credentials auth", () => {
       options: {
         data: {
           city: "Petropolis",
+          family: "OFMConv",
           full_name: "Frei Luis",
+          jurisdiction: "Provincia",
           ministry: "Banda Sao Francisco",
-          parish: "Paroquia Sao Pedro",
           phone: "24999990000",
           state: "RJ",
         },
@@ -154,13 +156,34 @@ describe("credentials auth", () => {
   it("normalizes helpers", () => {
     assert.equal(normalizeAuthEmail("  Frei@Example.com "), "frei@example.com");
     assert.equal(normalizePhone("(24) 99999-0000"), "24999990000");
-    assert.deepEqual(buildRegistrationMetadata({ ...validForm, ministry: "", parish: "" }), {
+    assert.deepEqual(buildRegistrationMetadata({ ...validForm, ministry: "", jurisdiction: "" }), {
       city: "Petropolis",
+      family: "OFMConv",
       full_name: "Frei Luis",
+      jurisdiction: null,
       ministry: null,
-      parish: null,
       phone: "24999990000",
       state: "RJ",
+    });
+  });
+
+  it("blocks registration without franciscan family", async () => {
+    const result = await registerWithPassword(
+      {
+        auth: {
+          resetPasswordForEmail: async () => ({ data: {}, error: null }),
+          signInWithPassword: async () => ({ data: {}, error: null }),
+          signUp: async () => {
+            throw new Error("should not run");
+          },
+        },
+      },
+      { ...validForm, family: "" },
+    );
+
+    assert.deepEqual(result, {
+      message: "Informe sua familia franciscana.",
+      status: "error",
     });
   });
 
