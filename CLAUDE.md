@@ -6210,6 +6210,51 @@ Sugestao de commit:
 
 `feat(shared): extract full franciscan santoral annual index`
 
+## Etapa 149 - Calendario no eixo franciscano (camada de dominio)
+
+Resumo do que foi feito:
+
+- `LiturgicalDay` agora carrega `saints: SaintDay[]` (santos franciscanos do dia) e um novo `kind` `franciscan_saint`.
+- `buildLiturgicalDay2026` passou a anexar o santoral (`findSaintDaysByMonthDay`) a cada dia e a resolver o `kind` por prioridade: repertorio > santo franciscano > preceito da Igreja > dia comum.
+- Coexistencia: o repertorio ainda vence (leva o musico direto ao roteiro), mas os santos ficam anexados mesmo em dias com roteiro; datas de preceito viram complemento apenas quando nao ha santo franciscano.
+- Efeito imediato: `getLiturgicalMarkedDays2026` (kind != ordinary) passa a incluir os dias franciscanos, tornando o santoral o eixo principal das "datas marcadas" do mes.
+
+Testes adicionados (`liturgical-calendar.test.ts`):
+
+- Dia com santo franciscano sem roteiro -> `franciscan_saint`, `hasRepertoire=false`, `saints` populado, titulo = nome do santo (01-04 Santa Angela de Foligno).
+- Dia com roteiro mantem `has_repertoire` e ainda anexa `saints` (01-03).
+- Preceito sem santo franciscano continua `liturgical_day_without_repertoire` (12-25).
+- Lista mensal marcada inclui `franciscan_saint`.
+- Dia comum sem santos (02-14).
+
+Decisoes tecnicas e trade-offs:
+
+- Repertorio mantido acima do santo no `kind` para nao desviar o fluxo principal (preparar a missa). O santo segue acessivel via `saints`.
+- Novo `kind` adicionado sem quebrar consumidores (comparacoes por igualdade, sem switch exaustivo).
+- `title` do dia franciscano usa o primeiro santo; multiplos santos ficam em `saints`.
+
+Escopo / proximo:
+
+- Esta etapa e apenas dominio. A UI do calendario (`calendario.tsx`) ainda nao estiliza `franciscan_saint` nem roteia para a pagina do santo; isso entra na proxima etapa (UI do calendario + pagina do santo).
+
+Validacoes executadas:
+
+- `rtk pnpm test` (calendario 11/11 + suite completa)
+- `rtk pnpm typecheck`
+- `rtk pnpm lint`
+
+Checklist DoD:
+
+- [x] TDD aplicado (Red -> Green).
+- [x] Santoral integrado ao dia liturgico com prioridade clara.
+- [x] Coexistencia repertorio/santo/preceito coberta por teste.
+- [x] Typecheck e lint limpos.
+- [x] Doc viva atualizada.
+
+Sugestao de commit:
+
+`feat(shared): make franciscan santoral the primary calendar axis`
+
 ## Proxima Etapa Planejada
 
-Etapa 149 - Refatorar o calendario principal para eixo franciscano (santo do dia coexistindo com repertorio e preceito).
+Etapa 150 - UI do calendario para o eixo franciscano: estilizar dias `franciscan_saint`, roteamento por tipo de dia e base da pagina do santo.

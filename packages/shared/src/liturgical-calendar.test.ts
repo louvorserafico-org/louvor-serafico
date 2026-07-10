@@ -52,4 +52,40 @@ describe("liturgical calendar 2026", () => {
     assert.equal(result.some((item) => item.kind === "has_repertoire"), true);
     assert.equal(result.some((item) => item.kind === "liturgical_day_without_repertoire"), true);
   });
+
+  it("marks franciscan saint days as the primary axis", () => {
+    const result = getLiturgicalDayForDate(new Date("2026-01-04T12:00:00.000Z"));
+
+    assert.equal(result.kind, "franciscan_saint");
+    assert.equal(result.hasRepertoire, false);
+    assert.ok(result.saints.some((saint) => saint.name.includes("Ângela de Foligno")));
+    assert.ok(result.title.includes("Ângela de Foligno"));
+  });
+
+  it("keeps repertoire priority but still attaches the day saints", () => {
+    const result = getLiturgicalDayForDate(new Date("2026-01-03T12:00:00.000Z"));
+
+    assert.equal(result.kind, "has_repertoire");
+    assert.equal(result.saints.length >= 1, true);
+  });
+
+  it("keeps precept days as complement when no franciscan saint exists", () => {
+    const result = getLiturgicalDayForDate(new Date("2026-12-25T12:00:00.000Z"));
+
+    assert.equal(result.kind, "liturgical_day_without_repertoire");
+    assert.deepEqual(result.saints, []);
+  });
+
+  it("marks franciscan days in the monthly marked list", () => {
+    const result = getLiturgicalMarkedDays2026(1);
+
+    assert.equal(result.some((item) => item.kind === "franciscan_saint"), true);
+  });
+
+  it("keeps ordinary days without saints", () => {
+    const result = getLiturgicalDayForDate(new Date("2026-02-14T12:00:00.000Z"));
+
+    assert.equal(result.kind, "ordinary_day");
+    assert.deepEqual(result.saints, []);
+  });
 });
