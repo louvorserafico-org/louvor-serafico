@@ -5,13 +5,14 @@ import { getSaintDayCatalog } from "./santoral.ts";
 import {
   findCuratedShortHistory,
   getCuratedSaintContents,
+  getDraftSaintContents,
   // @ts-ignore Node runs TypeScript sources directly in this dev setup.
 } from "./santoral-content.ts";
 
 describe("santoral curated content", () => {
-  it("publishes the january pilot as curated", () => {
+  it("publishes the reviewed santoral content as curated", () => {
     const curated = getCuratedSaintContents();
-    assert.equal(curated.length, 6);
+    assert.equal(curated.length, 112);
     assert.ok(curated.every((content) => content.status === "curated"));
     assert.ok(curated.every((content) => content.shortHistory.trim().length > 0));
   });
@@ -31,5 +32,14 @@ describe("santoral curated content", () => {
     for (const content of getCuratedSaintContents()) {
       assert.ok(catalogIds.has(content.saintId), `orphan content: ${content.saintId}`);
     }
+  });
+
+  it("has unique saintIds", () => {
+    const ids = getCuratedSaintContents().map((content) => content.saintId);
+    assert.equal(ids.length, new Set(ids).size);
+  });
+
+  it("keeps an empty draft queue once everything is curated", () => {
+    assert.deepEqual(getDraftSaintContents(), []);
   });
 });

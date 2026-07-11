@@ -6536,6 +6536,50 @@ Sugestao de commit:
 
 `feat(shared): add curated santoral content pilot`
 
+## Etapa 156 - Extracao em lote do santoral (fila de drafts)
+
+Resumo do que foi feito:
+
+- Extraido o primeiro bloco narrativo de 106 santos do `santoral-completo.pdf` (Proprio da Familia Franciscana, ano inteiro), revisados e aprovados pelo usuario.
+- Consolidado tudo em `santoral-content.ts`: 112 entradas `curated` (6 do piloto + 106 aprovados). O arquivo de drafts foi descartado; `getDraftSaintContents()` filtra o proprio arquivo (fila vazia).
+- `findCuratedShortHistory` publica os 112.
+
+Pipeline:
+
+- Segmentacao do Proprio por `<dia> de <mes>` + titulo em MAIUSCULAS; narrativa cortada antes das ancoras do oficio.
+- Limpeza (dehifenizacao, drop-cap, corte de rubricas "Do comum...").
+- Matching seção -> `saintId` do indice por month-day + sobreposicao de tokens do nome; descartados matches de score 0 e seções de "Comum".
+- Cobertura: 116 seções, 113 casadas, 0 dias orfaos; 106 drafts (excluindo os 6 ja curados e 1 match ruim).
+
+Testes (`santoral-content.test.ts`):
+
+- 112 `curated`, texto nao vazio.
+- Sem conteudo orfao (todo `saintId` no indice); `saintId` unicos.
+- Fila de draft vazia (tudo curado).
+
+Decisoes tecnicas e trade-offs:
+
+- Arquivo unico `santoral-content.ts` (o usuario colou os drafts nele e aprovou; consolidei em vez de manter dois arquivos). Promover/editar = alterar a entrada no mesmo arquivo.
+- ~14 santos do indice sem seção no Proprio (usam "Do comum") ficam sem texto por ora.
+
+Validacoes executadas:
+
+- `rtk pnpm test` (content 8/8 + suite completa)
+- `rtk pnpm typecheck`
+- `rtk pnpm lint`
+
+Checklist DoD:
+
+- [x] Extracao em lote (106) revisada e aprovada.
+- [x] Consolidado em arquivo unico; 112 curated.
+- [x] Guards de integridade (orfao, unicidade); fila draft vazia.
+- [x] Typecheck e lint limpos.
+- [x] Doc viva atualizada.
+
+Sugestao de commit:
+
+`feat(shared): curate full santoral content`
+
 ## Proxima Etapa Planejada
 
-Etapa 156 - Extracao em lote do primeiro bloco narrativo por santo (janeiro -> ano), com status draft ate revisao.
+Etapa 157 - Ligar `shortHistory` curado a pagina do santo; premium real quando houver texto.
