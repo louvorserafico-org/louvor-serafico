@@ -6619,6 +6619,50 @@ Sugestao de commit:
 
 `feat(shared): publish curated saint history with premium gate`
 
+## Track B bloqueado (fonte)
+
+O `santoral-completo.pdf` NAO contem Transito de Sao Francisco, Novena nem oracoes preparatorias (busca no arquivo inteiro: 0 ocorrencias). E livro de santoral/oficio. Track B (Etapas 158-159) aguarda o usuario fornecer os textos autoritativos. Reordenado: Track C primeiro.
+
+## Etapa 160 - Calendario geral (CNBB) como complemento, por calculo
+
+Resumo do que foi feito:
+
+- Criado `packages/shared/src/liturgical-general.ts`: calendario liturgico geral parametrizado por ano, como COMPLEMENTO do santoral franciscano (que continua primario).
+- `computeEaster(year)`: Computus gregoriano (algoritmo anonimo de Meeus).
+- Festas moveis derivadas da Pascoa (Cinzas -46, Ramos -7, Quinta/Sexta Santa, Pascoa, Ascensao +42, Pentecostes +49, Trindade +56, Corpus Christi +60) e tabela de fixas (Mae de Deus, Epifania, Sao Jose, Anunciacao, Sao Joao Batista, Pedro e Paulo, Transfiguracao, Assuncao, Exaltacao da Cruz, Todos os Santos, Imaculada, Natal).
+- `getGeneralLiturgicalFeasts(year)` e `findGeneralFeastByMonthDay(year, monthDay)`.
+
+Testes (`liturgical-general.test.ts`):
+
+- Pascoa 2025/2026/2027 (20-04, 05-04, 28-03).
+- Moveis 2026 batem com o `liturgicalMarkers2026` legado (Cinzas 02-18, Ramos 03-29, Pascoa 04-05, Pentecostes 05-24, Corpus 06-04).
+- Fixas presentes em qualquer ano; lista ordenada; lookup por data.
+
+Decisoes tecnicas e trade-offs:
+
+- Fonte por CALCULO (Computus + tabela), nao dataset externo (decisao do usuario).
+- Offsets validados contra as datas ja usadas em 2026.
+- Ranks sao rotulos aproximados para exibicao; transferencias CNBB (ex.: Ascensao ao domingo = +42) adotadas onde padrao.
+- Modulo isolado; a integracao no `liturgical-calendar` (coexistencia com santoral) e a Etapa 161.
+
+Validacoes executadas:
+
+- `rtk pnpm test` (general 5/5 + suite completa)
+- `rtk pnpm typecheck`
+- `rtk pnpm lint`
+
+Checklist DoD:
+
+- [x] Computus + festas moveis/fixas.
+- [x] TDD (Pascoa, offsets, fixas, ordenacao).
+- [x] Parametrizado por ano.
+- [x] Typecheck e lint limpos.
+- [x] Doc viva atualizada.
+
+Sugestao de commit:
+
+`feat(shared): add general liturgical calendar by computus`
+
 ## Proxima Etapa Planejada
 
-Track B - Etapa 158: sourcing e modelo das devocoes (Transito, Novena, Devocional) a partir do PDF.
+Etapa 161 - Integrar o calendario geral no `liturgical-calendar` (preceito como complemento do santoral); substituir `liturgicalMarkers2026`.
