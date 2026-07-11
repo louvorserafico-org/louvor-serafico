@@ -6487,6 +6487,55 @@ Decisoes do usuario: (1) conteudo curado fica LOCAL no codigo por enquanto; (2) 
 
 Ordem: A -> B -> C -> 163. Cada etapa com TDD/DoD/commit.
 
+## Etapa 155 - Track A: piloto de curadoria do santoral
+
+Resumo do que foi feito:
+
+- Criado `packages/shared/src/santoral-content.ts`: conteudo curado do santoral (primeiro bloco historico por santo), storage LOCAL, keyed por `saintId`, com status `curated`/`draft` (so `curated` publica).
+- Piloto de janeiro: 6 santos curados e revisados (01-03 Santissimo Nome, 01-04 Angela de Foligno, 01-05 Diego de Cadiz, 01-12 Bernardo de Corleone, 01-14 Odorico de Pordenone, 01-16 Sao Berardo e companheiros).
+- Helpers: `getCuratedSaintContents`, `findCuratedShortHistory`. Exportado em `index.ts`.
+
+Fonte e metodo:
+
+- Texto extraido do `santoral-completo.pdf` (Proprio da Familia Franciscana, p. 46+), que traz por celebracao: data, titulo, "Para ...: rank", primeiro bloco narrativo, depois o oficio completo.
+- pypdf basta (PDF tem texto real, sem OCR). Regra de corte: apos "Para ...: rank" ate a primeira ancora do oficio (Invitatorio/Hino/etc.).
+- Limpeza (dehifenizacao, drop-cap, corte de rubricas "Do comum...") feita e revisada manualmente para os 6; texto fiel a fonte.
+
+Testes (`santoral-content.test.ts`):
+
+- Piloto publica 6 `curated` com texto nao vazio.
+- Lookup por `saintId` (hit/miss).
+- Guard de integridade: todo `saintId` curado existe no indice (sem conteudo orfao).
+
+Decisoes tecnicas e trade-offs:
+
+- Keyed por `saintId` (nao `monthDay`) para desambiguar dias com multiplos santos.
+- Nao ligado ainda a pagina do santo (isso e a Etapa 157); 155 entrega dados + modelo revisaveis.
+- Tail truncado da fonte foi cortado em frase completa (ex.: Angela encerra em 1309) para nao adivinhar.
+
+Revisao pendente (usuario):
+
+- Conferir os 6 textos em `packages/shared/src/santoral-content.ts` antes do bulk (Etapa 156).
+
+Validacoes executadas:
+
+- `rtk pnpm test` (content 4/4 + suite completa)
+- `rtk pnpm typecheck`
+- `rtk pnpm lint`
+
+Checklist DoD:
+
+- [x] Modulo de conteudo curado local.
+- [x] Piloto de 6 santos revisados.
+- [x] TDD + guard de integridade.
+- [x] Typecheck e lint limpos.
+- [ ] Revisao editorial dos 6 textos (usuario).
+- [x] Doc viva atualizada.
+
+Sugestao de commit:
+
+`feat(shared): add curated santoral content pilot`
+
 ## Proxima Etapa Planejada
 
-Etapa 155 - Track A: fonte, storage local e piloto de curadoria do santoral.
+Etapa 156 - Extracao em lote do primeiro bloco narrativo por santo (janeiro -> ano), com status draft ate revisao.
