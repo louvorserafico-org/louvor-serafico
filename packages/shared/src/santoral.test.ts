@@ -71,6 +71,16 @@ describe("santoral franciscano domain", () => {
       assert.ok(clara?.observances.some((o) => o.jurisdiction === "OSC" && o.rank === "solenidade"));
     });
 
+    it("merges curated shortHistory into the catalog", () => {
+      const catalog = getSaintDayCatalog();
+      assert.equal(catalog.filter((saint) => saint.shortHistory).length, 112);
+
+      const berardo = catalog.find(
+        (saint) => saint.id === "saint-01-16-sao-berardo-e-seus-companheiros-protomartires",
+      );
+      assert.ok(berardo?.shortHistory?.includes("cinco irmãos"));
+    });
+
     it("keeps Sao Francisco as deacon and founder", () => {
       const francisco = findSaintDaysByMonthDay("10-04")[0];
       assert.ok(francisco?.name.includes("FRANCISCO DE ASSIS"));

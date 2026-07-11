@@ -6580,6 +6580,45 @@ Sugestao de commit:
 
 `feat(shared): curate full santoral content`
 
+## Etapa 157 - shortHistory curado no catalogo (premium real)
+
+Resumo do que foi feito:
+
+- `santoral.ts` passou a mesclar o texto curado (`findCuratedShortHistory`) no catalogo: cada `SaintDay` recebe `shortHistory` quando ha conteudo curado; santos sem conteudo ficam null ("em preparacao").
+- 112 santos passam a ter historia publicada; premium real: como `premium: true`, sem assinatura o texto fica bloqueado, com assinatura fica liberado.
+
+Sem mudanca de UI:
+
+- A pagina `app/santos/[monthDay].tsx` ja renderiza os estados via `buildSaintHistoryState` (available/locked/preparing) + `useSubscriptionPreview`. Passa a exibir texto real e o gate premium sem alteracao.
+
+Teste (`santoral.test.ts`):
+
+- Catalogo mescla `shortHistory`: exatamente 112 com texto; Berardo (01-16) inclui "cinco irmaos".
+
+Decisoes tecnicas e trade-offs:
+
+- Merge no catalogo (nao no arquivo de indice gerado), mantendo o indice como dado bruto e o conteudo curado como camada.
+- Sem ciclo de import: `santoral` importa `santoral-content`, que nao importa `santoral`.
+
+Validacoes executadas:
+
+- `rtk pnpm test` (santoral 14/14 + suite completa)
+- `rtk pnpm typecheck`
+- `rtk pnpm lint`
+
+Checklist DoD:
+
+- [x] Conteudo curado ligado ao catalogo.
+- [x] Premium real na pagina do santo.
+- [x] TDD (contagem + spot-check).
+- [x] Typecheck e lint limpos.
+- [ ] Revisao visual em device (pendente do usuario).
+- [x] Doc viva atualizada.
+
+Sugestao de commit:
+
+`feat(shared): publish curated saint history with premium gate`
+
 ## Proxima Etapa Planejada
 
-Etapa 157 - Ligar `shortHistory` curado a pagina do santo; premium real quando houver texto.
+Track B - Etapa 158: sourcing e modelo das devocoes (Transito, Novena, Devocional) a partir do PDF.

@@ -12,6 +12,7 @@
 // historico de cada dia (`shortHistory`) entra em etapa seguinte.
 
 import { franciscanSantoral2026 } from "./santoral-index-2026.ts";
+import { findCuratedShortHistory } from "./santoral-content.ts";
 
 export type FranciscanOrder = "first" | "second" | "third" | "secular";
 
@@ -73,7 +74,12 @@ export type SaintHistoryAccess = {
   reason: SaintHistoryAccessReason;
 };
 
-const saintDayCatalog: SaintDay[] = franciscanSantoral2026;
+// Mescla o texto historico curado (santoral-content) no indice. Santos sem conteudo
+// curado permanecem com `shortHistory` null (estado "em preparacao").
+const saintDayCatalog: SaintDay[] = franciscanSantoral2026.map((saint) => {
+  const curated = findCuratedShortHistory(saint.id);
+  return curated ? { ...saint, shortHistory: curated } : saint;
+});
 
 export function getSaintDayCatalog(): SaintDay[] {
   return [...saintDayCatalog].sort((first, second) => first.monthDay.localeCompare(second.monthDay));
