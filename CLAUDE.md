@@ -6464,6 +6464,29 @@ Sugestao de commit:
 
 `feat(mobile): add franciscan devotions hub`
 
+## Roteiro aprovado (pos to-change.md)
+
+Decisoes do usuario: (1) conteudo curado fica LOCAL no codigo por enquanto; (2) curadoria a partir de `santoral-completo.pdf`; (3) CNBB como COMPLEMENTO, via calculo (Computus + solenidades fixas). Migration de familia/jurisdicao sera aplicada pelo usuario via `supabase db push --linked`.
+
+### Track A - Conteudo historico do santoral (`shortHistory`)
+- Etapa 155 - Fonte + storage + piloto: modulo `santoral-content.ts` local, separando dado curado do indice gerado; status `draft`/`curated` (so `curated` publica); piloto de 3-5 santos extraidos do PDF e revisados.
+- Etapa 156 - Extracao em lote do primeiro bloco narrativo por data + revisao.
+- Etapa 157 - Ligar `shortHistory` curado a pagina do santo; premium real quando houver texto.
+
+### Track B - Devocoes (conteudo real)
+- Etapa 158 - Sourcing + modelo (Transito, Novena de 9 dias, Devocional) a partir de fonte autoritativa (PDF); sem fabricar.
+- Etapa 159 - Preencher e renderizar (Transito primeiro, depois Novena e Devocional).
+
+### Track C - CNBB / calendario geral (complemento, por calculo)
+- Etapa 160 - Papel + modelo: camada de calendario geral separada do santoral; franciscano continua primario.
+- Etapa 161 - Computus (Pascoa e moveis) + solenidades fixas; substituir `liturgicalMarkers2026` hardcoded por base gerada.
+- Etapa 162 - Generalizar o calendario por ano (moveis sao anuais).
+
+### Fecho do santoral
+- Etapa 163 - UI de filtro por categoria (Martir/Virgem/Doutor/Pastor...) usando `filterSaintDaysByQualifier`.
+
+Ordem: A -> B -> C -> 163. Cada etapa com TDD/DoD/commit.
+
 ## Proxima Etapa Planejada
 
-Fim do plano do to-change.md (Etapas 144-154 cobertas). Proximos candidatos: curadoria de conteudo (shortHistory do santoral, textos das devocoes), completar dezembro do santoral, base CNBB, ou aplicar migration de familia/jurisdicao no remoto.
+Etapa 155 - Track A: fonte, storage local e piloto de curadoria do santoral.
