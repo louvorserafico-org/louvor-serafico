@@ -19,7 +19,7 @@ export type LiturgicalDay = {
   monthNumber: number;
   saints: SaintDay[];
   title: string;
-  year: 2026;
+  year: number;
 };
 
 const monthFormatter = new Intl.DateTimeFormat("pt-BR", {
@@ -44,30 +44,38 @@ const monthNames = [
 ] as const;
 
 export function getLiturgicalDayForDate(date: Date): LiturgicalDay {
-  return buildLiturgicalDay2026(date.getMonth() + 1, date.getDate());
+  return buildLiturgicalDay(date.getFullYear(), date.getMonth() + 1, date.getDate());
+}
+
+export function getLiturgicalMonthDays(year: number, monthNumber: number): LiturgicalDay[] {
+  const dayCount = new Date(Date.UTC(year, monthNumber, 0)).getUTCDate();
+
+  return Array.from({ length: dayCount }, (_, index) => buildLiturgicalDay(year, monthNumber, index + 1));
 }
 
 export function getLiturgicalMonthDays2026(monthNumber: number): LiturgicalDay[] {
-  const dayCount = new Date(Date.UTC(2026, monthNumber, 0)).getUTCDate();
+  return getLiturgicalMonthDays(2026, monthNumber);
+}
 
-  return Array.from({ length: dayCount }, (_, index) => buildLiturgicalDay2026(monthNumber, index + 1));
+export function getLiturgicalMarkedDays(year: number, monthNumber: number): LiturgicalDay[] {
+  return getLiturgicalMonthDays(year, monthNumber).filter((item) => item.kind !== "ordinary_day");
 }
 
 export function getLiturgicalMarkedDays2026(monthNumber: number): LiturgicalDay[] {
-  return getLiturgicalMonthDays2026(monthNumber).filter((item) => item.kind !== "ordinary_day");
+  return getLiturgicalMarkedDays(2026, monthNumber);
 }
 
 export function getLiturgicalMonthLabel(monthNumber: number): string {
   return monthNames[monthNumber - 1] ?? "mes";
 }
 
-function buildLiturgicalDay2026(monthNumber: number, dayNumber: number): LiturgicalDay {
-  const isoDate = `2026-${String(monthNumber).padStart(2, "0")}-${String(dayNumber).padStart(2, "0")}`;
+function buildLiturgicalDay(year: number, monthNumber: number, dayNumber: number): LiturgicalDay {
+  const isoDate = `${year}-${String(monthNumber).padStart(2, "0")}-${String(dayNumber).padStart(2, "0")}`;
   const monthDay = `${String(monthNumber).padStart(2, "0")}-${String(dayNumber).padStart(2, "0")}`;
   const celebration = findCelebrationByDate(monthDay);
   const saints = findSaintDaysByMonthDay(monthDay);
   const primarySaint = saints[0];
-  const generalFeast = findGeneralFeastByMonthDay(2026, monthDay);
+  const generalFeast = findGeneralFeastByMonthDay(year, monthDay);
   const utcDate = new Date(`${isoDate}T00:00:00.000Z`);
   const dateLabel = capitalizeMonthLabel(monthFormatter.format(utcDate));
 
@@ -87,7 +95,7 @@ function buildLiturgicalDay2026(monthNumber: number, dayNumber: number): Liturgi
       monthNumber,
       saints,
       title: celebration.title,
-      year: 2026,
+      year,
     };
   }
 
@@ -103,7 +111,7 @@ function buildLiturgicalDay2026(monthNumber: number, dayNumber: number): Liturgi
       monthNumber,
       saints,
       title: primarySaint.name,
-      year: 2026,
+      year,
     };
   }
 
@@ -119,7 +127,7 @@ function buildLiturgicalDay2026(monthNumber: number, dayNumber: number): Liturgi
       monthNumber,
       saints: [],
       title: generalFeast.title,
-      year: 2026,
+      year,
     };
   }
 

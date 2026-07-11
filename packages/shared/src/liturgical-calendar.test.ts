@@ -3,6 +3,7 @@ import { describe, it } from "node:test";
 
 import {
   getLiturgicalDayForDate,
+  getLiturgicalMonthDays,
   getLiturgicalMonthDays2026,
   getLiturgicalMonthLabel,
   getLiturgicalMarkedDays2026,
@@ -90,6 +91,19 @@ describe("liturgical calendar 2026", () => {
     const corpus = getLiturgicalDayForDate(new Date("2026-06-04T12:00:00.000Z"));
     assert.equal(corpus.kind, "liturgical_day_without_repertoire");
     assert.equal(corpus.title, "Corpus Christi");
+  });
+
+  it("resolves movable feasts for other years", () => {
+    const easter2025 = getLiturgicalDayForDate(new Date("2025-04-20T12:00:00.000Z"));
+
+    assert.equal(easter2025.year, 2025);
+    assert.equal(easter2025.kind, "liturgical_day_without_repertoire");
+    assert.equal(easter2025.title, "Domingo da Páscoa");
+  });
+
+  it("builds month days for any year, including leap february", () => {
+    assert.equal(getLiturgicalMonthDays(2024, 2).length, 29);
+    assert.equal(getLiturgicalMonthDays(2025, 2).length, 28);
   });
 
   it("keeps ordinary days without saints", () => {

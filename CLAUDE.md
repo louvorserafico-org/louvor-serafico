@@ -6700,6 +6700,51 @@ Sugestao de commit:
 
 `feat(shared): drive precept days from computed general calendar`
 
+## Etapa 162 - Calendario liturgico generalizado por ano
+
+Resumo do que foi feito:
+
+- `buildLiturgicalDay2026` -> `buildLiturgicalDay(year, month, day)`: `isoDate`, `year` e festas gerais agora dependem do ano.
+- `getLiturgicalDayForDate` usa `date.getFullYear()` -> o dia de hoje resolve as datas moveis do ano real.
+- Novas funcoes parametrizadas `getLiturgicalMonthDays(year, month)` e `getLiturgicalMarkedDays(year, month)`; wrappers `*2026` mantidos para os consumidores atuais (UI, home, month-view) sem quebra.
+- `LiturgicalDay.year` passou de literal `2026` para `number`.
+
+Teste (`liturgical-calendar.test.ts`):
+
+- Pascoa 2025 (20-04) resolve com `year: 2025`.
+- `getLiturgicalMonthDays` cobre fevereiro bissexto (2024=29, 2025=28).
+- Todos os testes 2026 seguem verdes via wrappers.
+
+Decisoes tecnicas e trade-offs:
+
+- Wrappers `*2026` preservam a UI atual (que exibe "Ano liturgico 2026"); a generalizacao da UI para ano arbitrario fica para quando houver necessidade.
+- Santoral e repertorio continuam por month-day (year-agnostic); so as festas moveis dependem do ano.
+
+Validacoes executadas:
+
+- `rtk pnpm test` (calendar 14/14 + suite completa)
+- `rtk pnpm typecheck`
+- `rtk pnpm lint`
+
+Checklist DoD:
+
+- [x] Calendario parametrizado por ano.
+- [x] Hoje usa o ano real.
+- [x] Wrappers 2026 sem quebra de consumidores.
+- [x] TDD cross-year (Pascoa 2025, bissexto).
+- [x] Typecheck e lint limpos.
+- [x] Doc viva atualizada.
+
+Sugestao de commit:
+
+`feat(shared): generalize liturgical calendar by year`
+
+## Estado do plano
+
+- Track A (santoral: conteudo curado + premium): concluido (155-157).
+- Track B (devocoes): BLOQUEADO aguardando textos autoritativos do usuario (158-159).
+- Track C (CNBB por calculo): concluido (160-162).
+
 ## Proxima Etapa Planejada
 
-Etapa 162 - Generalizar o calendario por ano (datas moveis sao anuais); sair do 2026 fixo.
+Etapa 163 - UI de filtro por categoria do santoral (Martir/Virgem/Doutor/Pastor...) usando `filterSaintDaysByQualifier`. (Ou retomar Track B quando os textos chegarem.)
