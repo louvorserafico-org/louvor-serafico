@@ -6663,6 +6663,43 @@ Sugestao de commit:
 
 `feat(shared): add general liturgical calendar by computus`
 
+## Etapa 161 - Calendario geral integrado (preceito complementar)
+
+Resumo do que foi feito:
+
+- `liturgical-calendar.ts` passou a derivar a camada de preceito do `liturgical-general` (Computus + festas), substituindo o array hardcoded `liturgicalMarkers2026` (removido junto com o tipo `LiturgicalMarker`).
+- `buildLiturgicalDay2026` usa `findGeneralFeastByMonthDay(2026, monthDay)`; prioridade mantida: repertorio > santo franciscano > festa geral (preceito) > dia comum.
+- Efeito: mais datas de preceito reais (Epifania, Sao Jose, Anunciacao, Ascensao, Trindade, etc.) passam a aparecer como `liturgical_day_without_repertoire` quando nao ha santo franciscano nem roteiro.
+
+Teste (`liturgical-calendar.test.ts`):
+
+- Novo: Epifania (01-06) e Corpus Christi (06-04) agora vem do calendario calculado como preceito.
+- Testes existentes seguem verdes (Natal 12-25, dia comum 04-25, santo franciscano primario, roteiro vence).
+
+Decisoes tecnicas e trade-offs:
+
+- Santoral franciscano continua primario; preceito e complemento (so quando nao ha santo/roteiro).
+- 11-02 (Finados) sai do preceito calculado, mas o santoral ja cobre 11-02 (Comemoracao dos Fieis Defuntos da Ordem) -> sem perda.
+- Ano ainda fixo em 2026 dentro do calendario; a generalizacao por ano e a Etapa 162.
+
+Validacoes executadas:
+
+- `rtk pnpm test` (calendar 12/12 + suite completa)
+- `rtk pnpm typecheck`
+- `rtk pnpm lint`
+
+Checklist DoD:
+
+- [x] Preceito vem do calendario calculado.
+- [x] `liturgicalMarkers2026` removido.
+- [x] Coexistencia com prioridade coberta por teste.
+- [x] Typecheck e lint limpos.
+- [x] Doc viva atualizada.
+
+Sugestao de commit:
+
+`feat(shared): drive precept days from computed general calendar`
+
 ## Proxima Etapa Planejada
 
-Etapa 161 - Integrar o calendario geral no `liturgical-calendar` (preceito como complemento do santoral); substituir `liturgicalMarkers2026`.
+Etapa 162 - Generalizar o calendario por ano (datas moveis sao anuais); sair do 2026 fixo.

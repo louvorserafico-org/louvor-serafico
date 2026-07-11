@@ -1,4 +1,5 @@
 import { findCelebrationByDate } from "./celebration.ts";
+import { findGeneralFeastByMonthDay } from "./liturgical-general.ts";
 import { findSaintDaysByMonthDay, type SaintDay } from "./santoral.ts";
 
 export type LiturgicalDayKind =
@@ -21,11 +22,6 @@ export type LiturgicalDay = {
   year: 2026;
 };
 
-type LiturgicalMarker = {
-  monthDay: string;
-  title: string;
-};
-
 const monthFormatter = new Intl.DateTimeFormat("pt-BR", {
   day: "2-digit",
   month: "long",
@@ -46,23 +42,6 @@ const monthNames = [
   "novembro",
   "dezembro",
 ] as const;
-
-const liturgicalMarkers2026: LiturgicalMarker[] = [
-  { monthDay: "01-01", title: "Santa Maria, Mãe de Deus" },
-  { monthDay: "01-03", title: "Missa do Santíssimo Nome de Jesus" },
-  { monthDay: "02-18", title: "Quarta-feira de Cinzas" },
-  { monthDay: "03-29", title: "Domingo de Ramos" },
-  { monthDay: "04-02", title: "Quinta-feira Santa" },
-  { monthDay: "04-03", title: "Sexta-feira da Paixão" },
-  { monthDay: "04-05", title: "Domingo da Páscoa" },
-  { monthDay: "05-24", title: "Pentecostes" },
-  { monthDay: "06-04", title: "Corpus Christi" },
-  { monthDay: "08-15", title: "Assunção de Nossa Senhora" },
-  { monthDay: "11-02", title: "Comemoração de Todos os Fiéis Defuntos" },
-  { monthDay: "11-01", title: "Todos os Santos" },
-  { monthDay: "12-08", title: "Imaculada Conceição" },
-  { monthDay: "12-25", title: "Natal do Senhor" },
-];
 
 export function getLiturgicalDayForDate(date: Date): LiturgicalDay {
   return buildLiturgicalDay2026(date.getMonth() + 1, date.getDate());
@@ -88,7 +67,7 @@ function buildLiturgicalDay2026(monthNumber: number, dayNumber: number): Liturgi
   const celebration = findCelebrationByDate(monthDay);
   const saints = findSaintDaysByMonthDay(monthDay);
   const primarySaint = saints[0];
-  const marker = liturgicalMarkers2026.find((item) => item.monthDay === monthDay);
+  const generalFeast = findGeneralFeastByMonthDay(2026, monthDay);
   const utcDate = new Date(`${isoDate}T00:00:00.000Z`);
   const dateLabel = capitalizeMonthLabel(monthFormatter.format(utcDate));
 
@@ -128,7 +107,7 @@ function buildLiturgicalDay2026(monthNumber: number, dayNumber: number): Liturgi
     };
   }
 
-  if (marker) {
+  if (generalFeast) {
     return {
       celebrationSlug: null,
       dateLabel,
@@ -139,7 +118,7 @@ function buildLiturgicalDay2026(monthNumber: number, dayNumber: number): Liturgi
       monthDay,
       monthNumber,
       saints: [],
-      title: marker.title,
+      title: generalFeast.title,
       year: 2026,
     };
   }

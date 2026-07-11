@@ -82,6 +82,16 @@ describe("liturgical calendar 2026", () => {
     assert.equal(result.some((item) => item.kind === "franciscan_saint"), true);
   });
 
+  it("uses the computed general calendar for precept days", () => {
+    const epiphany = getLiturgicalDayForDate(new Date("2026-01-06T12:00:00.000Z"));
+    assert.equal(epiphany.kind, "liturgical_day_without_repertoire");
+    assert.equal(epiphany.title, "Epifania do Senhor");
+
+    const corpus = getLiturgicalDayForDate(new Date("2026-06-04T12:00:00.000Z"));
+    assert.equal(corpus.kind, "liturgical_day_without_repertoire");
+    assert.equal(corpus.title, "Corpus Christi");
+  });
+
   it("keeps ordinary days without saints", () => {
     const result = getLiturgicalDayForDate(new Date("2026-02-14T12:00:00.000Z"));
 
