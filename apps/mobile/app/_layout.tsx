@@ -17,7 +17,7 @@ export default function RootLayout() {
           <CommentsProvider>
             <SubscriptionPreviewProvider>
               <FavoritesProvider>
-                <StatusBar backgroundColor={colors.background} style="dark" />
+                <StatusBar backgroundColor={colors.background} style="light" />
                 <Stack
                   screenOptions={{
                     contentStyle: { backgroundColor: colors.background },

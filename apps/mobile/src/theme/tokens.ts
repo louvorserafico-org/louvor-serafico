@@ -1,23 +1,34 @@
 import { Platform } from "react-native";
 
+// Identidade franciscana (dark): chumbo (charcoal) + creme + dourado.
+// Alinhada ao site frei-luis-ventura (fundo ~HSL 220 13% 10%, ouro ~HSL 43 52% 54%).
 export const colors = {
-  accent: "#7b2f45",
-  accentStrong: "#5f2033",
-  background: "#f5efe4",
-  border: "#d8c9b1",
-  borderStrong: "#ad9562",
-  gold: "#a7894f",
-  goldSoft: "#efe1c0",
-  ink: "#2a241f",
-  olive: "#626b4d",
-  oliveSoft: "#e7ebde",
-  shadow: "rgba(42, 36, 31, 0.12)",
-  surface: "#fffaf2",
-  surfaceMuted: "#f1e9da",
-  tabBackground: "#f9f3e8",
-  textMuted: "#8b7d69",
-  textPrimary: "#2f2822",
-  textSecondary: "#5f5549",
+  // Acao / dourado
+  accent: "#c7a24e", // dourado principal (CTAs, links, destaque)
+  accentStrong: "#e2c77f", // dourado claro para enfase/texto
+  gold: "#c7a24e", // eyebrows e marcacoes liturgicas
+  goldSoft: "#2c2719", // superficie escura com tom dourado (estados/realces)
+
+  // Chumbo / superficies
+  background: "#16171a", // chumbo profundo
+  surface: "#1e2024", // cartoes
+  surfaceMuted: "#25272c", // inputs / superficie elevada
+  tabBackground: "#101114", // navegacao inferior
+  border: "#2b2e34",
+  borderStrong: "#3c4048",
+
+  // Verde bronze (marcacao de repertorio) e superficie sutil
+  olive: "#7e8659",
+  oliveSoft: "#1f231a",
+
+  // Texto (creme sobre chumbo)
+  textPrimary: "#f4f2ea",
+  textSecondary: "#bec1c9",
+  textMuted: "#878c95",
+
+  // Sombra
+  ink: "#000000",
+  shadow: "rgba(0, 0, 0, 0.45)",
 } as const;
 
 export const spacing = {

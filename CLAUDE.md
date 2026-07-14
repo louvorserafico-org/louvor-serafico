@@ -6745,6 +6745,62 @@ Sugestao de commit:
 - Track B (devocoes): BLOQUEADO aguardando textos autoritativos do usuario (158-159).
 - Track C (CNBB por calculo): concluido (160-162).
 
+## Etapa 163 adiada
+
+A antiga Etapa 163 (filtro por categoria do santoral) foi adiada a pedido do usuario, para depois da identidade visual. Vira Etapa 165 (ver abaixo).
+
+## Etapa 163 - Fundacao da identidade visual franciscana (dark)
+
+Contexto:
+
+- App e construido para um frade franciscano; precisa seguir a identidade do site institucional (`frei-luis-ventura`).
+- Paleta extraida do site (`src/index.css`): fundo chumbo `HSL 220 13% 10%` (~#16171a), dourado accent `HSL 43 52% 54%` (~#c6a24c), creme `#fcfbf7`. Site e dark.
+- Decisao do usuario: seguir DARK (igual ao site), nao light.
+
+Resumo do que foi feito:
+
+- `theme/tokens.ts`: paleta `colors` inteiramente reescrita para dark franciscano.
+  - Dourado: `accent`/`gold` `#c7a24e`, `accentStrong` `#e2c77f`, `goldSoft` `#2c2719` (superficie escura tonalizada, nao mais bege claro).
+  - Chumbo: `background` `#16171a`, `surface` `#1e2024`, `surfaceMuted` `#25272c`, `tabBackground` `#101114`, `border`/`borderStrong` em cinza-chumbo.
+  - Texto: `textPrimary` `#f4f2ea` (creme), `textSecondary`/`textMuted` em cinza claro — invertido de escuro-sobre-claro para claro-sobre-escuro.
+  - `olive`/`oliveSoft` (marcacao de repertorio) adaptados para dark.
+  - Removido o vinho (`#7b2f45`) que nao pertencia a identidade; dourado assume o papel de accent unico.
+- Como TODA a UI (telas, componentes) ja consumia `colors.*` de `tokens.ts` (confirmado por busca — zero hex hardcoded fora do tokens), a nova paleta se propaga automaticamente para o app inteiro.
+- Ajustes de consistencia fora do tokens:
+  - `app/_layout.tsx`: `StatusBar` `style="dark"` -> `"light"` (icones claros sobre fundo escuro).
+  - `app/visualizador-pdf.tsx`: overlay de loading de creme claro -> chumbo escuro translucido.
+  - `app.json`: `userInterfaceStyle` `light` -> `dark`; `splash.backgroundColor` e `android.adaptiveIcon.backgroundColor` de `#ffffff` -> `#16171a`.
+
+Decisoes tecnicas e trade-offs:
+
+- Dark confirmado pelo usuario (alinhado ao site, nao ao branco/creme que era o tema anterior do app).
+- Reuso do design system de tokens existente (nao criei um segundo sistema); trade-off: cores antigas (accent vinho) desaparecem globalmente sem flag de transicao, pois o app ainda nao esta em producao/loja.
+- Responsividade mobile: nao alterada nesta etapa (unidades ja eram relativas via `spacing`/`radii`/`typography`); revisao fina de layout fica para as proximas etapas (164+).
+- Assets de icone (`icon.png`, `adaptive-icon.png`, `splash-icon.png`) nao foram redesenhados (fora do escopo de codigo); apenas a cor de fundo ao redor deles.
+
+Validacao pendente (manual):
+
+- Revisao visual completa no Expo Go/device: contraste, legibilidade do dourado sobre chumbo, tab bar, PDF viewer.
+
+Validacoes executadas:
+
+- `rtk pnpm test`
+- `rtk pnpm typecheck`
+- `rtk pnpm lint`
+
+Checklist DoD:
+
+- [x] Paleta franciscana dark aplicada via tokens (propagacao automatica).
+- [x] StatusBar, splash e adaptive icon consistentes com dark.
+- [x] Sem hex hardcoded fora do tokens.
+- [x] Typecheck e lint limpos.
+- [ ] Revisao visual em device (pendente do usuario).
+- [x] Doc viva atualizada.
+
+Sugestao de commit:
+
+`feat(mobile): apply franciscan charcoal-gold-cream dark theme`
+
 ## Proxima Etapa Planejada
 
-Etapa 163 - UI de filtro por categoria do santoral (Martir/Virgem/Doutor/Pastor...) usando `filterSaintDaysByQualifier`. (Ou retomar Track B quando os textos chegarem.)
+Etapa 164 - Revisar telas principais (Home, Calendario, Repertorio, Comunidade, Perfil) com a nova paleta: hierarquia, contraste e responsividade mobile fina.

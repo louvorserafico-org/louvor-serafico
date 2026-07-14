@@ -6,12 +6,12 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "scheme": "louvor-serafico",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "dark",
     "newArchEnabled": false,
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#16171a"
     },
     "ios": {
       "bundleIdentifier": "com.louvorserafico.app",
@@ -21,7 +21,7 @@
       "package": "com.louvorserafico.app",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#16171a"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false

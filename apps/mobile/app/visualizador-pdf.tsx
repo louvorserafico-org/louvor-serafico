@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
   },
   loadingOverlay: {
     alignItems: "center",
-    backgroundColor: "rgba(245, 239, 228, 0.94)",
+    backgroundColor: "rgba(22, 23, 26, 0.94)",
     bottom: 0,
     gap: spacing.sm,
     justifyContent: "center",
