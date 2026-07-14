@@ -25,10 +25,10 @@ export default function CalendarScreen() {
   const [remoteCount, setRemoteCount] = useState(0);
   const [remoteStatus, setRemoteStatus] = useState<"error" | "not_configured" | "ready">("not_configured");
   const [subtitle, setSubtitle] = useState(
-    "Percorra o ano liturgico e encontre cada celebracao com serenidade e clareza.",
+    "Percorra o ano litúrgico e encontre cada celebração com serenidade e clareza.",
   );
   const [remoteMessage, setRemoteMessage] = useState(
-    "Configurar Supabase antes da leitura remota de celebracoes.",
+    "Configurar Supabase antes da leitura remota de celebrações.",
   );
 
   useEffect(() => {
@@ -51,8 +51,8 @@ export default function CalendarScreen() {
       setRemoteMessage(remote.message);
       setSubtitle(
         source.mode === "remote"
-          ? "Calendario liturgico atualizado para sua consulta."
-          : "Calendario inicial disponivel mesmo sem conexao.",
+          ? "Calendário litúrgico atualizado para sua consulta."
+          : "Calendário inicial disponível mesmo sem conexao.",
       );
     });
 
@@ -87,8 +87,8 @@ export default function CalendarScreen() {
       <PageHeader eyebrow={overview.eyebrow} title={overview.title} subtitle={subtitle} />
 
       <EditorialSectionHeader
-        eyebrow="Navegacao"
-        title={`Calendario de ${capitalizeLabel(monthView.monthLabel)}`}
+        eyebrow="Navegação"
+        title={`Calendário de ${capitalizeLabel(monthView.monthLabel)}`}
       />
 
       <View style={styles.monthCard}>
@@ -106,7 +106,7 @@ export default function CalendarScreen() {
           </Pressable>
           <Text style={styles.monthTitle}>{capitalizeLabel(monthView.monthLabel)}</Text>
           <Pressable
-            accessibilityLabel="Proximo mes"
+            accessibilityLabel="Próximo mes"
             accessibilityRole="button"
             disabled={!canGoNext}
             onPress={() => setSelectedMonth((current) => Math.min(12, current + 1))}
@@ -117,7 +117,7 @@ export default function CalendarScreen() {
             </Text>
           </Pressable>
         </View>
-        <Text style={styles.monthEyebrow}>Ano liturgico 2026</Text>
+        <Text style={styles.monthEyebrow}>Ano litúrgico 2026</Text>
 
         <View style={styles.weekRow}>
           {["D", "S", "T", "Q", "Q", "S", "S"].map((item, index) => (
@@ -169,7 +169,7 @@ export default function CalendarScreen() {
         <View style={styles.legend}>
           <View style={styles.legendItem}>
             <View style={[styles.legendDot, styles.dayCellRepertoire]} />
-            <Text style={styles.legendText}>Com repertorio</Text>
+            <Text style={styles.legendText}>Com repertório</Text>
           </View>
           <View style={styles.legendItem}>
             <View style={[styles.legendDot, styles.dayCellFranciscan]} />
@@ -177,7 +177,7 @@ export default function CalendarScreen() {
           </View>
           <View style={styles.legendItem}>
             <View style={[styles.legendDot, styles.legendDotLiturgical]} />
-            <Text style={styles.legendText}>Data liturgica (CNBB)</Text>
+            <Text style={styles.legendText}>Data litúrgica (CNBB)</Text>
           </View>
           <View style={styles.legendItem}>
             <View style={[styles.legendDot, styles.dayCellToday]} />
@@ -188,7 +188,7 @@ export default function CalendarScreen() {
 
       <EditorialSectionHeader
         eyebrow="Datas"
-        subtitle="Dias liturgicos e roteiros ja sinalizados neste mes."
+        subtitle="Dias liturgicos e roteiros já sinalizados neste mes."
         title={`Datas marcadas em ${monthView.monthLabel}`}
       />
 
@@ -212,10 +212,10 @@ export default function CalendarScreen() {
               <Text style={styles.markedTitle}>{day.title}</Text>
               <Text style={styles.markedText}>
                 {day.kind === "has_repertoire"
-                  ? "Roteiro musical disponivel para consulta."
+                  ? "Roteiro musical disponível para consulta."
                   : day.kind === "franciscan_saint"
                     ? "Santo franciscano do dia."
-                    : "Data liturgica registrada. Repertorio ainda nao publicado."}
+                    : "Data litúrgica registrada. Repertorio ainda não publicado."}
               </Text>
             </Pressable>
           ))
@@ -223,7 +223,7 @@ export default function CalendarScreen() {
           <View style={styles.emptyCard}>
             <Text style={styles.summaryTitle}>Sem marcacoes neste mes</Text>
             <Text style={styles.summaryText}>
-              Siga pelos meses do calendario de 2026 para localizar as proximas datas preparadas.
+              Siga pelos meses do calendário de 2026 para localizar as próximas datas preparadas.
             </Text>
           </View>
         )}
@@ -266,7 +266,7 @@ export default function CalendarScreen() {
           <View style={styles.emptyCard}>
             <Text style={styles.emptyTitle}>Ainda sem roteiros neste mes</Text>
             <Text style={styles.emptyText}>
-              Acompanhe as datas marcadas acima ou avance pelos proximos meses de 2026.
+              Acompanhe as datas marcadas acima ou avance pelos próximos meses de 2026.
             </Text>
           </View>
         )}

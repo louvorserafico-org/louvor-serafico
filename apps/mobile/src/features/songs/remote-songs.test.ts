@@ -22,7 +22,7 @@ describe("remote songs", () => {
     );
 
     assert.deepEqual(result, {
-      message: "Catalogo remoto de musicas carregado.",
+      message: "Catálogo remoto de músicas carregado.",
       songs: [
         {
           assets: [],
@@ -39,7 +39,7 @@ describe("remote songs", () => {
     const result = await fetchRemoteSongs(async () => new Response("[]"), null, null);
 
     assert.deepEqual(result, {
-      message: "Configurar Supabase antes da leitura remota de musicas.",
+      message: "Configurar Supabase antes da leitura remota de músicas.",
       songs: [],
       status: "not_configured",
     });
@@ -59,7 +59,7 @@ describe("remote songs", () => {
     );
 
     assert.deepEqual(result, {
-      message: "Tabela remota songs ainda nao existe no projeto.",
+      message: "Tabela remota songs ainda não existe no projeto.",
       songs: [],
       status: "error",
     });

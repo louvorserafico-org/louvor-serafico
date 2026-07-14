@@ -42,8 +42,8 @@ export default function TabsLayout() {
       })}
     >
       <Tabs.Screen name="index" options={{ title: "Hoje" }} />
-      <Tabs.Screen name="calendario" options={{ title: "Calendario" }} />
-      <Tabs.Screen name="repertorio" options={{ title: "Repertorio" }} />
+      <Tabs.Screen name="calendario" options={{ title: "Calendário" }} />
+      <Tabs.Screen name="repertorio" options={{ title: "Repertório" }} />
       <Tabs.Screen name="comunidade" options={{ title: "Partilha" }} />
       <Tabs.Screen name="perfil" options={{ title: "Perfil" }} />
     </Tabs>

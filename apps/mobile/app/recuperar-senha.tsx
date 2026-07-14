@@ -27,7 +27,7 @@ export default function PasswordRecoveryScreen() {
       />
 
       <View style={styles.summaryCard}>
-        <EditorialSectionHeader eyebrow="Recuperacao" subtitle={overview.helperText} title={overview.title} />
+        <EditorialSectionHeader eyebrow="Recuperação" subtitle={overview.helperText} title={overview.title} />
       </View>
 
       <View style={styles.formCard}>
@@ -81,8 +81,8 @@ export default function PasswordRecoveryScreen() {
       <View style={styles.card}>
         <EditorialSectionHeader
           eyebrow="Antes de concluir"
-          subtitle="Abra esta tela a partir do email de recuperacao para concluir a troca da senha sem interrupcoes."
-          title="Link necessario"
+          subtitle="Abra esta tela a partir do email de recuperação para concluir a troca da senha sem interrupcoes."
+          title="Link necessário"
         />
       </View>
     </ScrollView>

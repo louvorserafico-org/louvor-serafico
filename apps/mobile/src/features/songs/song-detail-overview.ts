@@ -20,7 +20,7 @@ export function buildSongDetailOverview(input: SongDetailOverviewInput): SongDet
   }
 
   return {
-    helperText: `${input.assetCount} ${input.assetCount === 1 ? "material ja pode ser consultado" : "materiais ja podem ser consultados"} neste canto. Favoritos ${input.favoriteEnabled ? "ativos" : "aguardando entrada na conta"}.`,
+    helperText: `${input.assetCount} ${input.assetCount === 1 ? "material já pode ser consultado" : "materiais já podem ser consultados"} neste canto. Favoritos ${input.favoriteEnabled ? "ativos" : "aguardando entrada na conta"}.`,
     title: "Canto em consulta",
   };
 }

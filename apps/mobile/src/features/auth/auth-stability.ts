@@ -17,31 +17,31 @@ export type AuthStability = {
 export function buildAuthStability(input: AuthStabilityInput): AuthStability {
   if (input.sessionStatus === "loading" || input.profileStatus === "loading") {
     return {
-      message: "Sessao ou perfil ainda em leitura.",
+      message: "Sessão ou perfil ainda em leitura.",
       status: "loading",
-      title: "Lendo autenticacao",
+      title: "Lendo autenticação",
     };
   }
 
   if (input.sessionStatus !== "authenticated") {
     return {
-      message: "Usuario sem sessao real no Supabase.",
+      message: "Usuário sem sessão real no Supabase.",
       status: "anonymous",
-      title: "Sem autenticacao",
+      title: "Sem autenticação",
     };
   }
 
   if (input.profileStatus !== "ready") {
     return {
-      message: "Sessao ativa, mas perfil remoto precisa de revisao.",
+      message: "Sessão ativa, mas perfil remoto precisa de revisão.",
       status: "partial",
-      title: "Autenticacao parcial",
+      title: "Autenticação parcial",
     };
   }
 
   return {
-    message: "Login, sessao e perfil remotos estao ativos.",
+    message: "Login, sessão e perfil remotos estão ativos.",
     status: "stable",
-    title: "Autenticacao estavel",
+    title: "Autenticação estável",
   };
 }

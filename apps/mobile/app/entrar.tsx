@@ -74,7 +74,7 @@ export default function SignInScreen() {
           </Pressable>
         </Link>
         <View style={styles.inlineLinks}>
-          <Text style={styles.inlineText}>Ainda nao possui conta?</Text>
+          <Text style={styles.inlineText}>Ainda não possui conta?</Text>
           <Link asChild href="/criar-conta">
             <Pressable accessibilityRole="button" style={styles.inlineButton}>
               <Text style={styles.inlineButtonText}>Criar conta</Text>

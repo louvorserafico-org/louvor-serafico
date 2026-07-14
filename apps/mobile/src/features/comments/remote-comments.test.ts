@@ -13,7 +13,7 @@ describe("remote comments", () => {
               body: "Texto remoto",
               celebrations: {
                 date_label: "03 de janeiro",
-                title: "Missa do Santissimo Nome de Jesus",
+                title: "Missa do Santíssimo Nome de Jesus",
               },
               id: "comment-1",
               profiles: {
@@ -33,12 +33,12 @@ describe("remote comments", () => {
           authorName: "Coral",
           body: "Texto remoto",
           celebrationDateLabel: "03 de janeiro",
-          celebrationTitle: "Missa do Santissimo Nome de Jesus",
+          celebrationTitle: "Missa do Santíssimo Nome de Jesus",
           id: "comment-1",
           scope: "community",
         },
       ],
-      message: "Comentarios remotos carregados.",
+      message: "Comentários remotos carregados.",
       status: "ready",
     });
   });
@@ -48,7 +48,7 @@ describe("remote comments", () => {
 
     assert.deepEqual(result, {
       comments: [],
-      message: "Configurar Supabase antes da leitura remota de comentarios.",
+      message: "Configurar Supabase antes da leitura remota de comentários.",
       status: "not_configured",
     });
   });
@@ -68,7 +68,7 @@ describe("remote comments", () => {
 
     assert.deepEqual(result, {
       comments: [],
-      message: "Tabela remota comments ainda nao existe no projeto.",
+      message: "Tabela remota comments ainda não existe no projeto.",
       status: "error",
     });
   });

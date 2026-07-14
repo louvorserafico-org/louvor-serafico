@@ -33,8 +33,8 @@ export function RemoteSongsCard() {
   if (state.status === "loading") {
     return (
       <View style={[styles.card, styles.loading]}>
-        <Text style={styles.title}>Lendo catalogo remoto</Text>
-        <Text style={styles.text}>Consultando musicas publicadas no Supabase.</Text>
+        <Text style={styles.title}>Lendo catálogo remoto</Text>
+        <Text style={styles.text}>Consultando músicas publicadas no Supabase.</Text>
       </View>
     );
   }
@@ -48,13 +48,13 @@ export function RemoteSongsCard() {
     >
       <Text style={styles.title}>
         {state.status === "ready"
-          ? "Catalogo remoto consultado"
+          ? "Catálogo remoto consultado"
           : state.status === "not_configured"
-            ? "Catalogo remoto nao configurado"
-            : "Catalogo remoto bloqueado"}
+            ? "Catálogo remoto não configurado"
+            : "Catálogo remoto bloqueado"}
       </Text>
       <Text style={styles.text}>{state.message}</Text>
-      <Text style={styles.text}>Musicas remotas: {state.songs.length}</Text>
+      <Text style={styles.text}>Músicas remotas: {state.songs.length}</Text>
     </View>
   );
 }

@@ -37,7 +37,7 @@ export const JURISDICTION_OPTIONS = [
   "Mosteiro",
   "Convento",
   "Fraternidade",
-  "Paroquia",
+  "Paróquia",
 ] as const;
 
 export type Jurisdiction = (typeof JURISDICTION_OPTIONS)[number];
@@ -106,7 +106,7 @@ export async function registerWithPassword(
 
   if (!client) {
     return {
-      message: "Cliente Supabase indisponivel para cadastro.",
+      message: "Cliente Supabase indisponível para cadastro.",
       status: "error",
     };
   }
@@ -130,12 +130,12 @@ export async function registerWithPassword(
     }
 
     return {
-      message: "Cadastro criado. Se necessario, confirme o email antes de entrar.",
+      message: "Cadastro criado. Se necessário, confirme o email antes de entrar.",
       status: "success",
     };
   } catch (error) {
     return {
-      message: mapUnexpectedAuthError(error, "Nao foi possivel concluir o cadastro agora."),
+      message: mapUnexpectedAuthError(error, "Não foi possível concluir o cadastro agora."),
       status: "error",
     };
   }
@@ -164,7 +164,7 @@ export async function signInWithPassword(
 
   if (!client) {
     return {
-      message: "Cliente Supabase indisponivel para login.",
+      message: "Cliente Supabase indisponível para login.",
       status: "error",
     };
   }
@@ -190,7 +190,7 @@ export async function signInWithPassword(
     };
   } catch (error) {
     return {
-      message: mapUnexpectedAuthError(error, "Nao foi possivel entrar agora."),
+      message: mapUnexpectedAuthError(error, "Não foi possível entrar agora."),
       status: "error",
     };
   }
@@ -212,7 +212,7 @@ export async function requestPasswordReset(
 
   if (!client) {
     return {
-      message: "Cliente Supabase indisponivel para recuperacao.",
+      message: "Cliente Supabase indisponível para recuperação.",
       status: "error",
     };
   }
@@ -237,12 +237,12 @@ export async function requestPasswordReset(
     }
 
     return {
-      message: "Email de recuperacao enviado.",
+      message: "Email de recuperação enviado.",
       status: "success",
     };
   } catch (error) {
     return {
-      message: mapUnexpectedAuthError(error, "Nao foi possivel enviar o email de recuperacao agora."),
+      message: mapUnexpectedAuthError(error, "Não foi possível enviar o email de recuperação agora."),
       status: "error",
     };
   }
@@ -274,7 +274,7 @@ function validateRegistration(form: RegistrationForm, email: string): string | n
   }
 
   if (!form.family.trim()) {
-    return "Informe sua familia franciscana.";
+    return "Informe sua família franciscana.";
   }
 
   return null;

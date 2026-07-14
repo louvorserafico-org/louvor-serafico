@@ -46,7 +46,7 @@ export default function CreateAccountScreen() {
       <View style={styles.heroSection}>
         <EditorialSectionHeader eyebrow="Dados principais" title="Nova conta" />
         <Text style={styles.helperText}>
-          Reuna seus dados principais para guardar favoritos, acompanhar partilhas e manter seu ministerio em ordem.
+          Reuna seus dados principais para guardar favoritos, acompanhar partilhas e manter seu ministério em ordem.
         </Text>
         <OrnamentalDivider />
       </View>
@@ -143,7 +143,7 @@ export default function CreateAccountScreen() {
           }}
         />
         <Text style={styles.legalText}>
-          Ao seguir, voce declara ciencia de nossas condicoes de uso, politica de privacidade e cuidado com seus dados.
+          Ao seguir, você declara ciencia de nossas condições de uso, politica de privacidade e cuidado com seus dados.
         </Text>
         <View style={styles.inlineLinks}>
           <Link asChild href="/politica-privacidade">
@@ -163,8 +163,8 @@ export default function CreateAccountScreen() {
 
       <View style={styles.returnSection}>
         <EditorialSectionHeader
-          eyebrow="Ja possui conta"
-          subtitle="Se voce ja criou seu acesso anteriormente, entre com a mesma conta para seguir."
+          eyebrow="Já possui conta"
+          subtitle="Se você já criou seu acesso anteriormente, entre com a mesma conta para seguir."
           title="Voltar para login"
         />
         <Link asChild href="/entrar">

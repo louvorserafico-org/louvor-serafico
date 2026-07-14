@@ -200,7 +200,7 @@ export default function PdfViewerScreen() {
               <TauLoading label="Preparando documento..." />
             ) : (
               <>
-                <Text style={styles.feedbackTitle}>Nao foi possivel abrir aqui</Text>
+                <Text style={styles.feedbackTitle}>Não foi possível abrir aqui</Text>
                 <Text style={styles.feedbackText}>{state.status === "error" ? state.message : ""}</Text>
                 <View style={styles.actions}>
                   <AnimatedPressable onPress={() => void loadDocument()} style={styles.primaryButton}>

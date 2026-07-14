@@ -9,12 +9,12 @@ export function SupabaseStatusCard() {
   return (
     <View style={[styles.card, configured ? styles.ready : styles.pending]}>
       <Text style={styles.title}>{configured ? "Supabase conectado" : "Supabase pendente"}</Text>
-      <Text style={styles.text}>Projeto: {supabaseConfig.projectRef ?? "nao definido"}</Text>
-      <Text style={styles.text}>Host: {supabaseConfig.projectHost ?? "nao definido"}</Text>
+      <Text style={styles.text}>Projeto: {supabaseConfig.projectRef ?? "não definido"}</Text>
+      <Text style={styles.text}>Host: {supabaseConfig.projectHost ?? "não definido"}</Text>
       <Text style={styles.text}>
-        Chave publica: {supabaseConfig.publishableKey ? "configurada" : "nao configurada"}
+        Chave pública: {supabaseConfig.publishableKey ? "configurada" : "não configurada"}
       </Text>
-      <Text style={styles.text}>Anon key: {supabaseConfig.anonKey ? "configurada" : "nao configurada"}</Text>
+      <Text style={styles.text}>Anon key: {supabaseConfig.anonKey ? "configurada" : "não configurada"}</Text>
     </View>
   );
 }

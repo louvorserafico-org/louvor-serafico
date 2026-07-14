@@ -23,8 +23,8 @@ export function buildCalendarMonthView(
   const monthDays = getLiturgicalMonthDays2026(monthNumber);
   const markedDays = getLiturgicalMarkedDays2026(monthNumber);
   const leadingEmptyCellCount = new Date(Date.UTC(2026, monthNumber - 1, 1)).getUTCDay();
-  // Completa somente ate o fim da ultima semana (multiplo de 7), nunca uma
-  // grade fixa de 6 linhas. O numero de linhas varia por mes, de proposito.
+  // Completa somente até o fim da última semana (multiplo de 7), nunca uma
+  // grade fixa de 6 linhas. O número de linhas varia por mes, de proposito.
   const trailingEmptyCellCount =
     (7 - ((leadingEmptyCellCount + monthDays.length) % 7)) % 7;
 

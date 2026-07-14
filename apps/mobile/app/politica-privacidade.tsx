@@ -21,7 +21,7 @@ export default function PrivacyPolicyScreen() {
           title="Uso dos dados"
         />
         <Text style={styles.text}>
-          O Louvor Serafico guarda somente as informacoes necessarias para autenticar sua conta, manter preferencias e
+          O Louvor Seráfico guarda somente as informações necessárias para autenticar sua conta, manter preferências e
           associar partilhas e materiais ao seu perfil.
         </Text>
       </View>

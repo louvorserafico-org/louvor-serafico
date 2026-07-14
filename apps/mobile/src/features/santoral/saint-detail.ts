@@ -30,7 +30,7 @@ const orderLabels: Record<FranciscanOrder, string> = {
 const rankLabels: Record<LiturgicalRank, string> = {
   solenidade: "Solenidade",
   festa: "Festa",
-  memoria: "Memória",
+  memória: "Memória",
   memoria_facultativa: "Memória facultativa",
 };
 

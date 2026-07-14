@@ -33,7 +33,7 @@ export async function fetchSupabaseRemoteStatus(
 ): Promise<SupabaseRemoteStatus> {
   if (!isSupabaseConfigured(config)) {
     return {
-      message: "Configurar URL e chave publica antes da leitura remota.",
+      message: "Configurar URL e chave pública antes da leitura remota.",
       status: "not_configured",
     };
   }
@@ -42,7 +42,7 @@ export async function fetchSupabaseRemoteStatus(
 
   if (!key) {
     return {
-      message: "Configurar URL e chave publica antes da leitura remota.",
+      message: "Configurar URL e chave pública antes da leitura remota.",
       status: "not_configured",
     };
   }
@@ -66,7 +66,7 @@ export async function fetchSupabaseRemoteStatus(
     return {
       disableSignup: Boolean(data.disable_signup),
       externalEmailEnabled: Boolean(data.external?.email),
-      message: "Configuracao remota lida com sucesso.",
+      message: "Configuração remota lida com sucesso.",
       projectRef: config.projectRef,
       status: "ready",
     };

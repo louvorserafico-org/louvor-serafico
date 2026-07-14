@@ -15,20 +15,20 @@ Deno.serve(async (request) => {
   }
 
   if (request.method !== "POST") {
-    return json({ message: "Metodo nao permitido." }, 405);
+    return json({ message: "Método não permitido." }, 405);
   }
 
   const supabaseUrl = Deno.env.get("SUPABASE_URL");
   const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
 
   if (!supabaseUrl || !serviceRoleKey) {
-    return json({ message: "Funcao sem configuracao de servidor." }, 500);
+    return json({ message: "Função sem configuração de servidor." }, 500);
   }
 
   const authorization = request.headers.get("Authorization");
 
   if (!authorization) {
-    return json({ message: "Sessao obrigatoria para abrir material." }, 401);
+    return json({ message: "Sessão obrigatória para abrir material." }, 401);
   }
 
   const admin = createClient(supabaseUrl, serviceRoleKey, {
@@ -47,7 +47,7 @@ Deno.serve(async (request) => {
   const body = await readJson(request);
 
   if (!body.assetId) {
-    return json({ message: "Asset obrigatorio." }, 400);
+    return json({ message: "Asset obrigatório." }, 400);
   }
 
   const { data: asset, error: assetError } = await admin
@@ -57,11 +57,11 @@ Deno.serve(async (request) => {
     .single();
 
   if (assetError || !asset) {
-    return json({ message: "Material nao encontrado." }, 404);
+    return json({ message: "Material não encontrado." }, 404);
   }
 
   if (asset.status !== "published") {
-    return json({ message: "Material indisponivel." }, 403);
+    return json({ message: "Material indisponível." }, 403);
   }
 
   if (asset.premium) {
@@ -73,7 +73,7 @@ Deno.serve(async (request) => {
       .maybeSingle();
 
     if (!subscription) {
-      return json({ message: "Assinatura ativa necessaria." }, 403);
+      return json({ message: "Assinatura ativa necessária." }, 403);
     }
   }
 
@@ -117,7 +117,7 @@ async function fetchAuthenticatedUserId(
 
   if (!response.ok) {
     return {
-      message: "Sessao invalida.",
+      message: "Sessão inválida.",
       userId: null,
     };
   }
@@ -125,7 +125,7 @@ async function fetchAuthenticatedUserId(
   const body = await response.json();
 
   return {
-    message: "Sessao valida.",
+    message: "Sessão válida.",
     userId: typeof body.id === "string" ? body.id : null,
   };
 }

@@ -39,7 +39,7 @@ export function RemoteFavoritesCard() {
     return (
       <View style={[styles.card, styles.loading]}>
         <Text style={styles.title}>Lendo favoritos remotos</Text>
-        <Text style={styles.text}>Consultando favoritos da sessao Supabase.</Text>
+        <Text style={styles.text}>Consultando favoritos da sessão Supabase.</Text>
       </View>
     );
   }
@@ -59,9 +59,9 @@ export function RemoteFavoritesCard() {
         {state.status === "ready"
           ? "Favoritos remotos consultados"
           : state.status === "not_authenticated"
-            ? "Favoritos remotos aguardando sessao"
+            ? "Favoritos remotos aguardando sessão"
             : state.status === "not_configured"
-              ? "Favoritos remotos nao configurados"
+              ? "Favoritos remotos não configurados"
               : "Favoritos remotos bloqueados"}
       </Text>
       <Text style={styles.text}>{state.message}</Text>

@@ -30,7 +30,7 @@ describe("song materials", () => {
   });
 
   it("returns preparation badge when no assets exist", () => {
-    assert.deepEqual(buildSongMaterialBadges([]), ["Em preparacao"]);
+    assert.deepEqual(buildSongMaterialBadges([]), ["Em preparação"]);
   });
 
   it("builds four sections and groups lyrics with chord sheets", () => {

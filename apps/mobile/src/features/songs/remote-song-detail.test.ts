@@ -32,7 +32,7 @@ describe("remote song detail", () => {
     );
 
     assert.deepEqual(result, {
-      message: "Musica remota carregada.",
+      message: "Música remota carregada.",
       song: {
         assets: [
           {
@@ -60,7 +60,7 @@ describe("remote song detail", () => {
     );
 
     assert.deepEqual(result, {
-      message: "Musica remota ainda nao encontrada.",
+      message: "Música remota ainda não encontrada.",
       song: null,
       status: "not_found",
     });
@@ -75,7 +75,7 @@ describe("remote song detail", () => {
     );
 
     assert.deepEqual(result, {
-      message: "Configurar Supabase antes da leitura remota da musica.",
+      message: "Configurar Supabase antes da leitura remota da música.",
       song: null,
       status: "not_configured",
     });

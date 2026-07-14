@@ -15,12 +15,12 @@ describe("santoral franciscano domain", () => {
     const days = findSaintDaysByMonthDay("01-16");
     const berardo = days.find((day) => day.name.includes("Berardo"));
 
-    assert.ok(berardo, "expected Sao Berardo on 01-16");
+    assert.ok(berardo, "expected São Berardo on 01-16");
     assert.deepEqual(berardo?.qualifiers, ["martir"]);
     assert.equal(berardo?.order, "first");
     assert.equal(berardo?.observances.length, 2);
     assert.ok(berardo?.observances.some((o) => o.jurisdiction === "OFM" && o.rank === "festa"));
-    assert.ok(berardo?.observances.some((o) => o.jurisdiction === "FF" && o.rank === "memoria"));
+    assert.ok(berardo?.observances.some((o) => o.jurisdiction === "FF" && o.rank === "memória"));
   });
 
   it("returns empty for a date without franciscan saint", () => {
@@ -81,7 +81,7 @@ describe("santoral franciscano domain", () => {
       assert.ok(berardo?.shortHistory?.includes("cinco irmãos"));
     });
 
-    it("keeps Sao Francisco as deacon and founder", () => {
+    it("keeps São Francisco as deacon and founder", () => {
       const francisco = findSaintDaysByMonthDay("10-04")[0];
       assert.ok(francisco?.name.includes("FRANCISCO DE ASSIS"));
       assert.equal(francisco?.qualifiers.includes("diacono"), true);

@@ -15,13 +15,13 @@ describe("calendar month view", () => {
   });
 
   it("completes the grid only to the next full week, not a fixed 6-row grid", () => {
-    // Julho 2026: comeca quarta (leading=3), tem 31 dias -> 3+31=34 -> completa ate 35 (trailing=1).
+    // Julho 2026: comeca quarta (leading=3), tem 31 dias -> 3+31=34 -> completa até 35 (trailing=1).
     const july = buildCalendarMonthView(7, getInitialCelebrationCatalog());
     assert.equal(july.leadingEmptyCellCount, 3);
     assert.equal(july.trailingEmptyCellCount, 1);
     assert.equal((july.leadingEmptyCellCount + july.monthDays.length + july.trailingEmptyCellCount) % 7, 0);
 
-    // Fevereiro 2026: comeca domingo (leading=0), tem 28 dias -> soma 28, ja multiplo de 7 -> trailing=0.
+    // Fevereiro 2026: comeca domingo (leading=0), tem 28 dias -> soma 28, já multiplo de 7 -> trailing=0.
     const february = buildCalendarMonthView(2, getInitialCelebrationCatalog());
     assert.equal(february.leadingEmptyCellCount, 0);
     assert.equal(february.trailingEmptyCellCount, 0);

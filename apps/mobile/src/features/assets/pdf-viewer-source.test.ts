@@ -46,7 +46,7 @@ describe("pdf viewer source", () => {
     });
 
     assert.deepEqual(result, {
-      message: "Documento publico pronto para leitura.",
+      message: "Documento público pronto para leitura.",
       status: "ready",
       url: "https://project.supabase.co/storage/v1/object/public/song-assets/Partituras/fazei.pdf",
     });

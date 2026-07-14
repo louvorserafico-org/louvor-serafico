@@ -38,7 +38,7 @@ describe("remote celebration detail", () => {
               date_month_day: "01-03",
               id: "celebration-1",
               slug: "santissimo-nome-de-jesus",
-              title: "Missa do Santissimo Nome de Jesus",
+              title: "Missa do Santíssimo Nome de Jesus",
             },
           ]),
           { status: 200 },
@@ -77,9 +77,9 @@ describe("remote celebration detail", () => {
             title: "Fazei em nome do Senhor",
           },
         ],
-        title: "Missa do Santissimo Nome de Jesus",
+        title: "Missa do Santíssimo Nome de Jesus",
       },
-      message: "Celebracao remota carregada.",
+      message: "Celebração remota carregada.",
       status: "ready",
     });
   });
@@ -94,7 +94,7 @@ describe("remote celebration detail", () => {
 
     assert.deepEqual(result, {
       celebration: null,
-      message: "Celebracao remota ainda nao encontrada.",
+      message: "Celebração remota ainda não encontrada.",
       status: "not_found",
     });
   });
@@ -109,7 +109,7 @@ describe("remote celebration detail", () => {
 
     assert.deepEqual(result, {
       celebration: null,
-      message: "Configurar Supabase antes da leitura remota da celebracao.",
+      message: "Configurar Supabase antes da leitura remota da celebração.",
       status: "not_configured",
     });
   });

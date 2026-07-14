@@ -39,7 +39,7 @@ describe("edge asset url", () => {
     );
 
     assert.deepEqual(result, {
-      message: "Sessao real necessaria para abrir material premium.",
+      message: "Sessão real necessária para abrir material premium.",
       status: "blocked",
       url: null,
     });
@@ -52,11 +52,11 @@ describe("edge asset url", () => {
         accessToken: "token",
         functionsUrl: "https://project.functions.supabase.co",
       },
-      async () => new Response(JSON.stringify({ message: "Assinatura ativa necessaria." }), { status: 403 }),
+      async () => new Response(JSON.stringify({ message: "Assinatura ativa necessária." }), { status: 403 }),
     );
 
     assert.deepEqual(result, {
-      message: "Assinatura ativa necessaria.",
+      message: "Assinatura ativa necessária.",
       status: "error",
       url: null,
     });

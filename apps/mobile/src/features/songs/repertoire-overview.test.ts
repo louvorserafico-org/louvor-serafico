@@ -13,7 +13,7 @@ describe("repertoire overview", () => {
       }),
       {
         eyebrow: "8 cantos",
-        helperText: "2 guardado(s). Acervo publicado para estudo, escolha e preparacao.",
+        helperText: "2 guardado(s). Acervo publicado para estudo, escolha e preparação.",
         title: "Repertorio de cantos",
       },
     );
@@ -28,7 +28,7 @@ describe("repertoire overview", () => {
       }),
       {
         eyebrow: "6 cantos",
-        helperText: "1 guardado(s). Acervo inicial disponivel neste aparelho para consulta serena.",
+        helperText: "1 guardado(s). Acervo inicial disponível neste aparelho para consulta serena.",
         title: "Repertorio de cantos",
       },
     );

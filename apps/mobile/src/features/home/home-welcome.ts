@@ -28,10 +28,10 @@ function resolveDisplayName(profile: SupabaseProfileState, session: SupabaseSess
   }
 
   if (session.email) {
-    return session.email.split("@")[0] ?? "musico";
+    return session.email.split("@")[0] ?? "músico";
   }
 
-  return "musico";
+  return "músico";
 }
 
 function buildInitials(name: string) {

@@ -40,7 +40,7 @@ export function SongCard({ song }: SongCardProps) {
             <Text style={styles.meta}>
               {hasAssets
                 ? "Partituras e apoios disponiveis para consulta."
-                : "Material em preparacao para publicacao."}
+                : "Material em preparação para públicação."}
             </Text>
           </View>
           <Text style={styles.action}>Abrir</Text>

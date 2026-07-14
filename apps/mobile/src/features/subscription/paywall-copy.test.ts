@@ -14,7 +14,7 @@ describe("paywall copy", () => {
         actionLabel: "Assinar premium",
         body: "Acesse partituras, cifras e materiais completos para preparar a missa com serenidade.",
         eyebrow: "Premium",
-        title: "Liberar repertorio completo",
+        title: "Liberar repertório completo",
       },
     );
   });

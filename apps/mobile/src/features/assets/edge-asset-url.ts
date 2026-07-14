@@ -26,7 +26,7 @@ export async function requestAssetSignedUrl(
 
   if (!config.accessToken) {
     return {
-      message: "Sessao real necessaria para abrir material premium.",
+      message: "Sessão real necessária para abrir material premium.",
       status: "blocked",
       url: null,
     };
@@ -53,7 +53,7 @@ export async function requestAssetSignedUrl(
 
   if (!body.signedUrl) {
     return {
-      message: "Link temporario indisponivel.",
+      message: "Link temporario indisponível.",
       status: "error",
       url: null,
     };

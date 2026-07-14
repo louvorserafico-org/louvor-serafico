@@ -8,7 +8,7 @@ describe("auth readiness", () => {
     const readiness = buildAuthReadiness({
       disableSignup: false,
       externalEmailEnabled: true,
-      message: "Configuracao remota lida com sucesso.",
+      message: "Configuração remota lida com sucesso.",
       projectRef: "engvbvdtdcveoebgrexl",
       status: "ready",
     });
@@ -17,7 +17,7 @@ describe("auth readiness", () => {
       ctaLabel: "Entrar ou criar conta",
       helperText: "Abra sua conta para guardar favoritos, acompanhar partilhas e reunir seus materiais.",
       status: "ready",
-      title: "Sua entrada esta pronta",
+      title: "Sua entrada está pronta",
     });
   });
 
@@ -25,14 +25,14 @@ describe("auth readiness", () => {
     const readiness = buildAuthReadiness({
       disableSignup: true,
       externalEmailEnabled: true,
-      message: "Configuracao remota lida com sucesso.",
+      message: "Configuração remota lida com sucesso.",
       projectRef: "engvbvdtdcveoebgrexl",
       status: "ready",
     });
 
     assert.deepEqual(readiness, {
       ctaLabel: "Voltar mais tarde",
-      helperText: "O acesso por email ja esta em preparacao e sera liberado assim que esta etapa terminar.",
+      helperText: "O acesso por email já está em preparação e será liberado assim que esta etapa terminar.",
       status: "limited",
       title: "Entrada em ajuste",
     });
@@ -45,10 +45,10 @@ describe("auth readiness", () => {
     });
 
     assert.deepEqual(readiness, {
-      ctaLabel: "Entrada indisponivel",
+      ctaLabel: "Entrada indisponível",
       helperText: "O caminho de entrada desta conta volta a aparecer assim que a conexao for retomada.",
       status: "blocked",
-      title: "Entrada temporariamente indisponivel",
+      title: "Entrada temporariamente indisponível",
     });
   });
 });

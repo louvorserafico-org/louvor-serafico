@@ -25,9 +25,9 @@ describe("subscription overview", () => {
         isAuthenticated: true,
       }),
       {
-        helperText: "Sua conta ja esta pronta. Falta apenas ativar o premium para liberar o acervo completo.",
+        helperText: "Sua conta já está pronta. Falta apenas ativar o premium para liberar o acervo completo.",
         status: "ready",
-        title: "Premium disponivel",
+        title: "Premium disponível",
       },
     );
   });
@@ -41,7 +41,7 @@ describe("subscription overview", () => {
       {
         helperText: "Entre na sua conta antes de assinar e manter o acesso premium vinculado ao seu perfil.",
         status: "locked",
-        title: "Entrada necessaria",
+        title: "Entrada necessária",
       },
     );
   });

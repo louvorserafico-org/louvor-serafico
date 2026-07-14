@@ -35,8 +35,8 @@ export function RemoteCelebrationsCard() {
   if (state.status === "loading") {
     return (
       <View style={[styles.card, styles.loading]}>
-        <Text style={styles.title}>Lendo calendario remoto</Text>
-        <Text style={styles.text}>Consultando celebracoes publicadas no Supabase.</Text>
+        <Text style={styles.title}>Lendo calendário remoto</Text>
+        <Text style={styles.text}>Consultando celebrações publicadas no Supabase.</Text>
       </View>
     );
   }
@@ -50,13 +50,13 @@ export function RemoteCelebrationsCard() {
     >
       <Text style={styles.title}>
         {state.status === "ready"
-          ? "Calendario remoto consultado"
+          ? "Calendário remoto consultado"
           : state.status === "not_configured"
-            ? "Calendario remoto nao configurado"
-            : "Calendario remoto bloqueado"}
+            ? "Calendário remoto não configurado"
+            : "Calendário remoto bloqueado"}
       </Text>
       <Text style={styles.text}>{state.message}</Text>
-      <Text style={styles.text}>Celebracoes remotas: {state.celebrations.length}</Text>
+      <Text style={styles.text}>Celebrações remotas: {state.celebrations.length}</Text>
     </View>
   );
 }

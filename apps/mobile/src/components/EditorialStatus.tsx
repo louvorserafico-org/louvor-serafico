@@ -11,8 +11,8 @@ export function EditorialStatus({ missingCount }: EditorialStatusProps) {
 
   return (
     <View style={[styles.card, complete ? styles.complete : styles.pending]}>
-      <Text style={styles.eyebrow}>{complete ? "Completo" : "Revisao"}</Text>
-      <Text style={styles.title}>{complete ? "Conteudo completo" : "Revisao pendente"}</Text>
+      <Text style={styles.eyebrow}>{complete ? "Completo" : "Revisão"}</Text>
+      <Text style={styles.title}>{complete ? "Conteúdo completo" : "Revisão pendente"}</Text>
       <Text style={styles.text}>
         {complete
           ? "Todos os momentos possuem material cadastrado."

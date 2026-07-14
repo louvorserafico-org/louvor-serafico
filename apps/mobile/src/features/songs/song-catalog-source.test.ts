@@ -18,7 +18,7 @@ describe("song catalog source", () => {
   it("prefers remote songs when available", () => {
     const source = resolveSongCatalogSource(
       {
-        message: "Catalogo remoto de musicas carregado.",
+        message: "Catálogo remoto de músicas carregado.",
         songs: [
           {
             assets: [],
@@ -49,7 +49,7 @@ describe("song catalog source", () => {
   it("falls back to local when remote is empty", () => {
     const source = resolveSongCatalogSource(
       {
-        message: "Catalogo remoto de musicas carregado.",
+        message: "Catálogo remoto de músicas carregado.",
         songs: [],
         status: "ready",
       },
@@ -57,7 +57,7 @@ describe("song catalog source", () => {
     );
 
     assert.deepEqual(source, {
-      message: "Catalogo remoto vazio. Mantendo fonte local.",
+      message: "Catálogo remoto vazio. Mantendo fonte local.",
       mode: "local",
       songs: localSongs,
     });
@@ -66,7 +66,7 @@ describe("song catalog source", () => {
   it("falls back to local when remote fails", () => {
     const source = resolveSongCatalogSource(
       {
-        message: "Tabela remota songs ainda nao existe no projeto.",
+        message: "Tabela remota songs ainda não existe no projeto.",
         songs: [],
         status: "error",
       },
@@ -74,7 +74,7 @@ describe("song catalog source", () => {
     );
 
     assert.deepEqual(source, {
-      message: "Tabela remota songs ainda nao existe no projeto.",
+      message: "Tabela remota songs ainda não existe no projeto.",
       mode: "local",
       songs: localSongs,
     });

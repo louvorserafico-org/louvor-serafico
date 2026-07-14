@@ -45,10 +45,10 @@ describe("home summary", () => {
 
     assert.deepEqual(result, {
       actionLabel: "Ver roteiro",
-      helperText: "6 cantos sugeridos para a celebracao de hoje.",
+      helperText: "6 cantos sugeridos para a celebração de hoje.",
       href: "/celebracoes/santissimo-nome-de-jesus",
       premiumText: "Materiais completos disponiveis.",
-      title: "Missa do Santissimo Nome de Jesus",
+      title: "Missa do Santíssimo Nome de Jesus",
     });
   });
 
@@ -62,10 +62,10 @@ describe("home summary", () => {
 
     assert.deepEqual(result, {
       actionLabel: "Entrar para ver materiais",
-      helperText: "6 cantos sugeridos ja podem ser consultados hoje.",
+      helperText: "6 cantos sugeridos já podem ser consultados hoje.",
       href: "/entrar",
       premiumText: "Materiais completos com assinatura ativa.",
-      title: "Missa do Santissimo Nome de Jesus",
+      title: "Missa do Santíssimo Nome de Jesus",
     });
   });
 
@@ -79,7 +79,7 @@ describe("home summary", () => {
 
     assert.deepEqual(result, {
       actionLabel: "Ver dias preparados",
-      helperText: "Ainda nao ha sugestoes musicais para este dia.",
+      helperText: "Ainda não há sugestões musicais para este dia.",
       href: "/calendario",
       premiumText: "",
       title: "Sem roteiro preparado",
@@ -96,7 +96,7 @@ describe("home summary", () => {
 
     assert.deepEqual(result, {
       actionLabel: "Ver dias preparados",
-      helperText: "Ainda nao ha sugestoes musicais para este dia.",
+      helperText: "Ainda não há sugestões musicais para este dia.",
       href: "/calendario",
       premiumText: "",
       title: "Sem roteiro preparado",

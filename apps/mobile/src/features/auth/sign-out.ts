@@ -17,7 +17,7 @@ export type SignOutResult = {
 export async function signOutFromSupabase(client: SignOutClient | null): Promise<SignOutResult> {
   if (!client) {
     return {
-      message: "Cliente Supabase indisponivel para sair.",
+      message: "Cliente Supabase indisponível para sair.",
       status: "error",
     };
   }
@@ -34,7 +34,7 @@ export async function signOutFromSupabase(client: SignOutClient | null): Promise
   }
 
   return {
-    message: "Sessao encerrada.",
+    message: "Sessão encerrada.",
     status: "success",
   };
 }

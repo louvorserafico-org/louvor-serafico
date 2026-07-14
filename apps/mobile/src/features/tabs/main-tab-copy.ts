@@ -1,12 +1,12 @@
 export function buildTodayTabSubtitle(isAuthenticated: boolean): string {
   return isAuthenticated
-    ? "Roteiro liturgico-musical pronto para abrir, estudar e seguir na celebracao de hoje."
-    : "Roteiro liturgico-musical de hoje, com entrada rapida para abrir conta e continuar.";
+    ? "Roteiro litúrgico-musical pronto para abrir, estudar e seguir na celebração de hoje."
+    : "Roteiro litúrgico-musical de hoje, com entrada rapida para abrir conta e continuar.";
 }
 
 export function buildCommunityTabSubtitle(canComment: boolean): string {
   return canComment
-    ? "Leia experiencias do ministerio e deixe a sua quando desejar."
+    ? "Leia experiencias do ministério e deixe a sua quando desejar."
     : "Entre na conta para acompanhar partilhas e registrar a sua com serenidade.";
 }
 

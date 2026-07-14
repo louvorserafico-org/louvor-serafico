@@ -15,7 +15,7 @@ export function resolveSongCatalogSource(remote: RemoteSongsResult, localSongs: 
 
   if (remote.status === "ready") {
     return {
-      message: "Catalogo remoto vazio. Mantendo fonte local.",
+      message: "Catálogo remoto vazio. Mantendo fonte local.",
       mode: "local" as const,
       songs: localSongs,
     };

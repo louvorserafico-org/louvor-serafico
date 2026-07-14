@@ -27,17 +27,17 @@ export default function CommunityScreen() {
   const canComment = session.status === "signed_in" || supabaseSession.status === "authenticated";
   const hasRemoteSession = supabaseSession.status === "authenticated";
   const [draft, setDraft] = useState("");
-  const [submitMessage, setSubmitMessage] = useState("Sua partilha pode fortalecer outros ministerios.");
+  const [submitMessage, setSubmitMessage] = useState("Sua partilha pode fortalecer outros ministérios.");
   const [remoteState, setRemoteState] = useState<Awaited<ReturnType<typeof fetchRemoteComments>>>({
     comments: [],
-    message: "Carregando comentarios remotos.",
+    message: "Carregando comentários remotos.",
     status: "ready",
   });
   const [remoteCelebrationsState, setRemoteCelebrationsState] = useState<
     Awaited<ReturnType<typeof fetchRemoteCelebrations>>
   >({
     celebrations: [],
-    message: "Carregando celebracoes remotas.",
+    message: "Carregando celebrações remotas.",
     status: "ready",
   });
   const [selectedCelebrationId, setSelectedCelebrationId] = useState<string | null>(null);
@@ -91,7 +91,7 @@ export default function CommunityScreen() {
       <ScrollView contentContainerStyle={styles.container}>
       <PageHeader
         eyebrow="Comunidade"
-        title="Partilha entre musicos"
+        title="Partilha entre músicos"
         subtitle={buildCommunityTabSubtitle(canComment)}
       />
 
@@ -103,7 +103,7 @@ export default function CommunityScreen() {
         />
         {canComment ? (
           <View style={styles.repertoireSection}>
-            <Text style={styles.repertoireLabel}>Vincular ao repertorio</Text>
+            <Text style={styles.repertoireLabel}>Vincular ao repertório</Text>
             <View style={styles.repertoireOptions}>
               <Pressable
                 onPress={() => setSelectedCelebrationId(null)}
@@ -217,7 +217,7 @@ export default function CommunityScreen() {
 
       <EditorialSectionHeader
         eyebrow="Leitura"
-        subtitle="Vozes do ministerio reunidas para memoria, formacao e servico."
+        subtitle="Vozes do ministério reunidas para memória, formação e serviço."
         title="Partilhas recentes"
       />
 
@@ -246,9 +246,9 @@ export default function CommunityScreen() {
         <View style={styles.commentList}>
           <View style={styles.comment}>
             <Text style={styles.commentEyebrow}>Comunidade</Text>
-            <Text style={styles.commentAuthor}>A primeira partilha ainda esta por chegar</Text>
+            <Text style={styles.commentAuthor}>A primeira partilha ainda está por chegar</Text>
             <Text style={styles.commentText}>
-              Quando uma experiencia for publicada, este espaco passara a reunir vozes do ministerio.
+              Quando uma experiencia for publicada, este espaco passara a reunir vozes do ministério.
             </Text>
           </View>
         </View>

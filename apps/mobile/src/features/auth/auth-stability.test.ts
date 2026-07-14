@@ -11,9 +11,9 @@ describe("auth stability", () => {
     });
 
     assert.deepEqual(result, {
-      message: "Login, sessao e perfil remotos estao ativos.",
+      message: "Login, sessão e perfil remotos estão ativos.",
       status: "stable",
-      title: "Autenticacao estavel",
+      title: "Autenticação estável",
     });
   });
 
@@ -24,9 +24,9 @@ describe("auth stability", () => {
     });
 
     assert.deepEqual(result, {
-      message: "Sessao ativa, mas perfil remoto precisa de revisao.",
+      message: "Sessão ativa, mas perfil remoto precisa de revisão.",
       status: "partial",
-      title: "Autenticacao parcial",
+      title: "Autenticação parcial",
     });
   });
 
@@ -37,9 +37,9 @@ describe("auth stability", () => {
     });
 
     assert.deepEqual(result, {
-      message: "Usuario sem sessao real no Supabase.",
+      message: "Usuário sem sessão real no Supabase.",
       status: "anonymous",
-      title: "Sem autenticacao",
+      title: "Sem autenticação",
     });
   });
 
@@ -50,9 +50,9 @@ describe("auth stability", () => {
     });
 
     assert.deepEqual(result, {
-      message: "Sessao ou perfil ainda em leitura.",
+      message: "Sessão ou perfil ainda em leitura.",
       status: "loading",
-      title: "Lendo autenticacao",
+      title: "Lendo autenticação",
     });
   });
 });

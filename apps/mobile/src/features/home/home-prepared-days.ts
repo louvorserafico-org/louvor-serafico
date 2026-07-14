@@ -31,7 +31,7 @@ export function buildHomePreparedDays(
 
   return {
     hasMore: sorted.length > 5,
-    helperText: "Os roteiros ja publicados seguem disponiveis para consulta.",
+    helperText: "Os roteiros já publicados seguem disponiveis para consulta.",
     items: sorted.slice(0, 5),
     title: "Roteiros disponiveis",
   };

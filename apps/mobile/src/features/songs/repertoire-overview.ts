@@ -14,14 +14,14 @@ export function buildRepertoireOverview(input: RepertoireOverviewInput): Reperto
   if (input.sourceMode === "remote") {
     return {
       eyebrow: `${input.remoteCount} cantos`,
-      helperText: `${input.favoriteCount} guardado(s). Acervo publicado para estudo, escolha e preparacao.`,
+      helperText: `${input.favoriteCount} guardado(s). Acervo publicado para estudo, escolha e preparação.`,
       title: "Repertorio de cantos",
     };
   }
 
   return {
     eyebrow: `${input.remoteCount} cantos`,
-    helperText: `${input.favoriteCount} guardado(s). Acervo inicial disponivel neste aparelho para consulta serena.`,
+    helperText: `${input.favoriteCount} guardado(s). Acervo inicial disponível neste aparelho para consulta serena.`,
     title: "Repertorio de cantos",
   };
 }

@@ -9,7 +9,7 @@ describe("remote comment submit", () => {
 
     const result = await postRemoteComment(
       {
-        body: " Comentario remoto ",
+        body: " Comentário remoto ",
         profileId: "profile-1",
       },
       async (_input, init) => {
@@ -21,10 +21,10 @@ describe("remote comment submit", () => {
       "token-1",
     );
 
-    assert.equal(capturedBody.includes('"body":"Comentario remoto"'), true);
+    assert.equal(capturedBody.includes('"body":"Comentário remoto"'), true);
     assert.equal(capturedBody.includes('"celebration_id":null'), true);
     assert.deepEqual(result, {
-      message: "Comentario remoto publicado.",
+      message: "Comentário remoto publicado.",
       ok: true,
     });
   });
@@ -32,7 +32,7 @@ describe("remote comment submit", () => {
   it("blocks submit without session", async () => {
     const result = await postRemoteComment(
       {
-        body: "Comentario remoto",
+        body: "Comentário remoto",
         profileId: "profile-1",
       },
       async () => new Response(null, { status: 201 }),
@@ -42,7 +42,7 @@ describe("remote comment submit", () => {
     );
 
     assert.deepEqual(result, {
-      message: "Sessao Supabase necessaria para publicar comentario remoto.",
+      message: "Sessão Supabase necessária para publicar comentário remoto.",
       ok: false,
     });
   });
@@ -50,7 +50,7 @@ describe("remote comment submit", () => {
   it("returns remote error message", async () => {
     const result = await postRemoteComment(
       {
-        body: "Comentario remoto",
+        body: "Comentário remoto",
         profileId: "profile-1",
       },
       async () =>
@@ -67,7 +67,7 @@ describe("remote comment submit", () => {
 
     assert.deepEqual(result, {
       detail: "new row violates row-level security policy",
-      message: "Falha ao publicar comentario remoto.",
+      message: "Falha ao publicar comentário remoto.",
       ok: false,
     });
   });

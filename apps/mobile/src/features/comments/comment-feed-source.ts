@@ -7,7 +7,7 @@ export function resolveCommentFeedSource(remote: RemoteCommentsResult, localComm
   if (remote.status === "ready" && remote.comments.length > 0) {
     return {
       comments: [...remote.comments, ...localComments],
-      message: "Comentarios remotos ativos. Preview local segue visivel neste aparelho.",
+      message: "Comentários remotos ativos. Preview local segue visivel neste aparelho.",
       mode: "mixed" as const,
     };
   }
@@ -15,7 +15,7 @@ export function resolveCommentFeedSource(remote: RemoteCommentsResult, localComm
   if (remote.status === "ready") {
     return {
       comments: localComments,
-      message: "Comentarios remotos vazios. Mantendo preview local.",
+      message: "Comentários remotos vazios. Mantendo preview local.",
       mode: "local" as const,
     };
   }

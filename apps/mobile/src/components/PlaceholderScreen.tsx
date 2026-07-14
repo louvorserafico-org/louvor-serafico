@@ -14,7 +14,7 @@ export function PlaceholderScreen({ eyebrow, title, body }: PlaceholderScreenPro
     <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
       <PageHeader eyebrow={eyebrow} title={title} subtitle={body} />
       <View style={styles.panel}>
-        <Text style={styles.panelText}>Base reservada para proximo incremento.</Text>
+        <Text style={styles.panelText}>Base reservada para próximo incremento.</Text>
       </View>
     </ScrollView>
   );

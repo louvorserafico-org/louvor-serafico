@@ -32,7 +32,7 @@ export default function CelebrationDetailScreen() {
   );
   const [remoteCelebration, setRemoteCelebration] = useState<typeof localCelebration | null>(null);
   const [sourceMode, setSourceMode] = useState<"local" | "remote">("local");
-  const [subtitle, setSubtitle] = useState("Roteiro organizado para acompanhar cada momento da celebracao.");
+  const [subtitle, setSubtitle] = useState("Roteiro organizado para acompanhar cada momento da celebração.");
   const celebration = remoteCelebration ?? localCelebration;
   const detailDay = fallbackDay;
   const momentRows = useMemo(
@@ -57,8 +57,8 @@ export default function CelebrationDetailScreen() {
       setSourceMode(result.celebration ? "remote" : "local");
       setSubtitle(
         result.celebration
-          ? "Roteiro preparado para conduzir a musica da celebracao."
-          : "Roteiro inicial disponivel para consulta e preparacao.",
+          ? "Roteiro preparado para conduzir a música da celebração."
+          : "Roteiro inicial disponível para consulta e preparação.",
       );
     });
 
@@ -72,11 +72,11 @@ export default function CelebrationDetailScreen() {
 
     return (
       <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
-        <Stack.Screen options={{ headerShown: true, title: "Celebracao" }} />
+        <Stack.Screen options={{ headerShown: true, title: "Celebração" }} />
         <PageHeader eyebrow={dayDetail.eyebrow} subtitle={dayDetail.helperText} title={dayDetail.title} />
 
         <View style={styles.summary}>
-          <Text style={styles.summaryEyebrow}>Calendario 2026</Text>
+          <Text style={styles.summaryEyebrow}>Calendário 2026</Text>
           <Text style={styles.summaryTitle}>{dayDetail.cardTitle}</Text>
           <Text style={styles.summaryText}>{dayDetail.helperText}</Text>
           <Text style={styles.summaryNote}>{dayDetail.note}</Text>
@@ -93,15 +93,15 @@ export default function CelebrationDetailScreen() {
   if (!celebration) {
     return (
       <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
-        <Stack.Screen options={{ headerShown: true, title: "Celebracao" }} />
-        <PageHeader eyebrow="Nao encontrada" subtitle="Celebracao indisponivel." title="Detalhe ausente" />
+        <Stack.Screen options={{ headerShown: true, title: "Celebração" }} />
+        <PageHeader eyebrow="Não encontrada" subtitle="Celebração indisponível." title="Detalhe ausente" />
       </ScrollView>
     );
   }
 
   return (
     <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
-      <Stack.Screen options={{ headerShown: true, title: "Celebracao" }} />
+      <Stack.Screen options={{ headerShown: true, title: "Celebração" }} />
       <PageHeader eyebrow={celebration.dateLabel} subtitle={subtitle} title={celebration.title} />
 
       <EditorialSectionHeader

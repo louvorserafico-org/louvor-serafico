@@ -60,7 +60,7 @@ describe("password reset", () => {
     );
 
     assert.deepEqual(result, {
-      message: "As senhas nao conferem.",
+      message: "As senhas não conferem.",
       status: "error",
     });
   });

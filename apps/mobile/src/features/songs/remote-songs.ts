@@ -22,7 +22,7 @@ export async function fetchRemoteSongs(
 ): Promise<RemoteSongsResult> {
   if (!url || !publicKey) {
     return {
-      message: "Configurar Supabase antes da leitura remota de musicas.",
+      message: "Configurar Supabase antes da leitura remota de músicas.",
       songs: [],
       status: "not_configured",
     };
@@ -40,7 +40,7 @@ export async function fetchRemoteSongs(
 
     if (errorBody.message?.includes("public.songs")) {
       return {
-        message: "Tabela remota songs ainda nao existe no projeto.",
+        message: "Tabela remota songs ainda não existe no projeto.",
         songs: [],
         status: "error",
       };
@@ -48,7 +48,7 @@ export async function fetchRemoteSongs(
 
     return {
       detail: errorBody.message,
-      message: "Falha ao carregar musicas remotas.",
+      message: "Falha ao carregar músicas remotas.",
       songs: [],
       status: "error",
     };
@@ -57,7 +57,7 @@ export async function fetchRemoteSongs(
   const rows = (await response.json()) as RemoteSongRow[];
 
   return {
-    message: "Catalogo remoto de musicas carregado.",
+    message: "Catálogo remoto de músicas carregado.",
     songs: rows.map((row) => ({
       assets: [],
       id: row.id,

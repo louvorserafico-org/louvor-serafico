@@ -30,7 +30,7 @@ function buildCelebrations(monthDays: string[]): Celebration[] {
       recommendations: [],
       slug: `celebration-${index}`,
       songs: [],
-      title: `Celebracao ${monthDay}`,
+      title: `Celebração ${monthDay}`,
     };
   });
 }

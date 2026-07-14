@@ -13,7 +13,7 @@ describe("celebration detail overview", () => {
       }),
       {
         helperText: "6 momentos reunidos neste roteiro. 1 ainda sem material.",
-        title: "Roteiro da celebracao",
+        title: "Roteiro da celebração",
       },
     );
   });
@@ -27,7 +27,7 @@ describe("celebration detail overview", () => {
       }),
       {
         helperText: "6 momentos reunidos neste roteiro. 2 ainda sem material.",
-        title: "Roteiro da celebracao",
+        title: "Roteiro da celebração",
       },
     );
   });

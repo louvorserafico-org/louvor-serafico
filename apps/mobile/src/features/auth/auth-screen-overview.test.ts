@@ -13,7 +13,7 @@ describe("auth screen overview", () => {
 
   it("builds register overview", () => {
     assert.deepEqual(buildAuthScreenOverview({ mode: "register" }), {
-      helperText: "Reuna seus dados principais para guardar favoritos, acompanhar partilhas e manter seu ministerio em ordem.",
+      helperText: "Reuna seus dados principais para guardar favoritos, acompanhar partilhas e manter seu ministério em ordem.",
       title: "Criar conta",
     });
   });

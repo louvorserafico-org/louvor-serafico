@@ -62,6 +62,6 @@ function buildCelebrations(monthDays: string[]): Celebration[] {
     recommendations: [],
     slug: `celebration-${index + 1}`,
     songs: [],
-    title: `Celebracao ${index + 1}`,
+    title: `Celebração ${index + 1}`,
   }));
 }

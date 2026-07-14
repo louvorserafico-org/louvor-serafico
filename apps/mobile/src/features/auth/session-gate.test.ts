@@ -12,10 +12,10 @@ describe("session gate", () => {
     });
 
     assert.deepEqual(gate, {
-      actionLabel: "Sair sessao teste",
-      helperText: "Sessao local ativa para favoritos, comentarios e fluxos protegidos.",
+      actionLabel: "Sair sessão teste",
+      helperText: "Sessão local ativa para favoritos, comentários e fluxos protegidos.",
       status: "open",
-      title: "Sessao teste ativa",
+      title: "Sessão teste ativa",
     });
   });
 
@@ -26,9 +26,9 @@ describe("session gate", () => {
 
     assert.deepEqual(gate, {
       actionLabel: "Entrar modo teste",
-      helperText: "Ative sessao local para liberar UX de favoritos e comentarios.",
+      helperText: "Ative sessão local para liberar UX de favoritos e comentários.",
       status: "closed",
-      title: "Sessao teste inativa",
+      title: "Sessão teste inativa",
     });
   });
 
@@ -38,10 +38,10 @@ describe("session gate", () => {
     });
 
     assert.deepEqual(gate, {
-      actionLabel: "Aguardando sessao",
+      actionLabel: "Aguardando sessão",
       helperText: "Estado local ainda inicializando.",
       status: "loading",
-      title: "Preparando sessao teste",
+      title: "Preparando sessão teste",
     });
   });
 });

@@ -18,7 +18,7 @@ describe("sign out", () => {
 
     assert.equal(called, true);
     assert.deepEqual(result, {
-      message: "Sessao encerrada.",
+      message: "Sessão encerrada.",
       status: "success",
     });
   });
@@ -27,7 +27,7 @@ describe("sign out", () => {
     const result = await signOutFromSupabase(null);
 
     assert.deepEqual(result, {
-      message: "Cliente Supabase indisponivel para sair.",
+      message: "Cliente Supabase indisponível para sair.",
       status: "error",
     });
   });

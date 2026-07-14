@@ -25,7 +25,7 @@ export async function fetchRemoteCelebrations(
   if (!url || !publicKey) {
     return {
       celebrations: [],
-      message: "Configurar Supabase antes da leitura remota de celebracoes.",
+      message: "Configurar Supabase antes da leitura remota de celebrações.",
       status: "not_configured",
     };
   }
@@ -46,7 +46,7 @@ export async function fetchRemoteCelebrations(
     if (errorBody.message?.includes("public.celebrations")) {
       return {
         celebrations: [],
-        message: "Tabela remota celebrations ainda nao existe no projeto.",
+        message: "Tabela remota celebrations ainda não existe no projeto.",
         status: "error",
       };
     }
@@ -54,7 +54,7 @@ export async function fetchRemoteCelebrations(
     return {
       celebrations: [],
       detail: errorBody.message,
-      message: "Falha ao carregar celebracoes remotas.",
+      message: "Falha ao carregar celebrações remotas.",
       status: "error",
     };
   }
@@ -71,7 +71,7 @@ export async function fetchRemoteCelebrations(
       songs: [],
       title: row.title,
     })),
-    message: "Calendario remoto carregado.",
+    message: "Calendário remoto carregado.",
     status: "ready",
   };
 }

@@ -21,7 +21,7 @@ export function MomentCard({ assetCount, materialBadges = [], moment, onPress, s
         <Text style={styles.label}>{moment.label}</Text>
         <Text style={styles.song}>{songTitle}</Text>
         <Text style={styles.assets}>
-          {assetCount > 0 ? `${assetCount} material${assetCount > 1 ? "s" : ""} disponivel${assetCount > 1 ? "is" : ""}` : "Material em preparacao"}
+          {assetCount > 0 ? `${assetCount} material${assetCount > 1 ? "s" : ""} disponível${assetCount > 1 ? "is" : ""}` : "Material em preparação"}
         </Text>
         {materialBadges.length > 0 ? (
           <View style={styles.badges}>

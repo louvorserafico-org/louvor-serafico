@@ -18,11 +18,11 @@ export default function TermsOfUseScreen() {
         <EditorialSectionHeader
           eyebrow="Uso do app"
           subtitle="Sua conta deve ser usada de forma pessoal, respeitando os materiais, o espaco de partilha e a integridade do acervo."
-          title="Condicoes de uso"
+          title="Condições de uso"
         />
         <Text style={styles.text}>
-          O Louvor Serafico oferece conteudo liturgico-musical para consulta, organizacao e servico ministerial. O uso
-          indevido do acervo ou da area de partilha pode limitar o acesso da conta.
+          O Louvor Seráfico oferece conteúdo litúrgico-musical para consulta, organização e serviço ministerial. O uso
+          indevido do acervo ou da área de partilha pode limitar o acesso da conta.
         </Text>
       </View>
     </ScrollView>

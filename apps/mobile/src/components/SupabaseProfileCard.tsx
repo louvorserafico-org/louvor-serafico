@@ -22,18 +22,18 @@ export function SupabaseProfileCard() {
           ? "Perfil remoto carregado"
           : profile.status === "loading"
             ? "Lendo perfil remoto"
-            : "Perfil remoto indisponivel"}
+            : "Perfil remoto indisponível"}
       </Text>
-      <Text style={styles.text}>Nome: {profile.displayName ?? "nao disponivel"}</Text>
-      <Text style={styles.text}>Email: {profile.email ?? "nao disponivel"}</Text>
-      <Text style={styles.text}>Telefone: {profile.phone ?? "nao disponivel"}</Text>
-      <Text style={styles.text}>Estado: {profile.state ?? "nao disponivel"}</Text>
-      <Text style={styles.text}>Cidade: {profile.city ?? "nao disponivel"}</Text>
-      <Text style={styles.text}>Familia: {profile.family ?? "nao disponivel"}</Text>
-      <Text style={styles.text}>Jurisdicao: {profile.jurisdiction ?? "nao disponivel"}</Text>
-      <Text style={styles.text}>Paroquia: {profile.parish ?? "nao disponivel"}</Text>
-      <Text style={styles.text}>Pastoral/Banda: {profile.ministry ?? "nao disponivel"}</Text>
-      <Text style={styles.text}>Provider: {profile.provider ?? "nao disponivel"}</Text>
+      <Text style={styles.text}>Nome: {profile.displayName ?? "não disponível"}</Text>
+      <Text style={styles.text}>Email: {profile.email ?? "não disponível"}</Text>
+      <Text style={styles.text}>Telefone: {profile.phone ?? "não disponível"}</Text>
+      <Text style={styles.text}>Estado: {profile.state ?? "não disponível"}</Text>
+      <Text style={styles.text}>Cidade: {profile.city ?? "não disponível"}</Text>
+      <Text style={styles.text}>Família: {profile.family ?? "não disponível"}</Text>
+      <Text style={styles.text}>Jurisdição: {profile.jurisdiction ?? "não disponível"}</Text>
+      <Text style={styles.text}>Paróquia: {profile.parish ?? "não disponível"}</Text>
+      <Text style={styles.text}>Pastoral/Banda: {profile.ministry ?? "não disponível"}</Text>
+      <Text style={styles.text}>Provider: {profile.provider ?? "não disponível"}</Text>
     </View>
   );
 }

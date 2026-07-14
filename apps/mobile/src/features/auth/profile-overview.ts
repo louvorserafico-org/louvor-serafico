@@ -30,18 +30,18 @@ export function buildProfileOverview(input: ProfileOverviewInput): ProfileOvervi
 
   if (input.session.status !== "authenticated") {
     return {
-      accountLine: "Entre para guardar favoritos, acompanhar partilhas e reunir seus materiais em um so lugar.",
-      detailLine: "Use seu email e sua senha para manter seu ministerio em ordem e seguir de perto o acervo.",
+      accountLine: "Entre para guardar favoritos, acompanhar partilhas e reunir seus materiais em um só lugar.",
+      detailLine: "Use seu email e sua senha para manter seu ministério em ordem e seguir de perto o acervo.",
       premiumLine,
       status: "anonymous",
-      title: "Sua conta ainda nao entrou",
+      title: "Sua conta ainda não entrou",
     };
   }
 
   if (input.profile.status !== "ready") {
     return {
-      accountLine: input.session.email ?? "Sessao ativa.",
-      detailLine: "Seu perfil ainda esta sendo organizado.",
+      accountLine: input.session.email ?? "Sessão ativa.",
+      detailLine: "Seu perfil ainda está sendo organizado.",
       premiumLine,
       status: "partial",
       title: "Conta conectada",
@@ -53,8 +53,8 @@ export function buildProfileOverview(input: ProfileOverviewInput): ProfileOvervi
   const ministry = input.profile.ministry ?? input.profile.jurisdiction ?? cityState;
 
   return {
-    accountLine: input.profile.email ?? "Email nao informado.",
-    detailLine: ministry || "Dados pastorais nao informados.",
+    accountLine: input.profile.email ?? "Email não informado.",
+    detailLine: ministry || "Dados pastorais não informados.",
     premiumLine,
     status: "ready",
     title: displayName,

@@ -22,14 +22,14 @@ export async function postRemoteComment(
 ): Promise<RemoteCommentSubmitResult> {
   if (!url || !publicKey) {
     return {
-      message: "Configurar Supabase antes de publicar comentario remoto.",
+      message: "Configurar Supabase antes de publicar comentário remoto.",
       ok: false,
     };
   }
 
   if (!accessToken) {
     return {
-      message: "Sessao Supabase necessaria para publicar comentario remoto.",
+      message: "Sessão Supabase necessária para publicar comentário remoto.",
       ok: false,
     };
   }
@@ -55,13 +55,13 @@ export async function postRemoteComment(
 
     return {
       detail: errorBody.message,
-      message: "Falha ao publicar comentario remoto.",
+      message: "Falha ao publicar comentário remoto.",
       ok: false,
     };
   }
 
   return {
-    message: "Comentario remoto publicado.",
+    message: "Comentário remoto publicado.",
     ok: true,
   };
 }

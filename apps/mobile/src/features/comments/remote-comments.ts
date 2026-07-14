@@ -29,7 +29,7 @@ export async function fetchRemoteComments(
   if (!url || !publicKey) {
     return {
       comments: [],
-      message: "Configurar Supabase antes da leitura remota de comentarios.",
+      message: "Configurar Supabase antes da leitura remota de comentários.",
       status: "not_configured",
     };
   }
@@ -50,7 +50,7 @@ export async function fetchRemoteComments(
     if (errorBody.message?.includes("public.comments")) {
       return {
         comments: [],
-        message: "Tabela remota comments ainda nao existe no projeto.",
+        message: "Tabela remota comments ainda não existe no projeto.",
         status: "error",
       };
     }
@@ -58,7 +58,7 @@ export async function fetchRemoteComments(
     return {
       comments: [],
       detail: errorBody.message,
-      message: "Falha ao carregar comentarios remotos.",
+      message: "Falha ao carregar comentários remotos.",
       status: "error",
     };
   }
@@ -67,14 +67,14 @@ export async function fetchRemoteComments(
 
   return {
     comments: rows.map((row) => ({
-      authorName: row.profiles?.display_name ?? "Usuario",
+      authorName: row.profiles?.display_name ?? "Usuário",
       body: row.body,
       celebrationDateLabel: row.celebrations?.date_label ?? undefined,
       celebrationTitle: row.celebrations?.title ?? undefined,
       id: row.id,
       scope: "community",
     })),
-    message: "Comentarios remotos carregados.",
+    message: "Comentários remotos carregados.",
     status: "ready",
   };
 }

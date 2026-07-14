@@ -23,7 +23,7 @@ export default function SongDetailScreen() {
   const [remoteSong, setRemoteSong] = useState<typeof localSong | null>(null);
   const [assetMessages, setAssetMessages] = useState<Record<string, string>>({});
   const [sourceMode, setSourceMode] = useState<"local" | "remote">("local");
-  const [subtitle, setSubtitle] = useState("Um canto preparado para servir a celebracao com beleza e ordem.");
+  const [subtitle, setSubtitle] = useState("Um canto preparado para servir a celebração com beleza e ordem.");
   const song = remoteSong ?? localSong;
   const { session } = useSessionPreview();
   const { session: supabaseSession } = useSupabaseSession();
@@ -45,7 +45,7 @@ export default function SongDetailScreen() {
 
       setRemoteSong(result.song ?? null);
       setSourceMode(result.song ? "remote" : "local");
-      setSubtitle(result.song ? "Materiais prontos para acompanhar seu estudo e preparo." : "Detalhe inicial disponivel para consulta e estudo.");
+      setSubtitle(result.song ? "Materiais prontos para acompanhar seu estudo e preparo." : "Detalhe inicial disponível para consulta e estudo.");
     });
 
     return () => {
@@ -56,11 +56,11 @@ export default function SongDetailScreen() {
   if (!song) {
     return (
       <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
-        <Stack.Screen options={{ headerShown: true, title: "Musica" }} />
+        <Stack.Screen options={{ headerShown: true, title: "Música" }} />
         <PageHeader
-          eyebrow="Nao encontrada"
-          title="Canto indisponivel"
-          subtitle="Este canto ainda nao esta disponivel no acervo."
+          eyebrow="Não encontrada"
+          title="Canto indisponível"
+          subtitle="Este canto ainda não está disponível no acervo."
         />
       </ScrollView>
     );
@@ -70,12 +70,12 @@ export default function SongDetailScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
-      <Stack.Screen options={{ headerShown: true, title: "Musica" }} />
+      <Stack.Screen options={{ headerShown: true, title: "Música" }} />
       <PageHeader eyebrow="Canto sacro" title={song.title} subtitle={subtitle} />
 
       <EditorialSectionHeader
         eyebrow="Consulta"
-        subtitle="Cada frente de estudo fica reunida em seu proprio espaco para leitura, cifra, audio e video."
+        subtitle="Cada frente de estudo fica reunida em seu próprio espaco para leitura, cifra, audio e video."
         title="Materiais"
       />
 
@@ -98,7 +98,7 @@ export default function SongDetailScreen() {
                     <View key={asset.id} style={styles.sectionItem}>
                       <Text style={styles.assetMeta}>{asset.title}</Text>
                       <Text style={styles.assetPath}>
-                        {access.canAccess ? "Disponivel para abrir agora." : access.message}
+                        {access.canAccess ? "Disponível para abrir agora." : access.message}
                       </Text>
                       {assetMessages[asset.id] ? <Text style={styles.assetPath}>{assetMessages[asset.id]}</Text> : null}
                       {action.kind === "open" ? (

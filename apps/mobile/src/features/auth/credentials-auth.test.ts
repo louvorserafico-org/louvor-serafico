@@ -17,7 +17,7 @@ const validForm: RegistrationForm = {
   family: "OFMConv",
   fullName: "Frei Luis",
   jurisdiction: "Provincia",
-  ministry: "Banda Sao Francisco",
+  ministry: "Banda São Francisco",
   password: "senha1234",
   phone: "(24) 99999-0000",
   state: "rj",
@@ -50,14 +50,14 @@ describe("credentials auth", () => {
           family: "OFMConv",
           full_name: "Frei Luis",
           jurisdiction: "Provincia",
-          ministry: "Banda Sao Francisco",
+          ministry: "Banda São Francisco",
           phone: "24999990000",
           state: "RJ",
         },
       },
     });
     assert.deepEqual(result, {
-      message: "Cadastro criado. Se necessario, confirme o email antes de entrar.",
+      message: "Cadastro criado. Se necessário, confirme o email antes de entrar.",
       status: "success",
     });
   });
@@ -183,7 +183,7 @@ describe("credentials auth", () => {
     );
 
     assert.deepEqual(result, {
-      message: "Informe sua familia franciscana.",
+      message: "Informe sua família franciscana.",
       status: "error",
     });
   });
@@ -213,7 +213,7 @@ describe("credentials auth", () => {
       redirectTo: "louvor-serafico://recuperar-senha",
     });
     assert.deepEqual(result, {
-      message: "Email de recuperacao enviado.",
+      message: "Email de recuperação enviado.",
       status: "success",
     });
   });

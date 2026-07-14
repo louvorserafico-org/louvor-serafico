@@ -12,17 +12,17 @@ export default function PersonalDataScreen() {
       <PageHeader
         eyebrow="Conta"
         title="Seus dados"
-        subtitle="Veja com clareza quais informacoes ajudam a manter sua conta, sua comunidade e seu acervo organizados."
+        subtitle="Veja com clareza quais informações ajudam a manter sua conta, sua comunidade e seu acervo organizados."
       />
       <View style={styles.card}>
         <EditorialSectionHeader
           eyebrow="LGPD"
-          subtitle="Nome, email, telefone, cidade, estado, paroquia e ministerio servem para identificar seu perfil e apoiar sua experiencia."
+          subtitle="Nome, email, telefone, cidade, estado, paróquia e ministério servem para identificar seu perfil e apoiar sua experiencia."
           title="Dados essenciais"
         />
         <Text style={styles.text}>
-          Seus dados acompanham autenticacao, favoritos, partilhas e organizacao pastoral da conta. Quando necessario,
-          esta area pode receber opcoes adicionais de revisao e exclusao.
+          Seus dados acompanham autenticação, favoritos, partilhas e organização pastoral da conta. Quando necessário,
+          esta área pode receber opções adicionais de revisão e exclusão.
         </Text>
       </View>
     </ScrollView>

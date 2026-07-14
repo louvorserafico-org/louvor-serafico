@@ -38,13 +38,13 @@ export const standardMassMoments: MassMoment[] = [
   },
   {
     key: "gospel_acclamation",
-    label: "Aclamacao ao Evangelho",
+    label: "Aclamação ao Evangelho",
     order: 3,
     required: true,
   },
   {
     key: "offertory",
-    label: "Apresentacao das oferendas",
+    label: "Apresentação das oferendas",
     order: 4,
     required: true,
   },

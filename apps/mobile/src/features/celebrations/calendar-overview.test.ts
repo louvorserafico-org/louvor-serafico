@@ -12,9 +12,9 @@ describe("calendar overview", () => {
         sourceMode: "remote",
       }),
       {
-        eyebrow: "4 celebracoes",
-        helperText: "Consulte as celebracoes ja publicadas e percorra o ano liturgico com mais clareza.",
-        title: "Calendario de celebracoes",
+        eyebrow: "4 celebrações",
+        helperText: "Consulte as celebrações já publicadas e percorra o ano litúrgico com mais clareza.",
+        title: "Calendário de celebrações",
       },
     );
   });
@@ -27,9 +27,9 @@ describe("calendar overview", () => {
         sourceMode: "local",
       }),
       {
-        eyebrow: "1 celebracoes",
-        helperText: "O calendario inicial segue disponivel para consulta enquanto novos roteiros sao publicados.",
-        title: "Calendario de celebracoes",
+        eyebrow: "1 celebrações",
+        helperText: "O calendário inicial segue disponível para consulta enquanto novos roteiros são publicados.",
+        title: "Calendário de celebrações",
       },
     );
   });

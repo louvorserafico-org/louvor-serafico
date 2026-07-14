@@ -1,11 +1,11 @@
-// Calendario liturgico geral (referencia CNBB) como COMPLEMENTO do santoral franciscano.
-// Datas moveis derivam da Pascoa (Computus gregoriano, algoritmo anonimo de Meeus);
+// Calendário litúrgico geral (referencia CNBB) como COMPLEMENTO do santoral franciscano.
+// Datas móveis derivam da Páscoa (Computus gregoriano, algoritmo anônimo de Meeus);
 // datas fixas vem de uma tabela. Parametrizado por ano.
 //
 // Papel: o eixo principal continua sendo o santoral franciscano; estas festas gerais
-// entram como camada de preceito. Ranks sao rotulos aproximados para exibicao.
+// entram como camada de preceito. Ranks são rotulos aproximados para exibição.
 
-export type GeneralFeastRank = "solenidade" | "festa" | "memoria";
+export type GeneralFeastRank = "solenidade" | "festa" | "memória";
 export type GeneralFeastKind = "fixed" | "movable";
 
 export type GeneralFeast = {
@@ -15,7 +15,7 @@ export type GeneralFeast = {
   title: string;
 };
 
-// Domingo de Pascoa no calendario gregoriano.
+// Domingo de Páscoa no calendário gregoriano.
 export function computeEaster(year: number): { day: number; month: number } {
   const a = year % 19;
   const b = Math.floor(year / 100);
@@ -38,7 +38,7 @@ export function computeEaster(year: number): { day: number; month: number } {
 type MovableSpec = { offset: number; rank: GeneralFeastRank; title: string };
 
 const movableSpecs: MovableSpec[] = [
-  { offset: -46, rank: "memoria", title: "Quarta-feira de Cinzas" },
+  { offset: -46, rank: "memória", title: "Quarta-feira de Cinzas" },
   { offset: -7, rank: "festa", title: "Domingo de Ramos" },
   { offset: -3, rank: "festa", title: "Quinta-feira Santa" },
   { offset: -2, rank: "festa", title: "Sexta-feira Santa da Paixão do Senhor" },

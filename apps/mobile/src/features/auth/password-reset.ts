@@ -31,14 +31,14 @@ export async function updatePasswordFromRecovery(
 
   if (password !== passwordConfirmation) {
     return {
-      message: "As senhas nao conferem.",
+      message: "As senhas não conferem.",
       status: "error",
     };
   }
 
   if (!client) {
     return {
-      message: "Cliente Supabase indisponivel para redefinir senha.",
+      message: "Cliente Supabase indisponível para redefinir senha.",
       status: "error",
     };
   }

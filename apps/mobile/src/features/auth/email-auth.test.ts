@@ -48,7 +48,7 @@ describe("email auth", () => {
     const result = await requestEmailSignIn(null, "frei@example.com");
 
     assert.deepEqual(result, {
-      message: "Cliente Supabase indisponivel para autenticacao.",
+      message: "Cliente Supabase indisponível para autenticação.",
       status: "error",
     });
   });

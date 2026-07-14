@@ -110,7 +110,7 @@ export function findCelebrationBySlug(slug: string): Celebration | undefined {
 export const santissimoNomeDeJesusCelebration: Celebration = {
   id: "celebration-santissimo-nome-de-jesus",
   slug: "santissimo-nome-de-jesus",
-  title: "Missa do Santissimo Nome de Jesus",
+  title: "Missa do Santíssimo Nome de Jesus",
   dateLabel: "03 de janeiro",
   dateMonthDay: "01-03",
   songs: [

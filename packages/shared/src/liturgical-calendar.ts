@@ -79,9 +79,9 @@ function buildLiturgicalDay(year: number, monthNumber: number, dayNumber: number
   const utcDate = new Date(`${isoDate}T00:00:00.000Z`);
   const dateLabel = capitalizeMonthLabel(monthFormatter.format(utcDate));
 
-  // Prioridade: repertorio > santo franciscano > preceito da Igreja > dia comum.
-  // O santoral franciscano e o eixo principal; o repertorio ainda vence porque
-  // leva o musico direto ao roteiro. Os santos ficam anexados em qualquer caso.
+  // Prioridade: repertório > santo franciscano > preceito da Igreja > dia comum.
+  // O santoral franciscano e o eixo principal; o repertório ainda vence porque
+  // leva o músico direto ao roteiro. Os santos ficam anexados em qualquer caso.
 
   if (celebration) {
     return {

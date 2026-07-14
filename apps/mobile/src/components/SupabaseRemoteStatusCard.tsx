@@ -37,7 +37,7 @@ export function SupabaseRemoteStatusCard() {
           <ActivityIndicator color={colors.olive} />
           <Text style={styles.title}>Lendo estado remoto</Text>
         </View>
-        <Text style={styles.text}>Consultando endpoint publico do projeto.</Text>
+        <Text style={styles.text}>Consultando endpoint público do projeto.</Text>
       </View>
     );
   }
@@ -46,7 +46,7 @@ export function SupabaseRemoteStatusCard() {
     return (
       <View style={[styles.card, styles.ready]}>
         <Text style={styles.title}>Leitura remota ativa</Text>
-        <Text style={styles.text}>Projeto: {state.projectRef ?? "nao definido"}</Text>
+        <Text style={styles.text}>Projeto: {state.projectRef ?? "não definido"}</Text>
         <Text style={styles.text}>Cadastro por email: {state.externalEmailEnabled ? "ativo" : "inativo"}</Text>
         <Text style={styles.text}>Bloqueio de cadastro: {state.disableSignup ? "ativo" : "inativo"}</Text>
         <Text style={styles.text}>{state.message}</Text>

@@ -88,14 +88,14 @@ export async function resolvePdfViewerSource(
 
   if (!publicUrl) {
     return {
-      message: "Documento publico ainda nao foi configurado corretamente.",
+      message: "Documento público ainda não foi configurado corretamente.",
       status: "not_configured",
       url: null,
     };
   }
 
   return {
-    message: "Documento publico pronto para leitura.",
+    message: "Documento público pronto para leitura.",
     status: "ready",
     url: publicUrl,
   };

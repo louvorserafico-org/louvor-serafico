@@ -33,8 +33,8 @@ export function RemoteCommentsCard() {
   if (state.status === "loading") {
     return (
       <View style={[styles.card, styles.loading]}>
-        <Text style={styles.title}>Lendo comentarios remotos</Text>
-        <Text style={styles.text}>Consultando catalogo remoto de comunidade.</Text>
+        <Text style={styles.title}>Lendo comentários remotos</Text>
+        <Text style={styles.text}>Consultando catálogo remoto de comunidade.</Text>
       </View>
     );
   }
@@ -48,10 +48,10 @@ export function RemoteCommentsCard() {
     >
       <Text style={styles.title}>
         {state.status === "ready"
-          ? "Catalogo remoto consultado"
+          ? "Catálogo remoto consultado"
           : state.status === "not_configured"
-            ? "Catalogo remoto nao configurado"
-            : "Catalogo remoto bloqueado"}
+            ? "Catálogo remoto não configurado"
+            : "Catálogo remoto bloqueado"}
       </Text>
       <Text style={styles.text}>{state.message}</Text>
       <Text style={styles.text}>Itens remotos: {state.comments.length}</Text>

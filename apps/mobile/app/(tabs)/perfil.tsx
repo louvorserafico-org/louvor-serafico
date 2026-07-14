@@ -46,17 +46,17 @@ export default function ProfileScreen() {
         <>
           <EditorialSectionHeader
             eyebrow="Conta"
-            subtitle="Dados da conta, identificacao pastoral e estado atual do acesso."
-            title="Visao da conta"
+            subtitle="Dados da conta, identificação pastoral e estado atual do acesso."
+            title="Visão da conta"
           />
           <ProfileOverviewCard />
           <View style={styles.linksCard}>
-            <Text style={styles.linksEyebrow}>Acessos uteis</Text>
+            <Text style={styles.linksEyebrow}>Acessos úteis</Text>
             <Text style={styles.linksTitle}>Sua conta no app</Text>
             <View style={styles.linkGroup}>
               <Link asChild href="/repertorio">
                 <Pressable accessibilityRole="button" style={styles.inlineLink}>
-                  <Text style={styles.inlineLinkText}>Favoritos e repertorio</Text>
+                  <Text style={styles.inlineLinkText}>Favoritos e repertório</Text>
                 </Pressable>
               </Link>
               <Link asChild href="/comunidade">
@@ -78,7 +78,7 @@ export default function ProfileScreen() {
       {isAuthenticated ? (
         <View style={styles.actionsCard}>
           <Text style={styles.actionsEyebrow}>Conta</Text>
-          <Text style={styles.actionsTitle}>Encerrar sessao</Text>
+          <Text style={styles.actionsTitle}>Encerrar sessão</Text>
           <Text style={styles.actionsText}>Saia desta conta quando precisar trocar de acesso neste aparelho.</Text>
           <Pressable
             accessibilityRole="button"

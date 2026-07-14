@@ -40,7 +40,7 @@ describe("premium access", () => {
     assert.deepEqual(resolveAssetAccess(premiumAsset, { hasActiveSubscription: false, isAuthenticated: true }), {
       canAccess: false,
       label: "Premium",
-      message: "Assinatura necessaria para acessar este material.",
+      message: "Assinatura necessária para acessar este material.",
     });
   });
 });

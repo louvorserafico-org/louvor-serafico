@@ -1,6 +1,6 @@
-// Traducao pt-BR das mensagens de erro do Supabase Auth (GoTrue). Mapeamento por
+// Tradução pt-BR das mensagens de erro do Supabase Auth (GoTrue). Mapeamento por
 // substring (case-insensitive) das mensagens conhecidas em ingles; fallback generico
-// para mensagens nao mapeadas, sem nunca expor o texto tecnico como resumo principal.
+// para mensagens não mapeadas, sem nunca expor o texto técnico como resumo principal.
 
 const GENERIC_MESSAGE = "Não foi possível concluir a operação.";
 

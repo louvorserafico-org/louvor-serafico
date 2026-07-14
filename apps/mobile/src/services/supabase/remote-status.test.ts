@@ -29,7 +29,7 @@ describe("supabase remote status", () => {
     assert.deepEqual(status, {
       disableSignup: false,
       externalEmailEnabled: true,
-      message: "Configuracao remota lida com sucesso.",
+      message: "Configuração remota lida com sucesso.",
       projectRef: "engvbvdtdcveoebgrexl",
       status: "ready",
     });
@@ -42,7 +42,7 @@ describe("supabase remote status", () => {
     });
 
     assert.deepEqual(status, {
-      message: "Configurar URL e chave publica antes da leitura remota.",
+      message: "Configurar URL e chave pública antes da leitura remota.",
       status: "not_configured",
     });
   });

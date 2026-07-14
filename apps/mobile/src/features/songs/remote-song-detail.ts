@@ -32,7 +32,7 @@ export async function fetchRemoteSongDetail(
 ): Promise<RemoteSongDetailResult> {
   if (!url || !publicKey) {
     return {
-      message: "Configurar Supabase antes da leitura remota da musica.",
+      message: "Configurar Supabase antes da leitura remota da música.",
       song: null,
       status: "not_configured",
     };
@@ -53,7 +53,7 @@ export async function fetchRemoteSongDetail(
 
     return {
       detail: errorBody.message,
-      message: "Falha ao carregar musica remota.",
+      message: "Falha ao carregar música remota.",
       song: null,
       status: "error",
     };
@@ -64,14 +64,14 @@ export async function fetchRemoteSongDetail(
 
   if (!row) {
     return {
-      message: "Musica remota ainda nao encontrada.",
+      message: "Música remota ainda não encontrada.",
       song: null,
       status: "not_found",
     };
   }
 
   return {
-    message: "Musica remota carregada.",
+    message: "Música remota carregada.",
     song: {
       assets: (row.song_assets ?? []).map((asset) => ({
         id: asset.id,

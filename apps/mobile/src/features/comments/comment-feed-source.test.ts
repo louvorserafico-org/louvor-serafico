@@ -8,7 +8,7 @@ import { resolveCommentFeedSource } from "./comment-feed-source.ts";
 const localComments: LocalComment[] = [
   {
     authorName: "Local User",
-    body: "Comentario local",
+    body: "Comentário local",
     id: "comment-local",
     scope: "community",
   },
@@ -21,13 +21,13 @@ describe("comment feed source", () => {
         comments: [
           {
             authorName: "Remote User",
-            body: "Comentario remoto",
-            celebrationTitle: "Missa do Santissimo Nome de Jesus",
+            body: "Comentário remoto",
+            celebrationTitle: "Missa do Santíssimo Nome de Jesus",
             id: "comment-remote",
             scope: "community",
           },
         ],
-        message: "Comentarios remotos carregados.",
+        message: "Comentários remotos carregados.",
         status: "ready",
       },
       localComments,
@@ -37,19 +37,19 @@ describe("comment feed source", () => {
       comments: [
         {
           authorName: "Remote User",
-          body: "Comentario remoto",
-          celebrationTitle: "Missa do Santissimo Nome de Jesus",
+          body: "Comentário remoto",
+          celebrationTitle: "Missa do Santíssimo Nome de Jesus",
           id: "comment-remote",
           scope: "community",
         },
         {
           authorName: "Local User",
-          body: "Comentario local",
+          body: "Comentário local",
           id: "comment-local",
           scope: "community",
         },
       ],
-      message: "Comentarios remotos ativos. Preview local segue visivel neste aparelho.",
+      message: "Comentários remotos ativos. Preview local segue visivel neste aparelho.",
       mode: "mixed",
     });
   });
@@ -58,7 +58,7 @@ describe("comment feed source", () => {
     const source = resolveCommentFeedSource(
       {
         comments: [],
-        message: "Comentarios remotos carregados.",
+        message: "Comentários remotos carregados.",
         status: "ready",
       },
       localComments,
@@ -66,7 +66,7 @@ describe("comment feed source", () => {
 
     assert.deepEqual(source, {
       comments: localComments,
-      message: "Comentarios remotos vazios. Mantendo preview local.",
+      message: "Comentários remotos vazios. Mantendo preview local.",
       mode: "local",
     });
   });
@@ -75,7 +75,7 @@ describe("comment feed source", () => {
     const source = resolveCommentFeedSource(
       {
         comments: [],
-        message: "Tabela remota comments ainda nao existe no projeto.",
+        message: "Tabela remota comments ainda não existe no projeto.",
         status: "error",
       },
       localComments,
@@ -83,7 +83,7 @@ describe("comment feed source", () => {
 
     assert.deepEqual(source, {
       comments: localComments,
-      message: "Tabela remota comments ainda nao existe no projeto.",
+      message: "Tabela remota comments ainda não existe no projeto.",
       mode: "local",
     });
   });

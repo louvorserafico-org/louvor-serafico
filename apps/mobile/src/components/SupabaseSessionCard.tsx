@@ -24,14 +24,14 @@ export function SupabaseSessionCard() {
     >
       <Text style={styles.title}>
         {session.status === "authenticated"
-          ? "Sessao real detectada"
+          ? "Sessão real detectada"
           : session.status === "loading"
-            ? "Lendo sessao real"
-            : "Sem sessao real"}
+            ? "Lendo sessão real"
+            : "Sem sessão real"}
       </Text>
-      <Text style={styles.text}>Email: {session.email ?? "nao autenticado"}</Text>
-      <Text style={styles.text}>Provider: {session.provider ?? "nao definido"}</Text>
-      <Text style={styles.text}>User ID: {session.userId ?? "nao autenticado"}</Text>
+      <Text style={styles.text}>Email: {session.email ?? "não autenticado"}</Text>
+      <Text style={styles.text}>Provider: {session.provider ?? "não definido"}</Text>
+      <Text style={styles.text}>User ID: {session.userId ?? "não autenticado"}</Text>
       {session.status === "authenticated" ? (
         <Pressable
           accessibilityRole="button"

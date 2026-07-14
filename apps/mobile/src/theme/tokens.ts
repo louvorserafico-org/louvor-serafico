@@ -3,7 +3,7 @@ import { Platform } from "react-native";
 // Identidade franciscana (dark): chumbo (charcoal) + creme + dourado.
 // Alinhada ao site frei-luis-ventura (fundo ~HSL 220 13% 10%, ouro ~HSL 43 52% 54%).
 export const colors = {
-  // Acao / dourado
+  // Ação / dourado
   accent: "#c7a24e", // dourado principal (CTAs, links, destaque)
   accentStrong: "#e2c77f", // dourado claro para enfase/texto
   gold: "#c7a24e", // eyebrows e marcacoes liturgicas
@@ -13,11 +13,11 @@ export const colors = {
   background: "#16171a", // chumbo profundo
   surface: "#1e2024", // cartoes
   surfaceMuted: "#25272c", // inputs / superficie elevada
-  tabBackground: "#101114", // navegacao inferior
+  tabBackground: "#101114", // navegação inferior
   border: "#2b2e34",
   borderStrong: "#3c4048",
 
-  // Verde bronze (marcacao de repertorio) e superficie sutil
+  // Verde bronze (marcação de repertório) e superficie sutil
   olive: "#7e8659",
   oliveSoft: "#1f231a",
 

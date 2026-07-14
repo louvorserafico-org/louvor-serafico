@@ -34,7 +34,7 @@ export function buildSongMaterialBadges(assets: SongAsset[]) {
     badges.push("Video");
   }
 
-  return badges.length > 0 ? badges : ["Em preparacao"];
+  return badges.length > 0 ? badges : ["Em preparação"];
 }
 
 export function buildSongMaterialSections(assets: SongAsset[]): SongMaterialSection[] {
@@ -47,7 +47,7 @@ export function buildSongMaterialSections(assets: SongAsset[]): SongMaterialSect
     {
       assets: scoreAssets,
       ctaLabel: "Abrir partitura",
-      emptyText: "A partitura sera reunida aqui quando estiver pronta.",
+      emptyText: "A partitura será reunida aqui quando estiver pronta.",
       helperText: scoreAssets.length > 0 ? "Leitura musical pronta para consulta." : "Espaco reservado para a partitura deste canto.",
       key: "score",
       title: "Partitura",
@@ -55,10 +55,10 @@ export function buildSongMaterialSections(assets: SongAsset[]): SongMaterialSect
     {
       assets: lyricsAndChordAssets,
       ctaLabel: "Abrir letra e cifra",
-      emptyText: "A letra com a cifra sera reunida aqui.",
+      emptyText: "A letra com a cifra será reunida aqui.",
       helperText:
         lyricsAndChordAssets.length > 0
-          ? "Texto e cifra preparados para estudo e execucao."
+          ? "Texto e cifra preparados para estudo e execução."
           : "Espaco reservado para letra e cifra deste canto.",
       key: "lyrics_and_chords",
       title: "Letra e cifra",
@@ -66,7 +66,7 @@ export function buildSongMaterialSections(assets: SongAsset[]): SongMaterialSect
     {
       assets: audioAssets,
       ctaLabel: "Ouvir audio",
-      emptyText: "O audio de apoio sera reunido aqui.",
+      emptyText: "O audio de apoio será reunido aqui.",
       helperText: audioAssets.length > 0 ? "Audios prontos para apoiar o preparo." : "Espaco reservado para audio deste canto.",
       key: "audio",
       title: "Audio",
@@ -74,8 +74,8 @@ export function buildSongMaterialSections(assets: SongAsset[]): SongMaterialSect
     {
       assets: videoAssets,
       ctaLabel: "Ver video",
-      emptyText: "O video de apoio sera reunido aqui.",
-      helperText: videoAssets.length > 0 ? "Videos prontos para apoiar o servico." : "Espaco reservado para video deste canto.",
+      emptyText: "O video de apoio será reunido aqui.",
+      helperText: videoAssets.length > 0 ? "Videos prontos para apoiar o serviço." : "Espaco reservado para video deste canto.",
       key: "video",
       title: "Video",
     },

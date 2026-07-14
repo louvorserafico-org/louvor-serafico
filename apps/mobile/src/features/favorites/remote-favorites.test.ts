@@ -35,7 +35,7 @@ describe("remote favorites", () => {
     );
 
     assert.deepEqual(result, {
-      message: "Sessao Supabase necessaria para ler favoritos remotos.",
+      message: "Sessão Supabase necessária para ler favoritos remotos.",
       songIds: [],
       status: "not_authenticated",
     });
@@ -56,7 +56,7 @@ describe("remote favorites", () => {
     );
 
     assert.deepEqual(result, {
-      message: "Tabela remota favorite_songs ainda nao existe no projeto.",
+      message: "Tabela remota favorite_songs ainda não existe no projeto.",
       songIds: [],
       status: "error",
     });

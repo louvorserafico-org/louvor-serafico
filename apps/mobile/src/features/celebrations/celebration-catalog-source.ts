@@ -19,7 +19,7 @@ export function resolveCelebrationCatalogSource(
   if (remote.status === "ready") {
     return {
       celebrations: localCelebrations,
-      message: "Calendario remoto vazio. Mantendo fonte local.",
+      message: "Calendário remoto vazio. Mantendo fonte local.",
       mode: "local" as const,
     };
   }

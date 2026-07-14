@@ -39,7 +39,7 @@ export async function requestEmailSignIn(
 
   if (!client) {
     return {
-      message: "Cliente Supabase indisponivel para autenticacao.",
+      message: "Cliente Supabase indisponível para autenticação.",
       status: "error",
     };
   }

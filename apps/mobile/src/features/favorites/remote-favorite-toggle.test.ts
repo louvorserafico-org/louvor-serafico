@@ -74,7 +74,7 @@ describe("remote favorite toggle", () => {
     );
 
     assert.deepEqual(result, {
-      message: "Sessao Supabase necessaria para sincronizar favoritos remotos.",
+      message: "Sessão Supabase necessária para sincronizar favoritos remotos.",
       ok: false,
     });
   });

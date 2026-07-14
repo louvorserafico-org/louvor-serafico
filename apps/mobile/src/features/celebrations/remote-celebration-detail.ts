@@ -53,7 +53,7 @@ export async function fetchRemoteCelebrationDetail(
   if (!url || !publicKey) {
     return {
       celebration: null,
-      message: "Configurar Supabase antes da leitura remota da celebracao.",
+      message: "Configurar Supabase antes da leitura remota da celebração.",
       status: "not_configured",
     };
   }
@@ -72,7 +72,7 @@ export async function fetchRemoteCelebrationDetail(
     return {
       celebration: null,
       detail: errorBody.message,
-      message: "Falha ao carregar celebracao remota.",
+      message: "Falha ao carregar celebração remota.",
       status: "error",
     };
   }
@@ -83,7 +83,7 @@ export async function fetchRemoteCelebrationDetail(
   if (!row) {
     return {
       celebration: null,
-      message: "Celebracao remota ainda nao encontrada.",
+      message: "Celebração remota ainda não encontrada.",
       status: "not_found",
     };
   }
@@ -136,7 +136,7 @@ export async function fetchRemoteCelebrationDetail(
       songs: Array.from(songsMap.values()),
       title: row.title,
     },
-    message: "Celebracao remota carregada.",
+    message: "Celebração remota carregada.",
     status: "ready",
   };
 }

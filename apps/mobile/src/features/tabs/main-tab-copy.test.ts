@@ -11,18 +11,18 @@ describe("main tab copy", () => {
   it("builds today subtitle", () => {
     assert.equal(
       buildTodayTabSubtitle(true),
-      "Roteiro liturgico-musical pronto para abrir, estudar e seguir na celebracao de hoje.",
+      "Roteiro litúrgico-musical pronto para abrir, estudar e seguir na celebração de hoje.",
     );
     assert.equal(
       buildTodayTabSubtitle(false),
-      "Roteiro liturgico-musical de hoje, com entrada rapida para abrir conta e continuar.",
+      "Roteiro litúrgico-musical de hoje, com entrada rapida para abrir conta e continuar.",
     );
   });
 
   it("builds community subtitle", () => {
     assert.equal(
       buildCommunityTabSubtitle(true),
-      "Leia experiencias do ministerio e deixe a sua quando desejar.",
+      "Leia experiencias do ministério e deixe a sua quando desejar.",
     );
     assert.equal(
       buildCommunityTabSubtitle(false),

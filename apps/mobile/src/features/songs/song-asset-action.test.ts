@@ -34,7 +34,7 @@ describe("song asset action", () => {
     );
   });
 
-  it("routes authenticated free user to premium area", () => {
+  it("routes authenticated free user to premium área", () => {
     assert.deepEqual(
       resolveSongAssetAction({
         canAccess: false,

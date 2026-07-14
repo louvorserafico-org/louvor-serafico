@@ -42,14 +42,14 @@ export default function TodayScreen() {
   });
   const homeSaint = buildHomeSaint(today);
   const supportLabel =
-    today.kind === "ordinary_day" ? "Dia comum" : todayCelebration ? "Celebracao do dia" : "Memoria liturgica";
+    today.kind === "ordinary_day" ? "Dia comum" : todayCelebration ? "Celebração do dia" : "Memória litúrgica";
 
   return (
     <SafeAreaView edges={["top"]} style={styles.screen}>
       <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.header}>
         <View style={styles.headerTopRow}>
-          <Text style={styles.headerSection}>Inicio</Text>
+          <Text style={styles.headerSection}>Início</Text>
           <Pressable
             accessibilityLabel={welcome.isAuthenticated ? "Abrir perfil" : "Entrar na conta"}
             accessibilityRole="button"
@@ -63,8 +63,8 @@ export default function TodayScreen() {
             )}
           </Pressable>
         </View>
-        <Text style={styles.headerTitle}>Louvor Serafico</Text>
-        <Text style={styles.headerSubtitle}>Que o canto conduza a oracao.</Text>
+        <Text style={styles.headerTitle}>Louvor Seráfico</Text>
+        <Text style={styles.headerSubtitle}>Que o canto conduza a oração.</Text>
         <View style={styles.headerDateBadge}>
           <Text style={styles.headerDateText}>{today.dateLabel}</Text>
         </View>
@@ -130,8 +130,8 @@ export default function TodayScreen() {
 
       <EditorialSectionHeader eyebrow="Navegar" title="Explorar o app" />
       <View style={styles.quickActions}>
-        <HomeQuickActionCard href="/calendario" subtitle="Celebracoes" title="Calendario" />
-        <HomeQuickActionCard href="/repertorio" subtitle="Cantos" title="Repertorio" />
+        <HomeQuickActionCard href="/calendario" subtitle="Celebrações" title="Calendário" />
+        <HomeQuickActionCard href="/repertorio" subtitle="Cantos" title="Repertório" />
         <HomeQuickActionCard href="/comunidade" subtitle="Comunidade" title="Partilha" />
       </View>
 
@@ -158,7 +158,7 @@ export default function TodayScreen() {
         </Link>
       ) : null}
 
-      <Text style={styles.footerNote}>Para cada tempo da Igreja, um repertorio a servico da oracao.</Text>
+      <Text style={styles.footerNote}>Para cada tempo da Igreja, um repertório a serviço da oração.</Text>
       </ScrollView>
     </SafeAreaView>
   );

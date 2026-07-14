@@ -17,13 +17,13 @@ export default function CelebrationsScreen() {
       <Stack.Screen options={{ headerShown: true, title: "Celebrações" }} />
       <PageHeader
         eyebrow={`${celebrations.length} roteiro${celebrations.length === 1 ? "" : "s"}`}
-        subtitle="Consulte as celebracoes ja preparadas e abra cada roteiro quando precisar."
-        title="Celebracoes"
+        subtitle="Consulte as celebrações já preparadas e abra cada roteiro quando precisar."
+        title="Celebrações"
       />
 
       <EditorialSectionHeader
         eyebrow="Consulta"
-        subtitle="Os roteiros publicados seguem organizados por data liturgica."
+        subtitle="Os roteiros publicados seguem organizados por data litúrgica."
         title="Roteiros disponiveis"
       />
 

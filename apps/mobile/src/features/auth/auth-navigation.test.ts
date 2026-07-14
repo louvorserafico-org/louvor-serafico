@@ -20,7 +20,7 @@ describe("auth navigation", () => {
   it("builds email confirmation copy with normalized email", () => {
     assert.deepEqual(buildEmailConfirmationCopy("  Frei@Example.com "), {
       actionLabel: "Ir para entrar",
-      message: "Enviamos a confirmacao para frei@example.com. Abra sua caixa de entrada antes de voltar ao app.",
+      message: "Enviamos a confirmação para frei@example.com. Abra sua caixa de entrada antes de voltar ao app.",
       title: "Confirme seu email",
     });
   });

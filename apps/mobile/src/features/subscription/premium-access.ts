@@ -32,7 +32,7 @@ export function resolveAssetAccess(asset: SongAsset, context: PremiumAccessConte
     return {
       canAccess: false,
       label: "Premium",
-      message: "Assinatura necessaria para acessar este material.",
+      message: "Assinatura necessária para acessar este material.",
     };
   }
 

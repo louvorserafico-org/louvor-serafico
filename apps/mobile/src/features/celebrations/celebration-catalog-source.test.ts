@@ -32,7 +32,7 @@ describe("celebration catalog source", () => {
             title: "Remote Celebration",
           },
         ],
-        message: "Calendario remoto carregado.",
+        message: "Calendário remoto carregado.",
         status: "ready",
       },
       localCelebrations,
@@ -59,7 +59,7 @@ describe("celebration catalog source", () => {
     const source = resolveCelebrationCatalogSource(
       {
         celebrations: [],
-        message: "Calendario remoto carregado.",
+        message: "Calendário remoto carregado.",
         status: "ready",
       },
       localCelebrations,
@@ -67,7 +67,7 @@ describe("celebration catalog source", () => {
 
     assert.deepEqual(source, {
       celebrations: localCelebrations,
-      message: "Calendario remoto vazio. Mantendo fonte local.",
+      message: "Calendário remoto vazio. Mantendo fonte local.",
       mode: "local",
     });
   });
@@ -76,7 +76,7 @@ describe("celebration catalog source", () => {
     const source = resolveCelebrationCatalogSource(
       {
         celebrations: [],
-        message: "Tabela remota celebrations ainda nao existe no projeto.",
+        message: "Tabela remota celebrations ainda não existe no projeto.",
         status: "error",
       },
       localCelebrations,
@@ -84,7 +84,7 @@ describe("celebration catalog source", () => {
 
     assert.deepEqual(source, {
       celebrations: localCelebrations,
-      message: "Tabela remota celebrations ainda nao existe no projeto.",
+      message: "Tabela remota celebrations ainda não existe no projeto.",
       mode: "local",
     });
   });

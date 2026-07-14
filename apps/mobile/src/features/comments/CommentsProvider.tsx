@@ -15,7 +15,7 @@ type CommentsContextValue = {
 
 const initialComments: LocalComment[] = [
   {
-    authorName: "Coral Sao Miguel",
+    authorName: "Coral São Miguel",
     body: "Usamos este salmo no ensaio de quarta e funcionou muito bem com assembleia.",
     id: "comment-initial-1",
     scope: "community",

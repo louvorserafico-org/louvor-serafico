@@ -39,7 +39,7 @@ describe("saint detail formatting", () => {
       fixture({
         observances: [
           { jurisdiction: "OFM", rank: "festa" },
-          { jurisdiction: "FF", rank: "memoria" },
+          { jurisdiction: "FF", rank: "memória" },
         ],
       }),
     );

@@ -22,13 +22,13 @@ const authenticatedSession: SupabaseSessionState = {
 };
 
 const readyProfile: SupabaseProfileState = {
-  city: "Sao Paulo",
+  city: "São Paulo",
   displayName: "Frei Luis",
   email: "louvor@example.com",
   family: "OFMConv",
   jurisdiction: "Provincia",
   ministry: "Coral paroquial",
-  parish: "Sao Francisco",
+  parish: "São Francisco",
   phone: "11999999999",
   provider: "email",
   status: "ready",
@@ -61,11 +61,11 @@ describe("profile overview", () => {
     });
 
     assert.deepEqual(result, {
-      accountLine: "Entre para guardar favoritos, acompanhar partilhas e reunir seus materiais em um so lugar.",
-      detailLine: "Use seu email e sua senha para manter seu ministerio em ordem e seguir de perto o acervo.",
+      accountLine: "Entre para guardar favoritos, acompanhar partilhas e reunir seus materiais em um só lugar.",
+      detailLine: "Use seu email e sua senha para manter seu ministério em ordem e seguir de perto o acervo.",
       premiumLine: "Premium inativo",
       status: "anonymous",
-      title: "Sua conta ainda nao entrou",
+      title: "Sua conta ainda não entrou",
     });
   });
 
@@ -78,7 +78,7 @@ describe("profile overview", () => {
 
     assert.deepEqual(result, {
       accountLine: "louvor@example.com",
-      detailLine: "Seu perfil ainda esta sendo organizado.",
+      detailLine: "Seu perfil ainda está sendo organizado.",
       premiumLine: "Premium ativo",
       status: "partial",
       title: "Conta conectada",

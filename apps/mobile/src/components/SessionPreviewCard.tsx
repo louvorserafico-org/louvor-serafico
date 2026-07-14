@@ -17,7 +17,7 @@ export function SessionPreviewCard() {
     >
       <Text style={styles.title}>{gate.title}</Text>
       <Text style={styles.text}>{gate.helperText}</Text>
-      {session.status === "signed_in" ? <Text style={styles.text}>Usuario: {session.displayName}</Text> : null}
+      {session.status === "signed_in" ? <Text style={styles.text}>Usuário: {session.displayName}</Text> : null}
       <Pressable
         accessibilityRole="button"
         onPress={session.status === "signed_in" ? signOutPreview : signInForPreview}

@@ -24,8 +24,8 @@ export default function RepertoireScreen() {
   const [sourceMode, setSourceMode] = useState<"local" | "remote">("local");
   const [remoteCount, setRemoteCount] = useState(localSongs.length);
   const [remoteStatus, setRemoteStatus] = useState<"error" | "not_configured" | "ready">("not_configured");
-  const [remoteMessage, setRemoteMessage] = useState("Leitura do acervo em preparacao.");
-  const [subtitle, setSubtitle] = useState("Um acervo liturgico para estudar, organizar e escolher com mais paz.");
+  const [remoteMessage, setRemoteMessage] = useState("Leitura do acervo em preparação.");
+  const [subtitle, setSubtitle] = useState("Um acervo litúrgico para estudar, organizar e escolher com mais paz.");
 
   useEffect(() => {
     let active = true;
@@ -42,7 +42,7 @@ export default function RepertoireScreen() {
           setSubtitle(
             favoriteSongIds.length > 0
               ? `${favoriteSongIds.length} canto${favoriteSongIds.length > 1 ? "s" : ""} guardado${favoriteSongIds.length > 1 ? "s" : ""} para consulta rapida.`
-              : "Navegue pelo repertorio e encontre o canto certo para cada momento.",
+              : "Navegue pelo repertório e encontre o canto certo para cada momento.",
           );
         }
       },
@@ -62,9 +62,9 @@ export default function RepertoireScreen() {
   const normalizedQuery = normalizeSongSearchTerm(query);
   const visibleSongs = useMemo(() => filteredSongs.slice(0, visibleCount), [filteredSongs, visibleCount]);
   const remoteFeedback = buildRemoteFeedback({
-    emptyLabel: "Nenhuma musica remota encontrada.",
+    emptyLabel: "Nenhuma música remota encontrada.",
     itemCount: remoteCount,
-    readyLabel: "musicas remotas consultadas",
+    readyLabel: "músicas remotas consultadas",
     status: remoteStatus,
     statusMessage: remoteMessage,
   });
@@ -75,7 +75,7 @@ export default function RepertoireScreen() {
       <PageHeader eyebrow={overview.eyebrow} title="Repertorio" subtitle={subtitle} />
 
       <View style={styles.searchBlock}>
-        <Text style={styles.searchLabel}>Pesquisar musica</Text>
+        <Text style={styles.searchLabel}>Pesquisar música</Text>
         <TextInput
           onChangeText={(value) => {
             setQuery(value);
@@ -95,8 +95,8 @@ export default function RepertoireScreen() {
 
       <EditorialSectionHeader
         eyebrow="Lista"
-        subtitle={`${songs.length} musica${songs.length === 1 ? "" : "s"} disponive${songs.length === 1 ? "l" : "is"}.`}
-        title="Musicas"
+        subtitle={`${songs.length} música${songs.length === 1 ? "" : "s"} disponive${songs.length === 1 ? "l" : "is"}.`}
+        title="Músicas"
       />
 
       <View style={styles.list}>
@@ -108,7 +108,7 @@ export default function RepertoireScreen() {
             <Text style={styles.emptyText}>
               {normalizedQuery.length >= 3
                 ? "Nenhum canto corresponde a esta busca."
-                : "Os proximos cantos publicados aparecerao aqui para estudo, escolha e preparacao."}
+                : "Os próximos cantos publicados aparecerao aqui para estudo, escolha e preparação."}
             </Text>
           </View>
         )}

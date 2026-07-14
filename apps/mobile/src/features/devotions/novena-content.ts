@@ -1,8 +1,8 @@
-// Novena a Sao Francisco de Assis. Fonte: "NOVENA DE SAO FRANCISCO DE ASSIS - 2026", subsidio
-// oficial da Provincia Sao Maximiliano Maria Kolbe do Brasil (OFM Conv.), Brasilia-DF, 21/05/2026,
-// para o 8o centenario da passagem de Sao Francisco. Texto do "Rito Fora da Liturgia da Missa",
+// Novena a São Francisco de Assis. Fonte: "NOVENA DE SAO FRANCISCO DE ASSIS - 2026", subsidio
+// oficial da Provincia São Maximiliano Maria Kolbe do Brasil (OFM Conv.), Brasilia-DF, 21/05/2026,
+// para o 8o centenario da passagem de São Francisco. Texto do "Rito Fora da Liturgia da Missa",
 // Anexo A (Ladainha) e Anexo C (cantos de Frei Luis Ventura, OFM Conv.), extraido verbatim do PDF.
-// Nao fabricar/editar conteudo sem nova fonte.
+// Não fabricar/editar conteúdo sem nova fonte.
 
 export type NovenaDay = {
   day: number;
@@ -52,7 +52,7 @@ export const novenaDays: NovenaDay[] = [
     theme: "São Francisco reconciliado com a obediência",
     reference: "1Cel 29",
     reading:
-      'São Francisco nos ensina: "Disse o Senhor a Adão: Come de toda árvore; da árvore da ciência do bem e do mal, porém, não comas. Podia, pois, comer de toda árvore do paraíso, porque, enquanto nada fazia contra a obediência, não pecava. Come, pois, da árvore da ciência do bem aquele que se apropria de sua vontade e se exalta pelos bens que o Senhor diz e opera nele. E assim, por sugestão do diabo e transgressão do mandato, fez-se o pomo da ciência do mal. Por isso, importa que sustente a pena."',
+      'São Francisco nos ensina: "Disse o Senhor a Adão: Come de toda árvore; da árvore da ciência do bem e do mal, porém, não comas. Podia, pois, comer de toda árvore do paraísó, porque, enquanto nada fazia contra a obediência, não pecava. Come, pois, da árvore da ciência do bem aquele que se apropria de sua vontade e se exalta pelos bens que o Senhor diz e opera nele. E assim, por sugestão do diabo e transgressão do mandato, fez-se o pomo da ciência do mal. Por isso, importa que sustente a pena."',
   },
   {
     day: 7,
@@ -180,7 +180,7 @@ export const novenaSongs: NovenaSong[] = [
       "1. Cantamos tua glória no Céu, na Terra cantamos a ti,\ntua vida é exemplo para se seguir.\nO Santo Evangelho encarnou e a Paixão de Cristo em ti\nse fez carne viva pelo Serafim.",
       "2. Cantamos tua doce paz e o teu ardente amor\ne por teu viver louvamos o Senhor.\nCantamos as chagas em ti nas mãos, nos pés, coração,\nés um outro Cristo, imagem da Paixão.",
       "3. Cantamos-te, Arauto do Rei que pobre e humilde se fez\nem ti Cristo se revela outra vez.\nAos Céus suba o nosso louvor, ó santo de Deus sem igual,\nensina a fraternidade universal.",
-      "4. Cantamos-te Altíssimo Pai, da Terra e do Céu Criador,\nao Filho do Pai e ao Santificador.\nÀ Santa Trindade o louvor, a glória, a exaltação,\nao Deus Trino e Onipotente a adoração.",
+      "4. Cantamos-te Altíssimo Pai, da Terra e do Céu Criador,\não Filho do Pai e ao Santificador.\nÀ Santa Trindade o louvor, a glória, a exaltação,\não Deus Trino e Onipotente a adoração.",
     ],
   },
 ];

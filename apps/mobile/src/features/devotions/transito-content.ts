@@ -1,10 +1,10 @@
-// Celebracao do Transito de Sao Francisco de Assis. Texto curado, fonte oficial:
-// - "I Vesperas de Sao Francisco de Assis" (Liturgia das Horas, Proprio da Conferencia
-//   da Familia Franciscana do Brasil), rezadas na tarde/noite de 03 de outubro (inicio do
-//   dia liturgico de 04 de outubro).
-// - "Transitus do Serafico Pai Sao Francisco de Assis - Forma Abreviada" (celebracao
+// Celebração do Transito de São Francisco de Assis. Texto curado, fonte oficial:
+// - "I Vesperas de São Francisco de Assis" (Liturgia das Horas, Próprio da Conferencia
+//   da Família Franciscana do Brasil), rezadas na tarde/noite de 03 de outubro (início do
+//   dia litúrgico de 04 de outubro).
+// - "Transitus do Seráfico Pai São Francisco de Assis - Forma Abreviada" (celebração
 //   dramatizada tradicional, celebrada durante as visperas do dia 03 de outubro).
-// Nao fabricar/editar conteudo sem nova fonte. Ordem: Visperas primeiro (oracao oficial),
+// Não fabricar/editar conteúdo sem nova fonte. Ordem: Visperas primeiro (oração oficial),
 // Transitus dramatizado em seguida.
 
 export type TransitoLine = {

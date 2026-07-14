@@ -41,7 +41,7 @@ describe("favorite source", () => {
   it("falls back to local when remote is blocked", () => {
     const source = resolveFavoriteSource(
       {
-        message: "Tabela remota favorite_songs ainda nao existe no projeto.",
+        message: "Tabela remota favorite_songs ainda não existe no projeto.",
         songIds: [],
         status: "error",
       },
@@ -49,7 +49,7 @@ describe("favorite source", () => {
     );
 
     assert.deepEqual(source, {
-      message: "Tabela remota favorite_songs ainda nao existe no projeto.",
+      message: "Tabela remota favorite_songs ainda não existe no projeto.",
       mode: "local",
       songIds: ["song-3"],
     });

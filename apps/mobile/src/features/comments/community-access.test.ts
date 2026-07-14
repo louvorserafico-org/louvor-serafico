@@ -11,11 +11,11 @@ describe("community access", () => {
         hasRemoteSession: true,
       }),
       {
-        helperText: "Partilhe um repertorio celebrado ou deixe apenas uma palavra para o ministerio.",
+        helperText: "Partilhe um repertório celebrado ou deixe apenas uma palavra para o ministério.",
         inputPlaceholder: "Conte como este canto ajudou a assembleia, o coro ou o ensaio.",
         primaryLabel: "Publicar partilha",
         status: "remote",
-        title: "Partilha entre ministerios",
+        title: "Partilha entre ministérios",
       },
     );
   });
@@ -27,11 +27,11 @@ describe("community access", () => {
         hasRemoteSession: false,
       }),
       {
-        helperText: "Partilhe um repertorio celebrado ou guarde uma memoria simples neste aparelho.",
-        inputPlaceholder: "Conte como foi o ensaio, a escolha dos cantos ou a celebracao.",
+        helperText: "Partilhe um repertório celebrado ou guarde uma memória simples neste aparelho.",
+        inputPlaceholder: "Conte como foi o ensaio, a escolha dos cantos ou a celebração.",
         primaryLabel: "Guardar partilha",
         status: "local",
-        title: "Partilha do ministerio",
+        title: "Partilha do ministério",
       },
     );
   });
@@ -43,11 +43,11 @@ describe("community access", () => {
         hasRemoteSession: false,
       }),
       {
-        helperText: "Entre na sua conta para relacionar o repertorio celebrado e partilhar a experiencia do ministerio.",
+        helperText: "Entre na sua conta para relacionar o repertório celebrado e partilhar a experiência do ministério.",
         inputPlaceholder: "Entre para escrever sua partilha.",
         primaryLabel: "Entrar para participar",
         status: "blocked",
-        title: "Partilha do ministerio",
+        title: "Partilha do ministério",
       },
     );
   });

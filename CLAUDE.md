@@ -7111,3 +7111,22 @@ Nota: a mudanca na Edge Function exige redeploy (`supabase functions deploy crea
 Validacoes: pnpm test (70 suites, fail 0) / typecheck / lint = 0.
 
 Commit: `fix(mobile): align PDF viewer with PageHeader/AnimatedPressable standards and translate signed-url error`
+
+## Etapa 184 - Normalizacao de acentuacao pt-BR em todo o texto do app
+
+Pedido do Frei: o app foi iniciado sem acentos (ASCII puro) para ganhar tempo; com o projeto avancado, precisava de uma varredura completa para adicionar a acentuacao correta em todo o conteudo de texto (prosa de UI, mensagens, comentarios de codigo).
+
+Metodo: script Node (`fix-accents.js`, descartavel, em scratchpad) com dicionario curado de ~100 palavras pt-BR sem acento -> forma correta (ambas as variantes, minuscula e capitalizada), aplicado com `\b` (word boundary) em todos os `.ts`/`.tsx` de `apps/mobile/app`, `apps/mobile/src`, `packages/shared/src` e `supabase/functions`. Como identificadores de codigo neste projeto sao em ingles, palavras em portugues so aparecem em comentarios e strings — a troca por `\b` nao arriscava identificadores.
+
+Excluidos do dicionario por ambiguidade (exigem leitura humana): "esta/estas/nesta/desta" (pronome demonstrativo "esta" vs verbo "está" — mesma grafia sem acento). Tratados manualmente, caso a caso: 8 ocorrencias reais do verbo "está" corrigidas (código-fonte + teste correspondente), demonstrativos mantidos como estavam.
+
+**3 incidentes encontrados e corrigidos durante a varredura** (o dicionario, sendo cego a contexto, acentuou palavras que tambem sao usadas como identificadores estaveis, nao como prosa):
+1. `react-native-safe-area-context` virou `safe-área-context` em 6 imports (quebrava o build) — revertido.
+2. Rotas do Expo Router: `/calendario`, `/celebracoes`, `/musicas` viraram `/calendário`, `/celebrações`, `/músicas` em ~15 lugares (href, `Tabs.Screen name`, chave de lookup de icone, tipos de rota) — quebrava navegacao em silencio (sem erro de typecheck). Revertido em todos os pontos; texto de exibicao (títulos, legendas) manteve o acento correto.
+3. Ids estaveis usados como chave de correlacao entre arquivos: `id`/`saintId` em `santoral-index-2026.ts` + `santoral-content.ts` (83 campos), `slug` em `devotions.ts`, `id` em `transito-content.ts` e `celebration.ts`. Acentuar so um lado quebraria `findCuratedShortHistory(saint.id)` silenciosamente (retorna null, sem erro). Revertidos para slug ASCII em ambos os lados; 2 comparacoes hardcoded em testes (`santoral.test.ts`, `santoral-content.test.ts`) tambem corrigidas para o mesmo slug.
+
+Testes: nenhum teste novo (mudanca e de conteudo, nao de logica); toda alteracao em `.test.ts` que comparava string literal foi ajustada junto pelo mesmo script, mantendo fonte e asserção sincronizados.
+
+Validacoes: pnpm test (70 suites, fail 0) / typecheck / lint = 0. `supabase/functions/create-asset-signed-url/index.ts` tambem corrigido (mesmo aviso da Etapa 183: exige redeploy manual, fora do CI/CD atual).
+
+Commit: `fix: normalize pt-BR accents across app copy, comments and edge function messages`

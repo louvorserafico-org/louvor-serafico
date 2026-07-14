@@ -1,11 +1,11 @@
-// Conteudo curado do santoral: o primeiro bloco historico de cada santo, extraido e
-// revisado do `santoral-completo.pdf` (Proprio da Familia Franciscana). Storage LOCAL.
+// Conteúdo curado do santoral: o primeiro bloco historico de cada santo, extraido e
+// revisado do `santoral-completo.pdf` (Próprio da Família Franciscana). Storage LOCAL.
 //
-// Regra: apenas entradas `curated` sao publicadas; `draft` fica retido ate revisao
-// editorial. Piloto (Etapa 155): janeiro. Extracao em lote nas etapas seguintes.
+// Regra: apenas entradas `curated` são publicadas; `draft` fica retido até revisão
+// editorial. Piloto (Etapa 155): janeiro. Extração em lote nas etapas seguintes.
 //
 // Cada `saintId` deve existir no indice (`santoral-index-2026.ts`); o teste garante
-// que nao ha conteudo orfao.
+// que não há conteúdo órfão.
 
 export type SaintContentStatus = "curated" | "draft";
 
@@ -345,7 +345,7 @@ const saintContents: SaintContent[] = [
   },
   {
     saintId: "saint-07-28-bem-aventurada-maria-teresa-kowalska-virgem",
-    shortHistory: "Nasceu em Varsóvia (Polônia), em 1902. Recebeu o hábito das Monjas Clarissas Capuchinhas no convento de Przasnysz, em 12 de agosto de 1923. No ano seguinte, em 15 de agosto de 1924, emitiu os votos simples e, em 1927, os perpétuos. Não obstante a doença da qual foi acometida, ela foi sempre muito afável com todos, distinguindo-se pelo espírito de oração e pelo trabalho. Em 2 de abril de 1941, os alemães invadiram",
+    shortHistory: "Nasceu em Varsóvia (Polônia), em 1902. Recebeu o hábito das Monjas Clarissas Capuchinhas no convento de Przasnysz, em 12 de agosto de 1923. No ano seguinte, em 15 de agosto de 1924, emitiu os votos simples e, em 1927, os perpétuos. Não obstante a doença da qual foi acometida, ela foi sempre muito afável com todos, distinguindo-se pelo espírito de oração e pelo trabalho. Em 2 de abril de 1941, os alémães invadiram",
     status: "curated",
   },
   {
@@ -589,7 +589,7 @@ export function getCuratedSaintContents(): SaintContent[] {
   return saintContents.filter((content) => content.status === "curated");
 }
 
-// Fila de revisao: entradas ainda com status draft (vazia quando tudo esta curado).
+// Fila de revisão: entradas ainda com status draft (vazia quando tudo está curado).
 export function getDraftSaintContents(): SaintContent[] {
   return saintContents.filter((content) => content.status === "draft");
 }

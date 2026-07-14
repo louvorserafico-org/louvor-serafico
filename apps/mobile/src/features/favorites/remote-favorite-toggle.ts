@@ -28,7 +28,7 @@ export async function toggleRemoteFavorite(
 
   if (!input.accessToken) {
     return {
-      message: "Sessao Supabase necessaria para sincronizar favoritos remotos.",
+      message: "Sessão Supabase necessária para sincronizar favoritos remotos.",
       ok: false,
     };
   }

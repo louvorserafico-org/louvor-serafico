@@ -22,7 +22,7 @@ export function buildHomeSummary(input: HomeSummaryInput): HomeSummary {
   if (input.day.kind === "liturgical_day_without_repertoire") {
     return {
       actionLabel: "Ver dias preparados",
-      helperText: "Ainda nao ha sugestoes musicais para este dia.",
+      helperText: "Ainda não há sugestões musicais para este dia.",
       href: "/calendario",
       premiumText: "",
       title: "Sem roteiro preparado",
@@ -32,7 +32,7 @@ export function buildHomeSummary(input: HomeSummaryInput): HomeSummary {
   if (input.day.kind !== "has_repertoire" || !input.celebration) {
     return {
       actionLabel: "Ver dias preparados",
-      helperText: "Ainda nao ha sugestoes musicais para este dia.",
+      helperText: "Ainda não há sugestões musicais para este dia.",
       href: "/calendario",
       premiumText: "",
       title: "Sem roteiro preparado",
@@ -47,7 +47,7 @@ export function buildHomeSummary(input: HomeSummaryInput): HomeSummary {
   if (input.session.status === "authenticated") {
     return {
       actionLabel: "Ver roteiro",
-      helperText: `${input.celebration.recommendations.length} cantos sugeridos para a celebracao de hoje.`,
+      helperText: `${input.celebration.recommendations.length} cantos sugeridos para a celebração de hoje.`,
       href: `/celebracoes/${input.celebration.slug}`,
       premiumText,
       title: input.celebration.title,
@@ -56,7 +56,7 @@ export function buildHomeSummary(input: HomeSummaryInput): HomeSummary {
 
   return {
     actionLabel: "Entrar para ver materiais",
-    helperText: `${input.celebration.recommendations.length} cantos sugeridos ja podem ser consultados hoje.`,
+    helperText: `${input.celebration.recommendations.length} cantos sugeridos já podem ser consultados hoje.`,
     href: "/entrar",
     premiumText,
     title: input.celebration.title,

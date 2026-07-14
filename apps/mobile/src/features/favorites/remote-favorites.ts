@@ -27,7 +27,7 @@ export async function fetchRemoteFavorites(
 
   if (!accessToken) {
     return {
-      message: "Sessao Supabase necessaria para ler favoritos remotos.",
+      message: "Sessão Supabase necessária para ler favoritos remotos.",
       songIds: [],
       status: "not_authenticated",
     };
@@ -45,7 +45,7 @@ export async function fetchRemoteFavorites(
 
     if (errorBody.message?.includes("public.favorite_songs")) {
       return {
-        message: "Tabela remota favorite_songs ainda nao existe no projeto.",
+        message: "Tabela remota favorite_songs ainda não existe no projeto.",
         songIds: [],
         status: "error",
       };

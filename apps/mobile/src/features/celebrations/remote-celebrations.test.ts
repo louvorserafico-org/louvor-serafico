@@ -14,7 +14,7 @@ describe("remote celebrations", () => {
               date_label: "03 de janeiro",
               id: "celebration-1",
               slug: "santissimo-nome-de-jesus",
-              title: "Missa do Santissimo Nome de Jesus",
+              title: "Missa do Santíssimo Nome de Jesus",
             },
           ]),
           { status: 200 },
@@ -32,10 +32,10 @@ describe("remote celebrations", () => {
           recommendations: [],
           slug: "santissimo-nome-de-jesus",
           songs: [],
-          title: "Missa do Santissimo Nome de Jesus",
+          title: "Missa do Santíssimo Nome de Jesus",
         },
       ],
-      message: "Calendario remoto carregado.",
+      message: "Calendário remoto carregado.",
       status: "ready",
     });
   });
@@ -45,7 +45,7 @@ describe("remote celebrations", () => {
 
     assert.deepEqual(result, {
       celebrations: [],
-      message: "Configurar Supabase antes da leitura remota de celebracoes.",
+      message: "Configurar Supabase antes da leitura remota de celebrações.",
       status: "not_configured",
     });
   });
@@ -65,7 +65,7 @@ describe("remote celebrations", () => {
 
     assert.deepEqual(result, {
       celebrations: [],
-      message: "Tabela remota celebrations ainda nao existe no projeto.",
+      message: "Tabela remota celebrations ainda não existe no projeto.",
       status: "error",
     });
   });

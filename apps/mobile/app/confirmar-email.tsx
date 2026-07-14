@@ -21,7 +21,7 @@ export default function ConfirmEmailScreen() {
 
       <View style={styles.card}>
         <EditorialSectionHeader
-          eyebrow="Proximo passo"
+          eyebrow="Próximo passo"
           subtitle="Depois de confirmar o email, volte para o app e entre com a mesma conta."
           title="Continuar"
         />
