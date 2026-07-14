@@ -130,20 +130,32 @@ function TransitoScreen({ title }: { title: string }) {
       <PageHeader
         eyebrow="Trânsito"
         title="Celebração do Trânsito de São Francisco"
-        subtitle="Roteiro da vigília na véspera da festa de São Francisco de Assis, 3 de outubro."
+        subtitle="I Vésperas (04 de outubro) seguidas da celebração dramatizada do Transitus, tradicionalmente rezada na véspera, 03 de outubro."
       />
 
-      {transitoSections.map((section) => (
-        <View key={section.id} style={styles.card}>
-          <EditorialSectionHeader eyebrow="Roteiro" title={section.title} />
-          {section.lines.map((line, index) => (
-            <View key={`${section.id}-${index}`} style={styles.transitoLine}>
-              {line.speaker ? <Text style={styles.speakerLabel}>{line.speaker}</Text> : null}
-              <Text style={styles.prayerText}>{line.text}</Text>
+      {transitoSections.map((section, index) => {
+        const previousPart = transitoSections[index - 1]?.part;
+        const isFirstOfPart = section.part !== previousPart;
+
+        return (
+          <View key={section.id} style={styles.sectionWrapper}>
+            {isFirstOfPart ? (
+              <Text style={styles.partHeading}>
+                {section.part === "vesperas" ? "I Vésperas de São Francisco" : "Transitus (celebração dramatizada)"}
+              </Text>
+            ) : null}
+            <View style={styles.card}>
+              <EditorialSectionHeader eyebrow="Roteiro" title={section.title} />
+              {section.lines.map((line, lineIndex) => (
+                <View key={`${section.id}-${lineIndex}`} style={styles.transitoLine}>
+                  {line.speaker ? <Text style={styles.speakerLabel}>{line.speaker}</Text> : null}
+                  <Text style={styles.prayerText}>{line.text}</Text>
+                </View>
+              ))}
             </View>
-          ))}
-        </View>
-      ))}
+          </View>
+        );
+      })}
     </ScrollView>
   );
 }
@@ -223,5 +235,15 @@ const styles = StyleSheet.create({
   },
   transitoLine: {
     gap: spacing.xs,
+  },
+  partHeading: {
+    color: colors.accentStrong,
+    fontFamily: fontFamilies.display,
+    fontSize: typography.title,
+    fontWeight: "700",
+    paddingTop: spacing.md,
+  },
+  sectionWrapper: {
+    gap: spacing.md,
   },
 });

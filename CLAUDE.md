@@ -7010,3 +7010,23 @@ Corrigido, mesmo padrao ja usado na Home (Etapa 172/173): cada devocao virou blo
 Validacoes: rtk pnpm test/typecheck/lint = 0.
 
 Commit: `fix(mobile): fix cramped devotions hub list spacing`
+
+## Etapa 178 - Transito de Sao Francisco: conteudo oficial completo
+
+Fonte: 3 PDFs em `frei-luis/transito são francisco/` (usuario). Analisados os tres:
+1. "I Vesperas de Sao Francisco de Assis" - Liturgia das Horas oficial (Proprio da Conferencia da Familia Franciscana do Brasil), 04/out.
+2. "Transitus - Forma Abreviada" - celebracao dramatizada tradicional (Animador, Francisco, Frei Angelo, Jacoba), 03/out a noite.
+3. "Transitus - Forma Longa" - mesma dramatizacao + bloco extra sobre as 3 Ordens franciscanas; redundante para o resto.
+
+Ordem correta identificada: I Vesperas (oracao oficial) primeiro, Transitus dramatizado em seguida (mesma noite). Usada a forma abreviada como base do Transitus (mais adequada a leitura no app); a longa nao foi usada por duplicar quase integralmente a abreviada.
+
+Feito:
+- `transito-content.ts` reescrito por completo: 20 secoes (7 de I Vesperas + 13 do Transitus), cada uma com `part: "vesperas" | "transitus"`. Conteudo muito mais completo e fiel que a versao anterior (extraida de HTML de paroquia): inclui hino, 3 antifonas+salmos completos (111, 147, 141), leitura, testamento de Sena, dialogo com Jacoba/Frei Angelo, cantico das criaturas completo, carta de Frei Elias na integra, preces, oracao final.
+- `[slug].tsx` (TransitoScreen): agrupa secoes por `part`, com cabecalho de parte ("I Vesperas de Sao Francisco" / "Transitus (celebracao dramatizada)") antes do primeiro card de cada grupo.
+- `devotions.ts`: descricao do item atualizada.
+
+Testes (`transito-content.test.ts`, 4/4): ordem exata das 20 secoes; vesperas sempre antes de transitus; ids unicos e linhas nao-vazias; dialogo dramatizado (Jacoba, Testamento) preservado verbatim.
+
+Validacoes: rtk pnpm test/typecheck/lint = 0.
+
+Commit: `feat(mobile): replace transitus content with full official Vesperas and Transitus script`

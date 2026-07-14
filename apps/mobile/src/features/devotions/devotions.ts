@@ -24,7 +24,7 @@ const devotionItems: DevotionItem[] = [
     title: "Novena de São Francisco",
   },
   {
-    description: "Memória da passagem (trânsito) de São Francisco de Assis.",
+    description: "I Vésperas e celebração dramatizada da passagem de São Francisco de Assis.",
     slug: "transito-sao-francisco",
     status: "available",
     title: "Trânsito de São Francisco",
