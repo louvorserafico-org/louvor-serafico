@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 
+import { FadeInView } from "@/components/FadeInView";
 import { colors, fontFamilies, spacing, typography } from "@/theme/tokens";
 
 type PageHeaderProps = {
@@ -10,11 +11,11 @@ type PageHeaderProps = {
 
 export function PageHeader({ eyebrow, title, subtitle }: PageHeaderProps) {
   return (
-    <View style={styles.container}>
+    <FadeInView style={styles.container}>
       <Text style={styles.eyebrow}>{eyebrow}</Text>
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.subtitle}>{subtitle}</Text>
-    </View>
+    </FadeInView>
   );
 }
 

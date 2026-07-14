@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.background,
     gap: spacing.lg,
-    padding: spacing.lg,
+    padding: spacing.xl,
     paddingBottom: spacing.xxl,
   },
   inlineLink: {

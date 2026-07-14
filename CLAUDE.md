@@ -7058,3 +7058,21 @@ Testes (`devotions.test.ts`): atualizados para 2 itens (`novena-sao-francisco`, 
 Validacoes: pnpm test/typecheck/lint = 0.
 
 Commit: `feat(mobile): remove devocional item from devotions hub`
+
+## Etapa 181 - Padronizacao de espacamento + transicoes + loading TAU
+
+Auditoria de espacamento em todas as ~20 telas: `card` (padding lg, gap sm, radius xl, border) e `container` (padding xl, paddingBottom xxl) ja eram consistentes na maioria. Dois desvios encontrados e corrigidos:
+- `(tabs)/index.tsx`: usava `paddingHorizontal: lg` + `paddingTop: xl` (mais estreito que as demais telas) -> padronizado para `padding: xl`.
+- `(tabs)/perfil.tsx`: usava `padding: lg` -> padronizado para `padding: xl`.
+
+Componentes novos:
+- `FadeInView.tsx` - wrapper de entrada (fade + translateY 12px, 360ms) via `Animated` nativo (sem reanimated, sem dependencia nova). Aplicado dentro de `PageHeader`, que e usado em praticamente todas as telas - toda tela ganha transicao de entrada de graca.
+- `AnimatedPressable.tsx` - Pressable com scale-down sutil (0.96) no press. Aplicado no botao de CTA do Hero (Home) e nos chips de dia da Novena (pontos de maior interacao).
+- `TauLoading.tsx` - loading com o elemento TAU (`assets/tau-element.png`, mesmo padrao do `OrnamentalDivider`) girando lentamente + 3 pontinhos pulsando em sequencia, com label opcional. Substitui `ActivityIndicator` no visualizador de PDF (unico loading full de tela de usuario final na base).
+- `_layout.tsx` (Stack raiz): `animation: "fade_from_bottom"`, `animationDuration: 220` - transicao de navegacao mais suave entre telas empilhadas.
+
+Nao alterado (fora do escopo desta etapa, sem regressao): tabs bottom (React Navigation ja anima por padrao), `SupabaseRemoteStatusCard` (indicador inline pequeno de debug, TAU ficaria pesado ali).
+
+Validacoes: pnpm test/typecheck/lint = 0. Revisao visual pendente no device do Frei (app Expo, sem preview web).
+
+Commit: `feat(mobile): normalize spacing and add TAU loading + entrance/press transitions`

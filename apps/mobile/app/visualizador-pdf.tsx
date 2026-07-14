@@ -1,9 +1,10 @@
 import Constants, { ExecutionEnvironment } from "expo-constants";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useCallback, useEffect, useMemo, useState, type ComponentType } from "react";
-import { ActivityIndicator, Linking, Pressable, StyleSheet, Text, View } from "react-native";
+import { Linking, Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { TauLoading } from "@/components/TauLoading";
 import { buildPdfCacheFileName, resolvePdfViewerSource } from "@/features/assets/pdf-viewer-source";
 import { useSupabaseSession } from "@/features/auth/SupabaseSessionProvider";
 import { supabaseConfig } from "@/services/supabase/client";
@@ -186,18 +187,14 @@ export default function PdfViewerScreen() {
 
             {loadingPdf ? (
               <View style={styles.loadingOverlay}>
-                <ActivityIndicator color={colors.accent} />
-                <Text style={styles.loadingText}>Carregando documento...</Text>
+                <TauLoading label="Carregando documento..." />
               </View>
             ) : null}
           </View>
         ) : (
           <View style={styles.feedbackCard}>
             {state.status === "loading" ? (
-              <>
-                <ActivityIndicator color={colors.accent} />
-                <Text style={styles.feedbackText}>Preparando documento...</Text>
-              </>
+              <TauLoading label="Preparando documento..." />
             ) : (
               <>
                 <Text style={styles.feedbackTitle}>Nao foi possivel abrir aqui</Text>

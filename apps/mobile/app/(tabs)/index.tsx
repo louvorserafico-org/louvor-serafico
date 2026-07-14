@@ -8,6 +8,7 @@ import { Link, router } from "expo-router";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { AnimatedPressable } from "@/components/AnimatedPressable";
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { HomePreparedDayItem } from "@/components/HomePreparedDayItem";
 import { HomeQuickActionCard } from "@/components/HomeQuickActionCard";
@@ -80,9 +81,9 @@ export default function TodayScreen() {
         <Text style={styles.heroText}>{summary.helperText}</Text>
         {summary.premiumText ? <Text style={styles.heroNote}>{summary.premiumText}</Text> : null}
         <Link asChild href={summary.href}>
-          <Pressable style={styles.heroButton}>
+          <AnimatedPressable style={styles.heroButton}>
             <Text style={styles.heroButtonText}>{summary.actionLabel}</Text>
-          </Pressable>
+          </AnimatedPressable>
         </Link>
       </View>
 
@@ -190,9 +191,8 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.background,
     gap: spacing.lg,
+    padding: spacing.xl,
     paddingBottom: spacing.xxl,
-    paddingHorizontal: spacing.lg,
-    paddingTop: spacing.xl,
   },
   footerNote: {
     color: colors.textMuted,

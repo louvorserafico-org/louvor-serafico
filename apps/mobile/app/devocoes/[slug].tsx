@@ -2,6 +2,7 @@ import { Stack, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
+import { AnimatedPressable } from "@/components/AnimatedPressable";
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { PageHeader } from "@/components/PageHeader";
 import { findDevotionBySlug } from "@/features/devotions/devotions";
@@ -85,7 +86,7 @@ function NovenaScreen({ title }: { title: string }) {
       <EditorialSectionHeader eyebrow="Escolha o dia" title="Fato da vida de São Francisco" />
       <View style={styles.dayPicker}>
         {novenaDays.map((item) => (
-          <Pressable
+          <AnimatedPressable
             key={item.day}
             onPress={() => setSelectedDay(item.day)}
             style={[styles.dayChip, selectedDay === item.day ? styles.dayChipActive : undefined]}
@@ -93,7 +94,7 @@ function NovenaScreen({ title }: { title: string }) {
             <Text style={[styles.dayChipText, selectedDay === item.day ? styles.dayChipTextActive : undefined]}>
               {item.day}º
             </Text>
-          </Pressable>
+          </AnimatedPressable>
         ))}
       </View>
 
