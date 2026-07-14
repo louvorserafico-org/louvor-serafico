@@ -7,11 +7,14 @@ import { PageHeader } from "@/components/PageHeader";
 import { findDevotionBySlug } from "@/features/devotions/devotions";
 import {
   findNovenaDay,
-  novenaBlessing,
-  novenaDailyPrayer,
+  novenaClosingVersicle,
+  novenaCollectPrayer,
   novenaDays,
-  novenaPrayerOfFrancis,
-  novenaSteps,
+  novenaFinalPrayer,
+  novenaLadainhaClosing,
+  novenaLadainhaInvocations,
+  novenaReconciliationText,
+  novenaSongs,
 } from "@/features/devotions/novena-content";
 import { transitoSections } from "@/features/devotions/transito-content";
 import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
@@ -70,24 +73,16 @@ function NovenaScreen({ title }: { title: string }) {
       <PageHeader
         eyebrow="Novena"
         title="Novena de São Francisco"
-        subtitle="Nove dias de oração na companhia do Poverello de Assis."
+        subtitle="Rito fora da liturgia da Missa, de 25 de setembro a 3 de outubro, subsídio oficial da Província São Maximiliano Maria Kolbe do Brasil para os 800 anos da páscoa do Poverello de Assis."
       />
 
       <View style={styles.card}>
-        <EditorialSectionHeader eyebrow="Passo a passo" title="Como rezar" />
-        {novenaSteps.map((step, index) => (
-          <Text key={step} style={styles.stepText}>
-            {index + 1}. {step}
-          </Text>
-        ))}
+        <EditorialSectionHeader eyebrow="Todos os dias" title="São Francisco, homem reconciliado" />
+        <Text style={styles.prayerText}>{novenaReconciliationText}</Text>
+        <Text style={styles.prayerText}>{novenaCollectPrayer}</Text>
       </View>
 
-      <View style={styles.card}>
-        <EditorialSectionHeader eyebrow="Todos os dias" title="Oração inicial" />
-        <Text style={styles.prayerText}>{novenaDailyPrayer}</Text>
-      </View>
-
-      <EditorialSectionHeader eyebrow="Escolha o dia" title="Meditação diária" />
+      <EditorialSectionHeader eyebrow="Escolha o dia" title="Fato da vida de São Francisco" />
       <View style={styles.dayPicker}>
         {novenaDays.map((item) => (
           <Pressable
@@ -104,20 +99,52 @@ function NovenaScreen({ title }: { title: string }) {
 
       {day ? (
         <View style={styles.card}>
-          <EditorialSectionHeader eyebrow={`${day.day}º dia`} title="Meditação" />
-          <Text style={styles.prayerText}>{day.meditation}</Text>
-          <Text style={styles.suggestionText}>Sugestão de leitura: {day.suggestion}</Text>
+          <EditorialSectionHeader eyebrow={`${day.day}º dia`} title={day.theme} />
+          <Text style={styles.suggestionText}>{day.reference}</Text>
+          <Text style={styles.prayerText}>{day.reading}</Text>
         </View>
       ) : null}
 
       <View style={styles.card}>
-        <EditorialSectionHeader eyebrow="Oração de São Francisco" title="Instrumento de paz" />
-        <Text style={styles.prayerText}>{novenaPrayerOfFrancis}</Text>
+        <EditorialSectionHeader eyebrow="Anexo A" title="Ladainha de São Francisco" />
+        {novenaLadainhaInvocations.map((line, index) => (
+          <Text key={`${index}-${line}`} style={styles.prayerText}>
+            {line}
+          </Text>
+        ))}
+        {novenaLadainhaClosing.lambOfGod.map((line) => (
+          <Text key={line} style={styles.prayerText}>
+            {line}
+          </Text>
+        ))}
+        <Text style={styles.prayerText}>{novenaLadainhaClosing.versicle}</Text>
+        <Text style={styles.prayerText}>{novenaLadainhaClosing.response}</Text>
+        <Text style={styles.prayerText}>{novenaLadainhaClosing.prayer}</Text>
       </View>
 
       <View style={styles.card}>
-        <EditorialSectionHeader eyebrow="Encerramento" title="Bênção de São Francisco" />
-        <Text style={styles.prayerText}>{novenaBlessing}</Text>
+        <EditorialSectionHeader eyebrow="Rogai por nós" title="Versículo de encerramento" />
+        <Text style={styles.prayerText}>{novenaClosingVersicle.celebrant}</Text>
+        <Text style={styles.prayerText}>{novenaClosingVersicle.people}</Text>
+      </View>
+
+      <View style={styles.card}>
+        <EditorialSectionHeader eyebrow="Encerramento" title="Oração final" />
+        <Text style={styles.prayerText}>{novenaFinalPrayer}</Text>
+      </View>
+
+      <View style={styles.card}>
+        <EditorialSectionHeader eyebrow="Anexo C" title="Cantos de Frei Luís Ventura, OFM Conv." />
+        {novenaSongs.map((song) => (
+          <View key={song.title} style={styles.transitoLine}>
+            <Text style={styles.speakerLabel}>{song.title}</Text>
+            {song.lyrics.map((stanza, index) => (
+              <Text key={`${song.title}-${index}`} style={styles.prayerText}>
+                {stanza}
+              </Text>
+            ))}
+          </View>
+        ))}
       </View>
     </ScrollView>
   );

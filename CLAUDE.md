@@ -7030,3 +7030,21 @@ Testes (`transito-content.test.ts`, 4/4): ordem exata das 20 secoes; vesperas se
 Validacoes: rtk pnpm test/typecheck/lint = 0.
 
 Commit: `feat(mobile): replace transitus content with full official Vesperas and Transitus script`
+
+## Etapa 179 - Novena de Sao Francisco: conteudo oficial 2026
+
+Fonte: `NOVENA DE SAO FRANCISCO DE ASSIS - 2026.pdf` (27 paginas), subsidio oficial da Provincia Sao Maximiliano Maria Kolbe do Brasil (OFM Conv.), Brasilia-DF, 21/05/2026, para o 8o centenario da passagem de Sao Francisco. Extraido via pypdf e lido na integra.
+
+Estrutura da fonte: Apresentacao (contexto/autoria); "Rito Fora da Liturgia da Missa" com 9 dias sob o tema "Sao Francisco, perfeito homem reconciliado" (com Deus, consigo mesmo, com o leproso, com a cruz, com a pobreza, com a obediencia, com a castidade, com as criaturas, com a morte) - cada dia com abertura/saudacao/oracao coletiva identicas e um "Fato da vida de Sao Francisco" (leitura das Fontes Franciscanas) proprio; Anexo A (Ladainha de Sao Francisco, 39 invocacoes + Cordeiro de Deus + versiculo + oracao); Anexo B (rito abreviado dentro da Missa - conteudo redundante com o rito principal, nao modelado separadamente); Anexo C (3 cantos originais de Frei Luis Ventura, OFM Conv.: "Francisco de Assis", "Altissimo, glorioso Deus", "Francisco Serafim do amor").
+
+Decisao: o app tinha uma novena simplificada anterior (9 meditacoes/sugestoes de leitura biblica, sem fonte oficial identificada) - substituida integralmente pelo rito oficial 2026. Anexo B nao replicado por ser um resumo do mesmo rito (evita duplicacao, mesmo padrao usado na Etapa 178 para a forma longa do Transitus).
+
+Feito:
+- `novena-content.ts` reescrito por completo: `novenaDays` (9 dias, cada um com `theme`, `reference` da fonte franciscana e `reading` verbatim), textos do rito comuns a todos os dias (`novenaReconciliationText`, `novenaCollectPrayer`, `novenaFinalPrayer`, `novenaClosingVersicle`), Ladainha completa (`novenaLadainhaInvocations` + `novenaLadainhaClosing`) e os 3 cantos do Anexo C (`novenaSongs`).
+- `[slug].tsx` (NovenaScreen): novo layout com texto de reconciliacao + oracao coletiva, seletor de dia (tema + referencia + leitura), card da Ladainha completa, versiculo de encerramento, oracao final e cantos do Anexo C.
+
+Testes (`novena-content.test.ts`, 6/6): ordem e temas dos 9 dias; referencia e leitura nao-vazias por dia; busca por numero do dia; textos comuns do rito verbatim; Ladainha completa (primeira/ultima invocacao, Cordeiro de Deus); 3 cantos com letras nao-vazias.
+
+Validacoes: pnpm test/typecheck/lint = 0 (rtk sem `pnpm` no PATH deste ambiente; executado via `corepack pnpm`).
+
+Commit: `feat(mobile): replace novena content with official 2026 rite from Provincia Sao Maximiliano Kolbe`
