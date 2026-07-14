@@ -55,7 +55,7 @@ export default function SongDetailScreen() {
 
   if (!song) {
     return (
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
         <Stack.Screen options={{ headerShown: true, title: "Musica" }} />
         <PageHeader
           eyebrow="Nao encontrada"
@@ -69,7 +69,7 @@ export default function SongDetailScreen() {
   const materialSections = buildSongMaterialSections(song.assets);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
       <Stack.Screen options={{ headerShown: true, title: "Musica" }} />
       <PageHeader eyebrow="Canto sacro" title={song.title} subtitle={subtitle} />
 
@@ -163,6 +163,10 @@ export default function SongDetailScreen() {
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    backgroundColor: colors.background,
+    flex: 1,
+  },
   asset: {
     backgroundColor: colors.surface,
     borderColor: colors.border,

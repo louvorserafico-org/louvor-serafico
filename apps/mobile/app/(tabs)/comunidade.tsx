@@ -86,7 +86,7 @@ export default function CommunityScreen() {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
       <PageHeader
         eyebrow="Comunidade"
         title="Partilha entre musicos"
@@ -256,6 +256,10 @@ export default function CommunityScreen() {
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    backgroundColor: colors.background,
+    flex: 1,
+  },
   button: {
     alignSelf: "flex-start",
     backgroundColor: colors.olive,

@@ -13,7 +13,7 @@ export default function CelebrationsScreen() {
   );
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
       <Stack.Screen options={{ headerShown: true, title: "Celebrações" }} />
       <PageHeader
         eyebrow={`${celebrations.length} roteiro${celebrations.length === 1 ? "" : "s"}`}
@@ -41,6 +41,10 @@ export default function CelebrationsScreen() {
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    backgroundColor: colors.background,
+    flex: 1,
+  },
   container: {
     backgroundColor: colors.background,
     gap: spacing.lg,

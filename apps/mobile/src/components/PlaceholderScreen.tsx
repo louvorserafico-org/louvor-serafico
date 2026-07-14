@@ -11,7 +11,7 @@ type PlaceholderScreenProps = {
 
 export function PlaceholderScreen({ eyebrow, title, body }: PlaceholderScreenProps) {
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
       <PageHeader eyebrow={eyebrow} title={title} subtitle={body} />
       <View style={styles.panel}>
         <Text style={styles.panelText}>Base reservada para proximo incremento.</Text>
@@ -21,6 +21,10 @@ export function PlaceholderScreen({ eyebrow, title, body }: PlaceholderScreenPro
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    backgroundColor: colors.background,
+    flex: 1,
+  },
   container: {
     backgroundColor: colors.background,
     gap: spacing.lg,

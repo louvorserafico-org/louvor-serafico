@@ -19,7 +19,7 @@ export default function SignInScreen() {
   const overview = buildAuthScreenOverview({ mode: "login" });
 
   return (
-    <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
+    <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" style={styles.screen}>
       <Stack.Screen options={{ headerShown: true, title: "Entrar" }} />
       <View style={styles.heroSection}>
         <EditorialSectionHeader eyebrow="Seja bem-vindo" title="Entrar" />
@@ -115,6 +115,10 @@ function AuthInput(props: ComponentProps<typeof TextInput>) {
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    backgroundColor: colors.background,
+    flex: 1,
+  },
   button: {
     alignSelf: "flex-start",
     backgroundColor: colors.accent,

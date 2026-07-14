@@ -81,7 +81,7 @@ export default function CalendarScreen() {
   const canGoNext = selectedMonth < 12;
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
       <PageHeader eyebrow={overview.eyebrow} title={overview.title} subtitle={subtitle} />
 
       <EditorialSectionHeader
@@ -276,6 +276,10 @@ export default function CalendarScreen() {
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    backgroundColor: colors.background,
+    flex: 1,
+  },
   cardPressed: {
     opacity: 0.82,
   },

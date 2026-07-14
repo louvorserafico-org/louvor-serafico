@@ -42,7 +42,7 @@ export default function TodayScreen() {
     today.kind === "ordinary_day" ? "Dia comum" : todayCelebration ? "Celebracao do dia" : "Memoria liturgica";
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
       <View style={styles.header}>
         <View style={styles.headerTopRow}>
           <Text style={styles.headerSection}>Inicio</Text>
@@ -153,6 +153,10 @@ export default function TodayScreen() {
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    backgroundColor: colors.background,
+    flex: 1,
+  },
   avatarCircle: {
     alignItems: "center",
     backgroundColor: colors.surface,

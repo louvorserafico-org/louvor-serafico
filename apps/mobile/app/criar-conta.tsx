@@ -39,7 +39,7 @@ export default function CreateAccountScreen() {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
+    <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" style={styles.screen}>
       <Stack.Screen options={{ headerShown: true, title: "Nova conta" }} />
       <View style={styles.heroSection}>
         <EditorialSectionHeader eyebrow="Dados principais" title="Nova conta" />
@@ -238,6 +238,10 @@ function ChipSelect({
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    backgroundColor: colors.background,
+    flex: 1,
+  },
   button: {
     alignSelf: "flex-start",
     backgroundColor: colors.accent,

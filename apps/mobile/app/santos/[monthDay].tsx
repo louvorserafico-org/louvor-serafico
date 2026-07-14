@@ -30,7 +30,7 @@ export default function SaintDayScreen() {
 
   if (saints.length === 0) {
     return (
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
         <Stack.Screen options={{ headerShown: true, title: "Santo do dia" }} />
         <PageHeader
           eyebrow="Santoral"
@@ -42,7 +42,7 @@ export default function SaintDayScreen() {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
       <Stack.Screen options={{ headerShown: true, title: "Santo do dia" }} />
       <PageHeader
         eyebrow={resolveDateLabel(monthDay)}
@@ -81,6 +81,10 @@ export default function SaintDayScreen() {
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    backgroundColor: colors.background,
+    flex: 1,
+  },
   card: {
     backgroundColor: colors.surface,
     borderColor: colors.border,

@@ -69,7 +69,7 @@ export default function RepertoireScreen() {
   });
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
       <PageHeader eyebrow={overview.eyebrow} title="Repertorio" subtitle={subtitle} />
 
       <View style={styles.searchBlock}>
@@ -121,6 +121,10 @@ export default function RepertoireScreen() {
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    backgroundColor: colors.background,
+    flex: 1,
+  },
   container: {
     backgroundColor: colors.background,
     gap: spacing.lg,

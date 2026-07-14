@@ -71,7 +71,7 @@ export default function CelebrationDetailScreen() {
     const dayDetail = buildLiturgicalDayDetail(detailDay);
 
     return (
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
         <Stack.Screen options={{ headerShown: true, title: "Celebracao" }} />
         <PageHeader eyebrow={dayDetail.eyebrow} subtitle={dayDetail.helperText} title={dayDetail.title} />
 
@@ -92,7 +92,7 @@ export default function CelebrationDetailScreen() {
 
   if (!celebration) {
     return (
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
         <Stack.Screen options={{ headerShown: true, title: "Celebracao" }} />
         <PageHeader eyebrow="Nao encontrada" subtitle="Celebracao indisponivel." title="Detalhe ausente" />
       </ScrollView>
@@ -100,7 +100,7 @@ export default function CelebrationDetailScreen() {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
       <Stack.Screen options={{ headerShown: true, title: "Celebracao" }} />
       <PageHeader eyebrow={celebration.dateLabel} subtitle={subtitle} title={celebration.title} />
 
@@ -129,6 +129,10 @@ export default function CelebrationDetailScreen() {
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    backgroundColor: colors.background,
+    flex: 1,
+  },
   button: {
     alignSelf: "flex-start",
     backgroundColor: colors.accent,

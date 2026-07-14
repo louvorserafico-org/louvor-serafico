@@ -10,7 +10,7 @@ export default function DevotionsHubScreen() {
   const items = getDevotionItems();
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
       <Stack.Screen options={{ headerShown: true, title: "Devoções" }} />
       <PageHeader
         eyebrow="Devoções"
@@ -44,6 +44,10 @@ export default function DevotionsHubScreen() {
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    backgroundColor: colors.background,
+    flex: 1,
+  },
   action: {
     color: colors.accent,
     fontFamily: fontFamilies.ui,

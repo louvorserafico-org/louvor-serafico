@@ -22,7 +22,7 @@ export default function DevotionScreen() {
 
   if (!devotion) {
     return (
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
         <Stack.Screen options={{ headerShown: true, title: "Devoção" }} />
         <PageHeader
           eyebrow="Devoções"
@@ -35,7 +35,7 @@ export default function DevotionScreen() {
 
   if (devotion.status === "preparing") {
     return (
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
         <Stack.Screen options={{ headerShown: true, title: devotion.title }} />
         <PageHeader eyebrow="Devoção" title={devotion.title} subtitle={devotion.description} />
         <View style={styles.card}>
@@ -65,7 +65,7 @@ function NovenaScreen({ title }: { title: string }) {
   const day = findNovenaDay(selectedDay);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
       <Stack.Screen options={{ headerShown: true, title }} />
       <PageHeader
         eyebrow="Novena"
@@ -125,7 +125,7 @@ function NovenaScreen({ title }: { title: string }) {
 
 function TransitoScreen({ title }: { title: string }) {
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
       <Stack.Screen options={{ headerShown: true, title }} />
       <PageHeader
         eyebrow="Trânsito"
@@ -149,6 +149,10 @@ function TransitoScreen({ title }: { title: string }) {
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    backgroundColor: colors.background,
+    flex: 1,
+  },
   card: {
     backgroundColor: colors.surface,
     borderColor: colors.border,

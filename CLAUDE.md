@@ -6902,3 +6902,13 @@ Testes: 3/3 (multi-santo 07-13 Angelina+Emanuel Ruíz; single 07-10; fallback).
 Validacoes: rtk pnpm test/typecheck/lint = 0.
 
 Commit: `feat(mobile): list all saints of the day on home card`
+
+## Etapa 170 - Fix: fundo branco atras de conteudo curto
+
+Causa sistemica: todo `ScrollView` tinha so `contentContainerStyle` (cor no conteudo), sem `style` proprio. Com conteudo mais curto que a tela, sobrava area sem `flex:1`/background -> fundo padrao (branco) aparecia embaixo.
+
+Corrigido em 20 arquivos (todas as telas + PlaceholderScreen): adicionado `style={styles.screen}` (`flex:1, backgroundColor: colors.background`) em cada ScrollView, junto do `contentContainerStyle` existente.
+
+Validacoes: rtk pnpm test/typecheck/lint = 0.
+
+Commit: `fix(mobile): fill screen background behind short scrollview content`

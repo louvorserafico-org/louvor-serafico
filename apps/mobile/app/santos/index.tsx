@@ -19,7 +19,7 @@ export default function SaintsListScreen() {
   const filtered = useMemo(() => applySaintFilter(catalog, filter), [catalog, filter]);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
       <Stack.Screen options={{ headerShown: true, title: "Santos franciscanos" }} />
       <PageHeader
         eyebrow="Santoral"
@@ -75,6 +75,10 @@ function SaintRow({ isLast, saint }: { isLast: boolean; saint: SaintDay }) {
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    backgroundColor: colors.background,
+    flex: 1,
+  },
   chip: {
     backgroundColor: colors.surfaceMuted,
     borderColor: colors.border,

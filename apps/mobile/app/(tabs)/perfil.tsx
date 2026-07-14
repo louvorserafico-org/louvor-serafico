@@ -30,7 +30,7 @@ export default function ProfileScreen() {
   const isAuthenticated = session.status === "authenticated";
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
       <PageHeader
         eyebrow={isAuthenticated ? "Perfil" : "Conta"}
         title={isAuthenticated ? "Conta e assinatura" : "Conta"}
@@ -125,6 +125,10 @@ export default function ProfileScreen() {
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    backgroundColor: colors.background,
+    flex: 1,
+  },
   actionsCard: {
     backgroundColor: colors.surface,
     borderColor: colors.border,

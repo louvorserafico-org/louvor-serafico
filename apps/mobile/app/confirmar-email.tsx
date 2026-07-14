@@ -11,7 +11,7 @@ export default function ConfirmEmailScreen() {
   const copy = buildEmailConfirmationCopy(params.email ?? "");
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
       <Stack.Screen options={{ headerShown: true, title: "Cadastro" }} />
       <View style={styles.heroSection}>
         <EditorialSectionHeader eyebrow="Cadastro" title={copy.title} />
@@ -34,6 +34,10 @@ export default function ConfirmEmailScreen() {
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    backgroundColor: colors.background,
+    flex: 1,
+  },
   card: {
     backgroundColor: colors.surface,
     borderColor: colors.border,

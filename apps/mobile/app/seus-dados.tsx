@@ -7,7 +7,7 @@ import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens
 
 export default function PersonalDataScreen() {
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
       <Stack.Screen options={{ headerShown: true, title: "Seus dados" }} />
       <PageHeader
         eyebrow="Conta"
@@ -30,6 +30,10 @@ export default function PersonalDataScreen() {
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    backgroundColor: colors.background,
+    flex: 1,
+  },
   card: {
     backgroundColor: colors.surface,
     borderColor: colors.border,

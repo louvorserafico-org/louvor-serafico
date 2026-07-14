@@ -7,7 +7,7 @@ import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens
 
 export default function PrivacyPolicyScreen() {
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
       <Stack.Screen options={{ headerShown: true, title: "Política de privacidade" }} />
       <PageHeader
         eyebrow="Conta"
@@ -30,6 +30,10 @@ export default function PrivacyPolicyScreen() {
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    backgroundColor: colors.background,
+    flex: 1,
+  },
   card: {
     backgroundColor: colors.surface,
     borderColor: colors.border,

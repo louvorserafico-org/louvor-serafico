@@ -17,7 +17,7 @@ export default function PasswordRecoveryScreen() {
   const overview = buildPasswordRecoveryOverview();
 
   return (
-    <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
+    <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" style={styles.screen}>
       <Stack.Screen options={{ headerShown: true, title: "Redefinir senha" }} />
       <PageHeader
         eyebrow="Conta"
@@ -100,6 +100,10 @@ function PasswordInput(props: ComponentProps<typeof TextInput>) {
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    backgroundColor: colors.background,
+    flex: 1,
+  },
   button: {
     alignSelf: "flex-start",
     backgroundColor: colors.accent,
