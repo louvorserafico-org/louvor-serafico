@@ -12,12 +12,6 @@ export type DevotionItem = {
 
 const devotionItems: DevotionItem[] = [
   {
-    description: "Orações diárias e preparatórias para a oração pessoal e comunitária.",
-    slug: "devocional",
-    status: "preparing",
-    title: "Devocional",
-  },
-  {
     description: "Nove dias de oração na companhia de São Francisco de Assis.",
     slug: "novena-sao-francisco",
     status: "available",

@@ -7048,3 +7048,13 @@ Testes (`novena-content.test.ts`, 6/6): ordem e temas dos 9 dias; referencia e l
 Validacoes: pnpm test/typecheck/lint = 0 (rtk sem `pnpm` no PATH deste ambiente; executado via `corepack pnpm`).
 
 Commit: `feat(mobile): replace novena content with official 2026 rite from Provincia Sao Maximiliano Kolbe`
+
+## Etapa 180 - Remove "Devocional" do hub de devocoes
+
+Pedido do Frei Luis: por hora nao sera usado. Removido `devocional` de `devotionItems` em `devotions.ts`. Hub passa a listar apenas Novena e Transito, ambos `available`.
+
+Testes (`devotions.test.ts`): atualizados para 2 itens (`novena-sao-francisco`, `transito-sao-francisco`), ambos `available`.
+
+Validacoes: pnpm test/typecheck/lint = 0.
+
+Commit: `feat(mobile): remove devocional item from devotions hub`
