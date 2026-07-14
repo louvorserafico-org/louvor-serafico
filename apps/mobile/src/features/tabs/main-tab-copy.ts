@@ -4,10 +4,10 @@ export function buildTodayTabSubtitle(isAuthenticated: boolean): string {
     : "Roteiro litúrgico-musical de hoje, com entrada rapida para abrir conta e continuar.";
 }
 
-export function buildCommunityTabSubtitle(canComment: boolean): string {
-  return canComment
-    ? "Leia experiencias do ministério e deixe a sua quando desejar."
-    : "Entre na conta para acompanhar partilhas e registrar a sua com serenidade.";
+export function buildCommunityTabSubtitle(isAuthenticated: boolean): string {
+  return isAuthenticated
+    ? "Publique sua partilha com o ministério e leia as demais na lista de partilhas públicas."
+    : "Veja partilhas públicas do ministério e entre na conta para publicar a sua.";
 }
 
 export function buildProfileTabSubtitle(isAuthenticated: boolean): string {

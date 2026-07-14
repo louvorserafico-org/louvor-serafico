@@ -22,11 +22,11 @@ describe("main tab copy", () => {
   it("builds community subtitle", () => {
     assert.equal(
       buildCommunityTabSubtitle(true),
-      "Leia experiencias do ministério e deixe a sua quando desejar.",
+      "Publique sua partilha com o ministério e leia as demais na lista de partilhas públicas.",
     );
     assert.equal(
       buildCommunityTabSubtitle(false),
-      "Entre na conta para acompanhar partilhas e registrar a sua com serenidade.",
+      "Veja partilhas públicas do ministério e entre na conta para publicar a sua.",
     );
   });
 

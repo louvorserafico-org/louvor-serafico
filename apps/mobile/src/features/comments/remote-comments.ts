@@ -8,6 +8,7 @@ type RemoteCommentRow = {
     date_label?: string | null;
     title?: string | null;
   } | null;
+  created_at?: string | null;
   id: string;
   profiles?: {
     display_name?: string | null;
@@ -35,7 +36,7 @@ export async function fetchRemoteComments(
   }
 
   const response = await fetchImpl(
-    `${url}/rest/v1/comments?select=id,body,profiles(display_name),celebrations(title,date_label)&limit=20`,
+    `${url}/rest/v1/comments?select=id,body,created_at,profiles(display_name),celebrations(title,date_label)&order=created_at.desc&limit=50`,
     {
     headers: {
       apikey: publicKey,
@@ -71,6 +72,7 @@ export async function fetchRemoteComments(
       body: row.body,
       celebrationDateLabel: row.celebrations?.date_label ?? undefined,
       celebrationTitle: row.celebrations?.title ?? undefined,
+      createdAt: row.created_at ?? undefined,
       id: row.id,
       scope: "community",
     })),

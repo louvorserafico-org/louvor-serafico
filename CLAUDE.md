@@ -7130,3 +7130,32 @@ Testes: nenhum teste novo (mudanca e de conteudo, nao de logica); toda alteracao
 Validacoes: pnpm test (70 suites, fail 0) / typecheck / lint = 0. `supabase/functions/create-asset-signed-url/index.ts` tambem corrigido (mesmo aviso da Etapa 183: exige redeploy manual, fora do CI/CD atual).
 
 Commit: `fix: normalize pt-BR accents across app copy, comments and edge function messages`
+
+## Etapa 185 - Partilhas: bug de login + tela publica de leitura
+
+Pedido do Frei: (1) SQL pra limpar partilhas existentes; (2) tela Comunidade mostrava "Entrar para participar" mesmo logado; (3) usuario logado deveria ter um botao "Ler partilhas publicas" levando a uma tela dedicada em lista; usuario deslogado deveria continuar vendo o feed publico (como "avaliacoes") na propria aba, junto com o aviso de login.
+
+Decisao (validada com o Frei via pergunta): a tela dedicada mostra **todas** as partilhas publicas (nao so as do usuario logado - o pedido original tinha uma contradicao entre "publicas" e "so as dele", resolvida a favor de "publicas").
+
+Causa raiz do bug de login: `canComment` fazia OR entre duas fontes de verdade - `useSessionPreview()` (sistema de preview local falso, usado em outras telas para demo/paywall) e `useSupabaseSession()` (sessao real). Ambiguidade entre as duas era a superficie mais provavel do bug. Removida a dependencia do preview falso desta tela; `isAuthenticated` passa a vir exclusivamente de `supabaseSession.status === "authenticated"`, mesmo padrao ja usado (e funcionando) em `perfil.tsx`.
+
+Feito:
+- `community-access.ts` simplificado: de 3 estados (`remote`/`local`/`blocked`) pra 2 (`authenticated`/`guest`), input agora e so `{ isAuthenticated }`. O estado "local" (partilha salva somente no aparelho, sem conta) foi removido - nao fazia sentido dentro do novo fluxo so-autenticado.
+- `comment-store.ts` / `remote-comments.ts`: campo `createdAt` adicionado (novo `created_at` no select do PostgREST) pra exibir data de publicacao nas partilhas. Select tambem ganhou `order=created_at.desc&limit=50` (antes: sem ordenacao, limit 20).
+- `comment-date.ts` (novo, testado): `formatCommentDate(iso)` formata timestamp ISO em data pt-BR ("03 de janeiro de 2026"), retorna `null` pra valor ausente/invalido.
+- `apps/mobile/app/partilhas/index.tsx` (nova rota `/partilhas`): lista publica de partilhas em cards (box com eyebrow, repertorio vinculado, autor, corpo completo, data). Usa `TauLoading` no carregamento. Acessivel a qualquer usuario (RLS de `comments` ja permite leitura anonima de linhas `status = 'visible'` - nenhuma migration nova necessaria).
+- `comunidade.tsx` reescrito: usuario autenticado ve o formulario de nova partilha + botao "Ler partilhas publicas" (`AnimatedPressable` -> `/partilhas`), sem mais o feed inline. Usuario deslogado ve o aviso de login + o feed publico inline (mesmo card style de antes, agora direto de `remoteState.comments`, sem mais o merge com comentarios locais via `useCommentsPreview`/`resolveCommentFeedSource`).
+- `main-tab-copy.ts`: `buildCommunityTabSubtitle` reescrito pros 2 novos estados (renomeado param `canComment` -> `isAuthenticated`).
+
+Nao removido (fora do escopo, sem uso mas sem quebra): `CommentsProvider.tsx`, `comment-feed-source.ts`, `SessionProvider.tsx` (preview falso) - continuam montados globalmente e usados por outras telas (`musicas/[slug].tsx`, cards de paywall). So pararam de ser consumidos por `comunidade.tsx`.
+
+Testes: `community-access.test.ts` reescrito (2 casos). `comment-date.test.ts` novo (2 casos, registrado no `test` script do `package.json` - lista explicita, nao glob). `remote-comments.test.ts` atualizado com `created_at`/`createdAt`. `main-tab-copy.test.ts` atualizado com a nova copy.
+
+Validacoes: pnpm test (71 suites, fail 0) / typecheck / lint = 0.
+
+SQL de limpeza (rodar manualmente no SQL Editor do Supabase - fora do escopo de migration versionada, e uma acao pontual):
+```sql
+delete from public.comments;
+```
+
+Commit: `feat(mobile): split public partilhas into dedicated screen and fix login-gated access`

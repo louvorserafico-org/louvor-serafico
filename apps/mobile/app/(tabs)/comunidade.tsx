@@ -4,16 +4,15 @@ import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-
 import { SafeAreaView } from "react-native-safe-area-context";
 import { getInitialCelebrationCatalog } from "@louvor-serafico/shared";
 
+import { AnimatedPressable } from "@/components/AnimatedPressable";
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { PageHeader } from "@/components/PageHeader";
-import { useSessionPreview } from "@/features/auth/SessionProvider";
 import { useSupabaseSession } from "@/features/auth/SupabaseSessionProvider";
 import { resolveCelebrationCatalogSource } from "@/features/celebrations/celebration-catalog-source";
 import { fetchRemoteCelebrations } from "@/features/celebrations/remote-celebrations";
+import { formatCommentDate } from "@/features/comments/comment-date";
 import { buildCommunityAccess } from "@/features/comments/community-access";
-import { resolveCommentFeedSource } from "@/features/comments/comment-feed-source";
 import { buildCommunityRepertoireOptions } from "@/features/comments/community-repertoire";
-import { useCommentsPreview } from "@/features/comments/CommentsProvider";
 import { postRemoteComment } from "@/features/comments/remote-comment-submit";
 import { fetchRemoteComments } from "@/features/comments/remote-comments";
 import { supabaseConfig } from "@/services/supabase/client";
@@ -21,11 +20,8 @@ import { buildCommunityTabSubtitle } from "@/features/tabs/main-tab-copy";
 import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
 
 export default function CommunityScreen() {
-  const { session } = useSessionPreview();
   const { session: supabaseSession } = useSupabaseSession();
-  const { comments, addCommunityComment } = useCommentsPreview();
-  const canComment = session.status === "signed_in" || supabaseSession.status === "authenticated";
-  const hasRemoteSession = supabaseSession.status === "authenticated";
+  const isAuthenticated = supabaseSession.status === "authenticated";
   const [draft, setDraft] = useState("");
   const [submitMessage, setSubmitMessage] = useState("Sua partilha pode fortalecer outros ministérios.");
   const [remoteState, setRemoteState] = useState<Awaited<ReturnType<typeof fetchRemoteComments>>>({
@@ -41,9 +37,8 @@ export default function CommunityScreen() {
     status: "ready",
   });
   const [selectedCelebrationId, setSelectedCelebrationId] = useState<string | null>(null);
-  const canSubmit = canComment && draft.trim().length > 0;
-  const feedSource = useMemo(() => resolveCommentFeedSource(remoteState, comments), [comments, remoteState]);
-  const communityAccess = buildCommunityAccess({ canComment, hasRemoteSession });
+  const canSubmit = isAuthenticated && draft.trim().length > 0;
+  const communityAccess = buildCommunityAccess({ isAuthenticated });
   const celebrationSource = useMemo(
     () => resolveCelebrationCatalogSource(remoteCelebrationsState, getInitialCelebrationCatalog()),
     [remoteCelebrationsState],
@@ -92,16 +87,16 @@ export default function CommunityScreen() {
       <PageHeader
         eyebrow="Comunidade"
         title="Partilha entre músicos"
-        subtitle={buildCommunityTabSubtitle(canComment)}
+        subtitle={buildCommunityTabSubtitle(isAuthenticated)}
       />
 
       <View style={styles.formCard}>
         <EditorialSectionHeader
           eyebrow="Escrever"
-          subtitle={canComment ? submitMessage : communityAccess.helperText}
+          subtitle={isAuthenticated ? submitMessage : communityAccess.helperText}
           title="Nova partilha"
         />
-        {canComment ? (
+        {isAuthenticated ? (
           <View style={styles.repertoireSection}>
             <Text style={styles.repertoireLabel}>Vincular ao repertório</Text>
             <View style={styles.repertoireOptions}>
@@ -152,15 +147,15 @@ export default function CommunityScreen() {
           </View>
         ) : null}
         <TextInput
-          editable={canComment}
+          editable={isAuthenticated}
           multiline
           onChangeText={setDraft}
           placeholder={communityAccess.inputPlaceholder}
           placeholderTextColor={colors.textMuted}
-          style={[styles.input, !canComment ? styles.inputDisabled : undefined]}
+          style={[styles.input, !isAuthenticated ? styles.inputDisabled : undefined]}
           value={draft}
         />
-        {canComment ? (
+        {isAuthenticated ? (
           <Pressable
             disabled={!canSubmit}
             onPress={async () => {
@@ -184,20 +179,6 @@ export default function CommunityScreen() {
                   setSelectedCelebrationId(null);
                   await refreshRemoteComments();
                 }
-
-                return;
-              }
-
-              if (session.status === "signed_in" && draft.trim()) {
-                addCommunityComment({
-                  authorName: session.displayName,
-                  body: draft,
-                  celebrationDateLabel: selectedCelebration?.dateLabel,
-                  celebrationTitle: selectedCelebration?.title,
-                });
-                setSubmitMessage("Partilha guardada neste aparelho.");
-                setDraft("");
-                setSelectedCelebrationId(null);
               }
             }}
             style={[styles.button, !canSubmit ? styles.buttonDisabled : undefined]}
@@ -215,43 +196,59 @@ export default function CommunityScreen() {
         )}
       </View>
 
-      <EditorialSectionHeader
-        eyebrow="Leitura"
-        subtitle="Vozes do ministério reunidas para memória, formação e serviço."
-        title="Partilhas recentes"
-      />
-
-      {feedSource.comments.length > 0 ? (
-        <View style={styles.commentList}>
-          {feedSource.comments.map((comment, index) => (
-            <View
-              key={comment.id}
-              style={[styles.comment, index !== feedSource.comments.length - 1 ? styles.commentBorder : undefined]}
-            >
-              <Text style={styles.commentEyebrow}>
-                {comment.celebrationTitle ? "Repertorio celebrado" : "Partilha"}
-              </Text>
-              {comment.celebrationTitle ? (
-                <Text style={styles.commentLinkedCelebration}>
-                  {comment.celebrationDateLabel ? `${comment.celebrationDateLabel} · ` : ""}
-                  {comment.celebrationTitle}
-                </Text>
-              ) : null}
-              <Text style={styles.commentAuthor}>{comment.authorName}</Text>
-              <Text style={styles.commentText}>{comment.body}</Text>
-            </View>
-          ))}
-        </View>
+      {isAuthenticated ? (
+        <Link asChild href="/partilhas">
+          <AnimatedPressable style={styles.readPublicButton}>
+            <Text style={styles.readPublicButtonText}>Ler partilhas públicas</Text>
+          </AnimatedPressable>
+        </Link>
       ) : (
-        <View style={styles.commentList}>
-          <View style={styles.comment}>
-            <Text style={styles.commentEyebrow}>Comunidade</Text>
-            <Text style={styles.commentAuthor}>A primeira partilha ainda está por chegar</Text>
-            <Text style={styles.commentText}>
-              Quando uma experiencia for publicada, este espaco passara a reunir vozes do ministério.
-            </Text>
-          </View>
-        </View>
+        <>
+          <EditorialSectionHeader
+            eyebrow="Leitura"
+            subtitle="Vozes do ministério reunidas para memória, formação e serviço."
+            title="Partilhas públicas"
+          />
+
+          {remoteState.comments.length > 0 ? (
+            <View style={styles.commentList}>
+              {remoteState.comments.map((comment, index) => (
+                <View
+                  key={comment.id}
+                  style={[
+                    styles.comment,
+                    index !== remoteState.comments.length - 1 ? styles.commentBorder : undefined,
+                  ]}
+                >
+                  <Text style={styles.commentEyebrow}>
+                    {comment.celebrationTitle ? "Repertório celebrado" : "Partilha"}
+                  </Text>
+                  {comment.celebrationTitle ? (
+                    <Text style={styles.commentLinkedCelebration}>
+                      {comment.celebrationDateLabel ? `${comment.celebrationDateLabel} · ` : ""}
+                      {comment.celebrationTitle}
+                    </Text>
+                  ) : null}
+                  <Text style={styles.commentAuthor}>{comment.authorName}</Text>
+                  <Text style={styles.commentText}>{comment.body}</Text>
+                  {formatCommentDate(comment.createdAt) ? (
+                    <Text style={styles.commentDate}>{formatCommentDate(comment.createdAt)}</Text>
+                  ) : null}
+                </View>
+              ))}
+            </View>
+          ) : (
+            <View style={styles.commentList}>
+              <View style={styles.comment}>
+                <Text style={styles.commentEyebrow}>Comunidade</Text>
+                <Text style={styles.commentAuthor}>A primeira partilha ainda está por chegar</Text>
+                <Text style={styles.commentText}>
+                  Quando uma experiência for publicada, este espaço passará a reunir vozes do ministério.
+                </Text>
+              </View>
+            </View>
+          )}
+        </>
       )}
       </ScrollView>
     </SafeAreaView>
@@ -293,6 +290,14 @@ const styles = StyleSheet.create({
   comment: {
     gap: spacing.xs,
     paddingVertical: spacing.md,
+  },
+  commentDate: {
+    color: colors.textMuted,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.tab,
+    fontWeight: "700",
+    paddingTop: spacing.xs,
+    textTransform: "uppercase",
   },
   commentEyebrow: {
     color: colors.gold,
@@ -361,6 +366,20 @@ const styles = StyleSheet.create({
     fontFamily: fontFamilies.body,
     fontSize: typography.caption,
     lineHeight: 20,
+  },
+  readPublicButton: {
+    alignItems: "center",
+    backgroundColor: colors.surface,
+    borderColor: colors.borderStrong,
+    borderRadius: radii.xl,
+    borderWidth: 1,
+    paddingVertical: spacing.md,
+  },
+  readPublicButtonText: {
+    color: colors.accent,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.body,
+    fontWeight: "800",
   },
   repertoireLabel: {
     color: colors.gold,

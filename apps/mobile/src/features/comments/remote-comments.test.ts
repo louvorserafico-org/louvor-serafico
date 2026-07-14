@@ -15,6 +15,7 @@ describe("remote comments", () => {
                 date_label: "03 de janeiro",
                 title: "Missa do Santíssimo Nome de Jesus",
               },
+              created_at: "2026-01-03T12:00:00.000Z",
               id: "comment-1",
               profiles: {
                 display_name: "Coral",
@@ -34,6 +35,7 @@ describe("remote comments", () => {
           body: "Texto remoto",
           celebrationDateLabel: "03 de janeiro",
           celebrationTitle: "Missa do Santíssimo Nome de Jesus",
+          createdAt: "2026-01-03T12:00:00.000Z",
           id: "comment-1",
           scope: "community",
         },

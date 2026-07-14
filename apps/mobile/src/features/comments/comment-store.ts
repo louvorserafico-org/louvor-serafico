@@ -3,6 +3,7 @@ export type LocalComment = {
   body: string;
   celebrationDateLabel?: string;
   celebrationTitle?: string;
+  createdAt?: string;
   id: string;
   scope: "community";
 };
