@@ -2,34 +2,42 @@ import type { LiturgicalDay } from "@louvor-serafico/shared";
 
 import { buildSaintClassification } from "../santoral/saint-detail.ts";
 
-export type HomeSaint = {
+export type HomeSaintEntry = {
   classification: string;
+  name: string;
+};
+
+export type HomeSaint = {
+  description: string;
   eyebrow: string;
   href: string | null;
-  moreCount: number;
+  saints: HomeSaintEntry[];
   status: "saint" | "none";
   title: string;
 };
 
 export function buildHomeSaint(day: LiturgicalDay): HomeSaint {
-  const [primary, ...rest] = day.saints;
+  const [primary] = day.saints;
 
   if (!primary) {
     return {
-      classification: "Acompanhe o calendário seráfico para as próximas memórias franciscanas.",
+      description: "Acompanhe o calendário seráfico para as próximas memórias franciscanas.",
       eyebrow: "Santo do dia",
       href: null,
-      moreCount: 0,
+      saints: [],
       status: "none",
       title: "Sem santo franciscano hoje",
     };
   }
 
   return {
-    classification: buildSaintClassification(primary),
-    eyebrow: "Santo do dia",
+    description: buildSaintClassification(primary),
+    eyebrow: day.saints.length > 1 ? "Santos do dia" : "Santo do dia",
     href: `/santos/${day.monthDay}`,
-    moreCount: rest.length,
+    saints: day.saints.map((saint) => ({
+      classification: buildSaintClassification(saint),
+      name: saint.name,
+    })),
     status: "saint",
     title: primary.name,
   };

@@ -6888,3 +6888,17 @@ Achado nao corrigido (fora do escopo, sinalizado ao usuario): texto curado de "A
 Validacoes: rtk pnpm test/typecheck/lint = 0.
 
 Commit: `fix(mobile): remove route group name leaking into back button`
+
+## Etapa 169 - Home: listar todos os santos do dia
+
+Pedido: quando houver mais de um santo no dia, listar todos no card em vez de "+1".
+
+Feito:
+- `home-saint.ts`: `HomeSaint.saints: HomeSaintEntry[]` (nome+classificacao de cada santo); `description` isolado do titulo (estado sem santo). Removido `moreCount`.
+- `index.tsx`: card renderiza todos os santos com separador quando `saints.length > 1`; caso unico mantem layout anterior.
+
+Testes: 3/3 (multi-santo 07-13 Angelina+Emanuel Ruíz; single 07-10; fallback).
+
+Validacoes: rtk pnpm test/typecheck/lint = 0.
+
+Commit: `feat(mobile): list all saints of the day on home card`

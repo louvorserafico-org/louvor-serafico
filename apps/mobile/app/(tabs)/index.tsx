@@ -76,11 +76,23 @@ export default function TodayScreen() {
         <Link asChild href={homeSaint.href}>
           <Pressable style={styles.saintCard}>
             <Text style={styles.saintEyebrow}>{homeSaint.eyebrow}</Text>
-            <Text style={styles.saintTitle}>{homeSaint.title}</Text>
-            <Text style={styles.saintMeta}>{homeSaint.classification}</Text>
-            <Text style={styles.saintAction}>
-              {homeSaint.moreCount > 0 ? `Ver santo · +${homeSaint.moreCount}` : "Ver santo"}
-            </Text>
+            {homeSaint.saints.length > 1 ? (
+              homeSaint.saints.map((saint, index) => (
+                <View
+                  key={saint.name}
+                  style={index > 0 ? styles.saintListItem : undefined}
+                >
+                  <Text style={styles.saintTitle}>{saint.name}</Text>
+                  <Text style={styles.saintMeta}>{saint.classification}</Text>
+                </View>
+              ))
+            ) : (
+              <>
+                <Text style={styles.saintTitle}>{homeSaint.title}</Text>
+                <Text style={styles.saintMeta}>{homeSaint.description}</Text>
+              </>
+            )}
+            <Text style={styles.saintAction}>Ver santo</Text>
           </Pressable>
         </Link>
       ) : (
@@ -88,7 +100,7 @@ export default function TodayScreen() {
           <Pressable style={styles.saintCard}>
             <Text style={styles.saintEyebrow}>{homeSaint.eyebrow}</Text>
             <Text style={styles.saintTitle}>{homeSaint.title}</Text>
-            <Text style={styles.saintMeta}>{homeSaint.classification}</Text>
+            <Text style={styles.saintMeta}>{homeSaint.description}</Text>
             <Text style={styles.saintAction}>Ver santoral</Text>
           </Pressable>
         </Link>
@@ -264,6 +276,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     gap: spacing.xs,
     padding: spacing.lg,
+  },
+  saintListItem: {
+    borderTopColor: colors.border,
+    borderTopWidth: 1,
+    gap: spacing.xs,
+    paddingTop: spacing.xs,
   },
   saintEyebrow: {
     color: colors.gold,
