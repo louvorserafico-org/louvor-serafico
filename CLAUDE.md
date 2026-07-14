@@ -6876,3 +6876,15 @@ Corrigido: entrar, criar-conta, recuperar-senha, confirmar-email, celebracoes/in
 Validacoes: rtk pnpm test/typecheck/lint = 0.
 
 Commit: `fix(mobile): restore back button on pushed screens missing header`
+
+## Etapa 168 - Fix: label "(tabs)" no botao voltar
+
+Causa: nome do grupo de rota `(tabs)` vazava como texto do botao voltar (comportamento padrao do back button com label).
+
+Corrigido globalmente em `_layout.tsx`: `headerBackButtonDisplayMode: "minimal"` + `headerBackTitle: ""` no Stack raiz. Chevron sem label em todas as telas.
+
+Achado nao corrigido (fora do escopo, sinalizado ao usuario): texto curado de "Angelina de Montegiove" corrompido por artefato de regex da extracao em lote (Etapa 156) — precisa remendo pontual no santoral-content.ts.
+
+Validacoes: rtk pnpm test/typecheck/lint = 0.
+
+Commit: `fix(mobile): remove route group name leaking into back button`
