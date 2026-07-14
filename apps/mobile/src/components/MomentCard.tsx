@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     padding: spacing.md,
     shadowColor: colors.ink,
     shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.3,
     shadowRadius: 14,
   },
   content: {

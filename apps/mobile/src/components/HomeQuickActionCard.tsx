@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.sm,
     shadowColor: colors.ink,
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.03,
+    shadowOpacity: 0.3,
     shadowRadius: 10,
   },
   subtitle: {

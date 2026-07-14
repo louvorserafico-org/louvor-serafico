@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     padding: spacing.lg,
     shadowColor: colors.ink,
     shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.04,
+    shadowOpacity: 0.3,
     shadowRadius: 18,
   },
   helperText: {

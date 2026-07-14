@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     padding: spacing.lg,
     shadowColor: colors.ink,
     shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.06,
+    shadowOpacity: 0.3,
     shadowRadius: 16,
   },
   buttonRow: {

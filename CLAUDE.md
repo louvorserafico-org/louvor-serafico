@@ -6804,3 +6804,22 @@ Sugestao de commit:
 ## Proxima Etapa Planejada
 
 Etapa 164 - Revisar telas principais (Home, Calendario, Repertorio, Comunidade, Perfil) com a nova paleta: hierarquia, contraste e responsividade mobile fina.
+
+## Etapa 164 - Ajuste fino telas principais (dark)
+
+Feito:
+- Sombras invisiveis em dark (shadowOpacity 0.03-0.08 sobre preto) bumped para 0.3 em 15 arquivos (Home, Calendario, Repertorio, Comunidade, auth, santos, cards).
+- Telas ja usavam tokens; hierarquia/contraste ja corretos pos-163.
+
+Validacoes: rtk pnpm test/typecheck/lint = 0.
+
+DoD:
+- [x] Sombras visiveis em dark.
+- [x] Typecheck/lint limpos.
+- [ ] Revisao visual device (usuario).
+
+Commit: `fix(mobile): make card shadows visible on dark theme`
+
+## Proxima Etapa
+
+Etapa 165 - Filtro por categoria do santoral (antiga 163).
