@@ -13,6 +13,7 @@ export type HomeSummaryInput = {
 export type HomeSummary = {
   actionLabel: string;
   helperText: string;
+  href: string;
   premiumText: string;
   title: string;
 };
@@ -22,6 +23,7 @@ export function buildHomeSummary(input: HomeSummaryInput): HomeSummary {
     return {
       actionLabel: "Ver dias preparados",
       helperText: "Ainda nao ha sugestoes musicais para este dia.",
+      href: "/calendario",
       premiumText: "",
       title: "Sem roteiro preparado",
     };
@@ -31,6 +33,7 @@ export function buildHomeSummary(input: HomeSummaryInput): HomeSummary {
     return {
       actionLabel: "Ver dias preparados",
       helperText: "Ainda nao ha sugestoes musicais para este dia.",
+      href: "/calendario",
       premiumText: "",
       title: "Sem roteiro preparado",
     };
@@ -45,6 +48,7 @@ export function buildHomeSummary(input: HomeSummaryInput): HomeSummary {
     return {
       actionLabel: "Ver roteiro",
       helperText: `${input.celebration.recommendations.length} cantos sugeridos para a celebracao de hoje.`,
+      href: `/celebracoes/${input.celebration.slug}`,
       premiumText,
       title: input.celebration.title,
     };
@@ -53,6 +57,7 @@ export function buildHomeSummary(input: HomeSummaryInput): HomeSummary {
   return {
     actionLabel: "Entrar para ver materiais",
     helperText: `${input.celebration.recommendations.length} cantos sugeridos ja podem ser consultados hoje.`,
+    href: "/entrar",
     premiumText,
     title: input.celebration.title,
   };

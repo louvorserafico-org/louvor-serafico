@@ -6912,3 +6912,18 @@ Corrigido em 20 arquivos (todas as telas + PlaceholderScreen): adicionado `style
 Validacoes: rtk pnpm test/typecheck/lint = 0.
 
 Commit: `fix(mobile): fill screen background behind short scrollview content`
+
+## Etapa 171 - Redesign hierarquico da Home
+
+Pedido: elementos harmonicos, hierarquia visual clara.
+
+Feito:
+- `home-summary.ts`: `HomeSummary` ganhou `href` (roteiro/entrar/calendario) para CTA real (+test).
+- Hero unico "Hoje": borda superior dourada (destaque), titulo maior, botao real (pill accent) usando `summary.href`/`actionLabel` — antes so tinha texto, sem CTA clicavel.
+- Santo do dia + Devoções unificados em uma lista compacta (`exploreList`, mesmo padrao visual do `preparedList`) em vez de 2 cards grandes redundantes ao hero.
+- Secoes tituladas ("Para hoje", "Navegar") organizam a hierarquia: hero > memoria/oracao > navegacao > roteiros disponiveis.
+- Removidos estilos redundantes (today*, saint*, quickActionsSection); +9 estilos novos (hero*, explore*).
+
+Validacoes: rtk pnpm test/typecheck/lint = 0.
+
+Commit: `feat(mobile): redesign home with clear visual hierarchy`

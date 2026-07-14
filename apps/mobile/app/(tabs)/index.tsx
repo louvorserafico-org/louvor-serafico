@@ -64,64 +64,62 @@ export default function TodayScreen() {
 
       <OrnamentalDivider />
 
-      <View style={styles.todayCard}>
-        <Text style={styles.todayEyebrow}>Hoje</Text>
-        <Text style={styles.todaySupportLabel}>{supportLabel}</Text>
-        <Text style={styles.todayTitle}>{summary.title}</Text>
-        <Text style={styles.todayText}>{summary.helperText}</Text>
-        {summary.premiumText ? <Text style={styles.todayNote}>{summary.premiumText}</Text> : null}
+      <View style={styles.heroCard}>
+        <View style={styles.heroTopRow}>
+          <Text style={styles.heroEyebrow}>Hoje</Text>
+          <Text style={styles.heroSupportLabel}>{supportLabel}</Text>
+        </View>
+        <Text style={styles.heroTitle}>{summary.title}</Text>
+        <Text style={styles.heroText}>{summary.helperText}</Text>
+        {summary.premiumText ? <Text style={styles.heroNote}>{summary.premiumText}</Text> : null}
+        <Link asChild href={summary.href}>
+          <Pressable style={({ pressed }) => [styles.heroButton, pressed ? styles.pressed : undefined]}>
+            <Text style={styles.heroButtonText}>{summary.actionLabel}</Text>
+          </Pressable>
+        </Link>
       </View>
 
-      {homeSaint.href ? (
-        <Link asChild href={homeSaint.href}>
-          <Pressable style={styles.saintCard}>
-            <Text style={styles.saintEyebrow}>{homeSaint.eyebrow}</Text>
-            {homeSaint.saints.length > 1 ? (
-              homeSaint.saints.map((saint, index) => (
-                <View
-                  key={saint.name}
-                  style={index > 0 ? styles.saintListItem : undefined}
-                >
-                  <Text style={styles.saintTitle}>{saint.name}</Text>
-                  <Text style={styles.saintMeta}>{saint.classification}</Text>
-                </View>
-              ))
-            ) : (
-              <>
-                <Text style={styles.saintTitle}>{homeSaint.title}</Text>
-                <Text style={styles.saintMeta}>{homeSaint.description}</Text>
-              </>
-            )}
-            <Text style={styles.saintAction}>Ver santo</Text>
+      <EditorialSectionHeader eyebrow="Para hoje" title="Memória e oração" />
+
+      <View style={styles.exploreList}>
+        <Link asChild href={homeSaint.href ?? "/santos"}>
+          <Pressable style={[styles.exploreRow, styles.exploreRowBorder]}>
+            <View style={styles.exploreCopy}>
+              <Text style={styles.exploreEyebrow}>{homeSaint.eyebrow}</Text>
+              {homeSaint.saints.length > 1 ? (
+                homeSaint.saints.map((saint) => (
+                  <Text key={saint.name} style={styles.exploreTitle}>
+                    {saint.name}
+                  </Text>
+                ))
+              ) : (
+                <>
+                  <Text style={styles.exploreTitle}>{homeSaint.title}</Text>
+                  <Text style={styles.exploreMeta}>{homeSaint.description}</Text>
+                </>
+              )}
+            </View>
+            <Text style={styles.exploreAction}>Ver</Text>
           </Pressable>
         </Link>
-      ) : (
-        <Link asChild href="/santos">
-          <Pressable style={styles.saintCard}>
-            <Text style={styles.saintEyebrow}>{homeSaint.eyebrow}</Text>
-            <Text style={styles.saintTitle}>{homeSaint.title}</Text>
-            <Text style={styles.saintMeta}>{homeSaint.description}</Text>
-            <Text style={styles.saintAction}>Ver santoral</Text>
+
+        <Link asChild href="/devocoes">
+          <Pressable style={styles.exploreRow}>
+            <View style={styles.exploreCopy}>
+              <Text style={styles.exploreEyebrow}>Oração</Text>
+              <Text style={styles.exploreTitle}>Devoções franciscanas</Text>
+              <Text style={styles.exploreMeta}>Devocional, novena e trânsito de São Francisco.</Text>
+            </View>
+            <Text style={styles.exploreAction}>Abrir</Text>
           </Pressable>
         </Link>
-      )}
+      </View>
 
-      <Link asChild href="/devocoes">
-        <Pressable style={styles.saintCard}>
-          <Text style={styles.saintEyebrow}>Oração</Text>
-          <Text style={styles.saintTitle}>Devoções franciscanas</Text>
-          <Text style={styles.saintMeta}>Devocional, novena e trânsito de São Francisco.</Text>
-          <Text style={styles.saintAction}>Abrir devoções</Text>
-        </Pressable>
-      </Link>
-
-      <View style={styles.quickActionsSection}>
-        <Text style={styles.quickActionsTitle}>Acessos rapidos</Text>
-        <View style={styles.quickActions}>
-          <HomeQuickActionCard href="/calendario" subtitle="Celebracoes" title="Calendario" />
-          <HomeQuickActionCard href="/repertorio" subtitle="Cantos" title="Repertorio" />
-          <HomeQuickActionCard href="/comunidade" subtitle="Comunidade" title="Partilha" />
-        </View>
+      <EditorialSectionHeader eyebrow="Navegar" title="Explorar o app" />
+      <View style={styles.quickActions}>
+        <HomeQuickActionCard href="/calendario" subtitle="Celebracoes" title="Calendario" />
+        <HomeQuickActionCard href="/repertorio" subtitle="Cantos" title="Repertorio" />
+        <HomeQuickActionCard href="/comunidade" subtitle="Comunidade" title="Partilha" />
       </View>
 
       <EditorialSectionHeader
@@ -237,6 +235,119 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     textTransform: "uppercase",
   },
+  exploreAction: {
+    color: colors.accent,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
+    paddingLeft: spacing.md,
+  },
+  exploreCopy: {
+    flex: 1,
+    gap: spacing.xs,
+  },
+  exploreEyebrow: {
+    color: colors.gold,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.tab,
+    fontWeight: "800",
+    textTransform: "uppercase",
+  },
+  exploreList: {
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    borderRadius: radii.xl,
+    borderWidth: 1,
+    paddingHorizontal: spacing.md,
+  },
+  exploreMeta: {
+    color: colors.textSecondary,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.caption,
+    lineHeight: 20,
+  },
+  exploreRow: {
+    alignItems: "center",
+    flexDirection: "row",
+    paddingVertical: spacing.md,
+  },
+  exploreRowBorder: {
+    borderBottomColor: colors.border,
+    borderBottomWidth: 1,
+  },
+  exploreTitle: {
+    color: colors.textPrimary,
+    fontFamily: fontFamilies.display,
+    fontSize: typography.lead,
+    fontWeight: "700",
+  },
+  heroButton: {
+    alignItems: "center",
+    alignSelf: "flex-start",
+    backgroundColor: colors.accent,
+    borderRadius: radii.pill,
+    marginTop: spacing.xs,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.sm,
+  },
+  heroButtonText: {
+    color: colors.background,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
+  },
+  heroCard: {
+    backgroundColor: colors.surface,
+    borderColor: colors.borderStrong,
+    borderRadius: radii.xl,
+    borderTopColor: colors.accent,
+    borderTopWidth: 3,
+    borderWidth: 1,
+    gap: spacing.sm,
+    padding: spacing.lg,
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.3,
+    shadowRadius: 18,
+  },
+  heroEyebrow: {
+    color: colors.gold,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
+    textTransform: "uppercase",
+  },
+  heroNote: {
+    color: colors.textMuted,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.caption,
+    lineHeight: 20,
+  },
+  heroSupportLabel: {
+    color: colors.accentStrong,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "700",
+    textTransform: "uppercase",
+  },
+  heroText: {
+    color: colors.textSecondary,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.lead,
+    lineHeight: 26,
+  },
+  heroTitle: {
+    color: colors.textPrimary,
+    fontFamily: fontFamilies.display,
+    fontSize: 30,
+    fontWeight: "700",
+    lineHeight: 36,
+  },
+  heroTopRow: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
   moreButton: {
     alignSelf: "flex-start",
     paddingTop: spacing.xs,
@@ -252,101 +363,11 @@ const styles = StyleSheet.create({
     borderRadius: radii.xl,
     paddingHorizontal: spacing.md,
   },
+  pressed: {
+    opacity: 0.82,
+  },
   quickActions: {
     columnGap: spacing.xs,
     flexDirection: "row",
-  },
-  quickActionsSection: {
-    gap: spacing.sm,
-  },
-  quickActionsTitle: {
-    color: colors.textMuted,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "700",
-    textTransform: "uppercase",
-  },
-  saintAction: {
-    color: colors.accent,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "800",
-    paddingTop: spacing.xs,
-  },
-  saintCard: {
-    backgroundColor: colors.surface,
-    borderColor: colors.border,
-    borderRadius: radii.xl,
-    borderWidth: 1,
-    gap: spacing.xs,
-    padding: spacing.lg,
-  },
-  saintListItem: {
-    borderTopColor: colors.border,
-    borderTopWidth: 1,
-    gap: spacing.xs,
-    paddingTop: spacing.xs,
-  },
-  saintEyebrow: {
-    color: colors.gold,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "800",
-    textTransform: "uppercase",
-  },
-  saintMeta: {
-    color: colors.textSecondary,
-    fontFamily: fontFamilies.body,
-    fontSize: typography.caption,
-    lineHeight: 20,
-  },
-  saintTitle: {
-    color: colors.textPrimary,
-    fontFamily: fontFamilies.display,
-    fontSize: typography.lead,
-    fontWeight: "700",
-  },
-  todayCard: {
-    backgroundColor: colors.surface,
-    borderRadius: radii.xl,
-    gap: spacing.sm,
-    padding: spacing.lg,
-    shadowColor: colors.ink,
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.3,
-    shadowRadius: 18,
-  },
-  todayEyebrow: {
-    color: colors.gold,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "800",
-    textTransform: "uppercase",
-  },
-  todayNote: {
-    color: colors.textMuted,
-    fontFamily: fontFamilies.body,
-    fontSize: typography.caption,
-    lineHeight: 20,
-  },
-  todaySupportLabel: {
-    color: colors.accentStrong,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "700",
-    textTransform: "uppercase",
-  },
-  todayText: {
-    color: colors.textSecondary,
-    fontFamily: fontFamilies.body,
-    fontSize: typography.lead,
-    lineHeight: 28,
-  },
-  todayTitle: {
-    color: colors.textPrimary,
-    fontFamily: fontFamilies.display,
-    fontSize: 34,
-    fontWeight: "700",
-    lineHeight: 40,
   },
 });
