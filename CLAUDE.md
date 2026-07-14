@@ -6960,3 +6960,19 @@ Feito:
 Validacoes: rtk pnpm test/typecheck/lint = 0.
 
 Commit: `feat(mobile): give each saint its own link and fix card spacing`
+
+## Etapa 174 - Refactor visual do Calendario
+
+Pedidos: grade adaptavel por mes (nao fixa em 6 linhas), remover destaque de domingo, revisar cores de destaque (franciscano vs preceito estavam identicas), legenda mais clara e harmonica.
+
+Achados/fixes:
+1. Bug real: `trailingEmptyCells` sempre completava para 42 celulas (6 linhas fixas), sobrando linha(s) invisiveis vazias dependendo do mes. Corrigido: `CalendarMonthView` ganhou `trailingEmptyCellCount` (completa so ate o fim da ultima semana, multiplo de 7) - `calendar-month-view.ts` +test (julho=1 trailing, fevereiro=0 trailing, formula validada).
+2. Destaque de domingo removido: `isSunday()`, `dayCellSunday`, `dayNumberSunday` deletados (nao tem significado liturgico proprio, so causava ruido visual).
+3. Cores duplicadas: `dayCellFranciscan` (borda `colors.accent`) e `dayCellLiturgical` (borda `colors.gold`) eram a MESMA cor (accent===gold no tokens.ts), santo franciscano e preceito ficavam indistinguiveis. Preceito (CNBB, camada complementar) passou a usar borda tracejada `colors.borderStrong` (neutra/secundaria); franciscano mantem o dourado (`colors.accent`, eixo principal); repertorio mantem oliva (prioridade maxima, com preenchimento). Hierarquia visual agora reflete a hierarquia de dominio (repertorio > santo > preceito > comum).
+4. Legenda: virou grid 2 colunas (`flexBasis: 50%`), dot do "Data liturgica" com borda tracejada igual a celula, label esclarecido para "Data liturgica (CNBB)".
+
+Testes (`calendar-month-view.test.ts`): grade completa apenas ate multiplo de 7 (julho trailing=1, fevereiro trailing=0).
+
+Validacoes: rtk pnpm test/typecheck/lint = 0.
+
+Commit: `fix(mobile): adaptive calendar grid, remove sunday highlight, fix color hierarchy`

@@ -74,7 +74,7 @@ export default function CalendarScreen() {
     (_, index) => `empty-${monthView.monthNumber}-${index}`,
   );
   const trailingEmptyCells = Array.from(
-    { length: Math.max(0, 42 - leadingEmptyCells.length - monthView.monthDays.length) },
+    { length: monthView.trailingEmptyCellCount },
     (_, index) => `tail-${monthView.monthNumber}-${index}`,
   );
   const canGoPrev = selectedMonth > 1;
@@ -139,20 +139,18 @@ export default function CalendarScreen() {
               style={[
                 styles.dayCell,
                 styles.dayCellPressable,
-                isSunday(day.isoDate) ? styles.dayCellSunday : undefined,
+                day.kind === "liturgical_day_without_repertoire" ? styles.dayCellLiturgical : undefined,
                 day.kind === "franciscan_saint" ? styles.dayCellFranciscan : undefined,
                 day.kind === "has_repertoire" ? styles.dayCellRepertoire : undefined,
-                day.kind === "liturgical_day_without_repertoire" ? styles.dayCellLiturgical : undefined,
                 day.monthDay === today.monthDay ? styles.dayCellToday : undefined,
               ]}
             >
               <Text
                 style={[
                   styles.dayNumber,
-                  isSunday(day.isoDate) ? styles.dayNumberSunday : undefined,
+                  day.kind === "liturgical_day_without_repertoire" ? styles.dayNumberLiturgical : undefined,
                   day.kind === "franciscan_saint" ? styles.dayNumberFranciscan : undefined,
                   day.kind === "has_repertoire" ? styles.dayNumberRepertoire : undefined,
-                  day.kind === "liturgical_day_without_repertoire" ? styles.dayNumberLiturgical : undefined,
                   day.monthDay === today.monthDay ? styles.dayNumberToday : undefined,
                 ]}
               >
@@ -176,8 +174,8 @@ export default function CalendarScreen() {
             <Text style={styles.legendText}>Santo franciscano</Text>
           </View>
           <View style={styles.legendItem}>
-            <View style={[styles.legendDot, styles.dayCellLiturgical]} />
-            <Text style={styles.legendText}>Data liturgica</Text>
+            <View style={[styles.legendDot, styles.legendDotLiturgical]} />
+            <Text style={styles.legendText}>Data liturgica (CNBB)</Text>
           </View>
           <View style={styles.legendItem}>
             <View style={[styles.legendDot, styles.dayCellToday]} />
@@ -309,7 +307,8 @@ const styles = StyleSheet.create({
   },
   dayCellLiturgical: {
     backgroundColor: colors.surface,
-    borderColor: colors.gold,
+    borderColor: colors.borderStrong,
+    borderStyle: "dashed",
   },
   dayCellPressable: {
     overflow: "hidden",
@@ -317,10 +316,6 @@ const styles = StyleSheet.create({
   dayCellRepertoire: {
     backgroundColor: colors.oliveSoft,
     borderColor: colors.olive,
-  },
-  dayCellSunday: {
-    backgroundColor: colors.surfaceMuted,
-    borderColor: colors.borderStrong,
   },
   dayCellToday: {
     borderColor: colors.textPrimary,
@@ -337,14 +332,10 @@ const styles = StyleSheet.create({
     fontWeight: "800",
   },
   dayNumberLiturgical: {
-    color: colors.gold,
+    color: colors.textSecondary,
   },
   dayNumberRepertoire: {
     color: colors.accent,
-  },
-  dayNumberSunday: {
-    color: colors.textPrimary,
-    fontWeight: "800",
   },
   dayNumberToday: {
     color: colors.textPrimary,
@@ -382,17 +373,25 @@ const styles = StyleSheet.create({
   legend: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: spacing.md,
+    rowGap: spacing.sm,
   },
   legendDot: {
     borderRadius: radii.pill,
+    borderWidth: 1,
     height: 12,
     width: 12,
   },
+  legendDotLiturgical: {
+    backgroundColor: colors.surface,
+    borderColor: colors.borderStrong,
+    borderStyle: "dashed",
+  },
   legendItem: {
     alignItems: "center",
+    flexBasis: "50%",
     flexDirection: "row",
     gap: spacing.xs,
+    paddingRight: spacing.xs,
   },
   legendText: {
     color: colors.textSecondary,
@@ -511,10 +510,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
 });
-
-function isSunday(isoDate: string): boolean {
-  return new Date(`${isoDate}T00:00:00.000Z`).getUTCDay() === 0;
-}
 
 function capitalizeLabel(value: string): string {
   return value.charAt(0).toUpperCase() + value.slice(1);
