@@ -7096,3 +7096,18 @@ Nao alterado (fora do escopo): subtitulo simples de `comunidade.tsx` (usa `resul
 Validacoes: pnpm test (70 suites, fail 0) / typecheck / lint = 0.
 
 Commit: `fix(mobile): translate backend error messages to pt-BR with technical detail`
+
+## Etapa 183 - Visualizador de PDF alinhado aos padroes (Etapas 181/182)
+
+Auditoria pedida pelo Frei na tela `visualizador-pdf.tsx` apos reportar erro de leitura interna no Expo Go (esperado - exige dev build). Revisao encontrou 4 desvios dos padroes recentes:
+
+1. Header custom (`View` com `eyebrow`/`title` proprios) em vez do componente `PageHeader` - perdia a transicao `FadeInView` que todo o resto do app ganhou na Etapa 181. Trocado por `<PageHeader eyebrow={documentLabel} title={screenTitle} subtitle="..."/>`.
+2. Botoes "Tentar novamente" e "Abrir externamente" usavam `Pressable` puro, sem o feedback de toque padronizado - trocados por `AnimatedPressable`.
+3. Estilos mortos (`eyebrow`, `header`, `title`, `loadingText`) sobrando de refactors anteriores (Etapa 181 trocou `ActivityIndicator` por `TauLoading` e nao limpou `loadingText`) - removidos.
+4. `supabase/functions/create-asset-signed-url/index.ts`: `signedUrlError?.message` (erro cru do Supabase Storage, em ingles) vazava para o cliente ao falhar a geracao do link assinado de material premium. Trocado por mensagem fixa em pt-BR "Falha ao gerar link temporario.", consistente com o padrao definido na Etapa 182 (nunca repassar texto tecnico do backend como mensagem principal).
+
+Nota: a mudanca na Edge Function exige redeploy (`supabase functions deploy create-asset-signed-url`) para valer em producao - nao e coberta pelo CI/CD atual (que so testa/builda o app mobile).
+
+Validacoes: pnpm test (70 suites, fail 0) / typecheck / lint = 0.
+
+Commit: `fix(mobile): align PDF viewer with PageHeader/AnimatedPressable standards and translate signed-url error`

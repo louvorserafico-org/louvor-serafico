@@ -86,7 +86,7 @@ Deno.serve(async (request) => {
     .createSignedUrl(asset.storage_path, 300);
 
   if (signedUrlError || !signedUrl?.signedUrl) {
-    return json({ message: signedUrlError?.message ?? "Falha ao gerar link." }, 500);
+    return json({ message: "Falha ao gerar link temporario." }, 500);
   }
 
   return json({

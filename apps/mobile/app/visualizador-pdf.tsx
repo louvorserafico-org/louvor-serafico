@@ -1,9 +1,11 @@
 import Constants, { ExecutionEnvironment } from "expo-constants";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useCallback, useEffect, useMemo, useState, type ComponentType } from "react";
-import { Linking, Pressable, StyleSheet, Text, View } from "react-native";
+import { Linking, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { AnimatedPressable } from "@/components/AnimatedPressable";
+import { PageHeader } from "@/components/PageHeader";
 import { TauLoading } from "@/components/TauLoading";
 import { buildPdfCacheFileName, resolvePdfViewerSource } from "@/features/assets/pdf-viewer-source";
 import { useSupabaseSession } from "@/features/auth/SupabaseSessionProvider";
@@ -150,10 +152,11 @@ export default function PdfViewerScreen() {
       <Stack.Screen options={{ headerShown: true, title: screenTitle }} />
 
       <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.eyebrow}>{documentLabel}</Text>
-          <Text style={styles.title}>{screenTitle}</Text>
-        </View>
+        <PageHeader
+          eyebrow={documentLabel}
+          subtitle="Acompanhe o documento diretamente aqui, sem sair do aplicativo."
+          title={screenTitle}
+        />
 
         {state.status === "ready" && PdfComponent ? (
           <View style={styles.viewerFrame}>
@@ -200,19 +203,19 @@ export default function PdfViewerScreen() {
                 <Text style={styles.feedbackTitle}>Nao foi possivel abrir aqui</Text>
                 <Text style={styles.feedbackText}>{state.status === "error" ? state.message : ""}</Text>
                 <View style={styles.actions}>
-                  <Pressable onPress={() => void loadDocument()} style={styles.primaryButton}>
+                  <AnimatedPressable onPress={() => void loadDocument()} style={styles.primaryButton}>
                     <Text style={styles.primaryButtonText}>Tentar novamente</Text>
-                  </Pressable>
+                  </AnimatedPressable>
 
                   {state.url ? (
-                    <Pressable
+                    <AnimatedPressable
                       onPress={() => {
                         void Linking.openURL(state.url!);
                       }}
                       style={styles.secondaryButton}
                     >
                       <Text style={styles.secondaryButtonText}>Abrir externamente</Text>
-                    </Pressable>
+                    </AnimatedPressable>
                   ) : null}
                 </View>
               </>
@@ -238,13 +241,6 @@ const styles = StyleSheet.create({
     padding: spacing.xl,
     paddingTop: spacing.lg,
   },
-  eyebrow: {
-    color: colors.gold,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "800",
-    textTransform: "uppercase",
-  },
   feedbackCard: {
     alignItems: "flex-start",
     backgroundColor: colors.surface,
@@ -266,12 +262,6 @@ const styles = StyleSheet.create({
     fontSize: typography.heading,
     fontWeight: "700",
   },
-  header: {
-    borderBottomColor: colors.border,
-    borderBottomWidth: 1,
-    gap: spacing.xs,
-    paddingBottom: spacing.md,
-  },
   loadingOverlay: {
     alignItems: "center",
     backgroundColor: "rgba(22, 23, 26, 0.94)",
@@ -282,11 +272,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 0,
     top: 0,
-  },
-  loadingText: {
-    color: colors.textSecondary,
-    fontFamily: fontFamilies.body,
-    fontSize: typography.body,
   },
   primaryButton: {
     backgroundColor: colors.accent,
@@ -319,13 +304,6 @@ const styles = StyleSheet.create({
     fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "700",
-  },
-  title: {
-    color: colors.textPrimary,
-    fontFamily: fontFamilies.display,
-    fontSize: typography.heading,
-    fontWeight: "700",
-    lineHeight: 36,
   },
   viewer: {
     backgroundColor: colors.surface,
