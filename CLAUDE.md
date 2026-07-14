@@ -6866,3 +6866,13 @@ Sugestao commit: `feat(mobile): add novena and transito devotion content`
 ## Track B status
 
 Novena e Transito: concluidos. Devocional (oracoes diarias/preparatorias): ainda sem fonte, aguardando usuario.
+
+## Etapa 167 - Fix: botao voltar ausente em 10 telas
+
+Causa: root Stack tem `headerShown: false` global; 10 telas empurradas na pilha nao tinham `Stack.Screen headerShown:true` local -> sem header, sem seta voltar.
+
+Corrigido: entrar, criar-conta, recuperar-senha, confirmar-email, celebracoes/index, devocoes/index, santos/index, seus-dados, politica-privacidade, termos-de-uso. Todas com title.
+
+Validacoes: rtk pnpm test/typecheck/lint = 0.
+
+Commit: `fix(mobile): restore back button on pushed screens missing header`

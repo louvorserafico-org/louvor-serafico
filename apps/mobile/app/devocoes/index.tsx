@@ -1,4 +1,4 @@
-import { Link } from "expo-router";
+import { Link, Stack } from "expo-router";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
@@ -11,6 +11,7 @@ export default function DevotionsHubScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <Stack.Screen options={{ headerShown: true, title: "Devoções" }} />
       <PageHeader
         eyebrow="Devoções"
         title="Oração franciscana"

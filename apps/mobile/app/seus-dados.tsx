@@ -1,3 +1,4 @@
+import { Stack } from "expo-router";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
@@ -7,6 +8,7 @@ import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens
 export default function PersonalDataScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <Stack.Screen options={{ headerShown: true, title: "Seus dados" }} />
       <PageHeader
         eyebrow="Conta"
         title="Seus dados"

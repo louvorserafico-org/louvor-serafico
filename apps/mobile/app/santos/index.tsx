@@ -1,5 +1,5 @@
 import { getSaintDayCatalog, type SaintDay } from "@louvor-serafico/shared";
-import { Link } from "expo-router";
+import { Link, Stack } from "expo-router";
 import { useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
@@ -20,6 +20,7 @@ export default function SaintsListScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <Stack.Screen options={{ headerShown: true, title: "Santos franciscanos" }} />
       <PageHeader
         eyebrow="Santoral"
         title="Santos franciscanos"

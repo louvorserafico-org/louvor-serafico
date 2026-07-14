@@ -1,4 +1,4 @@
-import { Link, router } from "expo-router";
+import { Link, router, Stack } from "expo-router";
 import { useState, type ComponentProps } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 
@@ -20,6 +20,7 @@ export default function SignInScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
+      <Stack.Screen options={{ headerShown: true, title: "Entrar" }} />
       <View style={styles.heroSection}>
         <EditorialSectionHeader eyebrow="Seja bem-vindo" title="Entrar" />
         <Text style={styles.helperText}>{overview.helperText}</Text>

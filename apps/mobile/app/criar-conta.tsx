@@ -1,4 +1,4 @@
-import { Link, router } from "expo-router";
+import { Link, router, Stack } from "expo-router";
 import { useState, type ComponentProps } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 
@@ -40,6 +40,7 @@ export default function CreateAccountScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
+      <Stack.Screen options={{ headerShown: true, title: "Nova conta" }} />
       <View style={styles.heroSection}>
         <EditorialSectionHeader eyebrow="Dados principais" title="Nova conta" />
         <Text style={styles.helperText}>

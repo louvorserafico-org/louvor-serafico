@@ -1,4 +1,4 @@
-import { Link, useLocalSearchParams } from "expo-router";
+import { Link, Stack, useLocalSearchParams } from "expo-router";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
@@ -12,6 +12,7 @@ export default function ConfirmEmailScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <Stack.Screen options={{ headerShown: true, title: "Cadastro" }} />
       <View style={styles.heroSection}>
         <EditorialSectionHeader eyebrow="Cadastro" title={copy.title} />
         <Text style={styles.helperText}>{copy.message}</Text>

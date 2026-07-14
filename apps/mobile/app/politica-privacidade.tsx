@@ -1,3 +1,4 @@
+import { Stack } from "expo-router";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
@@ -7,6 +8,7 @@ import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens
 export default function PrivacyPolicyScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <Stack.Screen options={{ headerShown: true, title: "Política de privacidade" }} />
       <PageHeader
         eyebrow="Conta"
         title="Politica de privacidade"

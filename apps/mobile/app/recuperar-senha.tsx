@@ -1,4 +1,4 @@
-import { router } from "expo-router";
+import { router, Stack } from "expo-router";
 import { useState, type ComponentProps } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 
@@ -18,6 +18,7 @@ export default function PasswordRecoveryScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
+      <Stack.Screen options={{ headerShown: true, title: "Redefinir senha" }} />
       <PageHeader
         eyebrow="Conta"
         title="Redefinir senha"

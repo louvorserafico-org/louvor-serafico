@@ -1,4 +1,5 @@
 import { getInitialCelebrationCatalog } from "@louvor-serafico/shared";
+import { Stack } from "expo-router";
 import { ScrollView, StyleSheet, View } from "react-native";
 
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
@@ -13,6 +14,7 @@ export default function CelebrationsScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <Stack.Screen options={{ headerShown: true, title: "Celebrações" }} />
       <PageHeader
         eyebrow={`${celebrations.length} roteiro${celebrations.length === 1 ? "" : "s"}`}
         subtitle="Consulte as celebracoes ja preparadas e abra cada roteiro quando precisar."
