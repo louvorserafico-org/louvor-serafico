@@ -2,6 +2,7 @@ import { getInitialCelebrationCatalog, getLiturgicalDayForDate } from "@louvor-s
 import { router } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { PageHeader } from "@/components/PageHeader";
@@ -81,7 +82,8 @@ export default function CalendarScreen() {
   const canGoNext = selectedMonth < 12;
 
   return (
-    <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
+    <SafeAreaView edges={["top"]} style={styles.screen}>
+      <ScrollView contentContainerStyle={styles.container}>
       <PageHeader eyebrow={overview.eyebrow} title={overview.title} subtitle={subtitle} />
 
       <EditorialSectionHeader
@@ -269,7 +271,8 @@ export default function CalendarScreen() {
           </View>
         )}
       </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

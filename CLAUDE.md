@@ -6976,3 +6976,13 @@ Testes (`calendar-month-view.test.ts`): grade completa apenas ate multiplo de 7 
 Validacoes: rtk pnpm test/typecheck/lint = 0.
 
 Commit: `fix(mobile): adaptive calendar grid, remove sunday highlight, fix color hierarchy`
+
+## Etapa 175 - Fix: conteudo colado no topo (area segura)
+
+Causa: as 5 telas de aba (Hoje, Calendario, Repertorio, Comunidade, Perfil) tem `headerShown: false` (sem header nativo) e usavam `ScrollView` puro, sem respeitar a area segura (notch/status bar/dynamic island). As demais telas do app ja tem header nativo (`Stack.Screen headerShown:true`), que cuida disso sozinho - por isso o problema aparecia so nas abas.
+
+Corrigido: as 5 telas de aba agora envolvem o `ScrollView` num `SafeAreaView edges={["top"]}` (react-native-safe-area-context, ja era dependencia do projeto). So a borda superior e protegida - a inferior fica por conta da tab bar, que ja se posiciona corretamente.
+
+Validacoes: rtk pnpm test/typecheck/lint = 0.
+
+Commit: `fix(mobile): respect safe area at top of tab screens`

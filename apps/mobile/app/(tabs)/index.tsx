@@ -5,6 +5,7 @@ import {
 } from "@louvor-serafico/shared";
 import { Link, router } from "expo-router";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { HomePreparedDayItem } from "@/components/HomePreparedDayItem";
@@ -42,7 +43,8 @@ export default function TodayScreen() {
     today.kind === "ordinary_day" ? "Dia comum" : todayCelebration ? "Celebracao do dia" : "Memoria liturgica";
 
   return (
-    <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
+    <SafeAreaView edges={["top"]} style={styles.screen}>
+      <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.header}>
         <View style={styles.headerTopRow}>
           <Text style={styles.headerSection}>Inicio</Text>
@@ -151,7 +153,8 @@ export default function TodayScreen() {
       ) : null}
 
       <Text style={styles.footerNote}>Para cada tempo da Igreja, um repertorio a servico da oracao.</Text>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

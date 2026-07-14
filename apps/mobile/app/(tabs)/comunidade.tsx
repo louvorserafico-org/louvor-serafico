@@ -1,6 +1,7 @@
 import { Link } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { getInitialCelebrationCatalog } from "@louvor-serafico/shared";
 
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
@@ -86,7 +87,8 @@ export default function CommunityScreen() {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
+    <SafeAreaView edges={["top"]} style={styles.screen}>
+      <ScrollView contentContainerStyle={styles.container}>
       <PageHeader
         eyebrow="Comunidade"
         title="Partilha entre musicos"
@@ -251,7 +253,8 @@ export default function CommunityScreen() {
           </View>
         </View>
       )}
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

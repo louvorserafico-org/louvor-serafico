@@ -1,6 +1,7 @@
 import { getInitialSongCatalog } from "@louvor-serafico/shared";
 import { useEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { SongCard } from "@/components/SongCard";
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
@@ -69,7 +70,8 @@ export default function RepertoireScreen() {
   });
 
   return (
-    <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
+    <SafeAreaView edges={["top"]} style={styles.screen}>
+      <ScrollView contentContainerStyle={styles.container}>
       <PageHeader eyebrow={overview.eyebrow} title="Repertorio" subtitle={subtitle} />
 
       <View style={styles.searchBlock}>
@@ -116,7 +118,8 @@ export default function RepertoireScreen() {
           </Pressable>
         ) : null}
       </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

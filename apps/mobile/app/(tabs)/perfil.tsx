@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "expo-router";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { PageHeader } from "@/components/PageHeader";
@@ -30,7 +31,8 @@ export default function ProfileScreen() {
   const isAuthenticated = session.status === "authenticated";
 
   return (
-    <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
+    <SafeAreaView edges={["top"]} style={styles.screen}>
+      <ScrollView contentContainerStyle={styles.container}>
       <PageHeader
         eyebrow={isAuthenticated ? "Perfil" : "Conta"}
         title={isAuthenticated ? "Conta e assinatura" : "Conta"}
@@ -120,7 +122,8 @@ export default function ProfileScreen() {
           <SessionPreviewCard />
         </>
       ) : null}
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
