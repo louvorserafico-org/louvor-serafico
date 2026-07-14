@@ -149,7 +149,7 @@ describe("credentials auth", () => {
     );
 
     assert.deepEqual(result, {
-      message: "Falha de rede ao falar com o Supabase. Verifique a conexao e tente novamente.",
+      message: "Falha de rede ao falar com o Supabase. Verifique a conexão e tente novamente.",
       status: "error",
     });
   });
@@ -233,7 +233,7 @@ describe("credentials auth", () => {
     );
 
     assert.deepEqual(result, {
-      message: "Digite um email valido para recuperar a senha.",
+      message: "Digite um e-mail válido para recuperar a senha.",
       status: "error",
     });
   });
@@ -253,7 +253,7 @@ describe("credentials auth", () => {
     );
 
     assert.deepEqual(result, {
-      message: "Falha de rede ao falar com o Supabase. Verifique a conexao e tente novamente.",
+      message: "Falha de rede ao falar com o Supabase. Verifique a conexão e tente novamente.",
       status: "error",
     });
   });
@@ -273,7 +273,7 @@ describe("credentials auth", () => {
     );
 
     assert.deepEqual(result, {
-      message: "Falha de rede ao falar com o Supabase. Verifique a conexao e tente novamente.",
+      message: "Falha de rede ao falar com o Supabase. Verifique a conexão e tente novamente.",
       status: "error",
     });
   });

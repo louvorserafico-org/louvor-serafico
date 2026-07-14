@@ -1,10 +1,11 @@
+import { Ionicons } from "@expo/vector-icons";
 import { Link, router, Stack } from "expo-router";
-import { useState, type ComponentProps } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { useState, type ComponentProps, type ReactNode } from "react";
+import { Pressable, ScrollView, StyleSheet, Text, TextInput, View, type StyleProp, type ViewStyle } from "react-native";
 
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
-import { OrnamentalDivider } from "@/components/OrnamentalDivider";
 import { ResultBanner } from "@/components/ResultBanner";
+import { SelectField } from "@/components/SelectField";
 import {
   FAMILY_OPTIONS,
   JURISDICTION_OPTIONS,
@@ -12,6 +13,14 @@ import {
   type CredentialsAuthResult,
   type RegistrationForm,
 } from "@/features/auth/credentials-auth";
+import { formatBrazilianPhone } from "@/features/auth/phone-mask";
+import {
+  validateEmailField,
+  validateFullNameField,
+  validatePasswordConfirmationField,
+  validatePasswordField,
+  validatePhoneField,
+} from "@/features/auth/registration-field-validation";
 import { supabase } from "@/services/supabase/client";
 import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
 
@@ -27,11 +36,16 @@ const emptyRegistration: RegistrationForm = {
   state: "",
 };
 
+type FieldName = "city" | "email" | "family" | "fullName" | "password" | "passwordConfirmation" | "phone" | "state";
+
 export default function CreateAccountScreen() {
   const [registration, setRegistration] = useState<RegistrationForm>(emptyRegistration);
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [touched, setTouched] = useState<Partial<Record<FieldName, boolean>>>({});
   const [result, setResult] = useState<CredentialsAuthResult | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirmation, setShowPasswordConfirmation] = useState(false);
 
   const updateRegistration = (field: keyof RegistrationForm, value: string) => {
     setRegistration((current) => ({
@@ -40,123 +54,209 @@ export default function CreateAccountScreen() {
     }));
   };
 
+  const markTouched = (field: FieldName) => setTouched((current) => ({ ...current, [field]: true }));
+
+  const errors: Partial<Record<FieldName, string>> = {
+    city: registration.city.trim() ? undefined : "Informe sua cidade.",
+    email: validateEmailField(registration.email) ?? undefined,
+    family: registration.family ? undefined : "Selecione sua família franciscana.",
+    fullName: validateFullNameField(registration.fullName) ?? undefined,
+    password: validatePasswordField(registration.password) ?? undefined,
+    passwordConfirmation:
+      validatePasswordConfirmationField(registration.password, passwordConfirmation) ?? undefined,
+    phone: validatePhoneField(registration.phone) ?? undefined,
+    state: registration.state.trim() ? undefined : "Informe seu estado.",
+  };
+
+  const isFormValid = Object.values(errors).every((message) => !message);
+
+  const showError = (field: FieldName) => (touched[field] ? errors[field] : undefined);
+
   return (
     <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" style={styles.screen}>
       <Stack.Screen options={{ headerShown: true, title: "Nova conta" }} />
-      <View style={styles.heroSection}>
-        <EditorialSectionHeader eyebrow="Dados principais" title="Nova conta" />
-        <Text style={styles.helperText}>
-          Reuna seus dados principais para guardar favoritos, acompanhar partilhas e manter seu ministério em ordem.
-        </Text>
-        <OrnamentalDivider />
-      </View>
+      <EditorialSectionHeader eyebrow="Dados principais" title="Nova conta" />
 
-      <View style={styles.formPanel}>
+      <FormField error={showError("fullName")} label="Nome completo">
         <AuthInput
           autoComplete="name"
+          onBlur={() => markTouched("fullName")}
           onChangeText={(value) => updateRegistration("fullName", value)}
           placeholder="Nome completo"
           value={registration.fullName}
         />
+      </FormField>
+
+      <FormField error={showError("email")} label="E-mail">
         <AuthInput
           autoComplete="email"
           keyboardType="email-address"
+          onBlur={() => markTouched("email")}
           onChangeText={(value) => updateRegistration("email", value)}
-          placeholder="Seu email"
+          placeholder="email@email.com"
           value={registration.email}
         />
+      </FormField>
+
+      <FormField error={showError("password")} label="Senha">
         <View style={styles.passwordRow}>
-          <View style={styles.passwordField}>
-            <AuthInput
-              autoComplete="password-new"
-              onChangeText={(value) => updateRegistration("password", value)}
-              placeholder="Crie uma senha com 8 ou mais caracteres"
-              secureTextEntry={!showPassword}
-              value={registration.password}
-            />
-          </View>
+          <AuthInput
+            autoComplete="password-new"
+            onBlur={() => markTouched("password")}
+            onChangeText={(value) => updateRegistration("password", value)}
+            placeholder="Crie uma senha com 8 ou mais caracteres"
+            secureTextEntry={!showPassword}
+            style={styles.passwordInput}
+            value={registration.password}
+          />
           <Pressable
+            accessibilityLabel={showPassword ? "Ocultar senha" : "Mostrar senha"}
             accessibilityRole="button"
             onPress={() => setShowPassword((current) => !current)}
             style={styles.passwordToggle}
           >
-            <Text style={styles.passwordToggleText}>{showPassword ? "Ocultar" : "Mostrar"}</Text>
+            <Ionicons color={colors.textMuted} name={showPassword ? "eye-off-outline" : "eye-outline"} size={20} />
           </Pressable>
         </View>
+      </FormField>
+
+      <FormField error={showError("passwordConfirmation")} label="Repita a senha">
+        <View style={styles.passwordRow}>
+          <AuthInput
+            autoComplete="password-new"
+            onBlur={() => markTouched("passwordConfirmation")}
+            onChangeText={setPasswordConfirmation}
+            placeholder="Digite a senha novamente"
+            secureTextEntry={!showPasswordConfirmation}
+            style={styles.passwordInput}
+            value={passwordConfirmation}
+          />
+          <Pressable
+            accessibilityLabel={showPasswordConfirmation ? "Ocultar senha" : "Mostrar senha"}
+            accessibilityRole="button"
+            onPress={() => setShowPasswordConfirmation((current) => !current)}
+            style={styles.passwordToggle}
+          >
+            <Ionicons
+              color={colors.textMuted}
+              name={showPasswordConfirmation ? "eye-off-outline" : "eye-outline"}
+              size={20}
+            />
+          </Pressable>
+        </View>
+      </FormField>
+
+      <FormField error={showError("phone")} label="Telefone">
         <AuthInput
           autoComplete="tel"
           keyboardType="phone-pad"
-          onChangeText={(value) => updateRegistration("phone", value)}
-          placeholder="Telefone"
+          onBlur={() => markTouched("phone")}
+          onChangeText={(value) => updateRegistration("phone", formatBrazilianPhone(value))}
+          placeholder="(24) 9-9999-9999"
           value={registration.phone}
         />
-        <View style={styles.inlineFields}>
+      </FormField>
+
+      <View style={styles.inlineFields}>
+        <FormField error={showError("state")} label="Estado" style={styles.inlineField}>
           <AuthInput
             autoCapitalize="characters"
+            maxLength={2}
+            onBlur={() => markTouched("state")}
             onChangeText={(value) => updateRegistration("state", value)}
-            placeholder="Estado"
+            placeholder="UF"
             value={registration.state}
           />
+        </FormField>
+        <FormField error={showError("city")} label="Cidade" style={styles.inlineField}>
           <AuthInput
+            onBlur={() => markTouched("city")}
             onChangeText={(value) => updateRegistration("city", value)}
             placeholder="Cidade"
             value={registration.city}
           />
-        </View>
-        <ChipSelect
+        </FormField>
+      </View>
+
+      <FormField error={showError("family")} label="">
+        <SelectField
           label="Família franciscana"
-          onSelect={(value) => updateRegistration("family", value)}
+          onSelect={(value) => {
+            updateRegistration("family", value);
+            markTouched("family");
+          }}
           options={FAMILY_OPTIONS}
+          placeholder="Selecione sua família franciscana"
           value={registration.family}
         />
-        <ChipSelect
-          label="Jurisdição (opcional)"
-          onSelect={(value) =>
-            updateRegistration("jurisdiction", value === registration.jurisdiction ? "" : value)
-          }
-          options={JURISDICTION_OPTIONS}
-          value={registration.jurisdiction}
-        />
+      </FormField>
+
+      <SelectField
+        label="Jurisdição (opcional)"
+        onSelect={(value) => updateRegistration("jurisdiction", value)}
+        options={JURISDICTION_OPTIONS}
+        placeholder="Selecione a jurisdição"
+        value={registration.jurisdiction}
+      />
+
+      <FormField label="Pastoral ou banda (opcional)">
         <AuthInput
           onChangeText={(value) => updateRegistration("ministry", value)}
           placeholder="Pastoral ou banda (opcional)"
           value={registration.ministry}
         />
-        <SubmitButton
-          disabled={submitting}
-          label={submitting ? "Criando..." : "Criar conta"}
-          onPress={async () => {
-            setSubmitting(true);
-            const nextResult = await registerWithPassword(supabase, registration);
-            if (nextResult.status === "success") {
-              setResult(null);
-              setSubmitting(false);
-              router.replace({
-                params: { email: registration.email.trim().toLowerCase() },
-                pathname: "/confirmar-email",
-              });
-              return;
-            }
+      </FormField>
 
-            setResult(nextResult);
+      <SubmitButton
+        disabled={submitting || !isFormValid}
+        label={submitting ? "Criando..." : "Criar conta"}
+        onPress={async () => {
+          setTouched({
+            city: true,
+            email: true,
+            family: true,
+            fullName: true,
+            password: true,
+            passwordConfirmation: true,
+            phone: true,
+            state: true,
+          });
+
+          if (!isFormValid) {
+            return;
+          }
+
+          setSubmitting(true);
+          const nextResult = await registerWithPassword(supabase, registration);
+          if (nextResult.status === "success") {
+            setResult(null);
             setSubmitting(false);
-          }}
-        />
-        <Text style={styles.legalText}>
-          Ao seguir, você declara ciencia de nossas condições de uso, politica de privacidade e cuidado com seus dados.
-        </Text>
-        <View style={styles.inlineLinks}>
-          <Link asChild href="/politica-privacidade">
-            <Pressable accessibilityRole="button" style={styles.inlineButton}>
-              <Text style={styles.inlineButtonText}>Politica de privacidade</Text>
-            </Pressable>
-          </Link>
-          <Link asChild href="/termos-de-uso">
-            <Pressable accessibilityRole="button" style={styles.inlineButton}>
-              <Text style={styles.inlineButtonText}>Termos de uso</Text>
-            </Pressable>
-          </Link>
-        </View>
+            router.replace({
+              params: { email: registration.email.trim().toLowerCase() },
+              pathname: "/confirmar-email",
+            });
+            return;
+          }
+
+          setResult(nextResult);
+          setSubmitting(false);
+        }}
+      />
+
+      <Text style={styles.legalText}>
+        Ao seguir, você declara ciência de nossas condições de uso, política de privacidade e cuidado com seus dados.
+      </Text>
+      <View style={styles.inlineLinks}>
+        <Link asChild href="/politica-privacidade">
+          <Pressable accessibilityRole="button" style={styles.inlineButton}>
+            <Text style={styles.inlineButtonText}>Política de privacidade</Text>
+          </Pressable>
+        </Link>
+        <Link asChild href="/termos-de-uso">
+          <Pressable accessibilityRole="button" style={styles.inlineButton}>
+            <Text style={styles.inlineButtonText}>Termos de uso</Text>
+          </Pressable>
+        </Link>
       </View>
 
       {result ? <ResultBanner detail={result.detail} message={result.message} status={result.status} /> : null}
@@ -177,6 +277,26 @@ export default function CreateAccountScreen() {
   );
 }
 
+function FormField({
+  children,
+  error,
+  label,
+  style,
+}: {
+  children: ReactNode;
+  error?: string;
+  label: string;
+  style?: StyleProp<ViewStyle>;
+}) {
+  return (
+    <View style={[styles.field, style]}>
+      {label ? <Text style={styles.fieldLabel}>{label}</Text> : null}
+      {children}
+      {error ? <Text style={styles.fieldError}>{error}</Text> : null}
+    </View>
+  );
+}
+
 function SubmitButton({ disabled, label, onPress }: { disabled: boolean; label: string; onPress: () => void }) {
   return (
     <Pressable
@@ -190,48 +310,9 @@ function SubmitButton({ disabled, label, onPress }: { disabled: boolean; label: 
   );
 }
 
-function AuthInput(props: ComponentProps<typeof TextInput>) {
+function AuthInput({ style, ...rest }: ComponentProps<typeof TextInput>) {
   return (
-    <TextInput
-      autoCapitalize="none"
-      placeholderTextColor={colors.textMuted}
-      style={styles.input}
-      {...props}
-    />
-  );
-}
-
-function ChipSelect({
-  label,
-  onSelect,
-  options,
-  value,
-}: {
-  label: string;
-  onSelect: (value: string) => void;
-  options: readonly string[];
-  value: string;
-}) {
-  return (
-    <View style={styles.selectBlock}>
-      <Text style={styles.selectLabel}>{label}</Text>
-      <View style={styles.chips}>
-        {options.map((option) => {
-          const active = value === option;
-
-          return (
-            <Pressable
-              accessibilityRole="button"
-              key={option}
-              onPress={() => onSelect(option)}
-              style={[styles.chip, active ? styles.chipActive : undefined]}
-            >
-              <Text style={[styles.chipText, active ? styles.chipTextActive : undefined]}>{option}</Text>
-            </Pressable>
-          );
-        })}
-      </View>
-    </View>
+    <TextInput autoCapitalize="none" placeholderTextColor={colors.textMuted} style={[styles.input, style]} {...rest} />
   );
 }
 
@@ -269,27 +350,21 @@ const styles = StyleSheet.create({
     padding: spacing.xl,
     paddingBottom: spacing.xxl,
   },
-  formPanel: {
-    backgroundColor: colors.surface,
-    borderColor: colors.border,
-    borderRadius: radii.xl,
-    borderWidth: 1,
-    gap: spacing.sm,
-    padding: spacing.lg,
-    shadowColor: colors.ink,
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.3,
-    shadowRadius: 18,
+  field: {
+    gap: spacing.xs,
   },
-  helperText: {
-    color: colors.textSecondary,
-    fontFamily: fontFamilies.body,
-    fontSize: typography.body,
-    lineHeight: 24,
+  fieldError: {
+    color: colors.gold,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.tab,
+    fontWeight: "700",
   },
-  heroSection: {
-    gap: spacing.md,
-    paddingTop: spacing.sm,
+  fieldLabel: {
+    color: colors.gold,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
+    textTransform: "uppercase",
   },
   inlineButton: {
     paddingVertical: spacing.xs,
@@ -299,6 +374,9 @@ const styles = StyleSheet.create({
     fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "800",
+  },
+  inlineField: {
+    flex: 1,
   },
   inlineFields: {
     flexDirection: "row",
@@ -320,66 +398,11 @@ const styles = StyleSheet.create({
     fontSize: typography.body,
     padding: spacing.md,
   },
-  chip: {
-    backgroundColor: colors.surfaceMuted,
-    borderColor: colors.border,
-    borderRadius: radii.pill,
-    borderWidth: 1,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
-  },
-  chipActive: {
-    backgroundColor: colors.goldSoft,
-    borderColor: colors.borderStrong,
-  },
-  chipText: {
-    color: colors.textSecondary,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "700",
-  },
-  chipTextActive: {
-    color: colors.accentStrong,
-  },
-  chips: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: spacing.sm,
-  },
-  passwordField: {
-    flex: 1,
-  },
-  passwordRow: {
-    alignItems: "center",
-    flexDirection: "row",
-    gap: spacing.sm,
-  },
-  passwordToggle: {
-    paddingHorizontal: spacing.sm,
-    paddingVertical: spacing.sm,
-  },
-  passwordToggleText: {
-    color: colors.accent,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "800",
-  },
-  selectBlock: {
-    gap: spacing.sm,
-  },
-  selectLabel: {
-    color: colors.gold,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "800",
-    textTransform: "uppercase",
-  },
   legalText: {
     color: colors.textMuted,
     fontFamily: fontFamilies.body,
     fontSize: typography.caption,
     lineHeight: 20,
-    marginTop: spacing.xs,
   },
   linkButton: {
     alignSelf: "flex-start",
@@ -390,6 +413,24 @@ const styles = StyleSheet.create({
     fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "800",
+  },
+  passwordInput: {
+    flex: 1,
+  },
+  passwordRow: {
+    alignItems: "center",
+    flexDirection: "row",
+    gap: spacing.sm,
+  },
+  passwordToggle: {
+    alignItems: "center",
+    backgroundColor: colors.surfaceMuted,
+    borderColor: colors.border,
+    borderRadius: radii.lg,
+    borderWidth: 1,
+    height: 46,
+    justifyContent: "center",
+    width: 46,
   },
   returnSection: {
     gap: spacing.sm,

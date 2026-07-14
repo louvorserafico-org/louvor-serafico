@@ -150,7 +150,7 @@ export async function signInWithPassword(
 
   if (!isValidEmail(email)) {
     return {
-      message: "Digite um email valido para continuar.",
+      message: "Digite um e-mail válido para continuar.",
       status: "error",
     };
   }
@@ -205,7 +205,7 @@ export async function requestPasswordReset(
 
   if (!isValidEmail(email)) {
     return {
-      message: "Digite um email valido para recuperar a senha.",
+      message: "Digite um e-mail válido para recuperar a senha.",
       status: "error",
     };
   }
@@ -254,7 +254,7 @@ function validateRegistration(form: RegistrationForm, email: string): string | n
   }
 
   if (!isValidEmail(email)) {
-    return "Digite um email valido para continuar.";
+    return "Digite um e-mail válido para continuar.";
   }
 
   if (form.password.length < 8) {
@@ -298,7 +298,7 @@ function mapUnexpectedAuthError(error: unknown, fallback: string): string {
     }
 
     if (/network request failed/i.test(message)) {
-      return "Falha de rede ao falar com o Supabase. Verifique a conexao e tente novamente.";
+      return "Falha de rede ao falar com o Supabase. Verifique a conexão e tente novamente.";
     }
 
     return translateAuthErrorMessage(message);

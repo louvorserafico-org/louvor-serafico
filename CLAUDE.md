@@ -7159,3 +7159,29 @@ delete from public.comments;
 ```
 
 Commit: `feat(mobile): split public partilhas into dedicated screen and fix login-gated access`
+
+## Etapa 186 - Redesign da tela de cadastro (Nova conta)
+
+Pedido do Frei: tela de cadastro "não tá legal" - queria (1) tirar os campos de dentro de uma unica caixa, deixando bem distribuido; (2) icone em vez do texto "Mostrar" pra senha; (3) obrigar repetir a senha; (4) remover o paragrafo de introducao; (5) trocar os chips de familia/jurisdicao por uma caixa seletora (select); (6) validacao de preenchimento por campo, com exemplo de formato (telefone, email).
+
+Analise antes de executar: pedido claro e sem contradicoes (diferente da etapa anterior de partilhas), pouca decisao de produto em aberto - segui direto pra execucao.
+
+Feito:
+- `phone-mask.ts` (novo, testado): `formatBrazilianPhone(raw)` formata progressivamente pro padrao `(DD) 9-9999-9999` enquanto o usuario digita.
+- `registration-field-validation.ts` (novo, testado): validadores puros por campo (`validateFullNameField`, `validateEmailField` com regex de formato, `validatePasswordField` min. 8 caracteres, `validatePasswordConfirmationField` compara com a senha, `validatePhoneField` exige 10-11 digitos). Independente da validacao de submit em `credentials-auth.ts` (que continua sendo a fonte de verdade no envio) - este modulo e so pra feedback em tempo real na UI.
+- `SelectField.tsx` (novo componente): substitui o `ChipSelect` local por um campo estilo select - mostra o valor escolhido (ou placeholder) com chevron, abre um modal de baixo pra cima (bottom sheet) com a lista de opcoes e check na selecionada. Usado pra "Familia franciscana" e "Jurisdicao".
+- `criar-conta.tsx` reescrito:
+  - Removida a `formPanel` (caixa unica com sombra) - campos agora ficam soltos no fundo da tela, cada um com label acima e mensagem de erro abaixo quando tocado (`touched`) e invalido.
+  - Removido o paragrafo de introducao ("Reuna seus dados principais...").
+  - Botao de mostrar/ocultar senha virou icone (`Ionicons eye-outline/eye-off-outline`) ao lado do campo, em vez do texto "Mostrar"/"Ocultar".
+  - Novo campo "Repita a senha" (nao enviado ao backend, so validado no client) com o mesmo padrao de icone.
+  - Campo telefone aplica a mascara em tempo real via `formatBrazilianPhone`, placeholder mostra o formato esperado.
+  - Botao "Criar conta" so habilita quando todos os campos obrigatorios passam na validacao; ao tentar submeter com campos invalidos, marca todos como `touched` pra revelar os erros de uma vez.
+
+Nao alterado (fora do escopo, mesmo padrao problematico mas nao pedido): `entrar.tsx` e `recuperar-senha.tsx` continuam com a caixa `formPanel` e texto "Mostrar"/"Ocultar" - o pedido foi especificamente sobre a tela de cadastro.
+
+Testes: `phone-mask.test.ts` (2/2), `registration-field-validation.test.ts` (5/5), ambos registrados no `test` script do `package.json`.
+
+Validacoes: pnpm test (73 suites, fail 0) / typecheck / lint = 0.
+
+Commit: `feat(mobile): redesign registration screen with inline validation, password confirmation and select fields`
