@@ -7000,3 +7000,13 @@ Feito:
 Validacoes: rtk pnpm test/typecheck/lint = 0.
 
 Commit: `fix(mobile): show generic icon instead of fake initial for guest avatar`
+
+## Etapa 177 - Fix: box de devocoes espremida
+
+Causa: hub `devocoes/index.tsx` empilhava titulo+meta+acao em linha (row) com so `paddingVertical: md` (16), sem borda no container - itens grudados.
+
+Corrigido, mesmo padrao ja usado na Home (Etapa 172/173): cada devocao virou bloco em coluna (`paddingTop/Bottom: lg`), acao em linha propria no rodape do bloco; `list` ganhou borda e `paddingHorizontal: lg`.
+
+Validacoes: rtk pnpm test/typecheck/lint = 0.
+
+Commit: `fix(mobile): fix cramped devotions hub list spacing`

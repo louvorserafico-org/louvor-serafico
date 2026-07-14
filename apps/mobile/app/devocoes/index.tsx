@@ -28,11 +28,9 @@ export default function DevotionsHubScreen() {
         {items.map((item, index) => (
           <Link asChild href={buildDevotionRoute(item.slug)} key={item.slug}>
             <Pressable style={[styles.item, index !== items.length - 1 ? styles.itemBorder : undefined]}>
-              <View style={styles.copy}>
-                <Text style={styles.title}>{item.title}</Text>
-                <Text style={styles.meta}>{item.description}</Text>
-              </View>
-              <Text style={styles.action}>
+              <Text style={styles.title}>{item.title}</Text>
+              <Text style={styles.meta}>{item.description}</Text>
+              <Text style={item.status === "available" ? styles.action : styles.actionMuted}>
                 {item.status === "available" ? "Abrir" : "Em preparação"}
               </Text>
             </Pressable>
@@ -53,6 +51,14 @@ const styles = StyleSheet.create({
     fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "800",
+    paddingTop: spacing.xs,
+  },
+  actionMuted: {
+    color: colors.textMuted,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "800",
+    paddingTop: spacing.xs,
   },
   container: {
     backgroundColor: colors.background,
@@ -60,15 +66,10 @@ const styles = StyleSheet.create({
     padding: spacing.xl,
     paddingBottom: spacing.xxl,
   },
-  copy: {
-    flex: 1,
-    gap: spacing.xs,
-  },
   item: {
-    alignItems: "center",
-    flexDirection: "row",
-    gap: spacing.md,
-    paddingVertical: spacing.md,
+    gap: spacing.xs,
+    paddingBottom: spacing.lg,
+    paddingTop: spacing.lg,
   },
   itemBorder: {
     borderBottomColor: colors.border,
@@ -76,8 +77,11 @@ const styles = StyleSheet.create({
   },
   list: {
     backgroundColor: colors.surface,
+    borderColor: colors.border,
     borderRadius: radii.xl,
-    paddingHorizontal: spacing.md,
+    borderWidth: 1,
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.xs,
   },
   meta: {
     color: colors.textMuted,
