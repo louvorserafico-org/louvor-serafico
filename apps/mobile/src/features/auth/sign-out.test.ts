@@ -42,7 +42,8 @@ describe("sign out", () => {
     });
 
     assert.deepEqual(result, {
-      message: "Network error",
+      detail: "Network error",
+      message: "Não foi possível concluir a operação.",
       status: "error",
     });
   });

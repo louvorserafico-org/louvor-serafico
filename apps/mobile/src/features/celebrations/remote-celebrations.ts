@@ -12,6 +12,7 @@ type RemoteCelebrationRow = {
 
 type RemoteCelebrationsResult = {
   celebrations: Celebration[];
+  detail?: string;
   message: string;
   status: "error" | "not_configured" | "ready";
 };
@@ -52,7 +53,8 @@ export async function fetchRemoteCelebrations(
 
     return {
       celebrations: [],
-      message: errorBody.message ?? "Falha ao carregar celebracoes remotas.",
+      detail: errorBody.message,
+      message: "Falha ao carregar celebracoes remotas.",
       status: "error",
     };
   }

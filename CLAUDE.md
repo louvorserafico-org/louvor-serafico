@@ -7076,3 +7076,23 @@ Nao alterado (fora do escopo desta etapa, sem regressao): tabs bottom (React Nav
 Validacoes: pnpm test/typecheck/lint = 0. Revisao visual pendente no device do Frei (app Expo, sem preview web).
 
 Commit: `feat(mobile): normalize spacing and add TAU loading + entrance/press transitions`
+
+## Etapa 182 - Mensagens de erro em pt-BR com resumo do motivo
+
+Motivado por screenshot do Frei: tela de login exibindo "Invalid login credentials" cru (texto do GoTrue/Supabase, em ingles, dentro de uma caixa pouco legivel).
+
+Causa raiz: `credentials-auth.ts`, `password-reset.ts`, `email-auth.ts`, `sign-out.ts` e os fetchers `remote-*.ts` (celebrations, comments, favorites, songs) repassavam `error.message` / `errorBody.message` do backend direto para a UI, sem traducao.
+
+Feito:
+- `auth-error-messages.ts` (novo, testado): `translateAuthErrorMessage` mapeia por regex case-insensitive as mensagens conhecidas do Supabase Auth (credenciais invalidas, email nao confirmado, usuario ja cadastrado, senha curta, rate limit, usuario nao encontrado, token expirado, sessao expirada, falha de rede, etc.) para pt-BR; fallback generico "Não foi possível concluir a operação." para o que nao for mapeado. `describeAuthError` retorna `{ summary, detail }` - resumo pt-BR + o texto original do backend (o "motivo tecnico").
+- `credentials-auth.ts`, `password-reset.ts`, `email-auth.ts`, `sign-out.ts`: resultado passa a ter `message` (sempre pt-BR) + `detail?` (texto original do backend, opcional).
+- Fetchers remotos (`remote-celebration-detail.ts`, `remote-celebrations.ts`, `remote-comment-submit.ts`, `remote-comments.ts`, `remote-favorite-toggle.ts`, `remote-favorites.ts`, `remote-song-detail.ts`, `remote-songs.ts`): quando o backend retorna erro sem ser um caso ja tratado (ex: tabela ausente), a mensagem passa a ser sempre o fallback pt-BR ja existente no codigo, com o `errorBody.message` bruto guardado em `detail` (mensagens do PostgREST/Postgres sao tecnicas demais para dicionario 1:1).
+- `ResultBanner.tsx` (novo componente): substitui as caixas `resultCard` duplicadas em `entrar.tsx`, `criar-conta.tsx` e `recuperar-senha.tsx`. Icone (check/alert) + mensagem pt-BR em destaque + "Motivo tecnico: ..." em texto menor e discreto quando ha `detail`; entrada com `FadeInView`.
+
+Testes: `auth-error-messages.test.ts` (novo, 5/5 - mapeamento conhecido, case-insensitive, fallback, `describeAuthError` com/sem detail). Atualizados: `credentials-auth.test.ts`, `email-auth.test.ts`, `sign-out.test.ts`, `password-reset.test.ts`, `remote-comment-submit.test.ts` (assertions que antes esperavam texto cru do backend agora esperam `message` pt-BR + `detail` com o original).
+
+Nao alterado (fora do escopo): subtitulo simples de `comunidade.tsx` (usa `result.message` do `postRemoteComment`, ja em pt-BR apos esta etapa, mas sem `ResultBanner` dedicado - e um subtitle inline, nao uma caixa de resultado).
+
+Validacoes: pnpm test (70 suites, fail 0) / typecheck / lint = 0.
+
+Commit: `fix(mobile): translate backend error messages to pt-BR with technical detail`

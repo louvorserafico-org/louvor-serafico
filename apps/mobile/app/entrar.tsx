@@ -4,17 +4,19 @@ import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-
 
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { OrnamentalDivider } from "@/components/OrnamentalDivider";
+import { ResultBanner } from "@/components/ResultBanner";
 import { resolvePostLoginDestination } from "@/features/auth/auth-navigation";
 import { buildAuthScreenOverview } from "@/features/auth/auth-screen-overview";
 import { getAuthRedirectUrl } from "@/features/auth/auth-deep-link";
 import { requestPasswordReset, signInWithPassword } from "@/features/auth/credentials-auth";
+import type { CredentialsAuthResult } from "@/features/auth/credentials-auth";
 import { supabase } from "@/services/supabase/client";
 import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
 
 export default function SignInScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [result, setResult] = useState<{ message: string; status: "error" | "success" } | null>(null);
+  const [result, setResult] = useState<CredentialsAuthResult | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const overview = buildAuthScreenOverview({ mode: "login" });
 
@@ -81,11 +83,7 @@ export default function SignInScreen() {
         </View>
       </View>
 
-      {result ? (
-        <View style={[styles.resultCard, result.status === "success" ? styles.success : styles.error]}>
-          <Text style={styles.resultText}>{result.message}</Text>
-        </View>
-      ) : null}
+      {result ? <ResultBanner detail={result.detail} message={result.message} status={result.status} /> : null}
     </ScrollView>
   );
 }
@@ -148,10 +146,6 @@ const styles = StyleSheet.create({
     padding: spacing.xl,
     paddingBottom: spacing.xxl,
   },
-  error: {
-    backgroundColor: colors.goldSoft,
-    borderColor: colors.gold,
-  },
   formPanel: {
     backgroundColor: colors.surface,
     borderColor: colors.border,
@@ -207,17 +201,6 @@ const styles = StyleSheet.create({
     fontSize: typography.body,
     padding: spacing.md,
   },
-  resultCard: {
-    borderRadius: radii.xl,
-    borderWidth: 1,
-    padding: spacing.lg,
-  },
-  resultText: {
-    color: colors.textPrimary,
-    fontFamily: fontFamilies.body,
-    fontSize: typography.body,
-    lineHeight: 22,
-  },
   secondaryAction: {
     alignSelf: "flex-start",
     paddingVertical: spacing.xs,
@@ -227,9 +210,5 @@ const styles = StyleSheet.create({
     fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "800",
-  },
-  success: {
-    backgroundColor: colors.oliveSoft,
-    borderColor: colors.olive,
   },
 });

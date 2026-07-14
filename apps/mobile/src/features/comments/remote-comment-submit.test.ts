@@ -66,7 +66,8 @@ describe("remote comment submit", () => {
     );
 
     assert.deepEqual(result, {
-      message: "new row violates row-level security policy",
+      detail: "new row violates row-level security policy",
+      message: "Falha ao publicar comentario remoto.",
       ok: false,
     });
   });

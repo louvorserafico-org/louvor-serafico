@@ -1,3 +1,5 @@
+import { describeAuthError } from "./auth-error-messages";
+
 type OtpClient = {
   auth: {
     signInWithOtp: (payload: {
@@ -13,6 +15,7 @@ type OtpClient = {
 };
 
 export type EmailAuthResult = {
+  detail?: string;
   message: string;
   status: "error" | "success";
 };
@@ -49,8 +52,10 @@ export async function requestEmailSignIn(
   });
 
   if (error) {
+    const { detail, summary } = describeAuthError(error.message);
     return {
-      message: error.message,
+      detail: detail ?? undefined,
+      message: summary,
       status: "error",
     };
   }

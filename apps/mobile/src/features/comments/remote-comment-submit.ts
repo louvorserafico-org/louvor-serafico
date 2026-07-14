@@ -8,6 +8,7 @@ type CreateRemoteCommentInput = {
 };
 
 type RemoteCommentSubmitResult = {
+  detail?: string;
   message: string;
   ok: boolean;
 };
@@ -53,7 +54,8 @@ export async function postRemoteComment(
     const errorBody = (await response.json()) as { message?: string };
 
     return {
-      message: errorBody.message ?? "Falha ao publicar comentario remoto.",
+      detail: errorBody.message,
+      message: "Falha ao publicar comentario remoto.",
       ok: false,
     };
   }

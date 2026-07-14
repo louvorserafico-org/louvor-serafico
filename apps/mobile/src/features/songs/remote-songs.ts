@@ -9,6 +9,7 @@ type RemoteSongRow = {
 };
 
 type RemoteSongsResult = {
+  detail?: string;
   message: string;
   songs: Song[];
   status: "error" | "not_configured" | "ready";
@@ -46,7 +47,8 @@ export async function fetchRemoteSongs(
     }
 
     return {
-      message: errorBody.message ?? "Falha ao carregar musicas remotas.",
+      detail: errorBody.message,
+      message: "Falha ao carregar musicas remotas.",
       songs: [],
       status: "error",
     };

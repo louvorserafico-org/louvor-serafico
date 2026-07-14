@@ -1,3 +1,5 @@
+import { describeAuthError } from "./auth-error-messages";
+
 type PasswordResetClient = {
   auth: {
     updateUser: (payload: { password: string }) => Promise<PasswordResetResponse>;
@@ -10,6 +12,7 @@ type PasswordResetResponse = {
 };
 
 export type PasswordResetResult = {
+  detail?: string;
   message: string;
   status: "error" | "success";
 };
@@ -45,8 +48,10 @@ export async function updatePasswordFromRecovery(
   });
 
   if (error) {
+    const { detail, summary } = describeAuthError(error.message);
     return {
-      message: error.message,
+      detail: detail ?? undefined,
+      message: summary,
       status: "error",
     };
   }

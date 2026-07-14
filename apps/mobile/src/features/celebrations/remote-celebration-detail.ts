@@ -39,6 +39,7 @@ type RemoteCelebrationRow = {
 
 type RemoteCelebrationDetailResult = {
   celebration: Celebration | null;
+  detail?: string;
   message: string;
   status: "error" | "not_configured" | "not_found" | "ready";
 };
@@ -70,7 +71,8 @@ export async function fetchRemoteCelebrationDetail(
 
     return {
       celebration: null,
-      message: errorBody.message ?? "Falha ao carregar celebracao remota.",
+      detail: errorBody.message,
+      message: "Falha ao carregar celebracao remota.",
       status: "error",
     };
   }

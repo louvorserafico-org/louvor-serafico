@@ -10,6 +10,7 @@ type ToggleRemoteFavoriteInput = {
 };
 
 type ToggleRemoteFavoriteResult = {
+  detail?: string;
   message: string;
   ok: boolean;
 };
@@ -62,7 +63,8 @@ export async function toggleRemoteFavorite(
     const errorBody = (await response.json()) as { message?: string };
 
     return {
-      message: errorBody.message ?? "Falha ao sincronizar favorito remoto.",
+      detail: errorBody.message,
+      message: "Falha ao sincronizar favorito remoto.",
       ok: false,
     };
   }

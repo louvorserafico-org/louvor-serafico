@@ -16,6 +16,7 @@ type RemoteCommentRow = {
 
 type RemoteCommentsResult = {
   comments: LocalComment[];
+  detail?: string;
   message: string;
   status: "error" | "not_configured" | "ready";
 };
@@ -56,7 +57,8 @@ export async function fetchRemoteComments(
 
     return {
       comments: [],
-      message: errorBody.message ?? "Falha ao carregar comentarios remotos.",
+      detail: errorBody.message,
+      message: "Falha ao carregar comentarios remotos.",
       status: "error",
     };
   }

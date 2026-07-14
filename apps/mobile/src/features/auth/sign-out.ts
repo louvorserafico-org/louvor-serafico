@@ -1,3 +1,5 @@
+import { describeAuthError } from "./auth-error-messages";
+
 type SignOutClient = {
   auth: {
     signOut: () => Promise<{
@@ -7,6 +9,7 @@ type SignOutClient = {
 };
 
 export type SignOutResult = {
+  detail?: string;
   message: string;
   status: "error" | "success";
 };
@@ -22,8 +25,10 @@ export async function signOutFromSupabase(client: SignOutClient | null): Promise
   const { error } = await client.auth.signOut();
 
   if (error) {
+    const { detail, summary } = describeAuthError(error.message);
     return {
-      message: error.message,
+      detail: detail ?? undefined,
+      message: summary,
       status: "error",
     };
   }

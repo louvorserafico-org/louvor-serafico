@@ -4,8 +4,9 @@ import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-
 
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { PageHeader } from "@/components/PageHeader";
+import { ResultBanner } from "@/components/ResultBanner";
 import { buildPasswordRecoveryOverview } from "@/features/auth/password-recovery-overview";
-import { updatePasswordFromRecovery } from "@/features/auth/password-reset";
+import { updatePasswordFromRecovery, type PasswordResetResult } from "@/features/auth/password-reset";
 import { supabase } from "@/services/supabase/client";
 import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
 
@@ -13,7 +14,7 @@ export default function PasswordRecoveryScreen() {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const [result, setResult] = useState<{ message: string; status: "error" | "success" } | null>(null);
+  const [result, setResult] = useState<PasswordResetResult | null>(null);
   const overview = buildPasswordRecoveryOverview();
 
   return (
@@ -67,8 +68,8 @@ export default function PasswordRecoveryScreen() {
       </View>
 
       {result ? (
-        <View style={[styles.resultCard, result.status === "success" ? styles.success : styles.error]}>
-          <Text style={styles.resultText}>{result.message}</Text>
+        <View style={styles.resultGroup}>
+          <ResultBanner detail={result.detail} message={result.message} status={result.status} />
           {result.status === "success" ? (
             <Pressable accessibilityRole="button" onPress={() => router.replace("/entrar")} style={styles.secondaryAction}>
               <Text style={styles.secondaryActionText}>Voltar para login</Text>
@@ -141,10 +142,6 @@ const styles = StyleSheet.create({
     padding: spacing.xl,
     paddingBottom: spacing.xxl,
   },
-  error: {
-    backgroundColor: colors.goldSoft,
-    borderColor: colors.gold,
-  },
   formCard: {
     backgroundColor: colors.surface,
     borderColor: colors.borderStrong,
@@ -163,17 +160,8 @@ const styles = StyleSheet.create({
     fontSize: typography.body,
     padding: spacing.md,
   },
-  resultCard: {
-    borderRadius: radii.xl,
-    borderWidth: 1,
-    gap: spacing.xs,
-    padding: spacing.lg,
-  },
-  resultText: {
-    color: colors.textPrimary,
-    fontFamily: fontFamilies.body,
-    fontSize: typography.body,
-    lineHeight: 22,
+  resultGroup: {
+    gap: spacing.sm,
   },
   secondaryAction: {
     alignSelf: "flex-start",
@@ -184,10 +172,6 @@ const styles = StyleSheet.create({
     fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "800",
-  },
-  success: {
-    backgroundColor: colors.oliveSoft,
-    borderColor: colors.olive,
   },
   summaryCard: {
     backgroundColor: colors.surface,

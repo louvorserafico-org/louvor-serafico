@@ -5,6 +5,7 @@ type RemoteFavoriteRow = {
 };
 
 type RemoteFavoritesResult = {
+  detail?: string;
   message: string;
   songIds: string[];
   status: "error" | "not_authenticated" | "not_configured" | "ready";
@@ -51,7 +52,8 @@ export async function fetchRemoteFavorites(
     }
 
     return {
-      message: errorBody.message ?? "Falha ao carregar favoritos remotos.",
+      detail: errorBody.message,
+      message: "Falha ao carregar favoritos remotos.",
       songIds: [],
       status: "error",
     };

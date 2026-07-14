@@ -1,3 +1,5 @@
+import { describeAuthError, translateAuthErrorMessage } from "./auth-error-messages";
+
 type CredentialsClient = {
   auth: {
     resetPasswordForEmail: (email: string, options?: { redirectTo?: string }) => Promise<AuthResponse>;
@@ -63,6 +65,7 @@ type RegistrationMetadata = {
 };
 
 export type CredentialsAuthResult = {
+  detail?: string;
   message: string;
   status: "error" | "success";
 };
@@ -118,8 +121,10 @@ export async function registerWithPassword(
     });
 
     if (error) {
+      const { detail, summary } = describeAuthError(error.message);
       return {
-        message: error.message,
+        detail: detail ?? undefined,
+        message: summary,
         status: "error",
       };
     }
@@ -171,8 +176,10 @@ export async function signInWithPassword(
     });
 
     if (error) {
+      const { detail, summary } = describeAuthError(error.message);
       return {
-        message: error.message,
+        detail: detail ?? undefined,
+        message: summary,
         status: "error",
       };
     }
@@ -221,8 +228,10 @@ export async function requestPasswordReset(
     );
 
     if (error) {
+      const { detail, summary } = describeAuthError(error.message);
       return {
-        message: error.message,
+        detail: detail ?? undefined,
+        message: summary,
         status: "error",
       };
     }
@@ -292,7 +301,7 @@ function mapUnexpectedAuthError(error: unknown, fallback: string): string {
       return "Falha de rede ao falar com o Supabase. Verifique a conexao e tente novamente.";
     }
 
-    return message;
+    return translateAuthErrorMessage(message);
   }
 
   return fallback;

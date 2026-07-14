@@ -127,7 +127,8 @@ describe("credentials auth", () => {
     );
 
     assert.deepEqual(result, {
-      message: "Invalid login credentials",
+      detail: "Invalid login credentials",
+      message: "E-mail ou senha incorretos.",
       status: "error",
     });
   });

@@ -80,7 +80,8 @@ describe("password reset", () => {
     );
 
     assert.deepEqual(result, {
-      message: "Auth session missing",
+      detail: "Auth session missing",
+      message: "Sua sessão expirou. Entre novamente.",
       status: "error",
     });
   });

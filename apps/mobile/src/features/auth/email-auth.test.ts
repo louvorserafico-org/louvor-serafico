@@ -67,7 +67,8 @@ describe("email auth", () => {
     );
 
     assert.deepEqual(result, {
-      message: "Email rate limit exceeded",
+      detail: "Email rate limit exceeded",
+      message: "Muitas tentativas seguidas. Aguarde alguns minutos e tente novamente.",
       status: "error",
     });
   });

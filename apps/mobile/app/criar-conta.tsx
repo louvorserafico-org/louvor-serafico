@@ -4,10 +4,12 @@ import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-
 
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { OrnamentalDivider } from "@/components/OrnamentalDivider";
+import { ResultBanner } from "@/components/ResultBanner";
 import {
   FAMILY_OPTIONS,
   JURISDICTION_OPTIONS,
   registerWithPassword,
+  type CredentialsAuthResult,
   type RegistrationForm,
 } from "@/features/auth/credentials-auth";
 import { supabase } from "@/services/supabase/client";
@@ -27,7 +29,7 @@ const emptyRegistration: RegistrationForm = {
 
 export default function CreateAccountScreen() {
   const [registration, setRegistration] = useState<RegistrationForm>(emptyRegistration);
-  const [result, setResult] = useState<{ message: string; status: "error" | "success" } | null>(null);
+  const [result, setResult] = useState<CredentialsAuthResult | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -157,11 +159,7 @@ export default function CreateAccountScreen() {
         </View>
       </View>
 
-      {result ? (
-        <View style={[styles.resultCard, result.status === "success" ? styles.success : styles.error]}>
-          <Text style={styles.resultText}>{result.message}</Text>
-        </View>
-      ) : null}
+      {result ? <ResultBanner detail={result.detail} message={result.message} status={result.status} /> : null}
 
       <View style={styles.returnSection}>
         <EditorialSectionHeader
@@ -270,10 +268,6 @@ const styles = StyleSheet.create({
     gap: spacing.lg,
     padding: spacing.xl,
     paddingBottom: spacing.xxl,
-  },
-  error: {
-    backgroundColor: colors.goldSoft,
-    borderColor: colors.gold,
   },
   formPanel: {
     backgroundColor: colors.surface,
@@ -397,22 +391,7 @@ const styles = StyleSheet.create({
     fontSize: typography.caption,
     fontWeight: "800",
   },
-  resultCard: {
-    borderRadius: radii.xl,
-    borderWidth: 1,
-    padding: spacing.lg,
-  },
-  resultText: {
-    color: colors.textPrimary,
-    fontFamily: fontFamilies.body,
-    fontSize: typography.body,
-    lineHeight: 22,
-  },
   returnSection: {
     gap: spacing.sm,
-  },
-  success: {
-    backgroundColor: colors.oliveSoft,
-    borderColor: colors.olive,
   },
 });
