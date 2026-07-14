@@ -84,11 +84,14 @@ export default function TodayScreen() {
           </Pressable>
         </Link>
       ) : (
-        <View style={styles.saintCard}>
-          <Text style={styles.saintEyebrow}>{homeSaint.eyebrow}</Text>
-          <Text style={styles.saintTitle}>{homeSaint.title}</Text>
-          <Text style={styles.saintMeta}>{homeSaint.classification}</Text>
-        </View>
+        <Link asChild href="/santos">
+          <Pressable style={styles.saintCard}>
+            <Text style={styles.saintEyebrow}>{homeSaint.eyebrow}</Text>
+            <Text style={styles.saintTitle}>{homeSaint.title}</Text>
+            <Text style={styles.saintMeta}>{homeSaint.classification}</Text>
+            <Text style={styles.saintAction}>Ver santoral</Text>
+          </Pressable>
+        </Link>
       )}
 
       <Link asChild href="/devocoes">

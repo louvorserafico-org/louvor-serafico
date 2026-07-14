@@ -6823,3 +6823,21 @@ Commit: `fix(mobile): make card shadows visible on dark theme`
 ## Proxima Etapa
 
 Etapa 165 - Filtro por categoria do santoral (antiga 163).
+
+## Etapa 165 - Filtro por categoria do santoral
+
+Feito:
+- `santoral-filter.ts` (+test 4/4): `applySaintFilter`, `buildAvailableQualifiers`.
+- `saint-detail.ts`: `qualifierLabels` exportado.
+- `app/santos/index.tsx`: lista completa do santoral com chips de filtro (Martir/Virgem/Doutor/...), rota nova.
+- Home: card sem santo hoje agora linka pra `/santos` (lista/filtro).
+
+Validacoes: rtk pnpm test/typecheck/lint = 0.
+
+DoD:
+- [x] TDD.
+- [x] UI de filtro funcional.
+- [x] Typecheck/lint limpos.
+- [ ] Revisao visual device (usuario).
+
+Commit: `feat(mobile): add santoral category filter list`

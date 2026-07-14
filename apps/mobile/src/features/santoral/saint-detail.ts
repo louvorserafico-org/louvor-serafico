@@ -6,7 +6,7 @@ import {
   type SaintQualifier,
 } from "@louvor-serafico/shared";
 
-const qualifierLabels: Record<SaintQualifier, string> = {
+export const qualifierLabels: Record<SaintQualifier, string> = {
   martir: "Mártir",
   virgem: "Virgem",
   doutor: "Doutor",
