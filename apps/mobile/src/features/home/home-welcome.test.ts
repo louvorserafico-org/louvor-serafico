@@ -61,6 +61,7 @@ describe("home welcome", () => {
       }),
       {
         initials: "FL",
+        isAuthenticated: true,
       },
     );
   });
@@ -73,6 +74,7 @@ describe("home welcome", () => {
       }),
       {
         initials: "L",
+        isAuthenticated: true,
       },
     );
   });
@@ -85,6 +87,7 @@ describe("home welcome", () => {
       }),
       {
         initials: "V",
+        isAuthenticated: false,
       },
     );
   });

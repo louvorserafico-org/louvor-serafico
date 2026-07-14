@@ -3,6 +3,7 @@ import {
   getInitialCelebrationCatalog,
   getLiturgicalDayForDate,
 } from "@louvor-serafico/shared";
+import { Ionicons } from "@expo/vector-icons";
 import { Link, router } from "expo-router";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -49,12 +50,16 @@ export default function TodayScreen() {
         <View style={styles.headerTopRow}>
           <Text style={styles.headerSection}>Inicio</Text>
           <Pressable
-            accessibilityLabel="Abrir perfil"
+            accessibilityLabel={welcome.isAuthenticated ? "Abrir perfil" : "Entrar na conta"}
             accessibilityRole="button"
             onPress={() => router.push("/perfil")}
             style={({ pressed }) => [styles.avatarCircle, pressed ? styles.avatarPressed : undefined]}
           >
-            <Text style={styles.avatarText}>{welcome.initials}</Text>
+            {welcome.isAuthenticated ? (
+              <Text style={styles.avatarText}>{welcome.initials}</Text>
+            ) : (
+              <Ionicons color={colors.textMuted} name="person-outline" size={18} />
+            )}
           </Pressable>
         </View>
         <Text style={styles.headerTitle}>Louvor Serafico</Text>

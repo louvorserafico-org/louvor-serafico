@@ -6986,3 +6986,17 @@ Corrigido: as 5 telas de aba agora envolvem o `ScrollView` num `SafeAreaView edg
 Validacoes: rtk pnpm test/typecheck/lint = 0.
 
 Commit: `fix(mobile): respect safe area at top of tab screens`
+
+## Etapa 176 - Fix: avatar "V" enganoso para visitante
+
+Pergunta do usuario: avatar mostrava inicial "V" (de "Visitante") mesmo sem login, parecendo conta logada.
+
+Recomendacao aplicada: visitante ve icone generico de pessoa (Ionicons `person-outline`), nao uma inicial - so usuarios autenticados veem suas iniciais reais. Ambos continuam levando a `/perfil` (login ali).
+
+Feito:
+- `HomeWelcome.isAuthenticated` (novo, +test 3/3 atualizados).
+- Home: `Ionicons person-outline` quando visitante; iniciais reais quando autenticado.
+
+Validacoes: rtk pnpm test/typecheck/lint = 0.
+
+Commit: `fix(mobile): show generic icon instead of fake initial for guest avatar`

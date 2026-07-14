@@ -8,6 +8,7 @@ type HomeWelcomeInput = {
 
 export type HomeWelcome = {
   initials: string;
+  isAuthenticated: boolean;
 };
 
 function normalizeName(value: string) {
@@ -52,5 +53,6 @@ export function buildHomeWelcome(input: HomeWelcomeInput): HomeWelcome {
 
   return {
     initials: buildInitials(displayName),
+    isAuthenticated: input.session.status === "authenticated",
   };
 }
