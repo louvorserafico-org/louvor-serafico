@@ -6841,3 +6841,28 @@ DoD:
 - [ ] Revisao visual device (usuario).
 
 Commit: `feat(mobile): add santoral category filter list`
+
+## Etapa 166 - Track B: Novena e Transito de Sao Francisco (conteudo real)
+
+Fonte: usuario forneceu texto da Novena (mensagem) e HTML do Transito (Paroquia Sao Francisco de Assis, Itapua). Copia fiel, sem fabricar.
+
+Feito:
+- `novena-content.ts` (+test 4/4): 6 passos, oracao diaria, oracao de Sao Francisco, bencao, 9 dias com meditacao+sugestao biblica.
+- `transito-content.ts` (+test 2/2): 8 secoes liturgicas (abertura/procissao/testamento de sena/ritos iniciais/liturgia da palavra/preces/eucaristica/finais), com falas Padre/Todos/Presidente/Comentarista/Leitor.
+- `devotions.ts`: novena e transito -> `available` (devocional segue `preparing`, sem fonte).
+- `app/devocoes/[slug].tsx` reescrito: renderiza Novena (seletor de dia 1-9 + oracoes fixas) e Transito (secoes com falas) de verdade; preparing continua com placeholder.
+
+Validacoes: rtk pnpm test/typecheck/lint = 0.
+
+DoD:
+- [x] TDD.
+- [x] Conteudo fiel a fonte, sem fabricacao.
+- [x] UI real substitui placeholder.
+- [x] Typecheck/lint limpos.
+- [ ] Revisao visual device (usuario).
+
+Sugestao commit: `feat(mobile): add novena and transito devotion content`
+
+## Track B status
+
+Novena e Transito: concluidos. Devocional (oracoes diarias/preparatorias): ainda sem fonte, aguardando usuario.

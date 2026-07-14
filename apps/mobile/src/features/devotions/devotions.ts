@@ -20,13 +20,13 @@ const devotionItems: DevotionItem[] = [
   {
     description: "Nove dias de oração na companhia de São Francisco de Assis.",
     slug: "novena-sao-francisco",
-    status: "preparing",
+    status: "available",
     title: "Novena de São Francisco",
   },
   {
     description: "Memória da passagem (trânsito) de São Francisco de Assis.",
     slug: "transito-sao-francisco",
-    status: "preparing",
+    status: "available",
     title: "Trânsito de São Francisco",
   },
 ];

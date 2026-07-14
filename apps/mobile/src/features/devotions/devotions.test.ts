@@ -13,8 +13,11 @@ describe("devotions hub", () => {
     );
   });
 
-  it("keeps devotions as preparing until curated", () => {
-    assert.ok(getDevotionItems().every((item) => item.status === "preparing"));
+  it("has novena and transito available, devocional preparing", () => {
+    const items = getDevotionItems();
+    assert.equal(items.find((i) => i.slug === "devocional")?.status, "preparing");
+    assert.equal(items.find((i) => i.slug === "novena-sao-francisco")?.status, "available");
+    assert.equal(items.find((i) => i.slug === "transito-sao-francisco")?.status, "available");
   });
 
   it("finds a devotion by slug", () => {
