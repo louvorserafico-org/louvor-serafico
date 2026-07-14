@@ -14,15 +14,19 @@ describe("home saint of the day", () => {
     assert.equal(result.href, "/santos/07-10");
     assert.equal(result.saints.length, 1);
     assert.ok(result.saints[0]?.classification.length > 0);
+    assert.ok(result.saints[0]?.href.startsWith("/santos/07-10?saintId="));
   });
 
-  it("lists every saint when the day has more than one", () => {
+  it("lists every saint with its own link when the day has more than one", () => {
     const result = buildHomeSaint(getLiturgicalDayForDate(new Date("2026-07-13T12:00:00.000Z")));
 
     assert.equal(result.eyebrow, "Santos do dia");
     assert.equal(result.saints.length, 2);
-    assert.ok(result.saints.some((saint) => saint.name.includes("Angelina")));
-    assert.ok(result.saints.some((saint) => saint.name.includes("Emanuel Ruíz")));
+    const angelina = result.saints.find((saint) => saint.name.includes("Angelina"));
+    const emanuel = result.saints.find((saint) => saint.name.includes("Emanuel Ruíz"));
+    assert.ok(angelina?.href.startsWith("/santos/07-13?saintId="));
+    assert.ok(emanuel?.href.startsWith("/santos/07-13?saintId="));
+    assert.notEqual(angelina?.href, emanuel?.href);
   });
 
   it("falls back editorially when there is no franciscan saint", () => {

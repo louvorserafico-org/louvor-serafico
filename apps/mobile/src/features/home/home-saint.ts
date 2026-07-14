@@ -4,6 +4,7 @@ import { buildSaintClassification } from "../santoral/saint-detail.ts";
 
 export type HomeSaintEntry = {
   classification: string;
+  href: string;
   name: string;
 };
 
@@ -36,6 +37,7 @@ export function buildHomeSaint(day: LiturgicalDay): HomeSaint {
     href: `/santos/${day.monthDay}`,
     saints: day.saints.map((saint) => ({
       classification: buildSaintClassification(saint),
+      href: `/santos/${day.monthDay}?saintId=${saint.id}`,
       name: saint.name,
     })),
     status: "saint",

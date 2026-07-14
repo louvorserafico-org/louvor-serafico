@@ -82,28 +82,33 @@ export default function TodayScreen() {
       <EditorialSectionHeader eyebrow="Para hoje" title="Memória e oração" />
 
       <View style={styles.exploreList}>
-        <Link asChild href={homeSaint.href ?? "/santos"}>
-          <Pressable style={[styles.exploreBlock, styles.exploreRowBorder]}>
+        {homeSaint.status === "saint" ? (
+          <View style={[styles.exploreBlock, styles.exploreRowBorder]}>
             <Text style={styles.exploreEyebrow}>{homeSaint.eyebrow}</Text>
-            {homeSaint.saints.length > 1 ? (
-              <View style={styles.exploreNameList}>
-                {homeSaint.saints.map((saint) => (
-                  <Text key={saint.name} style={styles.exploreTitle}>
-                    {saint.name}
-                  </Text>
-                ))}
-              </View>
-            ) : (
-              <>
-                <Text style={styles.exploreTitle}>{homeSaint.title}</Text>
-                <Text style={styles.exploreMeta}>{homeSaint.description}</Text>
-              </>
-            )}
-            <Text style={styles.exploreAction}>
-              {homeSaint.saints.length > 1 ? "Ver os dois santos" : "Ver santo"}
-            </Text>
-          </Pressable>
-        </Link>
+            <View style={styles.exploreNameList}>
+              {homeSaint.saints.map((saint) => (
+                <Link asChild href={saint.href} key={saint.name}>
+                  <Pressable style={styles.exploreSaintRow}>
+                    <View style={styles.exploreCopy}>
+                      <Text style={styles.exploreTitle}>{saint.name}</Text>
+                      <Text style={styles.exploreMeta}>{saint.classification}</Text>
+                    </View>
+                    <Text style={styles.exploreAction}>Ver</Text>
+                  </Pressable>
+                </Link>
+              ))}
+            </View>
+          </View>
+        ) : (
+          <Link asChild href="/santos">
+            <Pressable style={[styles.exploreBlock, styles.exploreRowBorder]}>
+              <Text style={styles.exploreEyebrow}>{homeSaint.eyebrow}</Text>
+              <Text style={styles.exploreTitle}>{homeSaint.title}</Text>
+              <Text style={styles.exploreMeta}>{homeSaint.description}</Text>
+              <Text style={styles.exploreAction}>Ver santoral</Text>
+            </Pressable>
+          </Link>
+        )}
 
         <Link asChild href="/devocoes">
           <Pressable style={styles.exploreBlock}>
@@ -244,7 +249,13 @@ const styles = StyleSheet.create({
   },
   exploreBlock: {
     gap: spacing.xs,
-    paddingVertical: spacing.lg,
+    paddingBottom: spacing.lg,
+    paddingTop: spacing.lg,
+  },
+  exploreCopy: {
+    flex: 1,
+    gap: spacing.xs,
+    paddingRight: spacing.md,
   },
   exploreEyebrow: {
     color: colors.gold,
@@ -259,6 +270,7 @@ const styles = StyleSheet.create({
     borderRadius: radii.xl,
     borderWidth: 1,
     paddingHorizontal: spacing.lg,
+    paddingTop: spacing.xs,
   },
   exploreMeta: {
     color: colors.textSecondary,
@@ -267,8 +279,12 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   exploreNameList: {
-    gap: spacing.xs,
+    gap: spacing.sm,
     paddingTop: spacing.xs,
+  },
+  exploreSaintRow: {
+    alignItems: "center",
+    flexDirection: "row",
   },
   exploreRowBorder: {
     borderBottomColor: colors.border,

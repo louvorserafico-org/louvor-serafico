@@ -9,6 +9,7 @@ import {
   buildSaintHistoryState,
   buildSaintObservancesLabel,
 } from "@/features/santoral/saint-detail";
+import { resolveSaintsForDay } from "@/features/santoral/saint-day-filter";
 import { useSubscriptionPreview } from "@/features/subscription/SubscriptionPreviewProvider";
 import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
 
@@ -23,9 +24,10 @@ function resolveDateLabel(monthDay: string): string {
 }
 
 export default function SaintDayScreen() {
-  const params = useLocalSearchParams<{ monthDay: string }>();
+  const params = useLocalSearchParams<{ monthDay: string; saintId?: string }>();
   const monthDay = params.monthDay ?? "";
-  const saints = findSaintDaysByMonthDay(monthDay);
+  const allSaints = findSaintDaysByMonthDay(monthDay);
+  const saints = resolveSaintsForDay(allSaints, params.saintId);
   const { hasActiveSubscription } = useSubscriptionPreview();
 
   if (saints.length === 0) {

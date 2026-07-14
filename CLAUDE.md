@@ -6945,3 +6945,18 @@ Causas e fixes:
 Validacoes: rtk pnpm test/typecheck/lint = 0.
 
 Commit: `fix(mobile): repair hero button, section dividers and multi-saint clarity`
+
+## Etapa 173 - Fix: botao por santo + folga no topo do card
+
+Pedido: cada santo com seu proprio botao (nao um "ver ambos"); corrigir espacamento apertado no topo do bloco "Santos do dia".
+
+Feito:
+- `HomeSaintEntry.href` (novo): link individual por santo (`/santos/{monthDay}?saintId={id}`), usando o `id` real do `SaintDay`.
+- Novo `features/santoral/saint-day-filter.ts` (+test 3/3): `resolveSaintsForDay(saints, saintId?)` filtra a pagina do dia para 1 santo quando `saintId` bate; senao mostra todos.
+- `santos/[monthDay].tsx` le `saintId` da query e aplica o filtro.
+- Home: cada santo agora e uma `Link`+`Pressable` propria com "Ver" individual (`exploreSaintRow`), em vez de bloco unico com acao compartilhada.
+- Espacamento: `exploreList` ganhou `paddingTop`; `exploreBlock` com padding top/bottom explicito; `exploreNameList` gap maior entre santos.
+
+Validacoes: rtk pnpm test/typecheck/lint = 0.
+
+Commit: `feat(mobile): give each saint its own link and fix card spacing`
