@@ -54,7 +54,10 @@ const styles = StyleSheet.create({
     fontWeight: "800",
   },
   container: {
+    borderBottomColor: colors.border,
+    borderBottomWidth: 1,
     gap: spacing.xs,
+    paddingBottom: spacing.md,
   },
   copy: {
     flex: 1,

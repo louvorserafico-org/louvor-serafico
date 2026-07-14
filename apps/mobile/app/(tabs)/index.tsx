@@ -73,7 +73,7 @@ export default function TodayScreen() {
         <Text style={styles.heroText}>{summary.helperText}</Text>
         {summary.premiumText ? <Text style={styles.heroNote}>{summary.premiumText}</Text> : null}
         <Link asChild href={summary.href}>
-          <Pressable style={({ pressed }) => [styles.heroButton, pressed ? styles.pressed : undefined]}>
+          <Pressable style={styles.heroButton}>
             <Text style={styles.heroButtonText}>{summary.actionLabel}</Text>
           </Pressable>
         </Link>
@@ -83,34 +83,34 @@ export default function TodayScreen() {
 
       <View style={styles.exploreList}>
         <Link asChild href={homeSaint.href ?? "/santos"}>
-          <Pressable style={[styles.exploreRow, styles.exploreRowBorder]}>
-            <View style={styles.exploreCopy}>
-              <Text style={styles.exploreEyebrow}>{homeSaint.eyebrow}</Text>
-              {homeSaint.saints.length > 1 ? (
-                homeSaint.saints.map((saint) => (
+          <Pressable style={[styles.exploreBlock, styles.exploreRowBorder]}>
+            <Text style={styles.exploreEyebrow}>{homeSaint.eyebrow}</Text>
+            {homeSaint.saints.length > 1 ? (
+              <View style={styles.exploreNameList}>
+                {homeSaint.saints.map((saint) => (
                   <Text key={saint.name} style={styles.exploreTitle}>
                     {saint.name}
                   </Text>
-                ))
-              ) : (
-                <>
-                  <Text style={styles.exploreTitle}>{homeSaint.title}</Text>
-                  <Text style={styles.exploreMeta}>{homeSaint.description}</Text>
-                </>
-              )}
-            </View>
-            <Text style={styles.exploreAction}>Ver</Text>
+                ))}
+              </View>
+            ) : (
+              <>
+                <Text style={styles.exploreTitle}>{homeSaint.title}</Text>
+                <Text style={styles.exploreMeta}>{homeSaint.description}</Text>
+              </>
+            )}
+            <Text style={styles.exploreAction}>
+              {homeSaint.saints.length > 1 ? "Ver os dois santos" : "Ver santo"}
+            </Text>
           </Pressable>
         </Link>
 
         <Link asChild href="/devocoes">
-          <Pressable style={styles.exploreRow}>
-            <View style={styles.exploreCopy}>
-              <Text style={styles.exploreEyebrow}>Oração</Text>
-              <Text style={styles.exploreTitle}>Devoções franciscanas</Text>
-              <Text style={styles.exploreMeta}>Devocional, novena e trânsito de São Francisco.</Text>
-            </View>
-            <Text style={styles.exploreAction}>Abrir</Text>
+          <Pressable style={styles.exploreBlock}>
+            <Text style={styles.exploreEyebrow}>Oração</Text>
+            <Text style={styles.exploreTitle}>Devoções franciscanas</Text>
+            <Text style={styles.exploreMeta}>Devocional, novena e trânsito de São Francisco.</Text>
+            <Text style={styles.exploreAction}>Abrir devoções</Text>
           </Pressable>
         </Link>
       </View>
@@ -240,11 +240,11 @@ const styles = StyleSheet.create({
     fontFamily: fontFamilies.ui,
     fontSize: typography.caption,
     fontWeight: "800",
-    paddingLeft: spacing.md,
+    paddingTop: spacing.xs,
   },
-  exploreCopy: {
-    flex: 1,
+  exploreBlock: {
     gap: spacing.xs,
+    paddingVertical: spacing.lg,
   },
   exploreEyebrow: {
     color: colors.gold,
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
     borderColor: colors.border,
     borderRadius: radii.xl,
     borderWidth: 1,
-    paddingHorizontal: spacing.md,
+    paddingHorizontal: spacing.lg,
   },
   exploreMeta: {
     color: colors.textSecondary,
@@ -266,10 +266,9 @@ const styles = StyleSheet.create({
     fontSize: typography.caption,
     lineHeight: 20,
   },
-  exploreRow: {
-    alignItems: "center",
-    flexDirection: "row",
-    paddingVertical: spacing.md,
+  exploreNameList: {
+    gap: spacing.xs,
+    paddingTop: spacing.xs,
   },
   exploreRowBorder: {
     borderBottomColor: colors.border,
@@ -362,9 +361,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderRadius: radii.xl,
     paddingHorizontal: spacing.md,
-  },
-  pressed: {
-    opacity: 0.82,
   },
   quickActions: {
     columnGap: spacing.xs,

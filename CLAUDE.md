@@ -6927,3 +6927,21 @@ Feito:
 Validacoes: rtk pnpm test/typecheck/lint = 0.
 
 Commit: `feat(mobile): redesign home with clear visual hierarchy`
+
+## Etapa 172 - Fix: hero invisivel, secoes amontoadas, ambiguidade multi-santo, divisores
+
+Problemas reportados (screenshot):
+1. Botao do hero ("Ver dias preparados") invisivel - texto escuro sem pill dourado.
+2. Elementos amontoados dentro dos cards.
+3. Com 2 santos no dia, um unico "Ver" flutuava ao lado do segundo nome, ambiguo.
+4. Sem linha separando secoes do app.
+
+Causas e fixes:
+1. `heroButton` usava `style={({pressed}) => [...]}` (Pressable dentro de `Link asChild`) - unico lugar do app com esse padrao dentro de Link asChild; convertido para estilo estatico (`style={styles.heroButton}`), igual a todos os outros botoes do app dentro de Link.
+2. `exploreList`: linha (row) virou bloco (coluna) por item, com `paddingVertical: lg` e `paddingHorizontal: lg` no container (era md) - mais respiro.
+3. Bloco do santo: nomes empilhados em `exploreNameList`, acao unica no rodape do bloco ("Ver os dois santos" quando `saints.length > 1`, "Ver santo" quando 1) - nao fica mais colada a um nome especifico.
+4. `EditorialSectionHeader` (componente compartilhado, usado em TODAS as telas do app) ganhou `borderBottomWidth: 1` + `borderBottomColor: colors.border` + `paddingBottom` - mesma linha que ja separava o `PageHeader`. Propaga o divisor de secao para o app inteiro com uma unica mudanca de componente.
+
+Validacoes: rtk pnpm test/typecheck/lint = 0.
+
+Commit: `fix(mobile): repair hero button, section dividers and multi-saint clarity`
