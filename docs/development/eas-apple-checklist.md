@@ -1,5 +1,8 @@
 # Checklist EAS E Apple
 
+> **Atualização**: Apple Developer Program pago. Bloqueio abaixo resolvido.
+> Plano vigente de CI/CD para TestFlight: `docs/development/testflight-cicd-plan.md`.
+
 ## Estado Atual
 
 O comando de build iOS chegou ate a autenticacao Apple, mas foi bloqueado

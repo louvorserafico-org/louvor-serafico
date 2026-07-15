@@ -5,7 +5,9 @@ import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from "react-na
 
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { PageHeader } from "@/components/PageHeader";
+import { SongAudioPlayer } from "@/components/SongAudioPlayer";
 import { requestAssetSignedUrl } from "@/features/assets/edge-asset-url";
+import { resolvePdfViewerSource } from "@/features/assets/pdf-viewer-source";
 import { useSessionPreview } from "@/features/auth/SessionProvider";
 import { useSupabaseSession } from "@/features/auth/SupabaseSessionProvider";
 import { fetchRemoteSongDetail } from "@/features/songs/remote-song-detail";
@@ -22,6 +24,7 @@ export default function SongDetailScreen() {
   const localSong = findSongBySlug(params.slug ?? "");
   const [remoteSong, setRemoteSong] = useState<typeof localSong | null>(null);
   const [assetMessages, setAssetMessages] = useState<Record<string, string>>({});
+  const [audioUrls, setAudioUrls] = useState<Record<string, string>>({});
   const [sourceMode, setSourceMode] = useState<"local" | "remote">("local");
   const [subtitle, setSubtitle] = useState("Um canto preparado para servir a celebração com beleza e ordem.");
   const song = remoteSong ?? localSong;
@@ -66,7 +69,7 @@ export default function SongDetailScreen() {
     );
   }
 
-  const materialSections = buildSongMaterialSections(song.assets);
+  const materialSections = buildSongMaterialSections(song.assets).filter((section) => section.assets.length > 0);
 
   return (
     <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
@@ -101,7 +104,9 @@ export default function SongDetailScreen() {
                         {access.canAccess ? "Disponível para abrir agora." : access.message}
                       </Text>
                       {assetMessages[asset.id] ? <Text style={styles.assetPath}>{assetMessages[asset.id]}</Text> : null}
-                      {action.kind === "open" ? (
+                      {action.kind === "open" && asset.type === "audio" && audioUrls[asset.id] ? (
+                        <SongAudioPlayer uri={audioUrls[asset.id]} />
+                      ) : action.kind === "open" ? (
                         <Pressable
                           onPress={() => {
                             if (asset.type === "score_pdf" || asset.type === "lyrics" || asset.type === "chord_sheet") {
@@ -114,6 +119,31 @@ export default function SongDetailScreen() {
                                   title: song.title,
                                   type: section.title,
                                 },
+                              });
+                              return;
+                            }
+
+                            if (asset.type === "audio") {
+                              void resolvePdfViewerSource({
+                                accessToken: supabaseSession.accessToken,
+                                assetId: asset.id,
+                                bucket: supabaseConfig.assetBucket,
+                                functionsUrl: supabaseConfig.functionsUrl,
+                                premium: asset.premium,
+                                storagePath: asset.path,
+                                supabaseUrl: supabaseConfig.url,
+                              }).then((result) => {
+                                setAssetMessages((current) => ({
+                                  ...current,
+                                  [asset.id]: result.message,
+                                }));
+
+                                if (result.status === "ready") {
+                                  setAudioUrls((current) => ({
+                                    ...current,
+                                    [asset.id]: result.url,
+                                  }));
+                                }
                               });
                               return;
                             }

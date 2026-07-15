@@ -7198,3 +7198,29 @@ Feito:
 Validacoes: pnpm test (73 suites, fail 0) / typecheck / lint = 0. Sem teste novo (mudanca visual/layout, sem logica de dominio).
 
 Commit: `fix(mobile): move section divider above header and add emphasis to home quick actions`
+
+## Etapa 188 - Player de áudio nos materiais + lista só com o disponível
+
+Pedido do Frei: audios das 6 musicas da Missa do Santissimo Nome de Jesus (enviados como .wav, nomes em CAIXA ALTA); criar player de audio na tela de material; e so exibir na lista de materiais os tipos que a musica realmente tem (nao mostrar "Letra e cifra" vazio quando a musica so tem partitura, por exemplo).
+
+Feito:
+- `expo-audio@~1.1.1` instalado (modulo oficial Expo, funciona no Expo Go - ao contrario de `react-native-pdf`/`react-native-blob-util`, entao o player de audio ja e demonstravel sem development build).
+- `audio-duration.ts` (novo, testado): `formatAudioDuration(seconds)` formata mm:ss.
+- `SongAudioPlayer.tsx` (novo componente): botao play/pause (`AnimatedPressable`), barra de progresso, tempo atual/total. Usa `useAudioPlayer`/`useAudioPlayerStatus` do `expo-audio`.
+- `musicas/[slug].tsx`: 
+  - `materialSections` agora filtra `section.assets.length > 0` antes de renderizar - resolve o pedido de nao mostrar tipo de material vazio.
+  - Ao abrir um asset `audio`, resolve a URL via `resolvePdfViewerSource` (reaproveitado - apesar do nome, e generico: resolve URL publica ou assinada via Edge Function conforme `premium`) e renderiza `<SongAudioPlayer>` inline no lugar do botao, em vez de abrir externamente como fazia antes (via `Linking.openURL`).
+- `packages/shared/src/celebration.ts`: os 6 cantos da Missa do Santissimo Nome de Jesus ganharam asset `type: "audio"` (`premium: true`, mesmo padrao dos `score_pdf`). "Invocando o nome do Senhor" tinha `assets: []` (sem PDF) - agora tem o audio.
+
+Upload pra producao (confirmado pelo Frei), executado nesta etapa:
+- `ffmpeg` instalado via winget (nao estava disponivel no ambiente) e usado pra converter os 6 `.wav` -> `.mp3` (qscale 4, ~10x menor: ~175MB -> ~10MB total). Necessario porque o bucket `song-assets` so aceita `allowed_mime_types` = pdf/jpeg/png/audio-mpeg/audio-mp3 (migration `20260421120000`) - `audio/wav` foi rejeitado (`415 invalid_mime_type`) na primeira tentativa.
+- `celebration.ts` atualizado pra apontar `.mp3` em vez de `.wav` nos 6 assets.
+- Upload via Storage REST API (`POST /storage/v1/object/song-assets/<path>`, service role, `x-upsert: true`) - os 6 arquivos subiram com sucesso.
+- Insert dos 6 registros em `song_assets` (status `published`, `premium: true`, `mime_type: audio/mpeg`) via PostgREST (`POST /rest/v1/song_assets`, service role) - **nao** via conexao Postgres direta (`db.<ref>.supabase.co`), que falhou por DNS neste ambiente (`ENOTFOUND`, so resolve AAAA/IPv6 sem rota); o host da API REST/Storage (`<ref>.supabase.co`) resolve IPv4 normalmente e serviu de contorno.
+- Verificado com a `anon key`: os 6 assets de audio aparecem publicados e legiveis. Uma observacao: o canto "Invocando o nome do Senhor" tem `status: reviewed` (nao `published`) na tabela `songs` - por isso a leitura remota do detalhe desse canto especifico ainda cai no fallback local (que ja tem o audio adicionado, entao funciona igual pro usuario, so nao passa pelo caminho remoto). Publicar esse canto fica como decisao separada do Frei, fora do pedido original.
+
+Testes: `audio-duration.test.ts` (2/2, registrado no `test` script do `package.json`).
+
+Validacoes: pnpm test (74 suites, fail 0) / typecheck / lint = 0.
+
+Commit: `feat(mobile): add in-app audio player and hide empty material sections`
