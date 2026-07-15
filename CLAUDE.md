@@ -7185,3 +7185,16 @@ Testes: `phone-mask.test.ts` (2/2), `registration-field-validation.test.ts` (5/5
 Validacoes: pnpm test (73 suites, fail 0) / typecheck / lint = 0.
 
 Commit: `feat(mobile): redesign registration screen with inline validation, password confirmation and select fields`
+
+## Etapa 187 - Destaque nos atalhos da Home + ordem da linha divisoria de secao
+
+Pedido do Frei: (1) mais destaque visual pros botoes de "Explorar o app" (Calendario/Repertorio/Partilha) na Home; (2) a linha divisoria de secao (`EditorialSectionHeader`) estava no lugar errado - aparecia embaixo do titulo, colada na caixa de conteudo abaixo, dando a impressao de que fechava a secao anterior em vez de abrir a proxima. O correto: linha -> eyebrow -> titulo -> conteudo.
+
+Feito:
+- `EditorialSectionHeader.tsx`: `borderBottomWidth/paddingBottom` -> `borderTopWidth/paddingTop` no container. Mudanca **global** (54 usos em todo o app) - efeito no `EditorialSectionHeader` conserta a ordem de leitura em toda tela que usa o componente, nao so na Home.
+- `HomeQuickActionCard.tsx`: ganhou icone (`Ionicons`, mesmo icone da tab bar - `calendar-outline`/`musical-notes-outline`/`people-outline`), borda (`colors.borderStrong`), sombra mais forte, altura maior (68 -> 92) e trocou `Pressable` por `AnimatedPressable` (feedback de toque, padrao das Etapas 181+). Prop nova `icon` obrigatoria.
+- `(tabs)/index.tsx`: os 3 usos de `HomeQuickActionCard` passam o icone correspondente.
+
+Validacoes: pnpm test (73 suites, fail 0) / typecheck / lint = 0. Sem teste novo (mudanca visual/layout, sem logica de dominio).
+
+Commit: `fix(mobile): move section divider above header and add emphasis to home quick actions`

@@ -130,9 +130,9 @@ export default function TodayScreen() {
 
       <EditorialSectionHeader eyebrow="Navegar" title="Explorar o app" />
       <View style={styles.quickActions}>
-        <HomeQuickActionCard href="/calendario" subtitle="Celebrações" title="Calendário" />
-        <HomeQuickActionCard href="/repertorio" subtitle="Cantos" title="Repertório" />
-        <HomeQuickActionCard href="/comunidade" subtitle="Comunidade" title="Partilha" />
+        <HomeQuickActionCard href="/calendario" icon="calendar-outline" subtitle="Celebrações" title="Calendário" />
+        <HomeQuickActionCard href="/repertorio" icon="musical-notes-outline" subtitle="Cantos" title="Repertório" />
+        <HomeQuickActionCard href="/comunidade" icon="people-outline" subtitle="Comunidade" title="Partilha" />
       </View>
 
       <EditorialSectionHeader
