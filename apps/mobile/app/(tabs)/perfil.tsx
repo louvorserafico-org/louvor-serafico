@@ -69,6 +69,11 @@ export default function ProfileScreen() {
                   <Text style={styles.inlineLinkText}>Privacidade e LGPD</Text>
                 </Pressable>
               </Link>
+              <Link asChild href="/sobre">
+                <Pressable accessibilityRole="button" style={styles.inlineLink}>
+                  <Text style={styles.inlineLinkText}>Sobre o Louvor Seráfico</Text>
+                </Pressable>
+              </Link>
             </View>
           </View>
         </>

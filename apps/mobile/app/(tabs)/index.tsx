@@ -4,8 +4,9 @@ import {
   getLiturgicalDayForDate,
 } from "@louvor-serafico/shared";
 import { Ionicons } from "@expo/vector-icons";
+import { Asset } from "expo-asset";
 import { Link, router } from "expo-router";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { AnimatedPressable } from "@/components/AnimatedPressable";
@@ -21,6 +22,9 @@ import { buildHomeSummary } from "@/features/home/home-summary";
 import { buildHomeWelcome } from "@/features/home/home-welcome";
 import { useSubscriptionPreview } from "@/features/subscription/SubscriptionPreviewProvider";
 import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
+
+const freiLuisLogo = require("../../assets/frei-luis-logo.png");
+const freiLuisLogoUri = Asset.fromModule(freiLuisLogo).uri;
 
 export default function TodayScreen() {
   const { session } = useSupabaseSession();
@@ -159,6 +163,13 @@ export default function TodayScreen() {
       ) : null}
 
       <Text style={styles.footerNote}>Para cada tempo da Igreja, um repertório a serviço da oração.</Text>
+
+      <Link asChild href="/sobre">
+        <Pressable accessibilityRole="button" style={styles.creditFooter}>
+          <Text style={styles.creditLabel}>Feito por</Text>
+          <Image resizeMode="contain" source={{ uri: freiLuisLogoUri }} style={styles.creditLogo} />
+        </Pressable>
+      </Link>
       </ScrollView>
     </SafeAreaView>
   );
@@ -193,6 +204,22 @@ const styles = StyleSheet.create({
     gap: spacing.lg,
     padding: spacing.xl,
     paddingBottom: spacing.xxl,
+  },
+  creditFooter: {
+    alignItems: "center",
+    gap: spacing.xs,
+    paddingTop: spacing.xs,
+  },
+  creditLabel: {
+    color: colors.textMuted,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.tab,
+    fontWeight: "700",
+    textTransform: "uppercase",
+  },
+  creditLogo: {
+    height: 28,
+    width: 28,
   },
   footerNote: {
     color: colors.textMuted,

@@ -7396,3 +7396,21 @@ Testes atualizados: `celebration.test.ts` (catalogo de musicas com as 6 novas, t
 Validacoes: pnpm test (74 suites, fail 0) / typecheck / lint = 0.
 
 Commit: `feat(shared): add Missa de Sao Boaventura repertoire (15 de julho)`
+
+## Etapa 200 - Pagina "Sobre" e credito ao idealizador
+
+Pedido do Frei: pagina institucional contando quem ele e e o proposito do app, mais um rodape minimalista "Feito por" + logo na home, e um atalho pra pagina em algum lugar que faca sentido.
+
+Fonte do conteudo: site pessoal do Frei em `C:\Users\myPC\Desktop\dev\personal\frei-luis\frei-luis-ventura` (`src/pages/Biografia.tsx` e `src/components/sections/BioSection.tsx`) - resumo proprio (nao copia literal) da trajetoria: infancia em Ceilandia (DF), coroinha aos 13, ingresso na OFMConv em 2012, Profissao Solene em 2020, ordenacao presbiteral em 2021, discografia recente ("O Crucificado", "Centelhas", "Difusivo Serafim"). Logo copiada de `frei-luis-ventura/dist/logo-transp.png` (1080x1080 PNG transparente) para `apps/mobile/assets/frei-luis-logo.png`.
+
+Implementado:
+- `apps/mobile/app/sobre.tsx` (nova rota `/sobre`, nao esta na tab bar - ja tem 5 tabs) - segue o mesmo padrao de `politica-privacidade.tsx`/`termos-de-uso.tsx` (`PageHeader` + cards com `EditorialSectionHeader`). Duas secoes: "O app" (proposito - celebracoes mais ricas e mais franciscanas, feito pra musicos) e "Idealizador" (resumo do Frei Luis Ventura). Termina com o mesmo bloco de credito "Feito por" + logo, reaproveitado da home.
+- `(tabs)/index.tsx`: rodape "Feito por" + logo do Frei adicionado logo abaixo do `footerNote` existente ("Para cada tempo da Igreja..."), minimalista, centralizado, clicavel (`Link` pra `/sobre`).
+- Atalho pra `/sobre`: adicionado em dois lugares, pra cobrir os dois estados de auth - `perfil.tsx` (lista "Acessos uteis" do usuario autenticado, junto de Favoritos/Partilhas/Privacidade) e `AuthEntryCard.tsx` (chip extra ao lado de Politica/Termos/Dados, visivel pro visitante). Nao virou tab nem entrou no "Explorar o app" da home pra nao competir com as funcionalidades principais do app.
+- Imagem carregada via `expo-asset` (`Asset.fromModule(...).uri`), mesmo padrao ja usado em `OrnamentalDivider.tsx`.
+
+Nao foi possivel verificar visualmente em app rodando: emulador Android segue instavel (ver tentativas anteriores) e o projeto nao tem suporte web instalado (`react-native-web` ausente - fora de escopo instalar so pra preview). Validado via typecheck + lint + revisao de codigo.
+
+Validacoes: pnpm test (74 suites, fail 0) / typecheck / lint = 0. Sem teste novo (mudanca de UI/conteudo estatico, sem logica nova).
+
+Commit: `feat(mobile): add Sobre page and Frei Luís Ventura credit footer`

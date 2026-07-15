@@ -81,6 +81,11 @@ export function AuthEntryCard() {
             <Text style={styles.linkChipText}>Seus dados</Text>
           </Pressable>
         </Link>
+        <Link asChild href="/sobre">
+          <Pressable accessibilityRole="button" style={styles.linkChip}>
+            <Text style={styles.linkChipText}>Sobre</Text>
+          </Pressable>
+        </Link>
       </View>
     </View>
   );
