@@ -11,7 +11,7 @@ describe("calendar month view", () => {
 
     assert.equal(result.monthLabel, "janeiro");
     assert.equal(result.markedDays.length >= 2, true);
-    assert.equal(result.celebrations[0]?.slug, "santissimo-nome-de-jesus");
+    assert.equal(result.celebrations[0]?.slug, "Santíssimo-nome-de-jesus");
   });
 
   it("completes the grid only to the next full week, not a fixed 6-row grid", () => {

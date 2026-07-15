@@ -42,10 +42,10 @@ Data:
 Celebracao:
 
 ```text
-Missa do Santissimo Nome de Jesus
+Missa do Santíssimo Nome de Jesus
 ```
 
-Roteiro:
+Repertório:
 
 ```text
 1. Canto de entrada
@@ -110,7 +110,7 @@ passar por normalizacao editorial:
 ## Extensoes Futuras
 
 Datas ou celebracoes especiais, como Pascoa, Natal, Assuncao de Nossa Senhora e
-festas franciscanas, devem poder:
+festas Franciscanas, devem poder:
 
 - Usar a missa padrao.
 - Adicionar momentos especiais.

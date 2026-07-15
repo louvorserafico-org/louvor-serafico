@@ -36,8 +36,8 @@ export default function SaintDayScreen() {
         <Stack.Screen options={{ headerShown: true, title: "Santo do dia" }} />
         <PageHeader
           eyebrow="Santoral"
-          title="Dia sem santo franciscano"
-          subtitle="Esta data ainda não possui um santo franciscano no calendário seráfico."
+          title="Dia sem santo Franciscano"
+          subtitle="Esta data ainda não possui um santo Franciscano no calendário seráfico."
         />
       </ScrollView>
     );
@@ -49,7 +49,7 @@ export default function SaintDayScreen() {
       <PageHeader
         eyebrow={resolveDateLabel(monthDay)}
         title={saints.length === 1 ? "Santo do dia" : "Santos do dia"}
-        subtitle="Memória do calendário seráfico franciscano."
+        subtitle="Memória do calendário seráfico Franciscano."
       />
 
       <View style={styles.list}>

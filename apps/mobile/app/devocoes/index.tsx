@@ -16,7 +16,7 @@ export default function DevotionsHubScreen() {
       <Stack.Screen options={{ headerShown: true, title: "Devoções" }} />
       <PageHeader
         eyebrow="Devoções"
-        title="Oração franciscana"
+        title="Oração Franciscana"
         subtitle="Devocional, novena e trânsito para rezar no espírito de São Francisco."
       />
 

@@ -7,7 +7,7 @@ import type { SaintDay } from "./santoral.ts";
 
 export const franciscanSantoral2026: SaintDay[] = [
   {
-    id: "saint-01-03-santissimo-nome-de-jesus",
+    id: "saint-01-03-Santíssimo-nome-de-jesus",
     monthDay: "01-03",
     name: "Santíssimo Nome de Jesus",
     qualifiers: [],
@@ -15,7 +15,7 @@ export const franciscanSantoral2026: SaintDay[] = [
     observances: [{ jurisdiction: "FF", rank: "memória" }],
     shortHistory: null,
     premium: true,
-    celebrationSlug: "santissimo-nome-de-jesus",
+    celebrationSlug: "Santíssimo-nome-de-jesus",
   },
   {
     id: "saint-01-04-santa-angela-de-foligno-religiosa",

@@ -2,7 +2,7 @@
 //
 // Modelagem em 3 eixos, fiel ao "Calendário Seráfico" (santoral-completo.pdf, p. 37-44):
 //   1. qualificadores liturgicos (martir, virgem, doutor, pastor, ...), multiplos por santo;
-//   2. Ordem franciscana (I/II/III/secular);
+//   2. Ordem Franciscana (I/II/III/secular);
 //   3. observancia por jurisdição + rank litúrgico (ex.: "Para OFMCap.: Memória").
 //
 // Regra premium (default reversivel): nome, data e classificação são públicos; o
@@ -14,7 +14,7 @@
 import { franciscanSantoral2026 } from "./santoral-index-2026.ts";
 import { findCuratedShortHistory } from "./santoral-content.ts";
 
-export type FranciscanOrder = "first" | "second" | "third" | "secular";
+export type Franciscanorder = "first" | "second" | "third" | "secular";
 
 export type SaintQualifier =
   | "martir"
@@ -31,7 +31,7 @@ export type SaintQualifier =
 
 export type LiturgicalRank = "solenidade" | "festa" | "memória" | "memoria_facultativa";
 
-// Jurisdição franciscana da observancia. Aberto (string) porque a fonte inclui
+// Jurisdição Franciscana da observancia. Aberto (string) porque a fonte inclui
 // congregacoes além das ordens (OSC, Cl.Cp., FMM, FMCIM, OIC, ...).
 export type FranciscanJurisdiction = string;
 
@@ -60,7 +60,7 @@ export type SaintDay = {
   monthDay: string;
   name: string;
   qualifiers: SaintQualifier[];
-  order: FranciscanOrder | null;
+  order: Franciscanorder | null;
   observances: SaintObservance[];
   shortHistory: string | null;
   premium: boolean;

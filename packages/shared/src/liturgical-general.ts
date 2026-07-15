@@ -1,8 +1,8 @@
-// Calendário litúrgico geral (referencia CNBB) como COMPLEMENTO do santoral franciscano.
+// Calendário litúrgico geral (referencia CNBB) como COMPLEMENTO do santoral Franciscano.
 // Datas móveis derivam da Páscoa (Computus gregoriano, algoritmo anônimo de Meeus);
 // datas fixas vem de uma tabela. Parametrizado por ano.
 //
-// Papel: o eixo principal continua sendo o santoral franciscano; estas festas gerais
+// Papel: o eixo principal continua sendo o santoral Franciscano; estas festas gerais
 // entram como camada de preceito. Ranks são rotulos aproximados para exibição.
 
 export type GeneralFeastRank = "solenidade" | "festa" | "memória";

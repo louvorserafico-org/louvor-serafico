@@ -183,7 +183,7 @@ describe("credentials auth", () => {
     );
 
     assert.deepEqual(result, {
-      message: "Informe sua família franciscana.",
+      message: "Informe sua família Franciscana.",
       status: "error",
     });
   });

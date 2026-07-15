@@ -6,7 +6,7 @@ import { fetchRemoteCelebrationDetail } from "./remote-celebration-detail.ts";
 describe("remote celebration detail", () => {
   it("maps remote celebration detail", async () => {
     const result = await fetchRemoteCelebrationDetail(
-      "santissimo-nome-de-jesus",
+      "Santíssimo-nome-de-jesus",
       async () =>
         new Response(
           JSON.stringify([
@@ -37,7 +37,7 @@ describe("remote celebration detail", () => {
               date_label: "03 de janeiro",
               date_month_day: "01-03",
               id: "celebration-1",
-              slug: "santissimo-nome-de-jesus",
+              slug: "Santíssimo-nome-de-jesus",
               title: "Missa do Santíssimo Nome de Jesus",
             },
           ]),
@@ -60,7 +60,7 @@ describe("remote celebration detail", () => {
             songId: "song-1",
           },
         ],
-        slug: "santissimo-nome-de-jesus",
+        slug: "Santíssimo-nome-de-jesus",
         songs: [
           {
             assets: [
@@ -86,7 +86,7 @@ describe("remote celebration detail", () => {
 
   it("returns not found when remote detail is empty", async () => {
     const result = await fetchRemoteCelebrationDetail(
-      "santissimo-nome-de-jesus",
+      "Santíssimo-nome-de-jesus",
       async () => new Response(JSON.stringify([]), { status: 200 }),
       "https://project.supabase.co",
       "anon",
@@ -101,7 +101,7 @@ describe("remote celebration detail", () => {
 
   it("returns config error when env is missing", async () => {
     const result = await fetchRemoteCelebrationDetail(
-      "santissimo-nome-de-jesus",
+      "Santíssimo-nome-de-jesus",
       async () => new Response(JSON.stringify([]), { status: 200 }),
       null,
       null,

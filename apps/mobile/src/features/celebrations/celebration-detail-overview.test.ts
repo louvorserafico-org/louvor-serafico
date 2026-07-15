@@ -12,8 +12,8 @@ describe("celebration detail overview", () => {
         sourceMode: "remote",
       }),
       {
-        helperText: "6 momentos reunidos neste roteiro. 1 ainda sem material.",
-        title: "Roteiro da celebração",
+        helperText: "6 momentos reunidos neste repertório. 1 ainda sem material.",
+        title: "Repertório da celebração",
       },
     );
   });
@@ -26,8 +26,8 @@ describe("celebration detail overview", () => {
         sourceMode: "local",
       }),
       {
-        helperText: "6 momentos reunidos neste roteiro. 2 ainda sem material.",
-        title: "Roteiro da celebração",
+        helperText: "6 momentos reunidos neste repertório. 2 ainda sem material.",
+        title: "Repertório da celebração",
       },
     );
   });

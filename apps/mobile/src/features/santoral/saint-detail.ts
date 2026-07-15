@@ -1,6 +1,6 @@
 import {
   resolveSaintHistoryAccess,
-  type FranciscanOrder,
+  type Franciscanorder,
   type LiturgicalRank,
   type SaintDay,
   type SaintQualifier,
@@ -20,7 +20,7 @@ export const qualifierLabels: Record<SaintQualifier, string> = {
   diacono: "Diácono",
 };
 
-const orderLabels: Record<FranciscanOrder, string> = {
+const orderLabels: Record<Franciscanorder, string> = {
   first: "Ordem I",
   second: "Ordem II",
   third: "Ordem III",
@@ -48,7 +48,7 @@ export function buildSaintClassification(day: SaintDay): string {
     parts.push(orderLabels[day.order]);
   }
 
-  return parts.length > 0 ? parts.join(" · ") : "Dia franciscano";
+  return parts.length > 0 ? parts.join(" · ") : "Dia Franciscano";
 }
 
 export function buildSaintObservancesLabel(day: SaintDay): string {

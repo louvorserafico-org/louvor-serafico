@@ -25,7 +25,7 @@ export function buildHomeSummary(input: HomeSummaryInput): HomeSummary {
       helperText: "Ainda não há sugestões musicais para este dia.",
       href: "/calendario",
       premiumText: "",
-      title: "Sem roteiro preparado",
+      title: "Sem repertório preparado",
     };
   }
 
@@ -35,7 +35,7 @@ export function buildHomeSummary(input: HomeSummaryInput): HomeSummary {
       helperText: "Ainda não há sugestões musicais para este dia.",
       href: "/calendario",
       premiumText: "",
-      title: "Sem roteiro preparado",
+      title: "Sem repertório preparado",
     };
   }
 
@@ -46,7 +46,7 @@ export function buildHomeSummary(input: HomeSummaryInput): HomeSummary {
 
   if (input.session.status === "authenticated") {
     return {
-      actionLabel: "Ver roteiro",
+      actionLabel: "Ver repertório",
       helperText: `${input.celebration.recommendations.length} cantos sugeridos para a celebração de hoje.`,
       href: `/celebracoes/${input.celebration.slug}`,
       premiumText,

@@ -31,7 +31,7 @@ describe("saint detail formatting", () => {
   });
 
   it("falls back when there is no qualifier or order", () => {
-    assert.equal(buildSaintClassification(fixture({})), "Dia franciscano");
+    assert.equal(buildSaintClassification(fixture({})), "Dia Franciscano");
   });
 
   it("builds observances label with portuguese ranks", () => {

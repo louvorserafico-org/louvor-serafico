@@ -176,7 +176,7 @@ e momento da missa, oferecendo repertorio recomendado e acesso premium a
 materiais como letra, cifra, partitura, audio e, futuramente, video.
 
 O projeto deve nascer com cuidado editorial, beleza visual, identidade
-franciscana e uma base tecnica simples, moderna, testavel e evolutiva.
+Franciscana e uma base tecnica simples, moderna, testavel e evolutiva.
 
 ## Paths Oficiais
 
@@ -229,7 +229,7 @@ Atualizacao apos validacao manual mais recente:
 O primeiro caso editorial real sera:
 
 - Data: 03 de janeiro.
-- Celebracao: Missa do Santissimo Nome de Jesus.
+- Celebracao: Missa do Santíssimo Nome de Jesus.
 - Modelo: missa padrao.
 
 Ordem liturgico-musical inicial:
@@ -415,7 +415,7 @@ Status: concluida em 2026-04-25.
 
 Entregue:
 
-- Home passou a distinguir entre dia comum sem roteiro e data liturgica sem
+- Home passou a distinguir entre dia comum sem repertório e data liturgica sem
   repertorio publicado.
 - Regra nova passou a selecionar os proximos dias preparados a partir do ponto
   atual do ano; quando nao houver proximos, a Home mostra os dias ja
@@ -472,7 +472,7 @@ Entregue:
 - Os dias da grade mensal passaram a ser clicaveis.
 - As datas marcadas do mes tambem passaram a abrir o detalhe correto.
 - A navegacao agora distingue automaticamente entre:
-  - celebracao com roteiro, usando `slug`
+  - celebracao com repertório, usando `slug`
   - data liturgica sem repertorio, usando `monthDay`
   - dia comum, usando `monthDay`
 - A regra de rota foi isolada e coberta por teste.
@@ -529,7 +529,7 @@ Entregue:
 - Foram adicionados atalhos editoriais para `Calendario` e `Repertorio`.
 - O bloco mensal da Home ganhou cabecalho proprio e CTA direto para o
   calendario completo.
-- O texto de apoio do roteiro sugerido foi refinado para reforcar contexto e
+- O texto de apoio do repertório sugerido foi refinado para reforcar contexto e
   ordem de leitura.
 
 Arquivos principais:
@@ -829,7 +829,7 @@ Resultado:
 
 - Tipos criados: `Song`, `SongAsset`, `RepertoireRecommendation`,
   `Celebration` e `CelebrationMomentRow`.
-- Mock estruturado criado em `santissimoNomeDeJesusCelebration`.
+- Mock estruturado criado em `SantíssimoNomeDeJesusCelebration`.
 - Funcoes criadas: `buildCelebrationMomentRows` e `validateCelebration`.
 - Tela Hoje passou a consumir linhas estruturadas.
 - Tela de detalhe criada em `app/celebracoes/[id].tsx`.
@@ -3267,7 +3267,7 @@ Objetivo esperado:
 
 - ajustar a tela Hoje para responder ao estado autenticado;
 - orientar usuarios anonimos para login quando tentarem acessar materiais;
-- manter o roteiro de hoje como experiencia principal.
+- manter o repertório de hoje como experiencia principal.
 
 Resultado:
 
@@ -3493,14 +3493,14 @@ Status: concluida em 2026-04-25.
 Objetivo esperado:
 
 - deixar detalhe de celebracao menos tecnico;
-- resumir claramente quando roteiro local ou remoto estiver ativo;
+- resumir claramente quando repertório local ou remoto estiver ativo;
 - destacar quantidade de momentos e lacunas editoriais.
 
 Resultado:
 
 - Criado `src/features/celebrations/celebration-detail-overview.ts`.
 - Criado `src/features/celebrations/celebration-detail-overview.test.ts`.
-- Tela de detalhe da celebracao ganhou resumo visual do roteiro atual.
+- Tela de detalhe da celebracao ganhou resumo visual do repertório atual.
 - Script de testes raiz atualizado.
 
 Decisoes tecnicas e trade-offs:
@@ -4022,7 +4022,7 @@ Resumo do que foi feito:
 - Expandido dominio do calendario 2026 para diferenciar dias comuns e datas liturgicas sem repertorio.
 - Adicionadas marcacoes liturgicas iniciais para 2026, incluindo tempos fortes e solenidades principais.
 - Calendario principal passou a exibir grade mensal real com tres estados visuais: hoje, data liturgica e dia com repertorio.
-- Incluida lista de datas marcadas do mes atual, separando visualmente o que ja tem roteiro do que ainda aguarda repertorio.
+- Incluida lista de datas marcadas do mes atual, separando visualmente o que ja tem repertório do que ainda aguarda repertorio.
 
 Arquivos alterados:
 
@@ -4060,7 +4060,7 @@ Etapa 77 - Refinar UX dos detalhes de dia sem repertorio.
 
 Resumo do que foi feito:
 
-- Refinada a Home para diferenciar dia comum sem roteiro e data liturgica sem repertorio.
+- Refinada a Home para diferenciar dia comum sem repertório e data liturgica sem repertorio.
 - Adicionada regra para destacar dias preparados relevantes ao momento do ano.
 - Quando nao ha proximos dias em 2026, a Home passa a exibir os dias ja publicados no app.
 
@@ -4124,7 +4124,7 @@ Resumo do que foi feito:
 
 - Dias da grade mensal passaram a ser clicaveis.
 - Datas marcadas do mes tambem passaram a abrir o detalhe correto.
-- Navegacao foi unificada por `slug` quando ha roteiro e por `monthDay` nos demais casos.
+- Navegacao foi unificada por `slug` quando ha repertório e por `monthDay` nos demais casos.
 
 Arquivos alterados:
 
@@ -4429,7 +4429,7 @@ Resumo do que foi feito:
 
 - Alinhada a copy da Home com o Calendario para usar a mesma linguagem sobre dias preparados, roteiros e celebracoes.
 - O resumo principal do Calendario passou a seguir a mesma hierarquia editorial dos detalhes.
-- Ajustados textos finais para reduzir variacao de tom entre Home, Calendario e estados sem roteiro.
+- Ajustados textos finais para reduzir variacao de tom entre Home, Calendario e estados sem repertório.
 
 Arquivos alterados:
 
@@ -4556,7 +4556,7 @@ Resumo do que foi feito:
 
 - A Home deixou de funcionar como um conjunto de cards explicativos e passou a priorizar composicao editorial, silencio visual e acao diaria.
 - O cabecalho foi reduzido para marca, data e frase curta.
-- O estado principal do dia foi concentrado em um unico card com duas acoes, sem transformar a ausencia de roteiro em bloco pesado.
+- O estado principal do dia foi concentrado em um unico card com duas acoes, sem transformar a ausencia de repertório em bloco pesado.
 - O calendario mensal completo saiu da Home e deu lugar a uma lista enxuta de roteiros disponiveis.
 - Foram criados componentes pequenos para divisor ornamental, atalhos rapidos e itens da lista de roteiros.
 - A copy da Home foi reduzida e reescrita para um tom mais curto, funcional e liturgico.
@@ -4683,7 +4683,7 @@ Resumo do que foi feito:
 
 - Removidas as letras decorativas dos atalhos rapidos.
 - Os atalhos ficaram reduzidos a titulo e microtexto curto.
-- O card principal deixou de repetir a mesma ideia no texto e no CTA quando nao ha roteiro preparado.
+- O card principal deixou de repetir a mesma ideia no texto e no CTA quando nao ha repertório preparado.
 - A Home ficou mais limpa sem alterar rotas nem comportamento.
 
 Arquivos alterados:
@@ -4931,7 +4931,7 @@ Resumo do que foi feito:
 - Os detalhes de Musica e Celebracao passaram a usar cabecalhos editoriais de secao.
 - Os resumos principais ficaram menos tecnicos e com foco maior em consulta e preparo.
 - `MomentCard` e `EditorialStatus` foram suavizados para reduzir peso visual e alinhar melhor com o restante do app.
-- Os estados de dia liturgico sem roteiro e dia comum foram reescritos para uma leitura mais limpa.
+- Os estados de dia liturgico sem repertório e dia comum foram reescritos para uma leitura mais limpa.
 
 Arquivos alterados:
 
@@ -5035,7 +5035,7 @@ Resumo do que foi feito:
 
 - O detalhe da celebracao passou a tratar cada canto como ponto de entrada para a tela completa da musica.
 - Cada momento da missa agora exibe sinais curtos dos materiais ja disponiveis, com destaque imediato para partitura quando houver.
-- Ao tocar em um canto no roteiro da celebracao, a navegacao segue para a tela da musica correspondente.
+- Ao tocar em um canto no repertório da celebracao, a navegacao segue para a tela da musica correspondente.
 - A tela da musica foi reorganizada para separar os materiais por frente de consulta: partitura, letra e cifra, audio e video.
 - Mesmo sem todos os materiais publicados hoje, a estrutura futura ficou pronta sem quebrar o catalogo atual.
 - O dominio compartilhado passou a aceitar `video` como tipo valido de material, preparando a evolucao futura do acervo.
@@ -5497,7 +5497,7 @@ Sugestao de commit:
 Resumo do que foi feito:
 
 - A lista de `Roteiros de mes` deixou de usar card separado.
-- Cada roteiro agora usa o mesmo layout visual das `Datas marcadas`.
+- Cada repertório agora usa o mesmo layout visual das `Datas marcadas`.
 - O comportamento de abertura da celebracao foi mantido.
 
 Arquivos alterados:
@@ -5544,7 +5544,7 @@ Sugestao de commit:
 Resumo do que foi feito:
 
 - O estado vazio de `Roteiros do mes` ganhou tipografia menor e mais discreta.
-- Titulo e texto do bloco sem roteiro foram alinhados ao padrao mais minimalista do app.
+- Titulo e texto do bloco sem repertório foram alinhados ao padrao mais minimalista do app.
 
 Arquivos alterados:
 
@@ -5593,7 +5593,7 @@ Sugestao de commit:
 Resumo do que foi feito:
 
 - O botao solto `Ver calendario` foi removido da secao de consulta da Home.
-- A Home passou a priorizar o roteiro do proprio dia quando existir e, em seguida, os roteiros mais proximos da data atual.
+- A Home passou a priorizar o repertório do proprio dia quando existir e, em seguida, os roteiros mais proximos da data atual.
 - A lista passou a limitar a exibicao a 5 roteiros.
 - Quando houver mais itens, a Home exibe `Ver mais roteiros`.
 - Foi criada a tela `Celebracoes`, com a lista completa de roteiros publicados.
@@ -5657,11 +5657,11 @@ Sugestao de commit:
 
 `feat: allow community posts to reference nearby repertoires`
 
-## Etapa 131 - Limpeza do topo de roteiro na tela de Celebracao
+## Etapa 131 - Limpeza do topo de repertório na tela de Celebracao
 
 Resumo do que foi feito:
 
-- Removida a box `Roteiro da Missa`.
+- Removida a box `Repertório da Missa`.
 - Removido o status `Completo`.
 - A tela passou a abrir direto no conteudo liturgico principal, preservando o cabecalho e a lista dos momentos da missa.
 
@@ -5901,7 +5901,7 @@ Sugestao de commit:
 
 `fix: standardize sign-in button text color`
 
-## Etapa 139 - Substituicao do ornamento IHS pelo tau franciscano
+## Etapa 139 - Substituicao do ornamento IHS pelo tau Franciscano
 
 Resumo do que foi feito:
 
@@ -6124,18 +6124,18 @@ Resumo do que foi feito:
 
 - Criado `packages/shared/src/santoral.ts` com o dominio do Santoral, modelado em 3 eixos fieis ao `santoral-completo.pdf` (p. 37-44):
   1. qualificadores liturgicos (`martir`, `virgem`, `doutor`, `pastor`, ...), multiplos por santo;
-  2. Ordem franciscana (`first`/`second`/`third`/`secular`);
+  2. Ordem Franciscana (`first`/`second`/`third`/`secular`);
   3. observancia por jurisdicao (`FF`, `OFM`, `OFMConv`, `OFMCap`, `TOR`, `TOFr`, `OFS`, `Ordem II`, `Ordem III`) + rank (`solenidade`/`festa`/`memoria`/`memoria_facultativa`).
-- Tipos: `SaintDay`, `SaintObservance`, `SaintQualifier`, `FranciscanOrder`, `LiturgicalRank`, `FranciscanJurisdiction`, `SaintHistoryAccess`.
+- Tipos: `SaintDay`, `SaintObservance`, `SaintQualifier`, `Franciscanorder`, `LiturgicalRank`, `FranciscanJurisdiction`, `SaintHistoryAccess`.
 - Funcoes puras: `getSaintDayCatalog`, `findSaintDaysByMonthDay`, `filterSaintDaysByQualifier`, `saintDayHasRepertoire`, `resolveSaintHistoryAccess`.
-- Seed inicial de exemplo (3 santos reais do indice de janeiro): Santissimo Nome de Jesus (01-03, ligado ao roteiro existente), Sao Berardo e companheiros (01-16), Santa Eustaquia Calafato (01-19).
+- Seed inicial de exemplo (3 santos reais do indice de janeiro): Santíssimo Nome de Jesus (01-03, ligado ao repertório existente), Sao Berardo e companheiros (01-16), Santa Eustaquia Calafato (01-19).
 - Exportado em `packages/shared/src/index.ts` e ligado ao pipeline de testes.
 
 Testes adicionados (`packages/shared/src/santoral.test.ts`):
 
 - Happy: santo por data com qualifiers, ordem e observancias (Berardo em 01-16).
-- Edge: data sem santo franciscano retorna `[]`.
-- Relacao com roteiro: 01-03 aponta `celebrationSlug`.
+- Edge: data sem santo Franciscano retorna `[]`.
+- Relacao com repertório: 01-03 aponta `celebrationSlug`.
 - Filtro por qualificador liturgico.
 - Ordenacao do catalogo por month-day.
 - Premium: bloqueio sem assinatura, liberacao com assinatura, conteudo livre, e `no_history`.
@@ -6172,7 +6172,7 @@ Resumo do que foi feito:
 - Extraido o indice anual completo do `Calendario Serafico` (santoral-completo.pdf, p. 37-44) para dados estruturados: `packages/shared/src/santoral-index-2026.ts` com 126 entradas.
 - `santoral.ts` passou a consumir `franciscanSantoral2026` como catalogo (seed de exemplo removido).
 - Modelo evoluido: `FranciscanJurisdiction` virou `string` (a fonte tem congregacoes alem das ordens: OSC, Cl.Cp., FMM, FMCIM, OIC, ...), com `commonFranciscanJurisdictions` para referencia. Adicionado qualificador `diacono`.
-- Testes de integridade adicionados: contagem (126), formato de month-day, spot-checks (Clara 08-11 OSC solenidade; Sao Francisco 10-04 diacono+fundador FF solenidade). Spot-checks da Etapa 147 corrigidos para os nomes acentuados reais (Santissimo -> Santissimo com acento, Eustaquia -> Eustoquia).
+- Testes de integridade adicionados: contagem (126), formato de month-day, spot-checks (Clara 08-11 OSC solenidade; Sao Francisco 10-04 diacono+fundador FF solenidade). Spot-checks da Etapa 147 corrigidos para os nomes acentuados reais (Santíssimo -> Santíssimo com acento, Eustaquia -> Eustoquia).
 
 Processo de extracao:
 
@@ -6210,20 +6210,20 @@ Sugestao de commit:
 
 `feat(shared): extract full franciscan santoral annual index`
 
-## Etapa 149 - Calendario no eixo franciscano (camada de dominio)
+## Etapa 149 - Calendario no eixo Franciscano (camada de dominio)
 
 Resumo do que foi feito:
 
-- `LiturgicalDay` agora carrega `saints: SaintDay[]` (santos franciscanos do dia) e um novo `kind` `franciscan_saint`.
-- `buildLiturgicalDay2026` passou a anexar o santoral (`findSaintDaysByMonthDay`) a cada dia e a resolver o `kind` por prioridade: repertorio > santo franciscano > preceito da Igreja > dia comum.
-- Coexistencia: o repertorio ainda vence (leva o musico direto ao roteiro), mas os santos ficam anexados mesmo em dias com roteiro; datas de preceito viram complemento apenas quando nao ha santo franciscano.
-- Efeito imediato: `getLiturgicalMarkedDays2026` (kind != ordinary) passa a incluir os dias franciscanos, tornando o santoral o eixo principal das "datas marcadas" do mes.
+- `LiturgicalDay` agora carrega `saints: SaintDay[]` (santos Franciscanos do dia) e um novo `kind` `franciscan_saint`.
+- `buildLiturgicalDay2026` passou a anexar o santoral (`findSaintDaysByMonthDay`) a cada dia e a resolver o `kind` por prioridade: repertorio > santo Franciscano > preceito da Igreja > dia comum.
+- Coexistencia: o repertorio ainda vence (leva o musico direto ao repertório), mas os santos ficam anexados mesmo em dias com repertório; datas de preceito viram complemento apenas quando nao ha santo Franciscano.
+- Efeito imediato: `getLiturgicalMarkedDays2026` (kind != ordinary) passa a incluir os dias Franciscanos, tornando o santoral o eixo principal das "datas marcadas" do mes.
 
 Testes adicionados (`liturgical-calendar.test.ts`):
 
-- Dia com santo franciscano sem roteiro -> `franciscan_saint`, `hasRepertoire=false`, `saints` populado, titulo = nome do santo (01-04 Santa Angela de Foligno).
-- Dia com roteiro mantem `has_repertoire` e ainda anexa `saints` (01-03).
-- Preceito sem santo franciscano continua `liturgical_day_without_repertoire` (12-25).
+- Dia com santo Franciscano sem repertório -> `franciscan_saint`, `hasRepertoire=false`, `saints` populado, titulo = nome do santo (01-04 Santa Angela de Foligno).
+- Dia com repertório mantem `has_repertoire` e ainda anexa `saints` (01-03).
+- Preceito sem santo Franciscano continua `liturgical_day_without_repertoire` (12-25).
 - Lista mensal marcada inclui `franciscan_saint`.
 - Dia comum sem santos (02-14).
 
@@ -6231,7 +6231,7 @@ Decisoes tecnicas e trade-offs:
 
 - Repertorio mantido acima do santo no `kind` para nao desviar o fluxo principal (preparar a missa). O santo segue acessivel via `saints`.
 - Novo `kind` adicionado sem quebrar consumidores (comparacoes por igualdade, sem switch exaustivo).
-- `title` do dia franciscano usa o primeiro santo; multiplos santos ficam em `saints`.
+- `title` do dia Franciscano usa o primeiro santo; multiplos santos ficam em `saints`.
 
 Escopo / proximo:
 
@@ -6255,18 +6255,18 @@ Sugestao de commit:
 
 `feat(shared): make franciscan santoral the primary calendar axis`
 
-## Etapa 150 - UI franciscana do calendario e base da pagina do santo
+## Etapa 150 - UI Franciscana do calendario e base da pagina do santo
 
 Resumo do que foi feito:
 
 - Roteamento por tipo de dia: `buildCalendarDayRoute` agora envia dia `franciscan_saint` para `/santos/<monthDay>`; repertorio segue para `/celebracoes/<slug>` e preceito/comum para `/celebracoes/<monthDay>`.
 - Criada a pagina base do santo `app/santos/[monthDay].tsx`: lista os santos do dia com classificacao (qualificadores + Ordem), observancias por jurisdicao/rank e bloco de historia com gate premium.
 - Criado helper puro `features/santoral/saint-detail.ts`: `buildSaintClassification`, `buildSaintObservancesLabel`, `buildSaintHistoryState` (labels em pt-BR e estados available/locked/preparing).
-- Calendario (`calendario.tsx`): celulas e numeros de dias `franciscan_saint` ganharam estilo proprio (borda/numero em vinho), nova legenda "Santo franciscano" e texto proprio na lista de datas marcadas.
+- Calendario (`calendario.tsx`): celulas e numeros de dias `franciscan_saint` ganharam estilo proprio (borda/numero em vinho), nova legenda "Santo Franciscano" e texto proprio na lista de datas marcadas.
 
 Testes adicionados:
 
-- `calendar-day-route.test.ts`: dia franciscano -> `/santos/01-04`.
+- `calendar-day-route.test.ts`: dia Franciscano -> `/santos/01-04`.
 - `saint-detail.test.ts`: classificacao, observancias em pt-BR e os tres estados de historia (preparing/locked/available, livre e premium).
 
 Decisoes tecnicas e trade-offs:
@@ -6277,7 +6277,7 @@ Decisoes tecnicas e trade-offs:
 
 Validacao pendente (manual):
 
-- Revisao visual no Expo Go (device): cores das celulas, legenda, navegacao dia franciscano -> pagina do santo. Nao ha simulador neste ambiente.
+- Revisao visual no Expo Go (device): cores das celulas, legenda, navegacao dia Franciscano -> pagina do santo. Nao ha simulador neste ambiente.
 
 Validacoes executadas:
 
@@ -6289,7 +6289,7 @@ Checklist DoD:
 
 - [x] TDD aplicado a roteamento e formatacao.
 - [x] Pagina do santo criada com gate premium.
-- [x] Calendario estiliza e roteia dias franciscanos.
+- [x] Calendario estiliza e roteia dias Franciscanos.
 - [x] Typecheck e lint limpos.
 - [ ] Revisao visual em device (pendente do usuario).
 - [x] Doc viva atualizada.
@@ -6302,7 +6302,7 @@ Sugestao de commit:
 
 Resumo do que foi feito:
 
-- Criado helper puro `features/home/home-saint.ts` (`buildHomeSaint`): a partir do `LiturgicalDay`, retorna eyebrow, titulo (nome do santo), classificacao, link `/santos/<monthDay>` e `moreCount` quando ha mais de um santo. Sem santo franciscano, cai em fallback editorial (status `none`, sem link).
+- Criado helper puro `features/home/home-saint.ts` (`buildHomeSaint`): a partir do `LiturgicalDay`, retorna eyebrow, titulo (nome do santo), classificacao, link `/santos/<monthDay>` e `moreCount` quando ha mais de um santo. Sem santo Franciscano, cai em fallback editorial (status `none`, sem link).
 - A Home (`index.tsx`) passou a exibir o card "Santo do dia" logo abaixo do bloco de hoje, navegavel para a pagina do santo quando existir.
 
 Testes adicionados (`home-saint.test.ts`):
@@ -6420,14 +6420,14 @@ Sugestao de commit:
 
 `feat(mobile): show family and jurisdiction in profile`
 
-## Etapa 154 - Hub de devocoes franciscanas
+## Etapa 154 - Hub de devocoes Franciscanas
 
 Resumo do que foi feito:
 
 - Criado `features/devotions/devotions.ts`: fonte unica das devocoes (Devocional, Novena de Sao Francisco, Transito de Sao Francisco) com `slug`, titulo, descricao, `status` e helpers (`getDevotionItems`, `findDevotionBySlug`, `buildDevotionRoute`).
 - Hub `app/devocoes/index.tsx`: lista as tres devocoes com navegacao.
 - Pagina dinamica `app/devocoes/[slug].tsx`: abre cada devocao com estado "em preparação".
-- Entrada na Home: card "Devoções franciscanas" -> `/devocoes` (reusa os estilos do card do santo).
+- Entrada na Home: card "Devoções Franciscanas" -> `/devocoes` (reusa os estilos do card do santo).
 
 Testes adicionados (`devotions.test.ts`):
 
@@ -6464,7 +6464,7 @@ Sugestao de commit:
 
 `feat(mobile): add franciscan devotions hub`
 
-## Roteiro aprovado (pos to-change.md)
+## Repertório aprovado (pos to-change.md)
 
 Decisoes do usuario: (1) conteudo curado fica LOCAL no codigo por enquanto; (2) curadoria a partir de `santoral-completo.pdf`; (3) CNBB como COMPLEMENTO, via calculo (Computus + solenidades fixas). Migration de familia/jurisdicao sera aplicada pelo usuario via `supabase db push --linked`.
 
@@ -6478,7 +6478,7 @@ Decisoes do usuario: (1) conteudo curado fica LOCAL no codigo por enquanto; (2) 
 - Etapa 159 - Preencher e renderizar (Transito primeiro, depois Novena e Devocional).
 
 ### Track C - CNBB / calendario geral (complemento, por calculo)
-- Etapa 160 - Papel + modelo: camada de calendario geral separada do santoral; franciscano continua primario.
+- Etapa 160 - Papel + modelo: camada de calendario geral separada do santoral; Franciscano continua primario.
 - Etapa 161 - Computus (Pascoa e moveis) + solenidades fixas; substituir `liturgicalMarkers2026` hardcoded por base gerada.
 - Etapa 162 - Generalizar o calendario por ano (moveis sao anuais).
 
@@ -6492,7 +6492,7 @@ Ordem: A -> B -> C -> 163. Cada etapa com TDD/DoD/commit.
 Resumo do que foi feito:
 
 - Criado `packages/shared/src/santoral-content.ts`: conteudo curado do santoral (primeiro bloco historico por santo), storage LOCAL, keyed por `saintId`, com status `curated`/`draft` (so `curated` publica).
-- Piloto de janeiro: 6 santos curados e revisados (01-03 Santissimo Nome, 01-04 Angela de Foligno, 01-05 Diego de Cadiz, 01-12 Bernardo de Corleone, 01-14 Odorico de Pordenone, 01-16 Sao Berardo e companheiros).
+- Piloto de janeiro: 6 santos curados e revisados (01-03 Santíssimo Nome, 01-04 Angela de Foligno, 01-05 Diego de Cadiz, 01-12 Bernardo de Corleone, 01-14 Odorico de Pordenone, 01-16 Sao Berardo e companheiros).
 - Helpers: `getCuratedSaintContents`, `findCuratedShortHistory`. Exportado em `index.ts`.
 
 Fonte e metodo:
@@ -6627,7 +6627,7 @@ O `santoral-completo.pdf` NAO contem Transito de Sao Francisco, Novena nem oraco
 
 Resumo do que foi feito:
 
-- Criado `packages/shared/src/liturgical-general.ts`: calendario liturgico geral parametrizado por ano, como COMPLEMENTO do santoral franciscano (que continua primario).
+- Criado `packages/shared/src/liturgical-general.ts`: calendario liturgico geral parametrizado por ano, como COMPLEMENTO do santoral Franciscano (que continua primario).
 - `computeEaster(year)`: Computus gregoriano (algoritmo anonimo de Meeus).
 - Festas moveis derivadas da Pascoa (Cinzas -46, Ramos -7, Quinta/Sexta Santa, Pascoa, Ascensao +42, Pentecostes +49, Trindade +56, Corpus Christi +60) e tabela de fixas (Mae de Deus, Epifania, Sao Jose, Anunciacao, Sao Joao Batista, Pedro e Paulo, Transfiguracao, Assuncao, Exaltacao da Cruz, Todos os Santos, Imaculada, Natal).
 - `getGeneralLiturgicalFeasts(year)` e `findGeneralFeastByMonthDay(year, monthDay)`.
@@ -6668,17 +6668,17 @@ Sugestao de commit:
 Resumo do que foi feito:
 
 - `liturgical-calendar.ts` passou a derivar a camada de preceito do `liturgical-general` (Computus + festas), substituindo o array hardcoded `liturgicalMarkers2026` (removido junto com o tipo `LiturgicalMarker`).
-- `buildLiturgicalDay2026` usa `findGeneralFeastByMonthDay(2026, monthDay)`; prioridade mantida: repertorio > santo franciscano > festa geral (preceito) > dia comum.
-- Efeito: mais datas de preceito reais (Epifania, Sao Jose, Anunciacao, Ascensao, Trindade, etc.) passam a aparecer como `liturgical_day_without_repertoire` quando nao ha santo franciscano nem roteiro.
+- `buildLiturgicalDay2026` usa `findGeneralFeastByMonthDay(2026, monthDay)`; prioridade mantida: repertorio > santo Franciscano > festa geral (preceito) > dia comum.
+- Efeito: mais datas de preceito reais (Epifania, Sao Jose, Anunciacao, Ascensao, Trindade, etc.) passam a aparecer como `liturgical_day_without_repertoire` quando nao ha santo Franciscano nem repertório.
 
 Teste (`liturgical-calendar.test.ts`):
 
 - Novo: Epifania (01-06) e Corpus Christi (06-04) agora vem do calendario calculado como preceito.
-- Testes existentes seguem verdes (Natal 12-25, dia comum 04-25, santo franciscano primario, roteiro vence).
+- Testes existentes seguem verdes (Natal 12-25, dia comum 04-25, santo Franciscano primario, repertório vence).
 
 Decisoes tecnicas e trade-offs:
 
-- Santoral franciscano continua primario; preceito e complemento (so quando nao ha santo/roteiro).
+- Santoral Franciscano continua primario; preceito e complemento (so quando nao ha santo/repertório).
 - 11-02 (Finados) sai do preceito calculado, mas o santoral ja cobre 11-02 (Comemoracao dos Fieis Defuntos da Ordem) -> sem perda.
 - Ano ainda fixo em 2026 dentro do calendario; a generalizacao por ano e a Etapa 162.
 
@@ -6749,17 +6749,17 @@ Sugestao de commit:
 
 A antiga Etapa 163 (filtro por categoria do santoral) foi adiada a pedido do usuario, para depois da identidade visual. Vira Etapa 165 (ver abaixo).
 
-## Etapa 163 - Fundacao da identidade visual franciscana (dark)
+## Etapa 163 - Fundacao da identidade visual Franciscana (dark)
 
 Contexto:
 
-- App e construido para um frade franciscano; precisa seguir a identidade do site institucional (`frei-luis-ventura`).
+- App e construido para um frade Franciscano; precisa seguir a identidade do site institucional (`frei-luis-ventura`).
 - Paleta extraida do site (`src/index.css`): fundo chumbo `HSL 220 13% 10%` (~#16171a), dourado accent `HSL 43 52% 54%` (~#c6a24c), creme `#fcfbf7`. Site e dark.
 - Decisao do usuario: seguir DARK (igual ao site), nao light.
 
 Resumo do que foi feito:
 
-- `theme/tokens.ts`: paleta `colors` inteiramente reescrita para dark franciscano.
+- `theme/tokens.ts`: paleta `colors` inteiramente reescrita para dark Franciscano.
   - Dourado: `accent`/`gold` `#c7a24e`, `accentStrong` `#e2c77f`, `goldSoft` `#2c2719` (superficie escura tonalizada, nao mais bege claro).
   - Chumbo: `background` `#16171a`, `surface` `#1e2024`, `surfaceMuted` `#25272c`, `tabBackground` `#101114`, `border`/`borderStrong` em cinza-chumbo.
   - Texto: `textPrimary` `#f4f2ea` (creme), `textSecondary`/`textMuted` em cinza claro — invertido de escuro-sobre-claro para claro-sobre-escuro.
@@ -6790,7 +6790,7 @@ Validacoes executadas:
 
 Checklist DoD:
 
-- [x] Paleta franciscana dark aplicada via tokens (propagacao automatica).
+- [x] Paleta Franciscana dark aplicada via tokens (propagacao automatica).
 - [x] StatusBar, splash e adaptive icon consistentes com dark.
 - [x] Sem hex hardcoded fora do tokens.
 - [x] Typecheck e lint limpos.
@@ -6918,7 +6918,7 @@ Commit: `fix(mobile): fill screen background behind short scrollview content`
 Pedido: elementos harmonicos, hierarquia visual clara.
 
 Feito:
-- `home-summary.ts`: `HomeSummary` ganhou `href` (roteiro/entrar/calendario) para CTA real (+test).
+- `home-summary.ts`: `HomeSummary` ganhou `href` (repertório/entrar/calendario) para CTA real (+test).
 - Hero unico "Hoje": borda superior dourada (destaque), titulo maior, botao real (pill accent) usando `summary.href`/`actionLabel` — antes so tinha texto, sem CTA clicavel.
 - Santo do dia + Devoções unificados em uma lista compacta (`exploreList`, mesmo padrao visual do `preparedList`) em vez de 2 cards grandes redundantes ao hero.
 - Secoes tituladas ("Para hoje", "Navegar") organizam a hierarquia: hero > memoria/oracao > navegacao > roteiros disponiveis.
@@ -6963,12 +6963,12 @@ Commit: `feat(mobile): give each saint its own link and fix card spacing`
 
 ## Etapa 174 - Refactor visual do Calendario
 
-Pedidos: grade adaptavel por mes (nao fixa em 6 linhas), remover destaque de domingo, revisar cores de destaque (franciscano vs preceito estavam identicas), legenda mais clara e harmonica.
+Pedidos: grade adaptavel por mes (nao fixa em 6 linhas), remover destaque de domingo, revisar cores de destaque (Franciscano vs preceito estavam identicas), legenda mais clara e harmonica.
 
 Achados/fixes:
 1. Bug real: `trailingEmptyCells` sempre completava para 42 celulas (6 linhas fixas), sobrando linha(s) invisiveis vazias dependendo do mes. Corrigido: `CalendarMonthView` ganhou `trailingEmptyCellCount` (completa so ate o fim da ultima semana, multiplo de 7) - `calendar-month-view.ts` +test (julho=1 trailing, fevereiro=0 trailing, formula validada).
 2. Destaque de domingo removido: `isSunday()`, `dayCellSunday`, `dayNumberSunday` deletados (nao tem significado liturgico proprio, so causava ruido visual).
-3. Cores duplicadas: `dayCellFranciscan` (borda `colors.accent`) e `dayCellLiturgical` (borda `colors.gold`) eram a MESMA cor (accent===gold no tokens.ts), santo franciscano e preceito ficavam indistinguiveis. Preceito (CNBB, camada complementar) passou a usar borda tracejada `colors.borderStrong` (neutra/secundaria); franciscano mantem o dourado (`colors.accent`, eixo principal); repertorio mantem oliva (prioridade maxima, com preenchimento). Hierarquia visual agora reflete a hierarquia de dominio (repertorio > santo > preceito > comum).
+3. Cores duplicadas: `dayCellFranciscan` (borda `colors.accent`) e `dayCellLiturgical` (borda `colors.gold`) eram a MESMA cor (accent===gold no tokens.ts), santo Franciscano e preceito ficavam indistinguiveis. Preceito (CNBB, camada complementar) passou a usar borda tracejada `colors.borderStrong` (neutra/secundaria); Franciscano mantem o dourado (`colors.accent`, eixo principal); repertorio mantem oliva (prioridade maxima, com preenchimento). Hierarquia visual agora reflete a hierarquia de dominio (repertorio > santo > preceito > comum).
 4. Legenda: virou grid 2 colunas (`flexBasis: 50%`), dot do "Data liturgica" com borda tracejada igual a celula, label esclarecido para "Data liturgica (CNBB)".
 
 Testes (`calendar-month-view.test.ts`): grade completa apenas ate multiplo de 7 (julho trailing=1, fevereiro trailing=0).
@@ -7016,7 +7016,7 @@ Commit: `fix(mobile): fix cramped devotions hub list spacing`
 Fonte: 3 PDFs em `frei-luis/transito são francisco/` (usuario). Analisados os tres:
 1. "I Vesperas de Sao Francisco de Assis" - Liturgia das Horas oficial (Proprio da Conferencia da Familia Franciscana do Brasil), 04/out.
 2. "Transitus - Forma Abreviada" - celebracao dramatizada tradicional (Animador, Francisco, Frei Angelo, Jacoba), 03/out a noite.
-3. "Transitus - Forma Longa" - mesma dramatizacao + bloco extra sobre as 3 Ordens franciscanas; redundante para o resto.
+3. "Transitus - Forma Longa" - mesma dramatizacao + bloco extra sobre as 3 Ordens Franciscanas; redundante para o resto.
 
 Ordem correta identificada: I Vesperas (oracao oficial) primeiro, Transitus dramatizado em seguida (mesma noite). Usada a forma abreviada como base do Transitus (mais adequada a leitura no app); a longa nao foi usada por duplicar quase integralmente a abreviada.
 
@@ -7040,7 +7040,7 @@ Estrutura da fonte: Apresentacao (contexto/autoria); "Rito Fora da Liturgia da M
 Decisao: o app tinha uma novena simplificada anterior (9 meditacoes/sugestoes de leitura biblica, sem fonte oficial identificada) - substituida integralmente pelo rito oficial 2026. Anexo B nao replicado por ser um resumo do mesmo rito (evita duplicacao, mesmo padrao usado na Etapa 178 para a forma longa do Transitus).
 
 Feito:
-- `novena-content.ts` reescrito por completo: `novenaDays` (9 dias, cada um com `theme`, `reference` da fonte franciscana e `reading` verbatim), textos do rito comuns a todos os dias (`novenaReconciliationText`, `novenaCollectPrayer`, `novenaFinalPrayer`, `novenaClosingVersicle`), Ladainha completa (`novenaLadainhaInvocations` + `novenaLadainhaClosing`) e os 3 cantos do Anexo C (`novenaSongs`).
+- `novena-content.ts` reescrito por completo: `novenaDays` (9 dias, cada um com `theme`, `reference` da fonte Franciscana e `reading` verbatim), textos do rito comuns a todos os dias (`novenaReconciliationText`, `novenaCollectPrayer`, `novenaFinalPrayer`, `novenaClosingVersicle`), Ladainha completa (`novenaLadainhaInvocations` + `novenaLadainhaClosing`) e os 3 cantos do Anexo C (`novenaSongs`).
 - `[slug].tsx` (NovenaScreen): novo layout com texto de reconciliacao + oracao coletiva, seletor de dia (tema + referencia + leitura), card da Ladainha completa, versiculo de encerramento, oracao final e cantos do Anexo C.
 
 Testes (`novena-content.test.ts`, 6/6): ordem e temas dos 9 dias; referencia e leitura nao-vazias por dia; busca por numero do dia; textos comuns do rito verbatim; Ladainha completa (primeira/ultima invocacao, Cordeiro de Deus); 3 cantos com letras nao-vazias.
@@ -7169,7 +7169,7 @@ Analise antes de executar: pedido claro e sem contradicoes (diferente da etapa a
 Feito:
 - `phone-mask.ts` (novo, testado): `formatBrazilianPhone(raw)` formata progressivamente pro padrao `(DD) 9-9999-9999` enquanto o usuario digita.
 - `registration-field-validation.ts` (novo, testado): validadores puros por campo (`validateFullNameField`, `validateEmailField` com regex de formato, `validatePasswordField` min. 8 caracteres, `validatePasswordConfirmationField` compara com a senha, `validatePhoneField` exige 10-11 digitos). Independente da validacao de submit em `credentials-auth.ts` (que continua sendo a fonte de verdade no envio) - este modulo e so pra feedback em tempo real na UI.
-- `SelectField.tsx` (novo componente): substitui o `ChipSelect` local por um campo estilo select - mostra o valor escolhido (ou placeholder) com chevron, abre um modal de baixo pra cima (bottom sheet) com a lista de opcoes e check na selecionada. Usado pra "Familia franciscana" e "Jurisdicao".
+- `SelectField.tsx` (novo componente): substitui o `ChipSelect` local por um campo estilo select - mostra o valor escolhido (ou placeholder) com chevron, abre um modal de baixo pra cima (bottom sheet) com a lista de opcoes e check na selecionada. Usado pra "Familia Franciscana" e "Jurisdicao".
 - `criar-conta.tsx` reescrito:
   - Removida a `formPanel` (caixa unica com sombra) - campos agora ficam soltos no fundo da tela, cada um com label acima e mensagem de erro abaixo quando tocado (`touched`) e invalido.
   - Removido o paragrafo de introducao ("Reuna seus dados principais...").
@@ -7201,7 +7201,7 @@ Commit: `fix(mobile): move section divider above header and add emphasis to home
 
 ## Etapa 188 - Player de áudio nos materiais + lista só com o disponível
 
-Pedido do Frei: audios das 6 musicas da Missa do Santissimo Nome de Jesus (enviados como .wav, nomes em CAIXA ALTA); criar player de audio na tela de material; e so exibir na lista de materiais os tipos que a musica realmente tem (nao mostrar "Letra e cifra" vazio quando a musica so tem partitura, por exemplo).
+Pedido do Frei: audios das 6 musicas da Missa do Santíssimo Nome de Jesus (enviados como .wav, nomes em CAIXA ALTA); criar player de audio na tela de material; e so exibir na lista de materiais os tipos que a musica realmente tem (nao mostrar "Letra e cifra" vazio quando a musica so tem partitura, por exemplo).
 
 Feito:
 - `expo-audio@~1.1.1` instalado (modulo oficial Expo, funciona no Expo Go - ao contrario de `react-native-pdf`/`react-native-blob-util`, entao o player de audio ja e demonstravel sem development build).
@@ -7210,7 +7210,7 @@ Feito:
 - `musicas/[slug].tsx`: 
   - `materialSections` agora filtra `section.assets.length > 0` antes de renderizar - resolve o pedido de nao mostrar tipo de material vazio.
   - Ao abrir um asset `audio`, resolve a URL via `resolvePdfViewerSource` (reaproveitado - apesar do nome, e generico: resolve URL publica ou assinada via Edge Function conforme `premium`) e renderiza `<SongAudioPlayer>` inline no lugar do botao, em vez de abrir externamente como fazia antes (via `Linking.openURL`).
-- `packages/shared/src/celebration.ts`: os 6 cantos da Missa do Santissimo Nome de Jesus ganharam asset `type: "audio"` (`premium: true`, mesmo padrao dos `score_pdf`). "Invocando o nome do Senhor" tinha `assets: []` (sem PDF) - agora tem o audio.
+- `packages/shared/src/celebration.ts`: os 6 cantos da Missa do Santíssimo Nome de Jesus ganharam asset `type: "audio"` (`premium: true`, mesmo padrao dos `score_pdf`). "Invocando o nome do Senhor" tinha `assets: []` (sem PDF) - agora tem o audio.
 
 Upload pra producao (confirmado pelo Frei), executado nesta etapa:
 - `ffmpeg` instalado via winget (nao estava disponivel no ambiente) e usado pra converter os 6 `.wav` -> `.mp3` (qscale 4, ~10x menor: ~175MB -> ~10MB total). Necessario porque o bucket `song-assets` so aceita `allowed_mime_types` = pdf/jpeg/png/audio-mpeg/audio-mp3 (migration `20260421120000`) - `audio/wav` foi rejeitado (`415 invalid_mime_type`) na primeira tentativa.
@@ -7270,13 +7270,13 @@ Commit: `fix(mobile): split devotions hub into separate tappable cards`
 
 Pedido do Frei: aplicar o mesmo tratamento da Etapa 191 (devocoes) em toda box com texto tipo "Abrir"/"Ver" - remover o texto do botao (box inteira ja e clicavel) e globalizar tamanho/design das boxes de conteudo.
 
-Escopo definido: telas/componentes onde uma box inteira ja e um `Link`/`Pressable` e ainda mostra um rotulo de texto redundante ("Abrir", "Ver roteiro", "Ver", "Abrir devoções", "Ver santoral", "Abrir canto completo"). Fora do escopo: `musicas/[slug].tsx` (uma secao pode ter mais de um asset - um unico clique na box seria ambiguo sobre qual material abrir, mantido como botao real); link inline "Ver premium" em `santos/[monthDay].tsx` (nao e uma box, e um link solto no meio do texto); `CelebrationCard.tsx`/`CelebrationCta.tsx` (componentes sem nenhum uso no app - codigo morto, nao vale a pena tocar).
+Escopo definido: telas/componentes onde uma box inteira ja e um `Link`/`Pressable` e ainda mostra um rotulo de texto redundante ("Abrir", "Ver repertório", "Ver", "Abrir devoções", "Ver santoral", "Abrir canto completo"). Fora do escopo: `musicas/[slug].tsx` (uma secao pode ter mais de um asset - um unico clique na box seria ambiguo sobre qual material abrir, mantido como botao real); link inline "Ver premium" em `santos/[monthDay].tsx` (nao e uma box, e um link solto no meio do texto); `CelebrationCard.tsx`/`CelebrationCta.tsx` (componentes sem nenhum uso no app - codigo morto, nao vale a pena tocar).
 
 Componentes atualizados, todos convertidos pro mesmo padrao visual (`backgroundColor: colors.surface`, `borderColor: colors.border`, `borderRadius: radii.xl`, `borderWidth: 1`, `padding: spacing.lg`, `AnimatedPressable`, icone `chevron-forward` no lugar do texto):
 - `SongCard.tsx` (lista do Repertorio) - antes era uma linha com `borderBottomWidth` (sem box propria) + texto "Abrir"; agora e um card individual. Estrela de favorito continua como botao proprio, separado do toque de navegacao (Pressable aninhado dentro do AnimatedPressable - RN resolve o touch responder pro filho, nao propaga pro pai).
 - `MomentCard.tsx` (momentos da missa em `celebracoes/[id].tsx`) - texto "Abrir canto completo" removido; radius `lg` -> `xl`; ganhou borda (nao tinha).
-- `HomePreparedDayItem.tsx` (usado em `(tabs)/index.tsx` e `celebracoes/index.tsx`) - antes era lista com `borderBottomWidth` entre itens + texto "Ver roteiro"; agora cards individuais com `gap`. Prop `isLast` removida (nao faz mais sentido sem divisor interno) - as 2 telas que usavam o componente foram atualizadas.
-- `(tabs)/index.tsx`: os blocos "Para hoje" (santo do dia / fallback pro santoral / devocoes franciscanas) - textos "Ver", "Ver santoral", "Abrir devoções" removidos; cada bloco virou uma box propria com borda (antes eram 2 blocos dentro de 1 unica box com `borderBottomWidth` entre eles - mesmo problema estrutural do hub de devocoes antes da Etapa 191).
+- `HomePreparedDayItem.tsx` (usado em `(tabs)/index.tsx` e `celebracoes/index.tsx`) - antes era lista com `borderBottomWidth` entre itens + texto "Ver repertório"; agora cards individuais com `gap`. Prop `isLast` removida (nao faz mais sentido sem divisor interno) - as 2 telas que usavam o componente foram atualizadas.
+- `(tabs)/index.tsx`: os blocos "Para hoje" (santo do dia / fallback pro santoral / devocoes Franciscanas) - textos "Ver", "Ver santoral", "Abrir devoções" removidos; cada bloco virou uma box propria com borda (antes eram 2 blocos dentro de 1 unica box com `borderBottomWidth` entre eles - mesmo problema estrutural do hub de devocoes antes da Etapa 191).
 
 Validacoes: pnpm test (74 suites, fail 0) / typecheck / lint = 0. Sem teste novo (mudanca de UI).
 
@@ -7284,7 +7284,7 @@ Commit: `fix(mobile): apply tappable-card pattern and unified box design across 
 
 ## Etapa 193 - Bug no AnimatedPressable: array de estilos quebrava o layout
 
-Reportado pelo Frei antes do commit da Etapa 192: na Home, o card "Santo do dia" mostrava a seta `>` numa linha propria abaixo do texto (em vez de alinhada a direita), e o card "Devoções franciscanas" perdeu a caixa (sem borda) inteiramente.
+Reportado pelo Frei antes do commit da Etapa 192: na Home, o card "Santo do dia" mostrava a seta `>` numa linha propria abaixo do texto (em vez de alinhada a direita), e o card "Devoções Franciscanas" perdeu a caixa (sem borda) inteiramente.
 
 Causa raiz: `AnimatedPressable.tsx` recebia `style` do chamador e fazia `style={[style, { transform: [...] }]}`. Quando o chamador ja passava um **array** de estilos (ex.: `style={[styles.exploreBlock, styles.exploreBlockRow]}`, padrao introduzido na Etapa 192 pros novos cards), isso criava um array aninhado (`[[styleA, styleB], {transform}]`). O componente animado (`Animated.createAnimatedComponent(Pressable)`) nao resolvia esse aninhamento do mesmo jeito que a StyleSheet normal resolveria, entao propriedades como `flexDirection: row` e a borda se perdiam silenciosamente.
 
@@ -7319,7 +7319,7 @@ Commit: `fix(mobile): redesign home header, hero card and quick actions; fix che
 1. Dias `has_repertoire` tinham `dayCellRepertoire` com `oliveSoft` (fundo quase preto) + borda `olive` - baixo contraste contra o fundo do app. Trocado pra celula solida `backgroundColor: colors.olive` + `borderWidth: 2`, numero em `colors.background` (escuro sobre claro) com `fontWeight: 800` - agora contrasta de verdade.
 2. `legendDot` usava `radii.pill` (circulo) - trocado pra `radii.md`, mesmo raio dos `dayCell` do calendario, e aumentado de 12x12 pra 16x16 (mini-quadrado arredondado igual as celulas do mes).
 3. `monthCard` (a caixa do calendario) ganhou sombra (`shadowColor/Offset/Opacity/Radius`, mesmo padrao usado em outros cards do app) + borda superior dourada de 3px (mesmo recurso do `heroCard`/`HomeQuickActionCard` das Etapas 194).
-4. `calendar-month-view.ts`: `markedDays` agora ordenado com `has_repertoire` primeiro (sort estavel - dentro de cada grupo mantem a ordem cronologica original). Antes a lista "Datas marcadas em {mes}" seguia so ordem cronologica, entao um roteiro preparado podia aparecer no fim da lista atras de varias datas liturgicas sem repertorio.
+4. `calendar-month-view.ts`: `markedDays` agora ordenado com `has_repertoire` primeiro (sort estavel - dentro de cada grupo mantem a ordem cronologica original). Antes a lista "Datas marcadas em {mes}" seguia so ordem cronologica, entao um repertório preparado podia aparecer no fim da lista atras de varias datas liturgicas sem repertorio.
 
 Testes: `calendar-month-view.test.ts` (+1 caso, 4/4 - `has_repertoire` primeiro, resto em ordem).
 

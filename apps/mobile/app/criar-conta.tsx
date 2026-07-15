@@ -59,7 +59,7 @@ export default function CreateAccountScreen() {
   const errors: Partial<Record<FieldName, string>> = {
     city: registration.city.trim() ? undefined : "Informe sua cidade.",
     email: validateEmailField(registration.email) ?? undefined,
-    family: registration.family ? undefined : "Selecione sua família franciscana.",
+    family: registration.family ? undefined : "Selecione sua família Franciscana.",
     fullName: validateFullNameField(registration.fullName) ?? undefined,
     password: validatePasswordField(registration.password) ?? undefined,
     passwordConfirmation:
@@ -180,13 +180,13 @@ export default function CreateAccountScreen() {
 
       <FormField error={showError("family")} label="">
         <SelectField
-          label="Família franciscana"
+          label="Família Franciscana"
           onSelect={(value) => {
             updateRegistration("family", value);
             markTouched("family");
           }}
           options={FAMILY_OPTIONS}
-          placeholder="Selecione sua família franciscana"
+          placeholder="Selecione sua família Franciscana"
           value={registration.family}
         />
       </FormField>

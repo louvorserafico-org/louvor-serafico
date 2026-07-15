@@ -68,7 +68,7 @@ Resultado esperado:
 
 ## Upload Inicial
 
-Os PDFs locais do roteiro inicial podem ser enviados com:
+Os PDFs locais do repertório inicial podem ser enviados com:
 
 ```powershell
 .\scripts\upload-song-assets.ps1

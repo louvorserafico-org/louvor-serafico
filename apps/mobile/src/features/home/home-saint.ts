@@ -22,12 +22,12 @@ export function buildHomeSaint(day: LiturgicalDay): HomeSaint {
 
   if (!primary) {
     return {
-      description: "Acompanhe o calendário seráfico para as próximas memórias franciscanas.",
+      description: "Acompanhe o calendário seráfico para as próximas memórias Franciscanas.",
       eyebrow: "Santo do dia",
       href: null,
       saints: [],
       status: "none",
-      title: "Sem santo franciscano hoje",
+      title: "Sem santo Franciscano hoje",
     };
   }
 

@@ -188,7 +188,7 @@ export const transitoSections: TransitoSection[] = [
       { speaker: "Todos", text: "Amém." },
       {
         speaker: "Celebrante",
-        text: "A vós todos que viestes celebrar conosco a gloriosa passagem do servo de Deus da vida terrena para a eternidade, nossa saudação evangélica e franciscana de PAZ e BEM!",
+        text: "A vós todos que viestes celebrar conosco a gloriosa passagem do servo de Deus da vida terrena para a eternidade, nossa saudação evangélica e Franciscana de PAZ e BEM!",
       },
       { speaker: "Todos", text: "Paz e Bem! (Todos sentados)" },
       {
@@ -387,7 +387,7 @@ export const transitoSections: TransitoSection[] = [
       },
       { speaker: "Todos", text: "Senhor, escutai nossa prece." },
       {
-        text: "4. Por todas as comunidades e fraternidades franciscanas, para que sejam estimuladas a dar ao mundo testemunho de fraternidade, pobreza, amor e alegria, encarnando em si as virtudes do bem-aventurado Francisco, rezemos ao Senhor.",
+        text: "4. Por todas as comunidades e fraternidades Franciscanas, para que sejam estimuladas a dar ao mundo testemunho de fraternidade, pobreza, amor e alegria, encarnando em si as virtudes do bem-aventurado Francisco, rezemos ao Senhor.",
       },
       { speaker: "Todos", text: "Senhor, escutai nossa prece." },
       {

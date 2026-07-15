@@ -1,4 +1,4 @@
-// Hub de devocoes franciscanas. Conteúdo textual (orações, novena, transito) fica
+// Hub de devocoes Franciscanas. Conteúdo textual (orações, novena, transito) fica
 // como "preparing" até a curadoria editorial; nada de texto litúrgico fabricado.
 
 export type DevotionStatus = "available" | "preparing";

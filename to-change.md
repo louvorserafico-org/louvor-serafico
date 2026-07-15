@@ -3,7 +3,7 @@
 Este arquivo reorganiza as mudancas solicitadas.
 
 Objetivo:
-- migrar o calendario atual para um calendario franciscano utilitario;
+- migrar o calendario atual para um calendario Franciscano utilitario;
 - incorporar o Santoral Franciscano como base principal;
 - manter o app simples para consulta diaria;
 - separar o que sera livre e o que sera premium.
@@ -37,21 +37,21 @@ Conclusao da leitura:
 
 ## Regra editorial do Santoral
 
-Cada data franciscana devera possuir:
+Cada data Franciscana devera possuir:
 - identificador da data;
 - nome principal do santo/dia;
 - familia/categoria;
 - classificacao liturgica;
 - texto curto historico inicial;
-- indicacao de disponibilidade de roteiro;
+- indicacao de disponibilidade de repertório;
 - indicacao de premium quando houver pagina detalhada.
 
 Observacao:
-- mesmo sem roteiro musical, a data precisa existir no calendario;
-- o calendario deve exibir a data franciscana de qualquer forma;
-- o roteiro musical e camada adicional.
+- mesmo sem repertório musical, a data precisa existir no calendario;
+- o calendario deve exibir a data Franciscana de qualquer forma;
+- o repertório musical e camada adicional.
 
-## Calendario franciscano
+## Calendario Franciscano
 
 ### Objetivo
 
@@ -61,20 +61,20 @@ Hoje:
 - calendario liturgico geral com destaque para celebracoes cadastradas.
 
 Novo alvo:
-- calendario franciscano como calendario principal;
-- mostrar apenas datas franciscanas no mes;
+- calendario Franciscano como calendario principal;
+- mostrar apenas datas Franciscanas no mes;
 - datas de preceito da Igreja ficam como excecao complementar;
-- toda data franciscana deve ser listada mesmo sem repertorio.
+- toda data Franciscana deve ser listada mesmo sem repertorio.
 
 ### Regras funcionais
 
-- o calendario mensal deve mostrar somente datas franciscanas;
+- o calendario mensal deve mostrar somente datas Franciscanas;
 - datas de preceito da Igreja podem aparecer, mas sem roubar o foco do Santoral;
 - datas com repertorio devem ter destaque visual mais forte;
 - datas sem repertorio continuam clicaveis;
 - ao clicar:
-  - se houver roteiro, abrir fluxo atual da celebracao;
-  - se nao houver roteiro, abrir detalhe do santo/dia;
+  - se houver repertório, abrir fluxo atual da celebracao;
+  - se nao houver repertório, abrir detalhe do santo/dia;
 
 ### Filtros previstos
 
@@ -97,8 +97,8 @@ Observacao tecnica:
 - ajuste do month view;
 - nova logica de clique por tipo de data;
 - coexistencia entre:
-  - data franciscana;
-  - data com roteiro;
+  - data Franciscana;
+  - data com repertório;
   - data de preceito.
 
 ## Home
@@ -110,11 +110,11 @@ Adicionar o Santo do dia.
 ### Regras
 
 - a Home deve exibir o santo do dia conforme o Santoral;
-- se o dia nao tiver santo franciscano, definir fallback editorial;
+- se o dia nao tiver santo Franciscano, definir fallback editorial;
 - quando houver detalhe disponivel:
   - mostrar nome;
   - mostrar acesso ao detalhe;
-- quando houver roteiro no mesmo dia:
+- quando houver repertório no mesmo dia:
   - harmonizar santo do dia com celebracao do dia.
 
 ### Impacto
@@ -127,7 +127,7 @@ Adicionar o Santo do dia.
 
 ### Objetivo
 
-Criar pagina propria para cada santo/dia franciscano.
+Criar pagina propria para cada santo/dia Franciscano.
 
 ### Conteudo minimo
 
@@ -145,7 +145,7 @@ Do PDF, por enquanto, interessa apenas:
 Exemplo observado:
 - pagina 46:
   - data;
-  - titulo `Santissimo Nome de Jesus`;
+  - titulo `Santíssimo Nome de Jesus`;
   - classificacao;
   - primeiro bloco historico;
 - todo o restante da pagina nao entra nesta fase.
@@ -177,7 +177,7 @@ Ainda precisa ser definido:
 
 Sem essa definicao:
 - calendario pode nascer com duplicidade de criterio;
-- pode haver conflito entre calendario geral e franciscano.
+- pode haver conflito entre calendario geral e Franciscano.
 
 ## Repertorio
 
@@ -273,7 +273,7 @@ Modelar dominio do Santoral:
 - estrutura minima;
 - regra de categoria;
 - regra de premium;
-- regra de relacionamento com roteiro.
+- regra de relacionamento com repertório.
 
 ### Etapa 145
 
@@ -294,7 +294,7 @@ Extrair modelo do detalhe diario:
 ### Etapa 147
 
 Refatorar calendario:
-- datas franciscanas como eixo principal;
+- datas Franciscanas como eixo principal;
 - preceitos como complemento;
 - destaque forte para repertorio.
 

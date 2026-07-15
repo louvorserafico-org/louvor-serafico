@@ -20,7 +20,7 @@ export default function CelebrationDetailScreen() {
   const params = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const localCelebration = useMemo(
-    () => findCelebrationBySlug(params.id ?? "") ?? findCelebrationBySlug("santissimo-nome-de-jesus"),
+    () => findCelebrationBySlug(params.id ?? "") ?? findCelebrationBySlug("Santíssimo-nome-de-jesus"),
     [params.id],
   );
   const fallbackDay = useMemo(
@@ -32,7 +32,7 @@ export default function CelebrationDetailScreen() {
   );
   const [remoteCelebration, setRemoteCelebration] = useState<typeof localCelebration | null>(null);
   const [sourceMode, setSourceMode] = useState<"local" | "remote">("local");
-  const [subtitle, setSubtitle] = useState("Roteiro organizado para acompanhar cada momento da celebração.");
+  const [subtitle, setSubtitle] = useState("Repertório organizado para acompanhar cada momento da celebração.");
   const celebration = remoteCelebration ?? localCelebration;
   const detailDay = fallbackDay;
   const momentRows = useMemo(
@@ -57,8 +57,8 @@ export default function CelebrationDetailScreen() {
       setSourceMode(result.celebration ? "remote" : "local");
       setSubtitle(
         result.celebration
-          ? "Roteiro preparado para conduzir a música da celebração."
-          : "Roteiro inicial disponível para consulta e preparação.",
+          ? "Repertório preparado para conduzir a música da celebração."
+          : "Repertório inicial disponível para consulta e preparação.",
       );
     });
 

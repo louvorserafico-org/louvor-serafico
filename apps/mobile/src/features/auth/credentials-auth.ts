@@ -274,7 +274,7 @@ function validateRegistration(form: RegistrationForm, email: string): string | n
   }
 
   if (!form.family.trim()) {
-    return "Informe sua família franciscana.";
+    return "Informe sua família Franciscana.";
   }
 
   return null;

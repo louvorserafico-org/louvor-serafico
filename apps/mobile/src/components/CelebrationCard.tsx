@@ -17,7 +17,7 @@ export function CelebrationCard({ celebration }: CelebrationCardProps) {
           <Text style={styles.title}>{celebration.title}</Text>
           <Text style={styles.meta}>{celebration.recommendations.length} cantos sugeridos</Text>
         </View>
-        <Text style={styles.action}>Ver roteiro</Text>
+        <Text style={styles.action}>Ver repertório</Text>
       </Pressable>
     </Link>
   );

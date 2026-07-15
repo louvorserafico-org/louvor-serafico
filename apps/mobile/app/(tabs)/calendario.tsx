@@ -173,7 +173,7 @@ export default function CalendarScreen() {
           </View>
           <View style={styles.legendItem}>
             <View style={[styles.legendDot, styles.dayCellFranciscan]} />
-            <Text style={styles.legendText}>Santo franciscano</Text>
+            <Text style={styles.legendText}>Santo Franciscano</Text>
           </View>
           <View style={styles.legendItem}>
             <View style={[styles.legendDot, styles.legendDotLiturgical]} />
@@ -212,9 +212,9 @@ export default function CalendarScreen() {
               <Text style={styles.markedTitle}>{day.title}</Text>
               <Text style={styles.markedText}>
                 {day.kind === "has_repertoire"
-                  ? "Roteiro musical disponível para consulta."
+                  ? "Repertório musical disponível para consulta."
                   : day.kind === "franciscan_saint"
-                    ? "Santo franciscano do dia."
+                    ? "Santo Franciscano do dia."
                     : "Data litúrgica registrada. Repertorio ainda não publicado."}
               </Text>
             </Pressable>

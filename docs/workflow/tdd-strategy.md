@@ -13,7 +13,7 @@ O objetivo nao e burocracia; e criar confianca no crescimento do app.
 
 - Ordem dos momentos da missa.
 - Validacao de celebracao completa/incompleta.
-- Montagem do roteiro musical por celebracao.
+- Montagem do repertório musical por celebracao.
 - Filtros por data, tempo liturgico e tipo de celebracao.
 - Classificacao premium/free.
 - Liberacao de assets premium.
@@ -38,7 +38,7 @@ telas simples. A logica por tras da UI, porem, deve ser testada.
 
 ## Exemplos De Testes De Dominio
 
-- Dada a Missa do Santissimo Nome de Jesus, os momentos devem aparecer na ordem
+- Dada a Missa do Santíssimo Nome de Jesus, os momentos devem aparecer na ordem
   Entrada, Salmo, Aclamacao, Ofertorio, Comunhao e Final.
 - Dada uma celebracao sem musica em um momento obrigatorio, a validacao editorial
   deve marcar a celebracao como incompleta.

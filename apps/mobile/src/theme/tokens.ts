@@ -1,6 +1,6 @@
 import { Platform } from "react-native";
 
-// Identidade franciscana (dark): chumbo (charcoal) + creme + dourado.
+// Identidade Franciscana (dark): chumbo (charcoal) + creme + dourado.
 // Alinhada ao site frei-luis-ventura (fundo ~HSL 220 13% 10%, ouro ~HSL 43 52% 54%).
 export const colors = {
   // Ação / dourado

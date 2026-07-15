@@ -14,7 +14,7 @@ describe("liturgical calendar 2026", () => {
     const result = getLiturgicalDayForDate(new Date("2026-01-03T12:00:00.000Z"));
 
     assert.equal(result.kind, "has_repertoire");
-    assert.equal(result.celebrationSlug, "santissimo-nome-de-jesus");
+    assert.equal(result.celebrationSlug, "Santíssimo-nome-de-jesus");
     assert.equal(result.hasRepertoire, true);
   });
 

@@ -1,9 +1,9 @@
 import {
   buildCelebrationMomentRows,
-  santissimoNomeDeJesusCelebration,
+  SantíssimoNomeDeJesusCelebration,
 } from "@louvor-serafico/shared";
 
 export const initialCelebration = {
-  ...santissimoNomeDeJesusCelebration,
-  moments: buildCelebrationMomentRows(santissimoNomeDeJesusCelebration),
+  ...SantíssimoNomeDeJesusCelebration,
+  moments: buildCelebrationMomentRows(SantíssimoNomeDeJesusCelebration),
 } as const;

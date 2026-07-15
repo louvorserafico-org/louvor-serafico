@@ -173,7 +173,7 @@ function TransitoScreen({ title }: { title: string }) {
               </Text>
             ) : null}
             <View style={styles.card}>
-              <EditorialSectionHeader eyebrow="Roteiro" title={section.title} />
+              <EditorialSectionHeader eyebrow="Repertório" title={section.title} />
               {section.lines.map((line, lineIndex) => (
                 <View key={`${section.id}-${lineIndex}`} style={styles.transitoLine}>
                   {line.speaker ? <Text style={styles.speakerLabel}>{line.speaker}</Text> : null}

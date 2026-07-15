@@ -84,7 +84,7 @@ export function validateCelebration(celebration: Celebration) {
 }
 
 export function getInitialSongCatalog(): Song[] {
-  return [...santissimoNomeDeJesusCelebration.songs].sort((first, second) =>
+  return [...SantíssimoNomeDeJesusCelebration.songs].sort((first, second) =>
     first.title.localeCompare(second.title, "pt-BR"),
   );
 }
@@ -94,7 +94,7 @@ export function findSongBySlug(slug: string): Song | undefined {
 }
 
 export function getInitialCelebrationCatalog(): Celebration[] {
-  return [santissimoNomeDeJesusCelebration];
+  return [SantíssimoNomeDeJesusCelebration];
 }
 
 export function findCelebrationByDate(dateMonthDay: string): Celebration | undefined {
@@ -107,9 +107,9 @@ export function findCelebrationBySlug(slug: string): Celebration | undefined {
   return getInitialCelebrationCatalog().find((celebration) => celebration.slug === slug);
 }
 
-export const santissimoNomeDeJesusCelebration: Celebration = {
-  id: "celebration-santissimo-nome-de-jesus",
-  slug: "santissimo-nome-de-jesus",
+export const SantíssimoNomeDeJesusCelebration: Celebration = {
+  id: "celebration-Santíssimo-nome-de-jesus",
+  slug: "Santíssimo-nome-de-jesus",
   title: "Missa do Santíssimo Nome de Jesus",
   dateLabel: "03 de janeiro",
   dateMonthDay: "01-03",

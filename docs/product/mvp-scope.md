@@ -1,7 +1,7 @@
 # Escopo Do MVP
 
 O MVP do Louvor Serafico deve provar que um musico catolico consegue abrir o
-app, encontrar a celebracao do dia e entender rapidamente um roteiro musical
+app, encontrar a celebracao do dia e entender rapidamente um repertório musical
 adequado.
 
 ## Objetivo Principal
@@ -47,16 +47,16 @@ oferecendo repertorio curado por data, celebracao e momento liturgico.
 
 Comecar por um caso real e pequeno:
 
-- Missa do Santissimo Nome de Jesus, 03 de janeiro.
+- Missa do Santíssimo Nome de Jesus, 03 de janeiro.
 - Depois expandir para domingos, solenidades principais, tempos fortes e festas
-  franciscanas.
+  Franciscanas.
 
 ## Principio De Reducao De Escopo
 
 Se houver duvida, priorizar:
 
 1. Confianca liturgica.
-2. Clareza do roteiro.
+2. Clareza do repertório.
 3. Facilidade de uso no celular.
 4. Simplicidade tecnica.
 5. Beleza visual.

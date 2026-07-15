@@ -51,8 +51,8 @@ where not exists (
 
 insert into public.celebrations (slug, title, date_label, date_month_day, liturgical_rank, liturgical_color, season_id, status)
 select
-  'santissimo-nome-de-jesus',
-  'Missa do Santissimo Nome de Jesus',
+  'Santíssimo-nome-de-jesus',
+  'Missa do Santíssimo Nome de Jesus',
   '03 de janeiro',
   '01-03',
   'memoria facultativa',
@@ -74,14 +74,14 @@ insert into public.celebration_recommendations (celebration_id, mass_moment_id, 
 select c.id, m.id, s.id, seeded.priority, seeded.notes
 from (
   values
-    ('entrance_chant', 'fazei-em-nome-do-senhor', 'required', 'Canto de entrada do roteiro inicial.'),
-    ('responsorial_psalm', 'bendito-seja-o-nome-do-senhor', 'required', 'Salmo do roteiro inicial.'),
-    ('gospel_acclamation', 'aleluia-bendizei-o-seu-nome', 'required', 'Aclamacao do roteiro inicial.'),
-    ('offertory', 'invocando-o-nome-do-senhor', 'required', 'Oferendas do roteiro inicial.'),
-    ('communion_chant', 'por-teu-nome-o-senhor', 'required', 'Comunhao do roteiro inicial.'),
-    ('final_chant', 'vamos-em-nome-do-senhor', 'required', 'Canto final do roteiro inicial.')
+    ('entrance_chant', 'fazei-em-nome-do-senhor', 'required', 'Canto de entrada do repertório inicial.'),
+    ('responsorial_psalm', 'bendito-seja-o-nome-do-senhor', 'required', 'Salmo do repertório inicial.'),
+    ('gospel_acclamation', 'aleluia-bendizei-o-seu-nome', 'required', 'Aclamacao do repertório inicial.'),
+    ('offertory', 'invocando-o-nome-do-senhor', 'required', 'Oferendas do repertório inicial.'),
+    ('communion_chant', 'por-teu-nome-o-senhor', 'required', 'Comunhao do repertório inicial.'),
+    ('final_chant', 'vamos-em-nome-do-senhor', 'required', 'Canto final do repertório inicial.')
 ) as seeded(moment_key, song_slug, priority, notes)
-join public.celebrations c on c.slug = 'santissimo-nome-de-jesus'
+join public.celebrations c on c.slug = 'Santíssimo-nome-de-jesus'
 join public.mass_moments m on m.key = seeded.moment_key
 join public.songs s on s.slug = seeded.song_slug
 where not exists (

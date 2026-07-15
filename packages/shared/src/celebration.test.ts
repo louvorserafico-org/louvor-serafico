@@ -7,13 +7,13 @@ import {
   findCelebrationBySlug,
   findSongBySlug,
   getInitialSongCatalog,
-  santissimoNomeDeJesusCelebration,
+  SantíssimoNomeDeJesusCelebration,
   validateCelebration,
 } from "./celebration.ts";
 
 describe("celebration domain", () => {
   it("builds celebration rows in standard mass order", () => {
-    const rows = buildCelebrationMomentRows(santissimoNomeDeJesusCelebration);
+    const rows = buildCelebrationMomentRows(SantíssimoNomeDeJesusCelebration);
 
     assert.deepEqual(
       rows.map((row) => row.song.title),
@@ -30,8 +30,8 @@ describe("celebration domain", () => {
 
   it("marks celebration incomplete when required moment has no recommendation", () => {
     const validation = validateCelebration({
-      ...santissimoNomeDeJesusCelebration,
-      recommendations: santissimoNomeDeJesusCelebration.recommendations.filter(
+      ...SantíssimoNomeDeJesusCelebration,
+      recommendations: SantíssimoNomeDeJesusCelebration.recommendations.filter(
         (recommendation) => recommendation.momentKey !== "offertory",
       ),
     });
@@ -44,9 +44,9 @@ describe("celebration domain", () => {
     assert.throws(
       () =>
         buildCelebrationMomentRows({
-          ...santissimoNomeDeJesusCelebration,
+          ...SantíssimoNomeDeJesusCelebration,
           recommendations: [
-            ...santissimoNomeDeJesusCelebration.recommendations,
+            ...SantíssimoNomeDeJesusCelebration.recommendations,
             {
               id: "broken",
               momentKey: "final_chant",
@@ -80,7 +80,7 @@ describe("celebration domain", () => {
   });
 
   it("finds the initial celebration by month-day", () => {
-    assert.equal(findCelebrationByDate("01-03")?.slug, "santissimo-nome-de-jesus");
+    assert.equal(findCelebrationByDate("01-03")?.slug, "Santíssimo-nome-de-jesus");
   });
 
   it("returns undefined when date has no celebration", () => {
@@ -88,6 +88,6 @@ describe("celebration domain", () => {
   });
 
   it("finds the initial celebration by slug", () => {
-    assert.equal(findCelebrationBySlug("santissimo-nome-de-jesus")?.id, santissimoNomeDeJesusCelebration.id);
+    assert.equal(findCelebrationBySlug("Santíssimo-nome-de-jesus")?.id, SantíssimoNomeDeJesusCelebration.id);
   });
 });

@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
-import { santissimoNomeDeJesusCelebration } from "../../../../../packages/shared/src/celebration.ts";
+import { SantíssimoNomeDeJesusCelebration } from "../../../../../packages/shared/src/celebration.ts";
 import { getLiturgicalDayForDate } from "../../../../../packages/shared/src/liturgical-calendar.ts";
 
 import type { SupabaseSessionState } from "@/features/auth/supabase-session";
@@ -37,16 +37,16 @@ const activeSubscription: SubscriptionPreviewState = {
 describe("home summary", () => {
   it("builds authenticated home copy", () => {
     const result = buildHomeSummary({
-      celebration: santissimoNomeDeJesusCelebration,
+      celebration: SantíssimoNomeDeJesusCelebration,
       day: getLiturgicalDayForDate(new Date("2026-01-03T12:00:00.000Z")),
       session: authenticatedSession,
       subscription: activeSubscription,
     });
 
     assert.deepEqual(result, {
-      actionLabel: "Ver roteiro",
+      actionLabel: "Ver repertório",
       helperText: "6 cantos sugeridos para a celebração de hoje.",
-      href: "/celebracoes/santissimo-nome-de-jesus",
+      href: "/celebracoes/Santíssimo-nome-de-jesus",
       premiumText: "Materiais completos disponiveis.",
       title: "Missa do Santíssimo Nome de Jesus",
     });
@@ -54,7 +54,7 @@ describe("home summary", () => {
 
   it("builds anonymous home copy", () => {
     const result = buildHomeSummary({
-      celebration: santissimoNomeDeJesusCelebration,
+      celebration: SantíssimoNomeDeJesusCelebration,
       day: getLiturgicalDayForDate(new Date("2026-01-03T12:00:00.000Z")),
       session: anonymousSession,
       subscription: inactiveSubscription,
@@ -82,7 +82,7 @@ describe("home summary", () => {
       helperText: "Ainda não há sugestões musicais para este dia.",
       href: "/calendario",
       premiumText: "",
-      title: "Sem roteiro preparado",
+      title: "Sem repertório preparado",
     });
   });
 
@@ -99,7 +99,7 @@ describe("home summary", () => {
       helperText: "Ainda não há sugestões musicais para este dia.",
       href: "/calendario",
       premiumText: "",
-      title: "Sem roteiro preparado",
+      title: "Sem repertório preparado",
     });
   });
 });

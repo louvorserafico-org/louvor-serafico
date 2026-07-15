@@ -207,7 +207,7 @@ Obrigatorios na primeira migration futura:
 
 - seasons basicas
 - mass_moments padrao
-- celebracao "Missa do Santissimo Nome de Jesus"
+- celebracao "Missa do Santíssimo Nome de Jesus"
 - songs iniciais
 - recommendations iniciais
 

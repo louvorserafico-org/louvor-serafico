@@ -11,11 +11,11 @@ describe("main tab copy", () => {
   it("builds today subtitle", () => {
     assert.equal(
       buildTodayTabSubtitle(true),
-      "Roteiro litúrgico-musical pronto para abrir, estudar e seguir na celebração de hoje.",
+      "Repertório litúrgico-musical pronto para abrir, estudar e seguir na celebração de hoje.",
     );
     assert.equal(
       buildTodayTabSubtitle(false),
-      "Roteiro litúrgico-musical de hoje, com entrada rapida para abrir conta e continuar.",
+      "Repertório litúrgico-musical de hoje, com entrada rapida para abrir conta e continuar.",
     );
   });
 

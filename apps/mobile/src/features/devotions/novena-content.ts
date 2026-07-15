@@ -82,7 +82,7 @@ export function findNovenaDay(day: number): NovenaDay | undefined {
 }
 
 export const novenaGreeting =
-  "A vós, irmãos e irmãs, que vieram celebrar conosco a novena em honra do nosso Seráfico Pai São Francisco de Assis nesse Jubileu de sua páscoa, a nossa saudação franciscana de Paz e Bem!";
+  "A vós, irmãos e irmãs, que vieram celebrar conosco a novena em honra do nosso Seráfico Pai São Francisco de Assis nesse Jubileu de sua páscoa, a nossa saudação Franciscana de Paz e Bem!";
 
 export const novenaReconciliationText =
   "A Igreja sempre reconheceu em São Francisco o homem providencial que Deus suscitou para renovar a vida cristã pela fidelidade ao Evangelho. Além disso, Francisco foi o Irmão de todo irmão, ele soube reconhecer em tudo a presença do Altíssimo e Bom Senhor. Foi um homem perfeitamente reconciliado consigo mesmo, com Deus, com o mundo e até mesmo com a morte, a quem também chamou de irmã.";

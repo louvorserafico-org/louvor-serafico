@@ -11,7 +11,7 @@ describe("calendar day route", () => {
       getLiturgicalDayForDate(new Date("2026-01-03T12:00:00.000Z")),
     );
 
-    assert.equal(result, "/celebracoes/santissimo-nome-de-jesus");
+    assert.equal(result, "/celebracoes/Santíssimo-nome-de-jesus");
   });
 
   it("routes liturgical day without repertoire to month-day detail", () => {

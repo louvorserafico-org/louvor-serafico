@@ -20,10 +20,10 @@ export default function SaintsListScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
-      <Stack.Screen options={{ headerShown: true, title: "Santos franciscanos" }} />
+      <Stack.Screen options={{ headerShown: true, title: "Santos Franciscanos" }} />
       <PageHeader
         eyebrow="Santoral"
-        title="Santos franciscanos"
+        title="Santos Franciscanos"
         subtitle="Percorra o calendário seráfico por categoria."
       />
 

@@ -16,8 +16,8 @@ export default function CelebrationsScreen() {
     <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
       <Stack.Screen options={{ headerShown: true, title: "Celebrações" }} />
       <PageHeader
-        eyebrow={`${celebrations.length} roteiro${celebrations.length === 1 ? "" : "s"}`}
-        subtitle="Consulte as celebrações já preparadas e abra cada roteiro quando precisar."
+        eyebrow={`${celebrations.length} repertório${celebrations.length === 1 ? "" : "s"}`}
+        subtitle="Consulte as celebrações já preparadas e abra cada repertório quando precisar."
         title="Celebrações"
       />
 

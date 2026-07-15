@@ -10,7 +10,7 @@ import {
   // @ts-ignore Node runs TypeScript sources directly in this dev setup.
 } from "./santoral.ts";
 
-describe("santoral franciscano domain", () => {
+describe("santoral Franciscano domain", () => {
   it("returns saints for a date with qualifiers, order and observances", () => {
     const days = findSaintDaysByMonthDay("01-16");
     const berardo = days.find((day) => day.name.includes("Berardo"));
@@ -32,7 +32,7 @@ describe("santoral franciscano domain", () => {
     const day = days[0];
 
     assert.equal(day?.name, "Santíssimo Nome de Jesus");
-    assert.equal(day?.celebrationSlug, "santissimo-nome-de-jesus");
+    assert.equal(day?.celebrationSlug, "Santíssimo-nome-de-jesus");
   });
 
   it("filters catalog by liturgical qualifier", () => {
