@@ -84,9 +84,9 @@ export function validateCelebration(celebration: Celebration) {
 }
 
 export function getInitialSongCatalog(): Song[] {
-  return [...SantíssimoNomeDeJesusCelebration.songs].sort((first, second) =>
-    first.title.localeCompare(second.title, "pt-BR"),
-  );
+  return getInitialCelebrationCatalog()
+    .flatMap((celebration) => celebration.songs)
+    .sort((first, second) => first.title.localeCompare(second.title, "pt-BR"));
 }
 
 export function findSongBySlug(slug: string): Song | undefined {
@@ -94,7 +94,7 @@ export function findSongBySlug(slug: string): Song | undefined {
 }
 
 export function getInitialCelebrationCatalog(): Celebration[] {
-  return [SantíssimoNomeDeJesusCelebration];
+  return [SantíssimoNomeDeJesusCelebration, BasílicaDeSãoFranciscoCelebration];
 }
 
 export function findCelebrationByDate(dateMonthDay: string): Celebration | undefined {
@@ -270,6 +270,153 @@ export const SantíssimoNomeDeJesusCelebration: Celebration = {
       momentKey: "final_chant",
       priority: "required",
       songId: "song-vamos-em-nome-do-senhor",
+    },
+  ],
+};
+
+export const BasílicaDeSãoFranciscoCelebration: Celebration = {
+  id: "celebration-basilica-de-sao-francisco",
+  slug: "basilica-de-sao-francisco",
+  title: "Missa da Basílica de São Francisco",
+  dateLabel: "24 de maio",
+  dateMonthDay: "05-24",
+  songs: [
+    {
+      id: "song-a-nova-jerusalem",
+      title: "Á nova Jerusalém",
+      slug: "a-nova-jerusalem",
+      assets: [
+        {
+          id: "asset-a-nova-jerusalem-score",
+          path: "A nova Jerusalem.pdf",
+          premium: true,
+          title: "Partitura",
+          type: "score_pdf",
+        },
+        {
+          id: "asset-a-nova-jerusalem-audio",
+          path: "A nova Jerusalem.mp3",
+          premium: true,
+          title: "Áudio",
+          type: "audio",
+        },
+      ],
+    },
+    {
+      id: "song-aleluia-santo-antonio-pregador",
+      title: "Aleluia, Santo Antônio Pregador",
+      slug: "aleluia-santo-antonio-pregador",
+      assets: [
+        {
+          id: "asset-aleluia-santo-antonio-score",
+          path: "Aleluia, Santo Antonio Pregador.pdf",
+          premium: true,
+          title: "Partitura",
+          type: "score_pdf",
+        },
+        {
+          id: "asset-aleluia-santo-antonio-audio",
+          path: "Aleluia, Santo Antonio Pregador.mp3",
+          premium: true,
+          title: "Áudio",
+          type: "audio",
+        },
+      ],
+    },
+    {
+      id: "song-qual-andorinha",
+      title: "Qual andorinha",
+      slug: "qual-andorinha",
+      assets: [
+        {
+          id: "asset-qual-andorinha-score",
+          path: "Qual andorinha.pdf",
+          premium: true,
+          title: "Partitura",
+          type: "score_pdf",
+        },
+        {
+          id: "asset-qual-andorinha-audio",
+          path: "Qual andorinha.mp3",
+          premium: true,
+          title: "Áudio",
+          type: "audio",
+        },
+      ],
+    },
+    {
+      id: "song-somos-templos-vivos",
+      title: "Somos templos vivos",
+      slug: "somos-templos-vivos",
+      assets: [
+        {
+          id: "asset-somos-templos-vivos-score",
+          path: "Somos templos vivos.pdf",
+          premium: true,
+          title: "Partitura",
+          type: "score_pdf",
+        },
+        {
+          id: "asset-somos-templos-vivos-audio",
+          path: "Somos templos vivos.mp3",
+          premium: true,
+          title: "Áudio",
+          type: "audio",
+        },
+      ],
+    },
+    {
+      id: "song-es-francisco-coluna-da-igreja",
+      title: "És Francisco coluna da Igreja",
+      slug: "es-francisco-coluna-da-igreja",
+      assets: [
+        {
+          id: "asset-es-francisco-coluna-score",
+          path: "Es Francisco coluna da Igreja.pdf",
+          premium: true,
+          title: "Partitura",
+          type: "score_pdf",
+        },
+        {
+          id: "asset-es-francisco-coluna-audio",
+          path: "Es Francisco coluna da Igreja.mp3",
+          premium: true,
+          title: "Áudio",
+          type: "audio",
+        },
+      ],
+    },
+  ],
+  recommendations: [
+    {
+      id: "rec-basilica-entrada",
+      momentKey: "entrance_chant",
+      priority: "required",
+      songId: "song-a-nova-jerusalem",
+    },
+    {
+      id: "rec-basilica-aclamacao",
+      momentKey: "gospel_acclamation",
+      priority: "required",
+      songId: "song-aleluia-santo-antonio-pregador",
+    },
+    {
+      id: "rec-basilica-oferendas",
+      momentKey: "offertory",
+      priority: "required",
+      songId: "song-qual-andorinha",
+    },
+    {
+      id: "rec-basilica-comunhao",
+      momentKey: "communion_chant",
+      priority: "required",
+      songId: "song-somos-templos-vivos",
+    },
+    {
+      id: "rec-basilica-final",
+      momentKey: "final_chant",
+      priority: "required",
+      songId: "song-es-francisco-coluna-da-igreja",
     },
   ],
 };

@@ -26,7 +26,7 @@ describe("home prepared days", () => {
     );
 
     assert.equal(result.title, "Roteiros disponiveis");
-    assert.equal(result.items[0]?.slug, "Santíssimo-nome-de-jesus");
+    assert.equal(result.items[0]?.slug, "basilica-de-sao-francisco");
     assert.equal(result.hasMore, false);
   });
 

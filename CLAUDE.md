@@ -7358,3 +7358,25 @@ Tela de Conta (`perfil.tsx` + `AuthEntryCard.tsx`), estado deslogado:
 Validacoes: pnpm test (74 suites, fail 0) / typecheck / lint = 0. Sem teste novo (mudanca de UI).
 
 Commit: `fix(mobile): unify community and account screens, remove redundant text and fix invisible button`
+
+## Etapa 198 - Novo repertorio: Missa da Basilica de Sao Francisco (24 de maio)
+
+Segundo evento completo do app (apos a Missa do Santissimo Nome de Jesus), a partir de audios e partituras enviados pelo Frei em `MISSA BASILICA DE SAO FRANCISCO-.../`. Hard-coded no catalogo local, mesmo padrao acordado na Etapa anterior de audio (admin manual fica para o futuro).
+
+Pendencias identificadas antes de cadastrar (resolvidas com o Frei):
+- **Sem salmo responsorial**: essa remessa so trouxe 5 dos 6 momentos obrigatorios (faltou o Salmo). Decisao: cadastrar assim mesmo, celebracao fica `incomplete` com `missingMomentKeys: ["responsorial_psalm"]` (o dominio ja suporta isso, ver `validateCelebrationRepertoire` em `mass-template.ts`). Frei envia o salmo depois.
+- **Audio orfao**: `ALELUIA EIS A TENDA.wav` nao tinha partitura correspondente na remessa; a unica partitura de aclamacao enviada era "Aleluia, Santo Antonio Pregador" (PDFs eram digitalizados/sem texto, confirmado abrindo como imagem). Decisao do Frei: e o mesmo canto, arquivo com nome divergente - usado como audio da aclamacao.
+
+Pipeline (identico ao da Etapa de audio anterior, agora documentado passo a passo):
+1. `ffmpeg` (WAV -> MP3, `libmp3lame -qscale:a 4`) nos 5 audios usados.
+2. `packages/shared/src/celebration.ts`: novo `BasilicaDeSaoFranciscoCelebration` (5 songs, 5 recommendations, sem salmo) + `getInitialCelebrationCatalog()` agora retorna as duas celebracoes + `getInitialSongCatalog()` refatorado para `flatMap` sobre o catalogo inteiro (antes so lia a Santissimo, hard-coded).
+3. Upload dos 10 arquivos (5 PDF + 5 MP3) para o bucket `song-assets` via Storage REST API (service role) - mesmo workaround de DNS da Etapa anterior (`db.<ref>.supabase.co` nao resolve neste ambiente, mas `<ref>.supabase.co` sim).
+4. Insert de `songs` (status `published` desta vez, evitando o caveat da Etapa anterior onde uma song ficou `reviewed` e o app caia pro catalogo local), `song_assets`, `celebrations` e `celebration_recommendations` via PostgREST.
+
+Bug de encoding descoberto no Storage: chaves com certas letras acentuadas maiusculas (`Á`, `É`, `Ô` em "Antônio") retornam `400 InvalidKey`; letras acentuadas minusculas em outras posicoes nao tinham sido testadas antes (os assets antigos nao usavam acento nenhum, incluindo o caso de mojibake conhecido "Por teu nome, Ã³ Senhor.pdf"). Corrigido removendo acento das 3 chaves afetadas (`storage_path` e `path` local): "A nova Jerusalem", "Aleluia, Santo Antonio Pregador", "Es Francisco coluna da Igreja" - os titulos exibidos no app continuam acentuados normalmente, so o nome do arquivo no Storage e ASCII.
+
+Testes atualizados: `celebration.test.ts` (catalogo de musicas agora inclui as 5 novas + teste novo de `findCelebrationByDate("05-24")` e de `validateCelebration` incompleta por falta do salmo), `home-prepared-days.test.ts` (o fallback "sem roteiro futuro no ano" a partir de 25/abr agora aponta pra Basilica de Sao Francisco, mais proxima que o Santissimo Nome de Jesus - comportamento correto, so a expectativa do teste estava desatualizada).
+
+Validacoes: pnpm test (74 suites, fail 0) / typecheck / lint = 0.
+
+Commit: `feat(shared): add Missa da Basilica de Sao Francisco repertoire (24 de maio)`

@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
 import {
+  BasílicaDeSãoFranciscoCelebration,
   buildCelebrationMomentRows,
   findCelebrationByDate,
   findCelebrationBySlug,
@@ -65,11 +66,16 @@ describe("celebration domain", () => {
     assert.deepEqual(
       catalog.map((song) => song.title),
       [
+        "Á nova Jerusalém",
         "Aleluia, bendizei o seu nome",
+        "Aleluia, Santo Antônio Pregador",
         "Bendito seja o nome do Senhor",
+        "És Francisco coluna da Igreja",
         "Fazei em nome do Senhor",
         "Invocando o nome do Senhor",
         "Por teu nome, o Senhor",
+        "Qual andorinha",
+        "Somos templos vivos",
         "Vamos em nome do Senhor",
       ],
     );
@@ -89,5 +95,16 @@ describe("celebration domain", () => {
 
   it("finds the initial celebration by slug", () => {
     assert.equal(findCelebrationBySlug("Santíssimo-nome-de-jesus")?.id, SantíssimoNomeDeJesusCelebration.id);
+  });
+
+  it("finds the Basílica de São Francisco celebration by month-day", () => {
+    assert.equal(findCelebrationByDate("05-24")?.slug, "basilica-de-sao-francisco");
+  });
+
+  it("marks the Basílica de São Francisco celebration incomplete without a responsorial psalm", () => {
+    assert.equal(validateCelebration(BasílicaDeSãoFranciscoCelebration).complete, false);
+    assert.deepEqual(validateCelebration(BasílicaDeSãoFranciscoCelebration).missingMomentKeys, [
+      "responsorial_psalm",
+    ]);
   });
 });

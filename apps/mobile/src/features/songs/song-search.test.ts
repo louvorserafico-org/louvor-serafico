@@ -7,7 +7,7 @@ import { filterSongsBySearch, normalizeSongSearchTerm } from "./song-search.ts";
 
 describe("song search", () => {
   it("normalizes case and accents", () => {
-    assert.equal(normalizeSongSearchTerm("  Santíssimo  "), "Santíssimo");
+    assert.equal(normalizeSongSearchTerm("  Santíssimo  "), "santissimo");
   });
 
   it("keeps full catalog when query has fewer than 3 characters", () => {
