@@ -1,8 +1,11 @@
 import { getInitialSongCatalog } from "@louvor-serafico/shared";
+import { Ionicons } from "@expo/vector-icons";
+import { Link } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { AnimatedPressable } from "@/components/AnimatedPressable";
 import { SongCard } from "@/components/SongCard";
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { PageHeader } from "@/components/PageHeader";
@@ -73,6 +76,19 @@ export default function RepertoireScreen() {
     <SafeAreaView edges={["top"]} style={styles.screen}>
       <ScrollView contentContainerStyle={styles.container}>
       <PageHeader eyebrow={overview.eyebrow} title="Repertorio" subtitle={subtitle} />
+
+      <Link asChild href="/repertorio/ouvir">
+        <AnimatedPressable style={styles.listenBlock}>
+          <View style={styles.listenIcon}>
+            <Ionicons color={colors.accent} name="headset-outline" size={22} />
+          </View>
+          <View style={styles.listenCopy}>
+            <Text style={styles.listenTitle}>Apenas ouvir músicas</Text>
+            <Text style={styles.listenMeta}>Uma lista simples para tocar, repetir e navegar entre os cantos.</Text>
+          </View>
+          <Ionicons color={colors.textMuted} name="chevron-forward" size={20} />
+        </AnimatedPressable>
+      </Link>
 
       <View style={styles.searchBlock}>
         <Text style={styles.searchLabel}>Pesquisar música</Text>
@@ -151,6 +167,40 @@ const styles = StyleSheet.create({
   },
   list: {
     gap: spacing.md,
+  },
+  listenBlock: {
+    alignItems: "center",
+    backgroundColor: colors.surface,
+    borderColor: colors.accent,
+    borderRadius: radii.xl,
+    borderWidth: 1,
+    flexDirection: "row",
+    gap: spacing.sm,
+    padding: spacing.lg,
+  },
+  listenCopy: {
+    flex: 1,
+    gap: 2,
+  },
+  listenIcon: {
+    alignItems: "center",
+    backgroundColor: colors.goldSoft,
+    borderRadius: radii.pill,
+    height: 40,
+    justifyContent: "center",
+    width: 40,
+  },
+  listenMeta: {
+    color: colors.textSecondary,
+    fontFamily: fontFamilies.body,
+    fontSize: typography.caption,
+    lineHeight: 18,
+  },
+  listenTitle: {
+    color: colors.textPrimary,
+    fontFamily: fontFamilies.display,
+    fontSize: typography.lead,
+    fontWeight: "700",
   },
   searchBlock: {
     gap: spacing.xs,

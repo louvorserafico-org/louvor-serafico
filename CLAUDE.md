@@ -7414,3 +7414,27 @@ Nao foi possivel verificar visualmente em app rodando: emulador Android segue in
 Validacoes: pnpm test (74 suites, fail 0) / typecheck / lint = 0. Sem teste novo (mudanca de UI/conteudo estatico, sem logica nova).
 
 Commit: `feat(mobile): add Sobre page and Frei Luís Ventura credit footer`
+
+## Etapa 201 - Player de musica persistente (fila, repetir, anterior/proximo)
+
+Pedido do Frei: opcao "Apenas ouvir musicas" no Repertorio, lista simples que ja comeca a tocar ao clicar, com player fixo (play/pausa/repetir/voltar/avancar). Pedido explicito de refinar a proposta antes de executar.
+
+Refinamento em relacao ao pedido original: em vez de um player preso so a uma tela, o player foi projetado como **estado global persistente** - a musica continua tocando ao navegar entre as abas (Hoje, Calendario, Repertorio, Partilha, Perfil), com uma mini-barra fixa acima da tab bar, no estilo Spotify/Youtube Music. Isso torna o app genuinamente utilizavel "para ouvir musica" (pedido explicito do Frei), nao so numa tela isolada.
+
+Arquitetura (TDD para a logica pura, provider/UI validados via typecheck + revisao manual, seguindo o mesmo padrao ja usado em `SongAudioPlayer.tsx`):
+- `apps/mobile/src/features/player/playback-queue.ts` (+ teste, 9 casos) - dominio puro: `buildPlayableQueue(songs)` filtra so os cantos com asset de audio; `getNextTrackIndex`/`getPreviousTrackIndex` com 3 modos de repeticao (`off`/`all`/`one`); `toggleRepeatMode` cicla off -> all -> one -> off.
+- `apps/mobile/src/features/player/PlayerProvider.tsx` - contexto React montado no `app/_layout.tsx` (acima do Stack raiz, dentro de `FavoritesProvider`), unico dono da instancia de `useAudioPlayer`/`useAudioPlayerStatus` do `expo-audio`. Ao trocar de faixa, resolve a URL assinada do asset via `resolvePdfViewerSource` (mesma funcao generica ja usada pra PDF/audio, respeitando `resolveAssetAccess` - free vs premium vs assinatura ativa). Auto-avanca ao terminar a faixa respeitando o modo de repeticao; skip manual (proximo/anterior) sempre "embrulha" a fila (`all`), independente do modo de repeticao selecionado - decisao deliberada: botao de pular deve sempre pular, so o avanco automatico respeita "repetir uma".
+- `apps/mobile/src/components/MiniPlayerBar.tsx` - barra fixa (`position: absolute`, `bottom: 76` = altura da tab bar), aparece so quando ha uma fila ativa (`track !== null`). Play/pausa, anterior, proximo, repetir (com indicador visual pro modo "uma"), fechar, barra de progresso e titulo da faixa atual.
+- `apps/mobile/app/(tabs)/_layout.tsx` - `MiniPlayerBar` renderizada como overlay dentro do layout das tabs (nao no root), pra ficar sempre por cima da tab bar mas sem competir com telas de detalhe empilhadas (ex.: `/musicas/[slug]`, que ja tem seu proprio `SongAudioPlayer` inline).
+- `apps/mobile/app/repertorio/ouvir.tsx` (nova rota) - "Apenas ouvir musicas": lista simples de todos os cantos com audio (catalogo local, via `buildPlayableQueue`); tocar num item chama `playQueue(fila, indice)` e comeca a tocar na hora; itens premium sem acesso mostram cadeado e levam pra login/assinatura em vez de tocar.
+- Ponto de entrada: card em destaque (`borderColor: colors.accent`) no topo do Repertorio, acima da busca, levando pra `/repertorio/ouvir`.
+
+Escopo deliberadamente fora desta etapa: fila usa sempre o catalogo local (nao o catalogo remoto sincronizado da tela de Repertorio) - simplicidade e disponibilidade offline priorizadas sobre paridade total; download/cache de audio para modo offline real; miniplayer persistente tambem nas telas empilhadas fora das tabs (ficaria sobre conteudo de detalhe).
+
+Testes novos: `playback-queue.test.ts` (9 casos, cobre fila vazia sem audio, next/previous nos 3 modos de repeticao, ciclo do toggle). Registrado na cadeia do script `test` do `package.json`.
+
+Nao foi possivel verificar visualmente em app rodando (mesma limitacao das Etapas 199/200 - emulador Android instavel, sem suporte web instalado). Validado via typecheck + lint + revisao cuidadosa da integracao com `expo-audio` (confirmado no codigo-fonte da lib que trocar a source re-cria a instancia do player via `useReleasingSharedObject`, então o fluxo de troca de faixa funciona como esperado).
+
+Validacoes: pnpm test (75 suites, fail 0) / typecheck / lint = 0.
+
+Commit: `feat(mobile): add persistent music player with queue, repeat and listen-only screen`
