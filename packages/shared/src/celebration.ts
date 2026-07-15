@@ -94,7 +94,7 @@ export function findSongBySlug(slug: string): Song | undefined {
 }
 
 export function getInitialCelebrationCatalog(): Celebration[] {
-  return [SantíssimoNomeDeJesusCelebration, BasílicaDeSãoFranciscoCelebration];
+  return [SantíssimoNomeDeJesusCelebration, BasílicaDeSãoFranciscoCelebration, SãoBoaventuraCelebration];
 }
 
 export function findCelebrationByDate(dateMonthDay: string): Celebration | undefined {
@@ -417,6 +417,180 @@ export const BasílicaDeSãoFranciscoCelebration: Celebration = {
       momentKey: "final_chant",
       priority: "required",
       songId: "song-es-francisco-coluna-da-igreja",
+    },
+  ],
+};
+
+export const SãoBoaventuraCelebration: Celebration = {
+  id: "celebration-sao-boaventura",
+  slug: "sao-boaventura",
+  title: "Missa de São Boaventura",
+  dateLabel: "15 de julho",
+  dateMonthDay: "07-15",
+  songs: [
+    {
+      id: "song-serafico-doutor",
+      title: "Seráfico Doutor",
+      slug: "serafico-doutor",
+      assets: [
+        {
+          id: "asset-serafico-doutor-score",
+          path: "Serafico Doutor.pdf",
+          premium: true,
+          title: "Partitura",
+          type: "score_pdf",
+        },
+        {
+          id: "asset-serafico-doutor-audio",
+          path: "Serafico Doutor.mp3",
+          premium: true,
+          title: "Áudio",
+          type: "audio",
+        },
+      ],
+    },
+    {
+      id: "song-meu-coracao-esta-em-festa",
+      title: "Meu coração está em festa",
+      slug: "meu-coracao-esta-em-festa",
+      assets: [
+        {
+          id: "asset-meu-coracao-score",
+          path: "Meu coracao esta em festa.pdf",
+          premium: true,
+          title: "Partitura",
+          type: "score_pdf",
+        },
+        {
+          id: "asset-meu-coracao-audio",
+          path: "Meu coracao esta em festa.mp3",
+          premium: true,
+          title: "Áudio",
+          type: "audio",
+        },
+      ],
+    },
+    {
+      id: "song-aleluia-o-sabio-brilhara",
+      title: "Aleluia, o sábio brilhará",
+      slug: "aleluia-o-sabio-brilhara",
+      assets: [
+        {
+          id: "asset-aleluia-sabio-score",
+          path: "Aleluia, o sabio brilhara.pdf",
+          premium: true,
+          title: "Partitura",
+          type: "score_pdf",
+        },
+        {
+          id: "asset-aleluia-sabio-audio",
+          path: "Aleluia, o sabio brilhara.mp3",
+          premium: true,
+          title: "Áudio",
+          type: "audio",
+        },
+      ],
+    },
+    {
+      id: "song-nos-dilatais-o-coracao",
+      title: "Nos dilatais o coração",
+      slug: "nos-dilatais-o-coracao",
+      assets: [
+        {
+          id: "asset-nos-dilatais-score",
+          path: "Nos dilatais o coracao.pdf",
+          premium: true,
+          title: "Partitura",
+          type: "score_pdf",
+        },
+        {
+          id: "asset-nos-dilatais-audio",
+          path: "Nos dilatais o coracao.mp3",
+          premium: true,
+          title: "Áudio",
+          type: "audio",
+        },
+      ],
+    },
+    {
+      id: "song-sumo-bem",
+      title: "Sumo Bem",
+      slug: "sumo-bem",
+      assets: [
+        {
+          id: "asset-sumo-bem-score",
+          path: "Sumo Bem.pdf",
+          premium: true,
+          title: "Partitura",
+          type: "score_pdf",
+        },
+        {
+          id: "asset-sumo-bem-audio",
+          path: "Sumo Bem.mp3",
+          premium: true,
+          title: "Áudio",
+          type: "audio",
+        },
+      ],
+    },
+    {
+      id: "song-mestre-sabio-sao-boaventura",
+      title: "Mestre sábio São Boaventura",
+      slug: "mestre-sabio-sao-boaventura",
+      assets: [
+        {
+          id: "asset-mestre-sabio-score",
+          path: "Mestre sabio Sao Boaventura.pdf",
+          premium: true,
+          title: "Partitura",
+          type: "score_pdf",
+        },
+        {
+          id: "asset-mestre-sabio-audio",
+          path: "Mestre sabio Sao Boaventura.mp3",
+          premium: true,
+          title: "Áudio",
+          type: "audio",
+        },
+      ],
+    },
+  ],
+  recommendations: [
+    {
+      id: "rec-boaventura-entrada",
+      momentKey: "entrance_chant",
+      priority: "required",
+      songId: "song-serafico-doutor",
+    },
+    {
+      id: "rec-boaventura-salmo",
+      momentKey: "responsorial_psalm",
+      priority: "required",
+      songId: "song-meu-coracao-esta-em-festa",
+    },
+    {
+      id: "rec-boaventura-aclamacao",
+      momentKey: "gospel_acclamation",
+      priority: "required",
+      songId: "song-aleluia-o-sabio-brilhara",
+    },
+    {
+      id: "rec-boaventura-oferendas",
+      momentKey: "offertory",
+      priority: "required",
+      songId: "song-nos-dilatais-o-coracao",
+    },
+    {
+      id: "rec-boaventura-comunhao",
+      momentKey: "communion_chant",
+      priority: "required",
+      songId: "song-sumo-bem",
+    },
+    {
+      id: "rec-boaventura-final",
+      momentKey: "final_chant",
+      priority: "required",
+      songId: "song-mestre-sabio-sao-boaventura",
     },
   ],
 };

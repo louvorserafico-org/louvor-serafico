@@ -7380,3 +7380,19 @@ Testes atualizados: `celebration.test.ts` (catalogo de musicas agora inclui as 5
 Validacoes: pnpm test (74 suites, fail 0) / typecheck / lint = 0.
 
 Commit: `feat(shared): add Missa da Basilica de Sao Francisco repertoire (24 de maio)`
+
+## Etapa 199 - Novo repertorio: Missa de Sao Boaventura (15 de julho)
+
+Terceiro evento completo do app. Diferente da Etapa anterior, essa remessa veio com os 6 momentos completos (incluindo o Salmo Responsorial) e mapeamento audio-partitura 1:1 sem orfaos - confirmado abrindo os PDFs como imagem (digitalizados, sem texto extraivel), igual na Etapa 198.
+
+Mesmo pipeline ja consolidado:
+1. `ffmpeg` (WAV -> MP3) nos 6 audios, ja usando nomes de arquivo ASCII-safe desde a conversao (licao da Etapa 198: Storage rejeita chaves com acento maiusculo tipo `Á`/`É`/`Ô`).
+2. `packages/shared/src/celebration.ts`: novo `SãoBoaventuraCelebration` (6 songs, 6 recommendations, celebracao completa) + registrado em `getInitialCelebrationCatalog()`.
+3. Upload dos 12 arquivos (6 PDF + 6 MP3) pro bucket `song-assets` via Storage REST API.
+4. Insert de `songs`, `song_assets`, `celebrations` e `celebration_recommendations` via PostgREST, tudo `status: "published"`.
+
+Testes atualizados: `celebration.test.ts` (catalogo de musicas com as 6 novas, teste de `findCelebrationByDate("07-15")` e de `validateCelebration` completa - primeira celebracao com os 6 momentos preenchidos, ao contrario da Basilica de Sao Francisco que ficou incompleta).
+
+Validacoes: pnpm test (74 suites, fail 0) / typecheck / lint = 0.
+
+Commit: `feat(shared): add Missa de Sao Boaventura repertoire (15 de julho)`

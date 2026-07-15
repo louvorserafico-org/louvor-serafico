@@ -9,6 +9,7 @@ import {
   findSongBySlug,
   getInitialSongCatalog,
   SantíssimoNomeDeJesusCelebration,
+  SãoBoaventuraCelebration,
   validateCelebration,
 } from "./celebration.ts";
 
@@ -68,14 +69,20 @@ describe("celebration domain", () => {
       [
         "Á nova Jerusalém",
         "Aleluia, bendizei o seu nome",
+        "Aleluia, o sábio brilhará",
         "Aleluia, Santo Antônio Pregador",
         "Bendito seja o nome do Senhor",
         "És Francisco coluna da Igreja",
         "Fazei em nome do Senhor",
         "Invocando o nome do Senhor",
+        "Mestre sábio São Boaventura",
+        "Meu coração está em festa",
+        "Nos dilatais o coração",
         "Por teu nome, o Senhor",
         "Qual andorinha",
+        "Seráfico Doutor",
         "Somos templos vivos",
+        "Sumo Bem",
         "Vamos em nome do Senhor",
       ],
     );
@@ -106,5 +113,14 @@ describe("celebration domain", () => {
     assert.deepEqual(validateCelebration(BasílicaDeSãoFranciscoCelebration).missingMomentKeys, [
       "responsorial_psalm",
     ]);
+  });
+
+  it("finds the São Boaventura celebration by month-day", () => {
+    assert.equal(findCelebrationByDate("07-15")?.slug, "sao-boaventura");
+  });
+
+  it("marks the São Boaventura celebration complete with all six moments", () => {
+    assert.equal(validateCelebration(SãoBoaventuraCelebration).complete, true);
+    assert.deepEqual(validateCelebration(SãoBoaventuraCelebration).missingMomentKeys, []);
   });
 });
