@@ -1,36 +1,31 @@
+import { Ionicons } from "@expo/vector-icons";
 import type { Celebration } from "@louvor-serafico/shared";
 import { Link } from "expo-router";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
-import { colors, fontFamilies, spacing, typography } from "@/theme/tokens";
+import { AnimatedPressable } from "@/components/AnimatedPressable";
+import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
 
 type HomePreparedDayItemProps = {
   celebration: Celebration;
-  isLast?: boolean;
 };
 
-export function HomePreparedDayItem({ celebration, isLast = false }: HomePreparedDayItemProps) {
+export function HomePreparedDayItem({ celebration }: HomePreparedDayItemProps) {
   return (
     <Link asChild href={`/celebracoes/${celebration.slug}`}>
-      <Pressable style={[styles.item, !isLast ? styles.itemBorder : undefined]}>
+      <AnimatedPressable style={styles.item}>
         <View style={styles.copy}>
           <Text style={styles.date}>{celebration.dateLabel}</Text>
           <Text style={styles.title}>{celebration.title}</Text>
           <Text style={styles.meta}>{celebration.recommendations.length} cantos sugeridos</Text>
         </View>
-        <Text style={styles.action}>Ver roteiro</Text>
-      </Pressable>
+        <Ionicons color={colors.textMuted} name="chevron-forward" size={20} />
+      </AnimatedPressable>
     </Link>
   );
 }
 
 const styles = StyleSheet.create({
-  action: {
-    color: colors.accent,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "800",
-  },
   copy: {
     flex: 1,
     gap: spacing.xs,
@@ -44,13 +39,13 @@ const styles = StyleSheet.create({
   },
   item: {
     alignItems: "center",
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    borderRadius: radii.xl,
+    borderWidth: 1,
     flexDirection: "row",
     gap: spacing.md,
-    paddingVertical: spacing.md,
-  },
-  itemBorder: {
-    borderBottomColor: colors.border,
-    borderBottomWidth: 1,
+    padding: spacing.lg,
   },
   meta: {
     color: colors.textMuted,

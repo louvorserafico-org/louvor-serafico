@@ -7265,3 +7265,49 @@ Feito (`devocoes/index.tsx`):
 Validacoes: pnpm test (74 suites, fail 0) / typecheck / lint = 0. Sem teste novo (mudanca de UI).
 
 Commit: `fix(mobile): split devotions hub into separate tappable cards`
+
+## Etapa 192 - Padrao "box inteira clicavel" aplicado no app inteiro
+
+Pedido do Frei: aplicar o mesmo tratamento da Etapa 191 (devocoes) em toda box com texto tipo "Abrir"/"Ver" - remover o texto do botao (box inteira ja e clicavel) e globalizar tamanho/design das boxes de conteudo.
+
+Escopo definido: telas/componentes onde uma box inteira ja e um `Link`/`Pressable` e ainda mostra um rotulo de texto redundante ("Abrir", "Ver roteiro", "Ver", "Abrir devoções", "Ver santoral", "Abrir canto completo"). Fora do escopo: `musicas/[slug].tsx` (uma secao pode ter mais de um asset - um unico clique na box seria ambiguo sobre qual material abrir, mantido como botao real); link inline "Ver premium" em `santos/[monthDay].tsx` (nao e uma box, e um link solto no meio do texto); `CelebrationCard.tsx`/`CelebrationCta.tsx` (componentes sem nenhum uso no app - codigo morto, nao vale a pena tocar).
+
+Componentes atualizados, todos convertidos pro mesmo padrao visual (`backgroundColor: colors.surface`, `borderColor: colors.border`, `borderRadius: radii.xl`, `borderWidth: 1`, `padding: spacing.lg`, `AnimatedPressable`, icone `chevron-forward` no lugar do texto):
+- `SongCard.tsx` (lista do Repertorio) - antes era uma linha com `borderBottomWidth` (sem box propria) + texto "Abrir"; agora e um card individual. Estrela de favorito continua como botao proprio, separado do toque de navegacao (Pressable aninhado dentro do AnimatedPressable - RN resolve o touch responder pro filho, nao propaga pro pai).
+- `MomentCard.tsx` (momentos da missa em `celebracoes/[id].tsx`) - texto "Abrir canto completo" removido; radius `lg` -> `xl`; ganhou borda (nao tinha).
+- `HomePreparedDayItem.tsx` (usado em `(tabs)/index.tsx` e `celebracoes/index.tsx`) - antes era lista com `borderBottomWidth` entre itens + texto "Ver roteiro"; agora cards individuais com `gap`. Prop `isLast` removida (nao faz mais sentido sem divisor interno) - as 2 telas que usavam o componente foram atualizadas.
+- `(tabs)/index.tsx`: os blocos "Para hoje" (santo do dia / fallback pro santoral / devocoes franciscanas) - textos "Ver", "Ver santoral", "Abrir devoções" removidos; cada bloco virou uma box propria com borda (antes eram 2 blocos dentro de 1 unica box com `borderBottomWidth` entre eles - mesmo problema estrutural do hub de devocoes antes da Etapa 191).
+
+Validacoes: pnpm test (74 suites, fail 0) / typecheck / lint = 0. Sem teste novo (mudanca de UI).
+
+Commit: `fix(mobile): apply tappable-card pattern and unified box design across the app`
+
+## Etapa 193 - Bug no AnimatedPressable: array de estilos quebrava o layout
+
+Reportado pelo Frei antes do commit da Etapa 192: na Home, o card "Santo do dia" mostrava a seta `>` numa linha propria abaixo do texto (em vez de alinhada a direita), e o card "Devoções franciscanas" perdeu a caixa (sem borda) inteiramente.
+
+Causa raiz: `AnimatedPressable.tsx` recebia `style` do chamador e fazia `style={[style, { transform: [...] }]}`. Quando o chamador ja passava um **array** de estilos (ex.: `style={[styles.exploreBlock, styles.exploreBlockRow]}`, padrao introduzido na Etapa 192 pros novos cards), isso criava um array aninhado (`[[styleA, styleB], {transform}]`). O componente animado (`Animated.createAnimatedComponent(Pressable)`) nao resolvia esse aninhamento do mesmo jeito que a StyleSheet normal resolveria, entao propriedades como `flexDirection: row` e a borda se perdiam silenciosamente.
+
+So apareceu agora porque a Etapa 192 foi a primeira leva de mudancas a passar **arrays de 2+ estilos** pro `AnimatedPressable` (`[styles.exploreBlock, styles.exploreBlockRow]`, `[styles.exploreSaintRow, styles.exploreSaintRowBorder]`) - usos anteriores sempre passavam um unico objeto de estilo.
+
+Correcao: `AnimatedPressable.tsx` agora acha `StyleSheet.flatten(style)` antes de combinar com o `transform`, garantindo um objeto unico e plano (nunca mais um array aninhado), independente de quantos estilos o chamador combinar num array.
+
+Efeito colateral positivo: corrige silenciosamente o mesmo risco em todo outro uso de `AnimatedPressable` com array de estilos no app (`devocoes/index.tsx`, `HomeQuickActionCard`, etc.) - so nao tinha se manifestado visualmente ainda nesses outros pontos.
+
+Validacoes: pnpm test (74 suites, fail 0) / typecheck / lint = 0.
+
+Commit: `fix(mobile): flatten style arrays in AnimatedPressable to prevent layout breakage`
+
+## Etapa 194 - Refinamento da Home: cabecalho, hero, boxes e "Explorar o app"
+
+5 ajustes pedidos pelo Frei em cima de prints da Home (ainda no bug do ">" quebrando linha, mesmo apos a Etapa 193):
+
+1. Removido "Que o canto conduza a oração." do cabecalho. Titulo "Louvor Seráfico" aumentado (42 -> 46px). Badge de data com mais destaque (fundo `goldSoft`, borda `accentStrong`, fonte maior).
+2. Removida a label "MEMÓRIA LITÚRGICA"/"CELEBRAÇÃO DO DIA" (`heroSupportLabel`) do card de hoje - a variavel `supportLabel` que a alimentava foi removida junto. Texto de status ("Ainda não há sugestões musicais...") reduzido de `typography.lead` pra `typography.body` pra caber numa linha só com mais frequencia.
+3. Bug do ">" quebrando linha (raiz ja identificada na Etapa 193, mas ainda visivel nos prints novos): reforcada a correcao evitando arrays de estilo *na origem*, nao so no `AnimatedPressable`. Em vez de `style={[styles.exploreBlock, styles.exploreBlockRow]}` e `style={[styles.exploreSaintRow, condicao ? styles.exploreSaintRowBorder : undefined]}`, agora cada variante e um unico objeto nomeado ja mesclado (`exploreBlockRow`, `exploreSaintRowWithBorder`) escolhido por ternario - nunca mais um array chega no componente.
+4. Box "Devoções Franciscanas" (F maiusculo, conforme pedido) agora usa exatamente `styles.exploreBlockRow` - o mesmo estilo mesclado do card de santo do dia (fallback sem santo do dia) - garantindo tamanho e formato identicos entre as duas boxes da secao "Memória e oração".
+5. `HomeQuickActionCard.tsx`: icone ganhou um selo circular dourado (`goldSoft` bg + borda `accentStrong`) atras dele; card ganhou borda superior dourada de 3px (mesmo recurso visual do `heroCard`) pra mais destaque nos 3 atalhos de "Explorar o app".
+
+Validacoes: pnpm test (74 suites, fail 0) / typecheck / lint = 0. Sem teste novo (mudanca de UI).
+
+Commit: `fix(mobile): redesign home header, hero card and quick actions; fix chevron wrap at the source`

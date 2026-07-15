@@ -41,8 +41,6 @@ export default function TodayScreen() {
     session,
   });
   const homeSaint = buildHomeSaint(today);
-  const supportLabel =
-    today.kind === "ordinary_day" ? "Dia comum" : todayCelebration ? "Celebração do dia" : "Memória litúrgica";
 
   return (
     <SafeAreaView edges={["top"]} style={styles.screen}>
@@ -64,7 +62,6 @@ export default function TodayScreen() {
           </Pressable>
         </View>
         <Text style={styles.headerTitle}>Louvor Seráfico</Text>
-        <Text style={styles.headerSubtitle}>Que o canto conduza a oração.</Text>
         <View style={styles.headerDateBadge}>
           <Text style={styles.headerDateText}>{today.dateLabel}</Text>
         </View>
@@ -73,10 +70,7 @@ export default function TodayScreen() {
       <OrnamentalDivider />
 
       <View style={styles.heroCard}>
-        <View style={styles.heroTopRow}>
-          <Text style={styles.heroEyebrow}>Hoje</Text>
-          <Text style={styles.heroSupportLabel}>{supportLabel}</Text>
-        </View>
+        <Text style={styles.heroEyebrow}>Hoje</Text>
         <Text style={styles.heroTitle}>{summary.title}</Text>
         <Text style={styles.heroText}>{summary.helperText}</Text>
         {summary.premiumText ? <Text style={styles.heroNote}>{summary.premiumText}</Text> : null}
@@ -91,40 +85,50 @@ export default function TodayScreen() {
 
       <View style={styles.exploreList}>
         {homeSaint.status === "saint" ? (
-          <View style={[styles.exploreBlock, styles.exploreRowBorder]}>
+          <View style={styles.exploreBlock}>
             <Text style={styles.exploreEyebrow}>{homeSaint.eyebrow}</Text>
             <View style={styles.exploreNameList}>
-              {homeSaint.saints.map((saint) => (
+              {homeSaint.saints.map((saint, index) => (
                 <Link asChild href={saint.href} key={saint.name}>
-                  <Pressable style={styles.exploreSaintRow}>
+                  <AnimatedPressable
+                    style={
+                      index !== homeSaint.saints.length - 1
+                        ? styles.exploreSaintRowWithBorder
+                        : styles.exploreSaintRow
+                    }
+                  >
                     <View style={styles.exploreCopy}>
                       <Text style={styles.exploreTitle}>{saint.name}</Text>
                       <Text style={styles.exploreMeta}>{saint.classification}</Text>
                     </View>
-                    <Text style={styles.exploreAction}>Ver</Text>
-                  </Pressable>
+                    <Ionicons color={colors.textMuted} name="chevron-forward" size={18} />
+                  </AnimatedPressable>
                 </Link>
               ))}
             </View>
           </View>
         ) : (
           <Link asChild href="/santos">
-            <Pressable style={[styles.exploreBlock, styles.exploreRowBorder]}>
-              <Text style={styles.exploreEyebrow}>{homeSaint.eyebrow}</Text>
-              <Text style={styles.exploreTitle}>{homeSaint.title}</Text>
-              <Text style={styles.exploreMeta}>{homeSaint.description}</Text>
-              <Text style={styles.exploreAction}>Ver santoral</Text>
-            </Pressable>
+            <AnimatedPressable style={styles.exploreBlockRow}>
+              <View style={styles.exploreCopy}>
+                <Text style={styles.exploreEyebrow}>{homeSaint.eyebrow}</Text>
+                <Text style={styles.exploreTitle}>{homeSaint.title}</Text>
+                <Text style={styles.exploreMeta}>{homeSaint.description}</Text>
+              </View>
+              <Ionicons color={colors.textMuted} name="chevron-forward" size={20} />
+            </AnimatedPressable>
           </Link>
         )}
 
         <Link asChild href="/devocoes">
-          <Pressable style={styles.exploreBlock}>
-            <Text style={styles.exploreEyebrow}>Oração</Text>
-            <Text style={styles.exploreTitle}>Devoções franciscanas</Text>
-            <Text style={styles.exploreMeta}>Devocional, novena e trânsito de São Francisco.</Text>
-            <Text style={styles.exploreAction}>Abrir devoções</Text>
-          </Pressable>
+          <AnimatedPressable style={styles.exploreBlockRow}>
+            <View style={styles.exploreCopy}>
+              <Text style={styles.exploreEyebrow}>Oração</Text>
+              <Text style={styles.exploreTitle}>Devoções Franciscanas</Text>
+              <Text style={styles.exploreMeta}>Devocional, novena e trânsito de São Francisco.</Text>
+            </View>
+            <Ionicons color={colors.textMuted} name="chevron-forward" size={20} />
+          </AnimatedPressable>
         </Link>
       </View>
 
@@ -142,12 +146,8 @@ export default function TodayScreen() {
       />
 
       <View style={styles.preparedList}>
-        {preparedDays.items.map((celebration, index) => (
-          <HomePreparedDayItem
-            celebration={celebration}
-            isLast={index === preparedDays.items.length - 1}
-            key={celebration.id}
-          />
+        {preparedDays.items.map((celebration) => (
+          <HomePreparedDayItem celebration={celebration} key={celebration.id} />
         ))}
       </View>
       {preparedDays.hasMore ? (
@@ -213,18 +213,12 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     textTransform: "uppercase",
   },
-  headerSubtitle: {
-    color: colors.textSecondary,
-    fontFamily: fontFamilies.body,
-    fontSize: typography.body,
-    lineHeight: 24,
-  },
   headerTitle: {
     color: colors.textPrimary,
     fontFamily: fontFamilies.display,
-    fontSize: 42,
+    fontSize: 46,
     fontWeight: "700",
-    lineHeight: 48,
+    lineHeight: 52,
   },
   headerTopRow: {
     alignItems: "center",
@@ -233,37 +227,42 @@ const styles = StyleSheet.create({
   },
   headerDateBadge: {
     alignSelf: "flex-start",
-    backgroundColor: colors.surface,
-    borderColor: colors.borderStrong,
+    backgroundColor: colors.goldSoft,
+    borderColor: colors.accentStrong,
     borderRadius: radii.pill,
     borderWidth: 1,
     marginTop: spacing.sm,
-    paddingHorizontal: spacing.md,
+    paddingHorizontal: spacing.lg,
     paddingVertical: spacing.sm,
   },
   headerDateText: {
     color: colors.accentStrong,
     fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
+    fontSize: typography.body,
     fontWeight: "800",
     textTransform: "uppercase",
   },
-  exploreAction: {
-    color: colors.accent,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "800",
-    paddingTop: spacing.xs,
-  },
   exploreBlock: {
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    borderRadius: radii.xl,
+    borderWidth: 1,
     gap: spacing.xs,
-    paddingBottom: spacing.lg,
-    paddingTop: spacing.lg,
+    padding: spacing.lg,
+  },
+  exploreBlockRow: {
+    alignItems: "center",
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    borderRadius: radii.xl,
+    borderWidth: 1,
+    flexDirection: "row",
+    gap: spacing.md,
+    padding: spacing.lg,
   },
   exploreCopy: {
     flex: 1,
     gap: spacing.xs,
-    paddingRight: spacing.md,
   },
   exploreEyebrow: {
     color: colors.gold,
@@ -273,12 +272,7 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
   },
   exploreList: {
-    backgroundColor: colors.surface,
-    borderColor: colors.border,
-    borderRadius: radii.xl,
-    borderWidth: 1,
-    paddingHorizontal: spacing.lg,
-    paddingTop: spacing.xs,
+    gap: spacing.md,
   },
   exploreMeta: {
     color: colors.textSecondary,
@@ -287,16 +281,22 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   exploreNameList: {
-    gap: spacing.sm,
+    gap: spacing.xs,
     paddingTop: spacing.xs,
   },
   exploreSaintRow: {
     alignItems: "center",
     flexDirection: "row",
+    gap: spacing.sm,
+    paddingVertical: spacing.sm,
   },
-  exploreRowBorder: {
+  exploreSaintRowWithBorder: {
+    alignItems: "center",
     borderBottomColor: colors.border,
     borderBottomWidth: 1,
+    flexDirection: "row",
+    gap: spacing.sm,
+    paddingVertical: spacing.sm,
   },
   exploreTitle: {
     color: colors.textPrimary,
@@ -346,18 +346,11 @@ const styles = StyleSheet.create({
     fontSize: typography.caption,
     lineHeight: 20,
   },
-  heroSupportLabel: {
-    color: colors.accentStrong,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "700",
-    textTransform: "uppercase",
-  },
   heroText: {
     color: colors.textSecondary,
     fontFamily: fontFamilies.body,
-    fontSize: typography.lead,
-    lineHeight: 26,
+    fontSize: typography.body,
+    lineHeight: 22,
   },
   heroTitle: {
     color: colors.textPrimary,
@@ -365,11 +358,6 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "700",
     lineHeight: 36,
-  },
-  heroTopRow: {
-    alignItems: "center",
-    flexDirection: "row",
-    justifyContent: "space-between",
   },
   moreButton: {
     alignSelf: "flex-start",
@@ -382,9 +370,7 @@ const styles = StyleSheet.create({
     fontWeight: "800",
   },
   preparedList: {
-    backgroundColor: colors.surface,
-    borderRadius: radii.xl,
-    paddingHorizontal: spacing.md,
+    gap: spacing.md,
   },
   quickActions: {
     columnGap: spacing.xs,

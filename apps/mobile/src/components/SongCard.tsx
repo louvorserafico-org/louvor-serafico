@@ -1,7 +1,9 @@
+import { Ionicons } from "@expo/vector-icons";
 import type { Song } from "@louvor-serafico/shared";
 import { Link } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
+import { AnimatedPressable } from "@/components/AnimatedPressable";
 import { useFavorites } from "@/features/favorites/FavoritesProvider";
 import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
 
@@ -18,52 +20,53 @@ export function SongCard({ song }: SongCardProps) {
     : "Sem material";
 
   return (
-    <View style={styles.card}>
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel={isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
-        hitSlop={8}
-        onPress={() => {
-          void toggleSongFavorite(song.id);
-        }}
-        style={styles.favoriteAction}
-      >
-        <Text style={[styles.favoriteIcon, isFavorite ? styles.favoriteIconActive : undefined]}>
-          {isFavorite ? "★" : "☆"}
-        </Text>
-      </Pressable>
-      <Link asChild href={`/musicas/${song.slug}`}>
-        <Pressable style={({ pressed }) => [styles.mainAction, pressed && styles.pressed]}>
-          <View style={styles.content}>
-            <Text style={styles.eyebrow}>{materialLabel}</Text>
-            <Text style={styles.title}>{song.title}</Text>
-            <Text style={styles.meta}>
-              {hasAssets
-                ? "Partituras e apoios disponiveis para consulta."
-                : "Material em preparação para públicação."}
+    <Link asChild href={`/musicas/${song.slug}`}>
+      <AnimatedPressable style={styles.card}>
+        <View style={styles.content}>
+          <Text style={styles.eyebrow}>{materialLabel}</Text>
+          <Text style={styles.title}>{song.title}</Text>
+          <Text style={styles.meta}>
+            {hasAssets
+              ? "Partituras e apoios disponiveis para consulta."
+              : "Material em preparação para públicação."}
+          </Text>
+        </View>
+        <View style={styles.actions}>
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+            hitSlop={8}
+            onPress={() => {
+              void toggleSongFavorite(song.id);
+            }}
+            style={styles.favoriteAction}
+          >
+            <Text style={[styles.favoriteIcon, isFavorite ? styles.favoriteIconActive : undefined]}>
+              {isFavorite ? "★" : "☆"}
             </Text>
-          </View>
-          <Text style={styles.action}>Abrir</Text>
-        </Pressable>
-      </Link>
-    </View>
+          </Pressable>
+          <Ionicons color={colors.textMuted} name="chevron-forward" size={20} />
+        </View>
+      </AnimatedPressable>
+    </Link>
   );
 }
 
 const styles = StyleSheet.create({
-  action: {
-    color: colors.accent,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "800",
+  actions: {
+    alignItems: "center",
+    flexDirection: "row",
+    gap: spacing.sm,
   },
   card: {
     alignItems: "center",
-    borderBottomColor: colors.border,
-    borderBottomWidth: 1,
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    borderRadius: radii.xl,
+    borderWidth: 1,
     flexDirection: "row",
     gap: spacing.md,
-    paddingBottom: spacing.md,
+    padding: spacing.lg,
   },
   content: {
     flex: 1,
@@ -91,20 +94,11 @@ const styles = StyleSheet.create({
     minHeight: 28,
     minWidth: 28,
   },
-  mainAction: {
-    alignItems: "center",
-    flex: 1,
-    flexDirection: "row",
-    gap: spacing.md,
-  },
   meta: {
     color: colors.textMuted,
     fontFamily: fontFamilies.body,
     fontSize: typography.caption,
     lineHeight: 20,
-  },
-  pressed: {
-    opacity: 0.82,
   },
   title: {
     color: colors.textPrimary,

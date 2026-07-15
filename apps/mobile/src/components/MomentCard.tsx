@@ -1,6 +1,8 @@
+import { Ionicons } from "@expo/vector-icons";
 import type { MassMoment } from "@louvor-serafico/shared";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
+import { AnimatedPressable } from "@/components/AnimatedPressable";
 import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
 
 type MomentCardProps = {
@@ -12,10 +14,10 @@ type MomentCardProps = {
 };
 
 export function MomentCard({ assetCount, materialBadges = [], moment, onPress, songTitle }: MomentCardProps) {
-  const Root = onPress ? Pressable : View;
+  const Root = onPress ? AnimatedPressable : View;
 
   return (
-    <Root style={({ pressed }) => [styles.card, pressed && styles.pressed]} onPress={onPress}>
+    <Root style={styles.card} onPress={onPress}>
       <Text style={styles.order}>{moment.order}</Text>
       <View style={styles.content}>
         <Text style={styles.label}>{moment.label}</Text>
@@ -32,8 +34,8 @@ export function MomentCard({ assetCount, materialBadges = [], moment, onPress, s
             ))}
           </View>
         ) : null}
-        {onPress ? <Text style={styles.link}>Abrir canto completo</Text> : null}
       </View>
+      {onPress ? <Ionicons color={colors.textMuted} name="chevron-forward" size={20} /> : null}
     </Root>
   );
 }
@@ -62,14 +64,12 @@ const styles = StyleSheet.create({
   card: {
     alignItems: "flex-start",
     backgroundColor: colors.surface,
-    borderRadius: radii.lg,
+    borderColor: colors.border,
+    borderRadius: radii.xl,
+    borderWidth: 1,
     flexDirection: "row",
     gap: spacing.md,
-    padding: spacing.md,
-    shadowColor: colors.ink,
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.3,
-    shadowRadius: 14,
+    padding: spacing.lg,
   },
   content: {
     flex: 1,
@@ -81,13 +81,6 @@ const styles = StyleSheet.create({
     fontSize: typography.caption,
     fontWeight: "800",
     textTransform: "uppercase",
-  },
-  link: {
-    color: colors.accent,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "700",
-    marginTop: spacing.xs,
   },
   assets: {
     color: colors.textMuted,
@@ -101,9 +94,6 @@ const styles = StyleSheet.create({
     fontSize: typography.heading,
     fontWeight: "700",
     minWidth: 28,
-  },
-  pressed: {
-    opacity: 0.82,
   },
   song: {
     color: colors.textPrimary,

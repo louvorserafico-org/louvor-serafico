@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 import { AnimatedPressable } from "@/components/AnimatedPressable";
 import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
@@ -16,7 +16,9 @@ export function HomeQuickActionCard({ href, icon, subtitle, title }: HomeQuickAc
   return (
     <Link asChild href={href}>
       <AnimatedPressable style={styles.card}>
-        <Ionicons color={colors.accent} name={icon} size={22} />
+        <View style={styles.iconBadge}>
+          <Ionicons color={colors.accentStrong} name={icon} size={22} />
+        </View>
         <Text adjustsFontSizeToFit numberOfLines={1} style={styles.title}>
           {title}
         </Text>
@@ -33,12 +35,14 @@ export function HomeQuickActionCard({ href, icon, subtitle, title }: HomeQuickAc
 const styles = StyleSheet.create({
   card: {
     backgroundColor: colors.surface,
-    borderColor: colors.borderStrong,
+    borderColor: colors.border,
     borderRadius: radii.lg,
+    borderTopColor: colors.accent,
+    borderTopWidth: 3,
     borderWidth: 1,
     flex: 1,
-    gap: spacing.xs,
-    minHeight: 92,
+    gap: spacing.sm,
+    minHeight: 108,
     justifyContent: "center",
     paddingHorizontal: spacing.sm,
     paddingVertical: spacing.md,
@@ -46,6 +50,16 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.35,
     shadowRadius: 12,
+  },
+  iconBadge: {
+    alignItems: "center",
+    backgroundColor: colors.goldSoft,
+    borderColor: colors.accentStrong,
+    borderRadius: radii.pill,
+    borderWidth: 1,
+    height: 40,
+    justifyContent: "center",
+    width: 40,
   },
   subtitle: {
     color: colors.textMuted,

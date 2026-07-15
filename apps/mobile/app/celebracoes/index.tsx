@@ -5,7 +5,7 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { HomePreparedDayItem } from "@/components/HomePreparedDayItem";
 import { PageHeader } from "@/components/PageHeader";
-import { colors, radii, spacing } from "@/theme/tokens";
+import { colors, spacing } from "@/theme/tokens";
 
 export default function CelebrationsScreen() {
   const celebrations = [...getInitialCelebrationCatalog()].sort((first, second) =>
@@ -28,12 +28,8 @@ export default function CelebrationsScreen() {
       />
 
       <View style={styles.list}>
-        {celebrations.map((celebration, index) => (
-          <HomePreparedDayItem
-            celebration={celebration}
-            isLast={index === celebrations.length - 1}
-            key={celebration.id}
-          />
+        {celebrations.map((celebration) => (
+          <HomePreparedDayItem celebration={celebration} key={celebration.id} />
         ))}
       </View>
     </ScrollView>
@@ -52,8 +48,6 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.xxl,
   },
   list: {
-    backgroundColor: colors.surface,
-    borderRadius: radii.xl,
-    paddingHorizontal: spacing.md,
+    gap: spacing.md,
   },
 });
