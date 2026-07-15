@@ -1,4 +1,4 @@
-import { Link, router } from "expo-router";
+﻿import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
@@ -65,29 +65,7 @@ export function AuthEntryCard() {
           <Text style={[styles.secondaryButtonText, disabled ? styles.buttonTextMuted : undefined]}>Criar conta</Text>
         </Pressable>
       </View>
-      <View style={styles.linksRow}>
-        <Link asChild href="/politica-privacidade">
-          <Pressable accessibilityRole="button" style={styles.linkChip}>
-            <Text style={styles.linkChipText}>Política de privacidade</Text>
-          </Pressable>
-        </Link>
-        <Link asChild href="/termos-de-uso">
-          <Pressable accessibilityRole="button" style={styles.linkChip}>
-            <Text style={styles.linkChipText}>Termos de uso</Text>
-          </Pressable>
-        </Link>
-        <Link asChild href="/seus-dados">
-          <Pressable accessibilityRole="button" style={styles.linkChip}>
-            <Text style={styles.linkChipText}>Seus dados</Text>
-          </Pressable>
-        </Link>
-        <Link asChild href="/sobre">
-          <Pressable accessibilityRole="button" style={styles.linkChip}>
-            <Text style={styles.linkChipText}>Sobre</Text>
-          </Pressable>
-        </Link>
-      </View>
-    </View>
+</View>
   );
 }
 
@@ -168,26 +146,6 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
     marginTop: spacing.xs,
   },
-  linkChip: {
-    backgroundColor: colors.surfaceMuted,
-    borderColor: colors.border,
-    borderRadius: radii.pill,
-    borderWidth: 1,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.xs,
-  },
-  linkChipText: {
-    color: colors.accentStrong,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.tab,
-    fontWeight: "700",
-  },
-  linksRow: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: spacing.sm,
-    marginTop: spacing.xs,
-  },
   secondaryButton: {
     backgroundColor: colors.surface,
     borderColor: colors.borderStrong,
@@ -211,3 +169,5 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
 });
+
+

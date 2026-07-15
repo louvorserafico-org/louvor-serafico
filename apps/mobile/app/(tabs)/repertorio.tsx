@@ -77,7 +77,7 @@ export default function RepertoireScreen() {
       <ScrollView contentContainerStyle={styles.container}>
       <PageHeader eyebrow={overview.eyebrow} title="Repertorio" subtitle={subtitle} />
 
-      <Link asChild href="/repertorio/ouvir">
+      <Link asChild href="/ouvir-musicas">
         <AnimatedPressable style={styles.listenBlock}>
           <View style={styles.listenIcon}>
             <Ionicons color={colors.accent} name="headset-outline" size={22} />

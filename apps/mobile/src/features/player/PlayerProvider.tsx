@@ -1,4 +1,4 @@
-import { setAudioModeAsync, useAudioPlayer, useAudioPlayerStatus } from "expo-audio";
+﻿import { setAudioModeAsync, useAudioPlayer, useAudioPlayerStatus } from "expo-audio";
 import { createContext, useContext, useEffect, useMemo, useRef, useState, type PropsWithChildren } from "react";
 
 import { resolvePdfViewerSource } from "@/features/assets/pdf-viewer-source";
@@ -76,6 +76,7 @@ export function PlayerProvider({ children }: PropsWithChildren) {
 
     void resolvePdfViewerSource({
       accessToken: supabaseSession.accessToken,
+      allowPublicFallback: true,
       assetId: track.assetId,
       bucket: supabaseConfig.assetBucket,
       functionsUrl: supabaseConfig.functionsUrl,
@@ -191,3 +192,4 @@ export function usePlayer() {
 
   return context;
 }
+

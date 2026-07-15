@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+﻿import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
 import { buildPdfCacheFileName, buildPublicStorageAssetUrl, resolvePdfViewerSource } from "./pdf-viewer-source.ts";
@@ -46,7 +46,7 @@ describe("pdf viewer source", () => {
     });
 
     assert.deepEqual(result, {
-      message: "Documento público pronto para leitura.",
+      message: "Documento pÃºblico pronto para leitura.",
       status: "ready",
       url: "https://project.supabase.co/storage/v1/object/public/song-assets/Partituras/fazei.pdf",
     });
@@ -78,6 +78,28 @@ describe("pdf viewer source", () => {
     });
   });
 
+
+  it("falls back to a public storage url when an allowed premium asset is not found by id", async () => {
+    const result = await resolvePdfViewerSource(
+      {
+        accessToken: "token",
+        allowPublicFallback: true,
+        assetId: "local-audio-id",
+        bucket: "song-assets",
+        functionsUrl: "https://project.functions.supabase.co",
+        premium: true,
+        storagePath: "Audios/fazei.mp3",
+        supabaseUrl: "https://project.supabase.co",
+      },
+      async () => new Response(JSON.stringify({ message: "Material nÃ£o encontrado." }), { status: 404 }),
+    );
+
+    assert.deepEqual(result, {
+      message: "Material pÃºblico pronto para leitura.",
+      status: "ready",
+      url: "https://project.supabase.co/storage/v1/object/public/song-assets/Audios/fazei.mp3",
+    });
+  });
   it("builds a stable local cache file name", () => {
     assert.equal(
       buildPdfCacheFileName("asset-fazei-score", "Partituras/Fazei em nome do Senhor.pdf", "Partitura"),
@@ -85,3 +107,4 @@ describe("pdf viewer source", () => {
     );
   });
 });
+

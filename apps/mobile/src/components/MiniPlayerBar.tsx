@@ -1,13 +1,13 @@
-import { Ionicons } from "@expo/vector-icons";
+﻿import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet, Text, View } from "react-native";
 
 import { AnimatedPressable } from "@/components/AnimatedPressable";
-import { formatAudioDuration } from "@/features/songs/audio-duration";
 import { usePlayer } from "@/features/player/PlayerProvider";
+import { formatAudioDuration } from "@/features/songs/audio-duration";
 import { colors, fontFamilies, radii, spacing, typography } from "@/theme/tokens";
 
 export function MiniPlayerBar() {
-  const { currentTime, duration, isPlaying, message, repeatMode, skipNext, skipPrevious, stop, toggleRepeat, togglePlayPause, track } =
+  const { currentTime, duration, isPlaying, message, repeatMode, skipNext, skipPrevious, stop, togglePlayPause, toggleRepeat, track } =
     usePlayer();
 
   if (!track) {
@@ -15,54 +15,64 @@ export function MiniPlayerBar() {
   }
 
   const progress = duration > 0 ? Math.min(currentTime / duration, 1) : 0;
+  const timeLabel = message ?? `${formatAudioDuration(currentTime)} / ${formatAudioDuration(duration)}`;
+  const repeatLabel = repeatMode === "off" ? "Repetir desativado" : repeatMode === "all" ? "Repetir fila" : "Repetir musica";
 
   return (
-    <View style={styles.container}>
-      <View style={styles.track}>
-        <View style={[styles.trackFill, { width: `${progress * 100}%` }]} />
-      </View>
-
-      <View style={styles.row}>
-        <View style={styles.info}>
-          <Text numberOfLines={1} style={styles.title}>
-            {track.title}
-          </Text>
-          <Text style={styles.time}>
-            {message ?? `${formatAudioDuration(currentTime)} / ${formatAudioDuration(duration)}`}
-          </Text>
+    <View pointerEvents="box-none" style={styles.overlay}>
+      <View style={styles.container}>
+        <View style={styles.track}>
+          <View style={[styles.trackFill, { width: `${progress * 100}%` }]} />
         </View>
 
-        <View style={styles.controls}>
-          <AnimatedPressable
-            accessibilityLabel={repeatMode === "off" ? "Repetir desativado" : repeatMode === "all" ? "Repetir fila" : "Repetir música"}
-            accessibilityRole="button"
-            onPress={toggleRepeat}
-            style={styles.iconButton}
-          >
-            <Ionicons color={repeatMode === "off" ? colors.textMuted : colors.accent} name="repeat" size={18} />
-            {repeatMode === "one" ? <View style={styles.repeatOneDot} /> : null}
-          </AnimatedPressable>
+        <View style={styles.content}>
+          <View style={styles.nowPlayingRow}>
+            <View style={styles.artwork}>
+              <Ionicons color={colors.accentStrong} name="musical-notes" size={22} />
+            </View>
 
-          <AnimatedPressable accessibilityLabel="Música anterior" accessibilityRole="button" onPress={skipPrevious} style={styles.iconButton}>
-            <Ionicons color={colors.textPrimary} name="play-skip-back" size={20} />
-          </AnimatedPressable>
+            <View style={styles.info}>
+              <Text numberOfLines={1} style={styles.kicker}>
+                Tocando agora
+              </Text>
+              <Text numberOfLines={1} style={styles.title}>
+                {track.title}
+              </Text>
+              <Text numberOfLines={1} style={styles.time}>
+                {timeLabel}
+              </Text>
+            </View>
 
-          <AnimatedPressable
-            accessibilityLabel={isPlaying ? "Pausar" : "Tocar"}
-            accessibilityRole="button"
-            onPress={togglePlayPause}
-            style={styles.playButton}
-          >
-            <Ionicons color={colors.background} name={isPlaying ? "pause" : "play"} size={20} />
-          </AnimatedPressable>
+            <AnimatedPressable accessibilityLabel="Fechar player" accessibilityRole="button" onPress={stop} style={styles.closeButton}>
+              <Ionicons color={colors.textMuted} name="close" size={18} />
+            </AnimatedPressable>
+          </View>
 
-          <AnimatedPressable accessibilityLabel="Próxima música" accessibilityRole="button" onPress={skipNext} style={styles.iconButton}>
-            <Ionicons color={colors.textPrimary} name="play-skip-forward" size={20} />
-          </AnimatedPressable>
+          <View style={styles.controls}>
+            <AnimatedPressable accessibilityLabel={repeatLabel} accessibilityRole="button" onPress={toggleRepeat} style={styles.iconButton}>
+              <Ionicons color={repeatMode === "off" ? colors.textMuted : colors.accentStrong} name="repeat" size={20} />
+              {repeatMode === "one" ? <View style={styles.repeatOneDot} /> : null}
+            </AnimatedPressable>
 
-          <AnimatedPressable accessibilityLabel="Fechar player" accessibilityRole="button" onPress={stop} style={styles.iconButton}>
-            <Ionicons color={colors.textMuted} name="close" size={18} />
-          </AnimatedPressable>
+            <AnimatedPressable accessibilityLabel="Musica anterior" accessibilityRole="button" onPress={skipPrevious} style={styles.skipButton}>
+              <Ionicons color={colors.textPrimary} name="play-skip-back" size={22} />
+            </AnimatedPressable>
+
+            <AnimatedPressable
+              accessibilityLabel={isPlaying ? "Pausar" : "Tocar"}
+              accessibilityRole="button"
+              onPress={togglePlayPause}
+              style={styles.playButton}
+            >
+              <Ionicons color={colors.background} name={isPlaying ? "pause" : "play"} size={24} />
+            </AnimatedPressable>
+
+            <AnimatedPressable accessibilityLabel="Proxima musica" accessibilityRole="button" onPress={skipNext} style={styles.skipButton}>
+              <Ionicons color={colors.textPrimary} name="play-skip-forward" size={22} />
+            </AnimatedPressable>
+
+            <View style={styles.iconButtonSpacer} />
+          </View>
         </View>
       </View>
     </View>
@@ -70,62 +80,98 @@ export function MiniPlayerBar() {
 }
 
 const styles = StyleSheet.create({
+  artwork: {
+    alignItems: "center",
+    backgroundColor: colors.goldSoft,
+    borderColor: colors.accent,
+    borderRadius: radii.lg,
+    borderWidth: 1,
+    height: 46,
+    justifyContent: "center",
+    width: 46,
+  },
+  closeButton: {
+    alignItems: "center",
+    height: 36,
+    justifyContent: "center",
+    width: 36,
+  },
   container: {
     backgroundColor: colors.surface,
     borderColor: colors.borderStrong,
+    borderRadius: radii.xl,
     borderTopColor: colors.accent,
-    borderTopWidth: 2,
+    borderTopWidth: 3,
     borderWidth: 1,
-    bottom: 76,
-    left: spacing.md,
-    position: "absolute",
-    right: spacing.md,
-    borderRadius: radii.lg,
     overflow: "hidden",
     shadowColor: colors.ink,
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.35,
-    shadowRadius: 18,
+    shadowOffset: { width: 0, height: 14 },
+    shadowOpacity: 0.45,
+    shadowRadius: 22,
+  },
+  content: {
+    gap: spacing.sm,
+    padding: spacing.md,
   },
   controls: {
     alignItems: "center",
     flexDirection: "row",
-    gap: spacing.xs,
+    justifyContent: "space-between",
   },
   iconButton: {
     alignItems: "center",
-    height: 32,
+    height: 40,
     justifyContent: "center",
-    width: 32,
+    width: 40,
+  },
+  iconButtonSpacer: {
+    width: 40,
   },
   info: {
     flex: 1,
     gap: 2,
-    paddingRight: spacing.sm,
+  },
+  kicker: {
+    color: colors.accentStrong,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.tab,
+    fontWeight: "800",
+    textTransform: "uppercase",
+  },
+  nowPlayingRow: {
+    alignItems: "center",
+    flexDirection: "row",
+    gap: spacing.sm,
+  },
+  overlay: {
+    bottom: 88,
+    left: spacing.md,
+    position: "absolute",
+    right: spacing.md,
+    zIndex: 50,
   },
   playButton: {
     alignItems: "center",
     backgroundColor: colors.accent,
     borderRadius: radii.pill,
-    height: 36,
+    height: 48,
     justifyContent: "center",
-    width: 36,
+    width: 48,
   },
   repeatOneDot: {
-    backgroundColor: colors.accent,
+    backgroundColor: colors.accentStrong,
     borderRadius: radii.pill,
-    bottom: 4,
+    bottom: 7,
     height: 5,
     position: "absolute",
-    right: 4,
+    right: 7,
     width: 5,
   },
-  row: {
+  skipButton: {
     alignItems: "center",
-    flexDirection: "row",
-    gap: spacing.sm,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
+    height: 44,
+    justifyContent: "center",
+    width: 44,
   },
   time: {
     color: colors.textMuted,
@@ -139,13 +185,13 @@ const styles = StyleSheet.create({
     fontSize: typography.caption,
     fontWeight: "700",
   },
+  track: {
+    backgroundColor: colors.surfaceMuted,
+    height: 4,
+    width: "100%",
+  },
   trackFill: {
     backgroundColor: colors.accent,
     height: "100%",
-  },
-  track: {
-    backgroundColor: colors.surfaceMuted,
-    height: 3,
-    width: "100%",
   },
 });

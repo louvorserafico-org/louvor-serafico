@@ -1,4 +1,4 @@
-import { requestAssetSignedUrl } from "./edge-asset-url.ts";
+﻿import { requestAssetSignedUrl } from "./edge-asset-url.ts";
 
 type FetchLike = typeof fetch;
 
@@ -8,6 +8,7 @@ type ResolvePdfViewerSourceInput = {
   bucket: string | null;
   fileUrl?: string | null;
   functionsUrl: string | null;
+  allowPublicFallback?: boolean;
   premium: boolean;
   storagePath: string;
   supabaseUrl: string | null;
@@ -77,6 +78,18 @@ export async function resolvePdfViewerSource(
       };
     }
 
+    if (input.allowPublicFallback) {
+      const publicUrl = buildPublicStorageAssetUrl(input.supabaseUrl, input.bucket, input.storagePath);
+
+      if (publicUrl) {
+        return {
+          message: "Material pÃºblico pronto para leitura.",
+          status: "ready",
+          url: publicUrl,
+        };
+      }
+    }
+
     return {
       message: result.message,
       status: result.status === "ready" ? "error" : result.status,
@@ -88,14 +101,14 @@ export async function resolvePdfViewerSource(
 
   if (!publicUrl) {
     return {
-      message: "Documento público ainda não foi configurado corretamente.",
+      message: "Documento pÃºblico ainda nÃ£o foi configurado corretamente.",
       status: "not_configured",
       url: null,
     };
   }
 
   return {
-    message: "Documento público pronto para leitura.",
+    message: "Documento pÃºblico pronto para leitura.",
     status: "ready",
     url: publicUrl,
   };
@@ -113,3 +126,4 @@ export function buildPdfCacheFileName(assetId: string, storagePath: string, docu
     .toLowerCase()
     .concat(".pdf");
 }
+

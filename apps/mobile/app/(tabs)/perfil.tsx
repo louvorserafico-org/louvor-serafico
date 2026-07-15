@@ -78,7 +78,23 @@ export default function ProfileScreen() {
           </View>
         </>
       ) : (
-        <AuthEntryCard />
+        <>
+          <AuthEntryCard />
+          <View style={styles.guestLegalLinks}>
+            <Link href="/politica-privacidade" style={styles.guestLegalLink}>
+              Política de privacidade
+            </Link>
+            <Link href="/termos-de-uso" style={styles.guestLegalLink}>
+              Termos de uso
+            </Link>
+            <Link href="/seus-dados" style={styles.guestLegalLink}>
+              Seus dados
+            </Link>
+            <Link href="/sobre" style={styles.guestLegalLink}>
+              Sobre
+            </Link>
+          </View>
+        </>
       )}
       {isAuthenticated ? (
         <View style={styles.actionsCard}>
@@ -166,9 +182,25 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: colors.background,
+    flexGrow: 1,
     gap: spacing.lg,
     padding: spacing.xl,
     paddingBottom: spacing.xxl,
+  },
+  guestLegalLink: {
+    color: colors.textMuted,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.tab,
+    fontWeight: "700",
+  },
+  guestLegalLinks: {
+    alignItems: "center",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: spacing.xs,
+    justifyContent: "center",
+    marginTop: "auto",
+    paddingTop: spacing.xxl,
   },
   inlineLink: {
     paddingVertical: spacing.xs,
@@ -230,3 +262,7 @@ const styles = StyleSheet.create({
     marginTop: spacing.xs,
   },
 });
+
+
+
+

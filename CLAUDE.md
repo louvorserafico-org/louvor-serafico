@@ -7426,8 +7426,10 @@ Arquitetura (TDD para a logica pura, provider/UI validados via typecheck + revis
 - `apps/mobile/src/features/player/PlayerProvider.tsx` - contexto React montado no `app/_layout.tsx` (acima do Stack raiz, dentro de `FavoritesProvider`), unico dono da instancia de `useAudioPlayer`/`useAudioPlayerStatus` do `expo-audio`. Ao trocar de faixa, resolve a URL assinada do asset via `resolvePdfViewerSource` (mesma funcao generica ja usada pra PDF/audio, respeitando `resolveAssetAccess` - free vs premium vs assinatura ativa). Auto-avanca ao terminar a faixa respeitando o modo de repeticao; skip manual (proximo/anterior) sempre "embrulha" a fila (`all`), independente do modo de repeticao selecionado - decisao deliberada: botao de pular deve sempre pular, so o avanco automatico respeita "repetir uma".
 - `apps/mobile/src/components/MiniPlayerBar.tsx` - barra fixa (`position: absolute`, `bottom: 76` = altura da tab bar), aparece so quando ha uma fila ativa (`track !== null`). Play/pausa, anterior, proximo, repetir (com indicador visual pro modo "uma"), fechar, barra de progresso e titulo da faixa atual.
 - `apps/mobile/app/(tabs)/_layout.tsx` - `MiniPlayerBar` renderizada como overlay dentro do layout das tabs (nao no root), pra ficar sempre por cima da tab bar mas sem competir com telas de detalhe empilhadas (ex.: `/musicas/[slug]`, que ja tem seu proprio `SongAudioPlayer` inline).
-- `apps/mobile/app/repertorio/ouvir.tsx` (nova rota) - "Apenas ouvir musicas": lista simples de todos os cantos com audio (catalogo local, via `buildPlayableQueue`); tocar num item chama `playQueue(fila, indice)` e comeca a tocar na hora; itens premium sem acesso mostram cadeado e levam pra login/assinatura em vez de tocar.
-- Ponto de entrada: card em destaque (`borderColor: colors.accent`) no topo do Repertorio, acima da busca, levando pra `/repertorio/ouvir`.
+- `apps/mobile/app/ouvir-musicas.tsx` (nova rota) - "Apenas ouvir musicas": lista simples de todos os cantos com audio (catalogo local, via `buildPlayableQueue`); tocar num item chama `playQueue(fila, indice)` e comeca a tocar na hora; itens premium sem acesso mostram cadeado e levam pra login/assinatura em vez de tocar.
+- Ponto de entrada: card em destaque (`borderColor: colors.accent`) no topo do Repertorio, acima da busca, levando pra `/ouvir-musicas`.
+
+**Bug corrigido antes do commit**: a rota nasceu como `apps/mobile/app/repertorio/ouvir.tsx`, mas isso colide com `(tabs)/repertorio.tsx` (Expo Router nao aceita uma tela e uma pasta com o mesmo nome "repertorio" - o roteador quebra e cai numa rota interna `--/` de "Unmatched Route", reportado pelo Frei ao clicar no card). Corrigido movendo a tela pra `apps/mobile/app/ouvir-musicas.tsx` (rota `/ouvir-musicas`, fora do namespace "repertorio").
 
 Escopo deliberadamente fora desta etapa: fila usa sempre o catalogo local (nao o catalogo remoto sincronizado da tela de Repertorio) - simplicidade e disponibilidade offline priorizadas sobre paridade total; download/cache de audio para modo offline real; miniplayer persistente tambem nas telas empilhadas fora das tabs (ficaria sobre conteudo de detalhe).
 
@@ -7438,3 +7440,128 @@ Nao foi possivel verificar visualmente em app rodando (mesma limitacao das Etapa
 Validacoes: pnpm test (75 suites, fail 0) / typecheck / lint = 0.
 
 Commit: `feat(mobile): add persistent music player with queue, repeat and listen-only screen`
+
+## Etapa 202 - Player fixo mais visivel e layout raiz corrigido
+
+Pedido do Frei: o fluxo "Apenas ouvir musicas" ficou bom, mas o player precisava aparecer fixo e mais evidente ao dar play, com comandos claros para pausar, avancar, voltar e repetir.
+
+Feito:
+- `MiniPlayerBar.tsx` redesenhado como painel fixo mais presente, com label "Tocando agora", icone musical, titulo, tempo, progresso, repetir, anterior, play/pausa, proxima e fechar.
+- O player fica montado no layout raiz (`app/_layout.tsx`), entao permanece visivel ao navegar pelo app enquanto houver faixa ativa.
+- Removida a duplicidade do player no layout das tabs (`app/(tabs)/_layout.tsx`), que tambem estava com imports quebrados apos a mudanca anterior.
+- Mantida a rota correta `/ouvir-musicas`, fora do namespace `repertorio`, para evitar conflito do Expo Router.
+
+Decisao:
+- Nao foi criado player em tela cheia nesta etapa. O ajuste ficou no player fixo persistente, por ser o comportamento pedido e por preservar a navegacao atual.
+
+Validacoes:
+- `rtk corepack pnpm test`
+- `rtk corepack pnpm typecheck`
+- `rtk corepack pnpm lint`
+- `rtk git diff --check`
+
+Resultado:
+- Testes passaram.
+- Typecheck passou.
+- Lint passou.
+- Diff check retornou apenas avisos CRLF do Git no Windows.
+
+Sugestao de commit:
+
+`fix(mobile): make persistent music player prominent and remove duplicate tab overlay`
+
+## Etapa 203 - Player persistente reaproveitando audio local por storagePath
+
+Pedido do Frei: ao dar play em "Apenas ouvir musicas", o player fixo aparecia, mas exibia "Material nÃ£o encontrado" e nÃ£o tocava. O entendimento era correto: o player deveria reaproveitar o Ã¡udio que jÃ¡ existe no repertÃ³rio.
+
+Causa:
+- O player global monta a fila a partir do catÃ¡logo local.
+- Alguns assets locais tÃªm `assetId` que nÃ£o existe na tabela remota usada pela Edge Function `create-asset-signed-url`.
+- A Edge Function retornava `404 Material nÃ£o encontrado`, mesmo com o arquivo existindo no Storage pelo `storagePath`.
+- A tela individual de mÃºsica jÃ¡ funcionava porque consegue cair no fluxo local/remoto daquele canto; o player global precisava do mesmo fallback por caminho.
+
+Feito:
+- `resolvePdfViewerSource` ganhou `allowPublicFallback`.
+- Quando um asset premium jÃ¡ passou pela regra local de acesso (`resolveAssetAccess`) mas a Edge Function nÃ£o encontra o `assetId`, a resoluÃ§Ã£o pode cair para URL pÃºblica de Storage usando `storagePath`.
+- O fallback foi ativado somente no `PlayerProvider`, mantendo o comportamento de PDF/material principal mais conservador.
+- Teste novo cobre o caso de asset premium permitido, `assetId` nÃ£o encontrado e fallback por `storagePath`.
+
+Arquivos alterados:
+- `apps/mobile/src/features/assets/pdf-viewer-source.ts`
+- `apps/mobile/src/features/assets/pdf-viewer-source.test.ts`
+- `apps/mobile/src/features/player/PlayerProvider.tsx`
+
+Validacoes:
+- `rtk corepack pnpm test`
+- `rtk corepack pnpm typecheck`
+- `rtk corepack pnpm lint`
+
+Resultado:
+- Testes passaram.
+- Typecheck passou.
+- Lint passou.
+
+Sugestao de commit:
+
+`fix(mobile): fallback audio player source to storage path when asset id is missing`
+
+## Etapa 204 - Links legais minimalistas na Conta deslogada
+
+Pedido do Frei: os links de PolÃ­tica, Termos, Dados e Sobre estavam visualmente misturados com os botÃµes Entrar e Criar conta. Eles deveriam ficar diferenciados, na parte inferior da tela de Conta/Login, como links minimalistas.
+
+Feito:
+- Removidos os chips legais de dentro do `AuthEntryCard`.
+- Mantidos no card apenas os CTAs principais: `Entrar` e `Criar conta`.
+- Links legais foram movidos para a tela `Perfil` no estado deslogado, abaixo do card principal.
+- Links agora sÃ£o texto minimalista com separadores, sem aparÃªncia de botÃ£o.
+
+Arquivos alterados:
+- `apps/mobile/src/components/AuthEntryCard.tsx`
+- `apps/mobile/app/(tabs)/perfil.tsx`
+
+Validacoes:
+- `rtk corepack pnpm test`
+- `rtk corepack pnpm typecheck`
+- `rtk corepack pnpm lint`
+
+Resultado:
+- Testes passaram.
+- Typecheck passou.
+- Lint passou.
+
+Sugestao de commit:
+
+`fix(mobile): move guest legal links below account entry card`
+## Etapa 205 - Correcao de encoding nos links legais da Conta
+
+Pedido do Frei: os links legais da tela Conta ficaram com caracteres quebrados por edicao via PowerShell.
+
+Causa:
+- Edicao anterior via PowerShell deixou texto renderizado com mojibake na UI.
+- O separador visual tambem apareceu corrompido.
+
+Feito:
+- Corrigido o texto de Politica de privacidade no arquivo da tela Perfil.
+- Removidos separadores visuais corrompidos entre links legais.
+- Mantidos links como texto minimalista no rodape do estado deslogado.
+- Adicionado `flexGrow: 1` ao container da tela para preservar a posicao inferior dos links.
+- Verificado por codigo Unicode que o arquivo Perfil nao contem codigos comuns de mojibake.
+
+Arquivos alterados:
+- `apps/mobile/app/(tabs)/perfil.tsx`
+
+Validacoes:
+- `rtk corepack pnpm test`
+- `rtk corepack pnpm typecheck`
+- `rtk corepack pnpm lint`
+- `rtk git diff --check`
+
+Resultado:
+- Testes passaram.
+- Typecheck passou.
+- Lint passou.
+- Diff check retornou apenas avisos CRLF do Git no Windows.
+
+Sugestao de commit:
+
+`fix(mobile): repair account legal links encoding`
