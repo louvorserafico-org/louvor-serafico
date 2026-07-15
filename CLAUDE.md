@@ -7224,3 +7224,15 @@ Testes: `audio-duration.test.ts` (2/2, registrado no `test` script do `package.j
 Validacoes: pnpm test (74 suites, fail 0) / typecheck / lint = 0.
 
 Commit: `feat(mobile): add in-app audio player and hide empty material sections`
+
+## Etapa 189 - Linha divisoria duplicada (PageHeader + EditorialSectionHeader)
+
+Bug reportado pelo Frei com print: varias telas (Musica, Celebracao, Calendario - qualquer tela `PageHeader` seguido de `EditorialSectionHeader`) mostravam duas linhas horizontais coladas uma na outra.
+
+Causa raiz: a Etapa 187 moveu a linha do `EditorialSectionHeader` de baixo pra cima (`borderBottomWidth` -> `borderTopWidth`), pra corrigir a ordem "linha -> eyebrow -> titulo -> conteudo". Isso ficou correto isoladamente, mas o `PageHeader` sempre teve sua propria linha embaixo (`borderBottomWidth`) - as duas telas praticamente sempre aparecem em sequencia (`PageHeader` seguido de `EditorialSectionHeader`), entao passou a renderizar duas linhas coladas: a de baixo do `PageHeader` e a de cima do `EditorialSectionHeader` logo em seguida.
+
+Corrigido: removida a borda do `PageHeader` (`borderBottomWidth`/`borderBottomColor`/`paddingBottom`) - o `EditorialSectionHeader` ja cobre a divisao de secao que vem depois. Mudanca global (componente usado em ~20 telas).
+
+Validacoes: pnpm test (74 suites, fail 0) / typecheck / lint = 0. Sem teste novo (mudanca visual pura).
+
+Commit: `fix(mobile): remove duplicate divider line between PageHeader and EditorialSectionHeader`

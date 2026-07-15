@@ -22,9 +22,6 @@ export function PageHeader({ eyebrow, title, subtitle }: PageHeaderProps) {
 const styles = StyleSheet.create({
   container: {
     gap: spacing.sm,
-    paddingBottom: spacing.lg,
-    borderBottomColor: colors.border,
-    borderBottomWidth: 1,
   },
   eyebrow: {
     color: colors.gold,
