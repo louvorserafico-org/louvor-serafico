@@ -56,6 +56,46 @@ export default function SongDetailScreen() {
     };
   }, [params.slug]);
 
+  useEffect(() => {
+    if (!song) {
+      return;
+    }
+
+    let active = true;
+    const audioAssets = song.assets.filter((asset) => asset.type === "audio");
+
+    for (const asset of audioAssets) {
+      const access = resolveAssetAccess(asset, { hasActiveSubscription, isAuthenticated });
+
+      if (!access.canAccess) {
+        continue;
+      }
+
+      void resolvePdfViewerSource({
+        accessToken: supabaseSession.accessToken,
+        assetId: asset.id,
+        bucket: supabaseConfig.assetBucket,
+        functionsUrl: supabaseConfig.functionsUrl,
+        premium: asset.premium,
+        storagePath: asset.path,
+        supabaseUrl: supabaseConfig.url,
+      }).then((result) => {
+        if (!active || result.status !== "ready") {
+          return;
+        }
+
+        setAudioUrls((current) => ({
+          ...current,
+          [asset.id]: result.url,
+        }));
+      });
+    }
+
+    return () => {
+      active = false;
+    };
+  }, [song, hasActiveSubscription, isAuthenticated, supabaseSession.accessToken]);
+
   if (!song) {
     return (
       <ScrollView contentContainerStyle={styles.container} style={styles.screen}>
@@ -97,15 +137,18 @@ export default function SongDetailScreen() {
                     isAuthenticated,
                   });
 
+                  const showAssetTitle = section.assets.length > 1;
+
                   return (
                     <View key={asset.id} style={styles.sectionItem}>
-                      <Text style={styles.assetMeta}>{asset.title}</Text>
-                      <Text style={styles.assetPath}>
-                        {access.canAccess ? "Disponível para abrir agora." : access.message}
-                      </Text>
-                      {assetMessages[asset.id] ? <Text style={styles.assetPath}>{assetMessages[asset.id]}</Text> : null}
-                      {action.kind === "open" && asset.type === "audio" && audioUrls[asset.id] ? (
-                        <SongAudioPlayer uri={audioUrls[asset.id]} />
+                      {showAssetTitle ? <Text style={styles.assetMeta}>{asset.title}</Text> : null}
+                      {!access.canAccess ? <Text style={styles.assetPath}>{access.message}</Text> : null}
+                      {action.kind === "open" && asset.type === "audio" ? (
+                        audioUrls[asset.id] ? (
+                          <SongAudioPlayer uri={audioUrls[asset.id]} />
+                        ) : (
+                          <Text style={styles.assetPath}>Preparando áudio...</Text>
+                        )
                       ) : action.kind === "open" ? (
                         <Pressable
                           onPress={() => {
@@ -123,31 +166,6 @@ export default function SongDetailScreen() {
                               return;
                             }
 
-                            if (asset.type === "audio") {
-                              void resolvePdfViewerSource({
-                                accessToken: supabaseSession.accessToken,
-                                assetId: asset.id,
-                                bucket: supabaseConfig.assetBucket,
-                                functionsUrl: supabaseConfig.functionsUrl,
-                                premium: asset.premium,
-                                storagePath: asset.path,
-                                supabaseUrl: supabaseConfig.url,
-                              }).then((result) => {
-                                setAssetMessages((current) => ({
-                                  ...current,
-                                  [asset.id]: result.message,
-                                }));
-
-                                if (result.status === "ready") {
-                                  setAudioUrls((current) => ({
-                                    ...current,
-                                    [asset.id]: result.url,
-                                  }));
-                                }
-                              });
-                              return;
-                            }
-
                             void requestAssetSignedUrl(
                               asset.id,
                               {
@@ -155,14 +173,15 @@ export default function SongDetailScreen() {
                                 functionsUrl: supabaseConfig.functionsUrl,
                               },
                             ).then((result) => {
-                              setAssetMessages((current) => ({
-                                ...current,
-                                [asset.id]: result.message,
-                              }));
-
-                              if (result.url) {
-                                void Linking.openURL(result.url);
+                              if (!result.url) {
+                                setAssetMessages((current) => ({
+                                  ...current,
+                                  [asset.id]: result.message,
+                                }));
+                                return;
                               }
+
+                              void Linking.openURL(result.url);
                             });
                           }}
                           style={styles.assetButton}

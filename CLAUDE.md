@@ -7236,3 +7236,19 @@ Corrigido: removida a borda do `PageHeader` (`borderBottomWidth`/`borderBottomCo
 Validacoes: pnpm test (74 suites, fail 0) / typecheck / lint = 0. Sem teste novo (mudanca visual pura).
 
 Commit: `fix(mobile): remove duplicate divider line between PageHeader and EditorialSectionHeader`
+
+## Etapa 190 - Materiais menos redundantes + audio auto-pronto + fix som mudo
+
+3 pedidos do Frei com print da tela de Musica: (1) texto repetido demais (titulo da secao + titulo do asset + "Disponivel para abrir agora." + mensagem tecnica do link temporario, tudo pra um unico item); (2) audio exigia um clique em "Ouvir audio" pra so entao aparecer o player - queria o play direto; (3) audio nao emitia som nenhum no iPhone (perguntou se era coisa do Expo).
+
+Causa do som mudo: `expo-audio` nao tem modo silencioso habilitado por padrao - no iPhone, a chavinha fisica de silencio bloqueia a reproducao mesmo com o player girando normalmente (posicao avancava, tempo contava, so nao saia som). Nao era bug do Expo Go.
+
+Feito:
+- `SongAudioPlayer.tsx`: `setAudioModeAsync({ playsInSilentMode: true })` no mount - toca mesmo com o iPhone no silencioso.
+- `musicas/[slug].tsx`:
+  - Novo `useEffect` resolve a URL de todo asset de audio automaticamente quando a musica carrega (via `resolvePdfViewerSource`, mesma logica generica ja usada pra PDF) - o player aparece pronto pra tocar, sem precisar de um clique intermediario num botao "Ouvir audio".
+  - Texto por asset simplificado: titulo do asset (`asset.title`, ex: "Áudio") so aparece quando a secao tem mais de um item (evita repetir "Audio" -> "Áudio" pra secao com um unico material); mensagem de acesso (`access.message`) so aparece quando bloqueado (nao mostra mais "Disponível para abrir agora." quando ja esta obviamente disponivel = link/player renderizado); mensagem tecnica ("Material liberado com link temporario.") removida da UI pra audio, ja que o proprio player aparecendo e a confirmacao.
+
+Testes: sem teste novo (mudanca de UI/copy). Validacoes: pnpm test (74 suites, fail 0) / typecheck / lint = 0.
+
+Commit: `fix(mobile): auto-load audio player, trim redundant material copy, fix silent audio on iOS`

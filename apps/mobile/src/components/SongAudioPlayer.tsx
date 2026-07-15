@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
-import { useAudioPlayer, useAudioPlayerStatus } from "expo-audio";
+import { setAudioModeAsync, useAudioPlayer, useAudioPlayerStatus } from "expo-audio";
+import { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import { AnimatedPressable } from "@/components/AnimatedPressable";
@@ -14,6 +15,10 @@ export function SongAudioPlayer({ uri }: SongAudioPlayerProps) {
   const player = useAudioPlayer(uri);
   const status = useAudioPlayerStatus(player);
   const progress = status.duration > 0 ? Math.min(status.currentTime / status.duration, 1) : 0;
+
+  useEffect(() => {
+    void setAudioModeAsync({ playsInSilentMode: true });
+  }, []);
 
   return (
     <View style={styles.container}>
