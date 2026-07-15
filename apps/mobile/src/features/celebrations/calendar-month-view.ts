@@ -21,7 +21,11 @@ export function buildCalendarMonthView(
   celebrations: Celebration[],
 ): CalendarMonthView {
   const monthDays = getLiturgicalMonthDays2026(monthNumber);
-  const markedDays = getLiturgicalMarkedDays2026(monthNumber);
+  const markedDays = [...getLiturgicalMarkedDays2026(monthNumber)].sort((first, second) => {
+    const firstRank = first.kind === "has_repertoire" ? 0 : 1;
+    const secondRank = second.kind === "has_repertoire" ? 0 : 1;
+    return firstRank - secondRank;
+  });
   const leadingEmptyCellCount = new Date(Date.UTC(2026, monthNumber - 1, 1)).getUTCDay();
   // Completa somente até o fim da última semana (multiplo de 7), nunca uma
   // grade fixa de 6 linhas. O número de linhas varia por mes, de proposito.

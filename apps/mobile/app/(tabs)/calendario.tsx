@@ -317,8 +317,9 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   dayCellRepertoire: {
-    backgroundColor: colors.oliveSoft,
+    backgroundColor: colors.olive,
     borderColor: colors.olive,
+    borderWidth: 2,
   },
   dayCellToday: {
     borderColor: colors.textPrimary,
@@ -338,7 +339,8 @@ const styles = StyleSheet.create({
     color: colors.textSecondary,
   },
   dayNumberRepertoire: {
-    color: colors.accent,
+    color: colors.background,
+    fontWeight: "800",
   },
   dayNumberToday: {
     color: colors.textPrimary,
@@ -379,10 +381,10 @@ const styles = StyleSheet.create({
     rowGap: spacing.sm,
   },
   legendDot: {
-    borderRadius: radii.pill,
+    borderRadius: 4,
     borderWidth: 1,
-    height: 12,
-    width: 12,
+    height: 16,
+    width: 16,
   },
   legendDotLiturgical: {
     backgroundColor: colors.surface,
@@ -443,9 +445,15 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderColor: colors.borderStrong,
     borderRadius: radii.xl,
+    borderTopColor: colors.accent,
+    borderTopWidth: 3,
     borderWidth: 1,
     gap: spacing.md,
     padding: spacing.lg,
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.35,
+    shadowRadius: 20,
   },
   monthEyebrow: {
     alignSelf: "center",

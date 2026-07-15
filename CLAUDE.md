@@ -7311,3 +7311,30 @@ Commit: `fix(mobile): flatten style arrays in AnimatedPressable to prevent layou
 Validacoes: pnpm test (74 suites, fail 0) / typecheck / lint = 0. Sem teste novo (mudanca de UI).
 
 Commit: `fix(mobile): redesign home header, hero card and quick actions; fix chevron wrap at the source`
+
+## Etapa 195 - Calendario: destaque, legenda quadrada, sombra e reordenacao
+
+4 ajustes do Frei em cima de prints da tela Calendario:
+
+1. Dias `has_repertoire` tinham `dayCellRepertoire` com `oliveSoft` (fundo quase preto) + borda `olive` - baixo contraste contra o fundo do app. Trocado pra celula solida `backgroundColor: colors.olive` + `borderWidth: 2`, numero em `colors.background` (escuro sobre claro) com `fontWeight: 800` - agora contrasta de verdade.
+2. `legendDot` usava `radii.pill` (circulo) - trocado pra `radii.md`, mesmo raio dos `dayCell` do calendario, e aumentado de 12x12 pra 16x16 (mini-quadrado arredondado igual as celulas do mes).
+3. `monthCard` (a caixa do calendario) ganhou sombra (`shadowColor/Offset/Opacity/Radius`, mesmo padrao usado em outros cards do app) + borda superior dourada de 3px (mesmo recurso do `heroCard`/`HomeQuickActionCard` das Etapas 194).
+4. `calendar-month-view.ts`: `markedDays` agora ordenado com `has_repertoire` primeiro (sort estavel - dentro de cada grupo mantem a ordem cronologica original). Antes a lista "Datas marcadas em {mes}" seguia so ordem cronologica, entao um roteiro preparado podia aparecer no fim da lista atras de varias datas liturgicas sem repertorio.
+
+Testes: `calendar-month-view.test.ts` (+1 caso, 4/4 - `has_repertoire` primeiro, resto em ordem).
+
+Validacoes: pnpm test (74 suites, fail 0) / typecheck / lint = 0.
+
+Commit: `fix(mobile): improve calendar contrast, legend shape, card shadow and marked-days order`
+
+## Etapa 196 - Legenda ainda circular: bug matematico no raio
+
+Frei reportou que a legenda quadrada da Etapa 195 nao apareceu mesmo apos reiniciar o bundle, e a reordenacao de "Datas marcadas" tambem nao.
+
+Legenda: bug real. `legendDot` usava `radii.md` (8) num quadrado de 16x16 - `borderRadius` igual a metade do tamanho do lado produz um circulo perfeito (mesma matematica de `radii.pill`), entao a troca da Etapa 195 nao teve efeito visual nenhum por coincidencia numerica. Corrigido pra `borderRadius: 4` (um quarto do tamanho) - agora e visivelmente um quadrado com cantos arredondados.
+
+Reordenacao: verificada de novo - o teste `calendar-month-view.test.ts` comprova que `markedDays[0].kind === "has_repertoire"` continua correto, e a tela usa `monthView.markedDays` direto, sem nenhum sort extra por cima. Suspeita: `useMemo(() => buildCalendarMonthView(...), [celebrations, selectedMonth])` em `calendario.tsx` - Fast Refresh do Metro atualiza o modulo `calendar-month-view.ts`, mas nao invalida um `useMemo` cujas dependencias nao mudaram, entao o app em execucao pode continuar mostrando o resultado memoizado antigo ate um reload completo (fechar e reabrir o Expo Go, nao so recarregar). Nenhuma mudanca de codigo nesta etapa para o item 2 - orientado o Frei a fazer reload completo antes de reavaliar.
+
+Validacoes: pnpm test (74 suites, fail 0) / typecheck / lint = 0.
+
+Commit: `fix(mobile): use a real rounded-square radius for calendar legend dots`

@@ -27,6 +27,19 @@ describe("calendar month view", () => {
     assert.equal(february.trailingEmptyCellCount, 0);
   });
 
+  it("lists marked days with prepared repertoire first, keeping the rest in date order", () => {
+    const result = buildCalendarMonthView(1, getInitialCelebrationCatalog());
+
+    assert.equal(result.markedDays[0]?.kind, "has_repertoire");
+
+    const firstNonRepertoireIndex = result.markedDays.findIndex((day) => day.kind !== "has_repertoire");
+    const rest = result.markedDays.slice(firstNonRepertoireIndex);
+    assert.equal(
+      rest.every((day) => day.kind !== "has_repertoire"),
+      true,
+    );
+  });
+
   it("returns empty celebration list for month without published repertoire", () => {
     const result = buildCalendarMonthView(4, getInitialCelebrationCatalog());
 
