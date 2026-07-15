@@ -31,8 +31,7 @@ export function AuthEntryCard() {
 
   if (state.status === "loading") {
     return (
-      <View style={[styles.card, styles.loading]}>
-      <Text style={styles.eyebrow}>Conta</Text>
+      <View style={styles.cardLoading}>
       <Text style={styles.title}>Preparando sua entrada</Text>
       <Text style={styles.text}>Separando o caminho para entrar ou criar seu perfil.</Text>
       </View>
@@ -41,15 +40,11 @@ export function AuthEntryCard() {
 
   const readiness = buildAuthReadiness(state);
   const disabled = readiness.status !== "ready";
+  const cardStyle =
+    readiness.status === "ready" ? styles.cardReady : readiness.status === "limited" ? styles.cardLimited : styles.cardBlocked;
 
   return (
-    <View
-      style={[
-        styles.card,
-        readiness.status === "ready" ? styles.ready : readiness.status === "limited" ? styles.limited : styles.blocked,
-      ]}
-    >
-      <Text style={styles.eyebrow}>Conta</Text>
+    <View style={cardStyle}>
       <Text style={styles.title}>{readiness.title}</Text>
       <Text style={styles.text}>{readiness.helperText}</Text>
       <View style={styles.buttonRow}>
@@ -72,18 +67,18 @@ export function AuthEntryCard() {
       </View>
       <View style={styles.linksRow}>
         <Link asChild href="/politica-privacidade">
-          <Pressable accessibilityRole="button" style={styles.linkButton}>
-            <Text style={styles.linkText}>Politica de privacidade</Text>
+          <Pressable accessibilityRole="button" style={styles.linkChip}>
+            <Text style={styles.linkChipText}>Política de privacidade</Text>
           </Pressable>
         </Link>
         <Link asChild href="/termos-de-uso">
-          <Pressable accessibilityRole="button" style={styles.linkButton}>
-            <Text style={styles.linkText}>Termos de uso</Text>
+          <Pressable accessibilityRole="button" style={styles.linkChip}>
+            <Text style={styles.linkChipText}>Termos de uso</Text>
           </Pressable>
         </Link>
         <Link asChild href="/seus-dados">
-          <Pressable accessibilityRole="button" style={styles.linkButton}>
-            <Text style={styles.linkText}>Seus dados</Text>
+          <Pressable accessibilityRole="button" style={styles.linkChip}>
+            <Text style={styles.linkChipText}>Seus dados</Text>
           </Pressable>
         </Link>
       </View>
@@ -92,10 +87,6 @@ export function AuthEntryCard() {
 }
 
 const styles = StyleSheet.create({
-  blocked: {
-    backgroundColor: colors.goldSoft,
-    borderColor: colors.gold,
-  },
   button: {
     borderRadius: radii.pill,
     borderWidth: 1,
@@ -118,7 +109,45 @@ const styles = StyleSheet.create({
   buttonTextMuted: {
     color: colors.textMuted,
   },
-  card: {
+  cardBlocked: {
+    backgroundColor: colors.goldSoft,
+    borderColor: colors.gold,
+    borderRadius: radii.xl,
+    borderWidth: 1,
+    gap: spacing.sm,
+    padding: spacing.lg,
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.3,
+    shadowRadius: 16,
+  },
+  cardLimited: {
+    backgroundColor: colors.goldSoft,
+    borderColor: colors.gold,
+    borderRadius: radii.xl,
+    borderWidth: 1,
+    gap: spacing.sm,
+    padding: spacing.lg,
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.3,
+    shadowRadius: 16,
+  },
+  cardLoading: {
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
+    borderRadius: radii.xl,
+    borderWidth: 1,
+    gap: spacing.sm,
+    padding: spacing.lg,
+    shadowColor: colors.ink,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.3,
+    shadowRadius: 16,
+  },
+  cardReady: {
+    backgroundColor: colors.oliveSoft,
+    borderColor: colors.olive,
     borderRadius: radii.xl,
     borderWidth: 1,
     gap: spacing.sm,
@@ -134,38 +163,25 @@ const styles = StyleSheet.create({
     gap: spacing.sm,
     marginTop: spacing.xs,
   },
-  limited: {
-    backgroundColor: colors.goldSoft,
-    borderColor: colors.gold,
-  },
-  linkButton: {
+  linkChip: {
+    backgroundColor: colors.surfaceMuted,
+    borderColor: colors.border,
+    borderRadius: radii.pill,
+    borderWidth: 1,
+    paddingHorizontal: spacing.md,
     paddingVertical: spacing.xs,
   },
-  linkText: {
-    color: colors.textMuted,
+  linkChipText: {
+    color: colors.accentStrong,
     fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
+    fontSize: typography.tab,
     fontWeight: "700",
   },
   linksRow: {
     flexDirection: "row",
     flexWrap: "wrap",
     gap: spacing.sm,
-  },
-  loading: {
-    backgroundColor: colors.surface,
-    borderColor: colors.border,
-  },
-  eyebrow: {
-    color: colors.accent,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "800",
-    textTransform: "uppercase",
-  },
-  ready: {
-    backgroundColor: colors.oliveSoft,
-    borderColor: colors.olive,
+    marginTop: spacing.xs,
   },
   secondaryButton: {
     backgroundColor: colors.surface,

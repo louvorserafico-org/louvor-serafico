@@ -93,6 +93,7 @@ export default function CommunityScreen() {
       <View style={styles.formCard}>
         <EditorialSectionHeader
           eyebrow="Escrever"
+          showDivider={false}
           subtitle={isAuthenticated ? submitMessage : communityAccess.helperText}
           title="Nova partilha"
         />
@@ -146,52 +147,53 @@ export default function CommunityScreen() {
             </View>
           </View>
         ) : null}
-        <TextInput
-          editable={isAuthenticated}
-          multiline
-          onChangeText={setDraft}
-          placeholder={communityAccess.inputPlaceholder}
-          placeholderTextColor={colors.textMuted}
-          style={[styles.input, !isAuthenticated ? styles.inputDisabled : undefined]}
-          value={draft}
-        />
         {isAuthenticated ? (
-          <Pressable
-            disabled={!canSubmit}
-            onPress={async () => {
-              if (supabaseSession.status === "authenticated" && supabaseSession.userId && draft.trim()) {
-                const result = await postRemoteComment(
-                  {
-                    body: draft,
-                    celebrationId: selectedCelebration?.id ?? null,
-                    profileId: supabaseSession.userId,
-                  },
-                  fetch,
-                  supabaseConfig.url,
-                  supabaseConfig.publishableKey ?? supabaseConfig.anonKey,
-                  supabaseSession.accessToken,
-                );
+          <>
+            <TextInput
+              multiline
+              onChangeText={setDraft}
+              placeholder={communityAccess.inputPlaceholder}
+              placeholderTextColor={colors.textMuted}
+              style={styles.input}
+              value={draft}
+            />
+            <Pressable
+              disabled={!canSubmit}
+              onPress={async () => {
+                if (supabaseSession.status === "authenticated" && supabaseSession.userId && draft.trim()) {
+                  const result = await postRemoteComment(
+                    {
+                      body: draft,
+                      celebrationId: selectedCelebration?.id ?? null,
+                      profileId: supabaseSession.userId,
+                    },
+                    fetch,
+                    supabaseConfig.url,
+                    supabaseConfig.publishableKey ?? supabaseConfig.anonKey,
+                    supabaseSession.accessToken,
+                  );
 
-                setSubmitMessage(result.ok ? "Partilha publicada com sucesso." : result.message);
+                  setSubmitMessage(result.ok ? "Partilha publicada com sucesso." : result.message);
 
-                if (result.ok) {
-                  setDraft("");
-                  setSelectedCelebrationId(null);
-                  await refreshRemoteComments();
+                  if (result.ok) {
+                    setDraft("");
+                    setSelectedCelebrationId(null);
+                    await refreshRemoteComments();
+                  }
                 }
-              }
-            }}
-            style={[styles.button, !canSubmit ? styles.buttonDisabled : undefined]}
-          >
-            <Text style={[styles.buttonText, !canSubmit ? styles.buttonTextDisabled : undefined]}>
-              {communityAccess.primaryLabel}
-            </Text>
-          </Pressable>
+              }}
+              style={canSubmit ? styles.buttonEnabled : styles.buttonDisabled}
+            >
+              <Text style={canSubmit ? styles.buttonText : styles.buttonTextDisabled}>
+                {communityAccess.primaryLabel}
+              </Text>
+            </Pressable>
+          </>
         ) : (
           <Link asChild href="/entrar">
-            <Pressable style={[styles.button, styles.buttonAccent]}>
-              <Text style={styles.buttonText}>{communityAccess.primaryLabel}</Text>
-            </Pressable>
+            <AnimatedPressable style={styles.buttonAccent}>
+              <Text style={styles.buttonText}>Entrar</Text>
+            </AnimatedPressable>
           </Link>
         )}
       </View>
@@ -260,7 +262,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
     flex: 1,
   },
-  button: {
+  buttonEnabled: {
     alignSelf: "flex-start",
     backgroundColor: colors.olive,
     borderColor: colors.olive,
@@ -271,12 +273,24 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.sm,
   },
   buttonDisabled: {
+    alignSelf: "flex-start",
     backgroundColor: colors.surface,
     borderColor: colors.border,
+    borderRadius: radii.pill,
+    borderWidth: 1,
+    marginTop: spacing.sm,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.sm,
   },
   buttonAccent: {
+    alignSelf: "flex-start",
     backgroundColor: colors.accent,
     borderColor: colors.accent,
+    borderRadius: radii.pill,
+    borderWidth: 1,
+    marginTop: spacing.sm,
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.sm,
   },
   buttonText: {
     color: colors.background,
@@ -286,6 +300,9 @@ const styles = StyleSheet.create({
   },
   buttonTextDisabled: {
     color: colors.textMuted,
+    fontFamily: fontFamilies.ui,
+    fontSize: typography.caption,
+    fontWeight: "700",
   },
   comment: {
     gap: spacing.xs,
@@ -357,9 +374,6 @@ const styles = StyleSheet.create({
     minHeight: 96,
     padding: spacing.md,
     textAlignVertical: "top",
-  },
-  inputDisabled: {
-    color: colors.textMuted,
   },
   commentLinkedCelebration: {
     color: colors.accent,

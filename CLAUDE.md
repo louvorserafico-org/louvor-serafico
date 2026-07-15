@@ -7338,3 +7338,23 @@ Reordenacao: verificada de novo - o teste `calendar-month-view.test.ts` comprova
 Validacoes: pnpm test (74 suites, fail 0) / typecheck / lint = 0.
 
 Commit: `fix(mobile): use a real rounded-square radius for calendar legend dots`
+
+## Etapa 197 - Unificacao de design: telas Partilha e Conta
+
+Pedido do Frei em cima de prints das telas Comunidade (Partilha) e Perfil (Conta), ambas deslogado: (1) linha estranha dentro da box "Nova partilha"; (2) botao "Entrar para participar" quase invisivel (cor perto do fundo); (3) redundancia de texto; (4) "Conta" repetindo varias vezes na tela de Conta; (5) design dos links de politica/termos/dados.
+
+Causa da linha estranha: mesma familia de bug da Etapa 189 (divider duplicado), mas em local novo - `EditorialSectionHeader` usado *dentro* de uma box com borda propria (`formCard`) ganha sua propria linha no topo (convencao da Etapa 187), duplicando com a borda da box que ja o envolve. Corrigido de forma reutilizavel: `EditorialSectionHeader` ganhou prop opcional `showDivider` (default `true`); `comunidade.tsx` passa `showDivider={false}` no cabecalho "Escrever/Nova partilha" (unico caso no app onde o componente fica aninhado numa box com borda propria).
+
+Causa do botao quase invisivel: suspeita de bug irmao do `AnimatedPressable`/array-de-estilo das Etapas 193/196 - aqui era `Link asChild` envolvendo um `Pressable` comum com `style={[styles.button, styles.buttonAccent]}`. Em vez de investigar a fundo de novo, apliquei a mesma mitigacao preventiva: nada de arrays de estilo chegando em componentes envolvidos por `Link asChild` - cada variante de botao agora e um objeto nomeado unico e completo (`buttonEnabled`, `buttonDisabled`, `buttonAccent`), e o botao de visitante trocou de `Pressable` pra `AnimatedPressable` (consistencia com o resto do app).
+
+Simplificacao de texto (`comunidade.tsx`, estado deslogado):
+- Removida a caixa de texto desabilitada (cinza, sem funcao nenhuma pra quem nao pode digitar).
+- Botao mudou de "Entrar para participar" pra so "Entrar" - o helper text logo acima ja explica o "para participar".
+
+Tela de Conta (`perfil.tsx` + `AuthEntryCard.tsx`), estado deslogado:
+- Antes: `PageHeader` mostrava eyebrow "Conta" + titulo "Conta" (mesma palavra 2x) e o `AuthEntryCard` tinha mais um eyebrow "Conta" dentro da caixa - 3 repeticoes da mesma palavra na tela inteira. Titulo do `PageHeader` trocado pra "Acesse sua conta"; eyebrow interno do `AuthEntryCard` removido (o header da pagina ja da o contexto).
+- Links "Politica de privacidade" / "Termos de uso" / "Seus dados": eram texto puro cor `textMuted` (baixo contraste, sem indicio visual de toque). Viraram chips com fundo, borda e cor `accentStrong` - mesmo padrao de chip usado em outras partes do app.
+
+Validacoes: pnpm test (74 suites, fail 0) / typecheck / lint = 0. Sem teste novo (mudanca de UI).
+
+Commit: `fix(mobile): unify community and account screens, remove redundant text and fix invisible button`

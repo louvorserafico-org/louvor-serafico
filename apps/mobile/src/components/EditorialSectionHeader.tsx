@@ -7,6 +7,7 @@ type EditorialSectionHeaderProps = {
   actionHref?: "/calendario" | "/comunidade" | "/entrar" | "/perfil" | "/repertorio";
   actionLabel?: string;
   eyebrow?: string;
+  showDivider?: boolean;
   subtitle?: string;
   title: string;
 };
@@ -15,6 +16,7 @@ export function EditorialSectionHeader({
   actionHref,
   actionLabel,
   eyebrow,
+  showDivider = true,
   subtitle,
   title,
 }: EditorialSectionHeaderProps) {
@@ -29,7 +31,7 @@ export function EditorialSectionHeader({
     : null;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, showDivider ? styles.containerDivided : undefined]}>
       <View style={styles.topRow}>
         <View style={styles.copy}>
           {eyebrow ? <Text style={styles.eyebrow}>{eyebrow}</Text> : null}
@@ -54,9 +56,11 @@ const styles = StyleSheet.create({
     fontWeight: "800",
   },
   container: {
+    gap: spacing.xs,
+  },
+  containerDivided: {
     borderTopColor: colors.border,
     borderTopWidth: 1,
-    gap: spacing.xs,
     paddingTop: spacing.md,
   },
   copy: {

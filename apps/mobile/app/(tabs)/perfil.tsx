@@ -35,7 +35,7 @@ export default function ProfileScreen() {
       <ScrollView contentContainerStyle={styles.container}>
       <PageHeader
         eyebrow={isAuthenticated ? "Perfil" : "Conta"}
-        title={isAuthenticated ? "Conta e assinatura" : "Conta"}
+        title={isAuthenticated ? "Conta e assinatura" : "Acesse sua conta"}
         subtitle={
           isAuthenticated
             ? buildProfileTabSubtitle(true)
