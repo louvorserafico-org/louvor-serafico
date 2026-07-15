@@ -7252,3 +7252,16 @@ Feito:
 Testes: sem teste novo (mudanca de UI/copy). Validacoes: pnpm test (74 suites, fail 0) / typecheck / lint = 0.
 
 Commit: `fix(mobile): auto-load audio player, trim redundant material copy, fix silent audio on iOS`
+
+## Etapa 191 - Hub de devocoes: cards separados, sem botao "Abrir"
+
+Pedido do Frei: a box unica com as 3 devocoes tinha conteudo colado nas bordas (padding insuficiente) e o botao "Abrir" parecia "fora de ritmo" - pediu pra separar cada devocao em sua propria box e tornar a box inteira clicavel, sem o botao de texto.
+
+Feito (`devocoes/index.tsx`):
+- A lista deixou de ser uma unica `View` com borda + itens internos separados por `borderBottomWidth` -> agora cada devocao e um card independente (`borderWidth`, `borderRadius`, `padding: spacing.lg` completo - sem mais padding assimetrico colado nas bordas), com `gap: spacing.md` entre os cards.
+- Texto "Abrir" removido. Card inteiro e o alvo do toque (`Link asChild` + `AnimatedPressable`, mesmo padrao ja usado em outras telas). Adicionado um icone sutil de seta (`chevron-forward`) a direita, so nos itens `available`, como indicio visual de que e clicavel - sem ser um "botao" de texto.
+- Itens `preparing` mantem o rotulo "Em preparação" (nao e uma acao, e um status - continua visivel).
+
+Validacoes: pnpm test (74 suites, fail 0) / typecheck / lint = 0. Sem teste novo (mudanca de UI).
+
+Commit: `fix(mobile): split devotions hub into separate tappable cards`

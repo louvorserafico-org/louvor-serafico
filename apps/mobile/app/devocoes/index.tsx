@@ -1,6 +1,8 @@
+import { Ionicons } from "@expo/vector-icons";
 import { Link, Stack } from "expo-router";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 
+import { AnimatedPressable } from "@/components/AnimatedPressable";
 import { EditorialSectionHeader } from "@/components/EditorialSectionHeader";
 import { PageHeader } from "@/components/PageHeader";
 import { buildDevotionRoute, getDevotionItems } from "@/features/devotions/devotions";
@@ -25,15 +27,18 @@ export default function DevotionsHubScreen() {
       />
 
       <View style={styles.list}>
-        {items.map((item, index) => (
+        {items.map((item) => (
           <Link asChild href={buildDevotionRoute(item.slug)} key={item.slug}>
-            <Pressable style={[styles.item, index !== items.length - 1 ? styles.itemBorder : undefined]}>
-              <Text style={styles.title}>{item.title}</Text>
-              <Text style={styles.meta}>{item.description}</Text>
-              <Text style={item.status === "available" ? styles.action : styles.actionMuted}>
-                {item.status === "available" ? "Abrir" : "Em preparação"}
-              </Text>
-            </Pressable>
+            <AnimatedPressable style={styles.item}>
+              <View style={styles.itemCopy}>
+                <Text style={styles.title}>{item.title}</Text>
+                <Text style={styles.meta}>{item.description}</Text>
+                {item.status === "preparing" ? <Text style={styles.actionMuted}>Em preparação</Text> : null}
+              </View>
+              {item.status === "available" ? (
+                <Ionicons color={colors.textMuted} name="chevron-forward" size={20} />
+              ) : null}
+            </AnimatedPressable>
           </Link>
         ))}
       </View>
@@ -45,13 +50,6 @@ const styles = StyleSheet.create({
   screen: {
     backgroundColor: colors.background,
     flex: 1,
-  },
-  action: {
-    color: colors.accent,
-    fontFamily: fontFamilies.ui,
-    fontSize: typography.caption,
-    fontWeight: "800",
-    paddingTop: spacing.xs,
   },
   actionMuted: {
     color: colors.textMuted,
@@ -67,21 +65,22 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.xxl,
   },
   item: {
-    gap: spacing.xs,
-    paddingBottom: spacing.lg,
-    paddingTop: spacing.lg,
-  },
-  itemBorder: {
-    borderBottomColor: colors.border,
-    borderBottomWidth: 1,
-  },
-  list: {
+    alignItems: "center",
     backgroundColor: colors.surface,
     borderColor: colors.border,
     borderRadius: radii.xl,
     borderWidth: 1,
-    paddingHorizontal: spacing.lg,
-    paddingTop: spacing.xs,
+    flexDirection: "row",
+    gap: spacing.sm,
+    justifyContent: "space-between",
+    padding: spacing.lg,
+  },
+  itemCopy: {
+    flex: 1,
+    gap: spacing.xs,
+  },
+  list: {
+    gap: spacing.md,
   },
   meta: {
     color: colors.textMuted,
